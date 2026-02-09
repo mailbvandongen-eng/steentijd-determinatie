@@ -46,6 +46,14 @@ export default {
     }
 
     try {
+      // Check if API key is configured
+      if (!env.ANTHROPIC_API_KEY) {
+        return new Response(
+          JSON.stringify({ error: { message: 'API key niet geconfigureerd. Neem contact op met de beheerder.' } }),
+          { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+        );
+      }
+
       // Get request body
       const body = await request.json();
 

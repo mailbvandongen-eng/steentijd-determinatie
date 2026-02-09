@@ -15,10 +15,10 @@ interface ImageCaptureProps {
 }
 
 const IMAGE_LABELS = [
-  { key: 'dorsaal', label: 'Dorsaal (bovenzijde)', description: 'De rugzijde met afslagnegatieven' },
-  { key: 'ventraal', label: 'Ventraal (onderzijde)', description: 'De buikzijde met slagbult' },
-  { key: 'zijkant', label: 'Zijkant', description: 'Profiel van het artefact' },
-  { key: 'extra', label: 'Extra', description: 'Aanvullende opname' },
+  { key: 'dorsaal', label: 'Foto 1' },
+  { key: 'ventraal', label: 'Foto 2' },
+  { key: 'zijkant', label: 'Foto 3' },
+  { key: 'extra', label: 'Foto 4' },
 ] as const;
 
 export function ImageCapture({ onCapture }: ImageCaptureProps) {
@@ -411,7 +411,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
             <div className="text-left">
               <div className="font-semibold">Meerdere foto's</div>
-              <div className="text-xs opacity-80">Dorsaal, ventraal en zijkant</div>
+              <div className="text-xs opacity-80">Voeg meerdere foto's toe</div>
             </div>
           </button>
 
@@ -440,7 +440,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
             <div className="text-left">
               <div className="font-semibold">Video opnemen</div>
-              <div className="text-xs opacity-80">Draai het artefact voor alle kanten</div>
+              <div className="text-xs opacity-80">Neem een video op</div>
             </div>
           </button>
 
@@ -479,7 +479,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       <div className="flex flex-col h-full">
         <div className="bg-stone-800 p-3 shrink-0">
           <h2 className="text-white font-semibold">Foto's toevoegen</h2>
-          <p className="text-stone-400 text-xs">Voeg foto's toe van verschillende zijden</p>
+          <p className="text-stone-400 text-xs">Tik op een vakje om een foto te maken</p>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3">
@@ -688,26 +688,37 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         </div>
         <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex flex-col gap-2 shrink-0">
           {multiImages.length > 0 || currentLabel !== 'dorsaal' ? (
-            <>
-              <p className="text-xs text-stone-500 text-center">
-                {IMAGE_LABELS.find((l) => l.key === currentLabel)?.label}
-              </p>
-              <div className="flex gap-2">
-                <button onClick={handleRetake} className="btn-secondary flex-1">
-                  Opnieuw
-                </button>
-                <button onClick={handleAddToMulti} className="btn-success flex-1">
-                  Toevoegen
-                </button>
-              </div>
-            </>
+            <div className="flex gap-2">
+              <button onClick={handleRetake} className="btn-secondary flex-1">
+                Opnieuw
+              </button>
+              <button onClick={handleAddToMulti} className="btn-success flex-1">
+                Toevoegen
+              </button>
+            </div>
           ) : (
             <div className="flex gap-2">
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
               </button>
-              <button onClick={() => setMode('multi-photo')} className="btn-secondary flex-1">
-                + Meer foto's
+              <button
+                onClick={async () => {
+                  // Voeg huidige foto toe aan multi-images en ga naar multi-photo mode
+                  if (capturedBlob && previewUrl) {
+                    const img = new Image();
+                    img.src = previewUrl;
+                    await new Promise<void>((resolve) => { img.onload = () => resolve(); });
+                    const thumbnail = await createThumbnail(img);
+                    setMultiImages([{ label: 'dorsaal', blob: capturedBlob, thumbnail }]);
+                    setCapturedBlob(null);
+                    setPreviewUrl(null);
+                    setCurrentLabel('ventraal');
+                    setMode('multi-photo');
+                  }
+                }}
+                className="btn-secondary flex-1"
+              >
+                + Meer
               </button>
               <button onClick={handleConfirmSingle} className="btn-success flex-1">
                 Gebruiken
