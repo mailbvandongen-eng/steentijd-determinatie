@@ -1,27 +1,30 @@
 import { useState, useCallback } from 'react';
 import { ImageCapture } from './components/ImageCapture';
-import { DecisionNavigator } from './components/DecisionNavigator';
+import { AIAnalysis } from './components/AIAnalysis';
 import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
-import { createSession, addStep, completeSession, getSession } from './lib/db';
-import type { DeterminationSession, DeterminationStep, LabeledImage } from './types';
+import { createSession, completeSession, getSession } from './lib/db';
+import type { DeterminationSession, LabeledImage } from './types';
+import type { AnalysisResult } from './lib/aiAnalysis';
 
-type View = 'home' | 'capture' | 'determine' | 'result' | 'history';
+type View = 'home' | 'capture' | 'analyze' | 'result' | 'history';
+
+interface CapturedData {
+  type: 'photo' | 'video' | 'multi-photo';
+  blob?: Blob;
+  thumbnail?: string;
+  images?: LabeledImage[];
+  videoBlob?: Blob;
+}
 
 function App() {
   const [view, setView] = useState<View>('home');
   const [currentSessionId, setCurrentSessionId] = useState<number | null>(null);
   const [currentSession, setCurrentSession] = useState<DeterminationSession | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [capturedData, setCapturedData] = useState<CapturedData | null>(null);
 
-  const handleCapture = useCallback(async (data: {
-    type: 'photo' | 'video' | 'multi-photo';
-    blob?: Blob;
-    thumbnail?: string;
-    images?: LabeledImage[];
-    videoBlob?: Blob;
-  }) => {
-    // Maak nieuwe sessie met de juiste input type
+  const handleCapture = useCallback(async (data: CapturedData) => {
+    // Maak nieuwe sessie
     const sessionId = await createSession({
       type: data.type,
       blob: data.blob,
@@ -30,23 +33,17 @@ function App() {
       videoBlob: data.videoBlob,
     });
     setCurrentSessionId(sessionId);
-    setImageUrl(data.thumbnail || (data.images?.[0]?.thumbnail) || null);
-    setView('determine');
+    setCapturedData(data);
+    setView('analyze');
   }, []);
 
-  const handleStep = useCallback(
-    async (step: DeterminationStep) => {
+  const handleAnalysisComplete = useCallback(
+    async (result: { type: string; description: string; aiAnalysis: AnalysisResult }) => {
       if (currentSessionId) {
-        await addStep(currentSessionId, step);
-      }
-    },
-    [currentSessionId]
-  );
-
-  const handleComplete = useCallback(
-    async (result: { type: string; description?: string }) => {
-      if (currentSessionId) {
-        await completeSession(currentSessionId, result);
+        await completeSession(currentSessionId, {
+          type: result.type,
+          description: result.description,
+        });
         const session = await getSession(currentSessionId);
         if (session) {
           setCurrentSession(session);
@@ -60,7 +57,7 @@ function App() {
   const handleNewDetermination = useCallback(() => {
     setCurrentSessionId(null);
     setCurrentSession(null);
-    setImageUrl(null);
+    setCapturedData(null);
     setView('capture');
   }, []);
 
@@ -73,6 +70,13 @@ function App() {
     setView('home');
   }, []);
 
+  const handleBackFromAnalysis = useCallback(() => {
+    // Terug naar capture, sessie annuleren
+    setCurrentSessionId(null);
+    setCapturedData(null);
+    setView('capture');
+  }, []);
+
   // Home screen
   if (view === 'home') {
     return (
@@ -80,7 +84,7 @@ function App() {
         {/* Hero - compact */}
         <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center shrink-0">
           <h1 className="text-2xl font-bold">Steentijd</h1>
-          <p className="text-amber-200 text-sm">Determineer stenen artefacten</p>
+          <p className="text-amber-200 text-sm">AI Determinatie van stenen artefacten</p>
         </div>
 
         {/* Info - scrollable */}
@@ -90,17 +94,24 @@ function App() {
             <ol className="text-sm text-stone-600 space-y-1">
               <li className="flex gap-2 items-center">
                 <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
-                <span>Maak een foto van het artefact</span>
+                <span>Maak foto's van het artefact</span>
               </li>
               <li className="flex gap-2 items-center">
                 <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
-                <span>Beantwoord vragen over kenmerken</span>
+                <span>AI analyseert het object</span>
               </li>
               <li className="flex gap-2 items-center">
                 <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
-                <span>Ontvang de determinatie</span>
+                <span>Ontvang type, periode en beschrijving</span>
               </li>
             </ol>
+          </div>
+
+          <div className="card mb-3 bg-amber-50 border-amber-200">
+            <p className="text-sm text-amber-800">
+              <strong>AI-powered</strong><br />
+              Gebruikt Claude AI met kennis van het AWN determinatie-algoritme voor nauwkeurige analyse.
+            </p>
           </div>
 
           <p className="text-xs text-stone-400 text-center">
@@ -140,14 +151,17 @@ function App() {
     );
   }
 
-  // Determination screen
-  if (view === 'determine' && imageUrl) {
+  // AI Analysis screen
+  if (view === 'analyze' && capturedData) {
     return (
-      <DecisionNavigator
-        imageUrl={imageUrl}
-        onStep={handleStep}
-        onComplete={handleComplete}
-        onBack={handleBack}
+      <AIAnalysis
+        images={capturedData.images || []}
+        singleImage={capturedData.blob && capturedData.thumbnail ? {
+          blob: capturedData.blob,
+          thumbnail: capturedData.thumbnail,
+        } : undefined}
+        onComplete={handleAnalysisComplete}
+        onBack={handleBackFromAnalysis}
       />
     );
   }

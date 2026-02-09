@@ -48,6 +48,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   const startCamera = useCallback(async (forVideo: boolean = false) => {
     setCameraError(null);
+    // Eerst mode veranderen zodat video element gerenderd wordt
+    setMode(forVideo ? 'camera-video' : 'camera-photo');
+
+    // Wacht een tick zodat React het video element kan renderen
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     try {
       const constraints: MediaStreamConstraints = {
         video: {
@@ -63,21 +69,16 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        // Wacht tot video geladen is
-        await new Promise<void>((resolve) => {
-          if (videoRef.current) {
-            videoRef.current.onloadedmetadata = () => {
-              videoRef.current?.play().then(resolve).catch(() => resolve());
-            };
-          }
-        });
+        // Wacht tot video geladen is en start afspelen
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play().catch(console.error);
+        };
       }
-
-      setMode(forVideo ? 'camera-video' : 'camera-photo');
     } catch (err) {
       console.error('Camera error:', err);
       const errorMessage = err instanceof Error ? err.message : 'Onbekende fout';
       setCameraError(`Kan camera niet openen: ${errorMessage}`);
+      setMode('select');
     }
   }, []);
 
