@@ -68,50 +68,44 @@ function App() {
   // Home screen
   if (view === 'home') {
     return (
-      <div className="min-h-screen flex flex-col">
-        {/* Hero */}
-        <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-8 text-center">
-          <h1 className="text-3xl font-bold mb-2">Steentijd</h1>
-          <p className="text-amber-100">Determinatie App</p>
-          <p className="text-sm text-amber-200 mt-4">
-            Herken en determineer stenen artefacten
-          </p>
+      <div className="h-screen flex flex-col overflow-hidden">
+        {/* Hero - compact */}
+        <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center shrink-0">
+          <h1 className="text-2xl font-bold">Steentijd</h1>
+          <p className="text-amber-200 text-sm">Determineer stenen artefacten</p>
         </div>
 
-        {/* Info */}
-        <div className="p-4 flex-1">
-          <div className="card mb-4">
-            <h2 className="font-semibold text-lg mb-2">Hoe werkt het?</h2>
-            <ol className="text-sm text-stone-600 space-y-2">
-              <li className="flex gap-2">
-                <span className="bg-amber-100 text-amber-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
+        {/* Info - scrollable */}
+        <div className="p-3 flex-1 overflow-y-auto">
+          <div className="card mb-3">
+            <h2 className="font-semibold mb-2">Hoe werkt het?</h2>
+            <ol className="text-sm text-stone-600 space-y-1">
+              <li className="flex gap-2 items-center">
+                <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
                 <span>Maak een foto van het artefact</span>
               </li>
-              <li className="flex gap-2">
-                <span className="bg-amber-100 text-amber-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
-                <span>Beantwoord de vragen over kenmerken</span>
+              <li className="flex gap-2 items-center">
+                <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                <span>Beantwoord vragen over kenmerken</span>
               </li>
-              <li className="flex gap-2">
-                <span className="bg-amber-100 text-amber-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
-                <span>Ontvang de determinatie met uitleg</span>
+              <li className="flex gap-2 items-center">
+                <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                <span>Ontvang de determinatie</span>
               </li>
             </ol>
           </div>
 
-          <div className="card">
-            <p className="text-xs text-stone-500">
-              Gebaseerd op het Algoritme Typebepaling (Vuur-)Stenen Artefacten
-              van de Landelijke Werkgroep Steentijd (AWN)
-            </p>
-          </div>
+          <p className="text-xs text-stone-400 text-center">
+            AWN Landelijke Werkgroep Steentijd
+          </p>
         </div>
 
-        {/* Actions */}
-        <div className="p-4 bg-white border-t border-stone-200 flex gap-4">
-          <button onClick={() => setView('history')} className="btn-secondary flex-1">
+        {/* Actions - fixed at bottom */}
+        <div className="p-3 bg-white border-t border-stone-200 flex gap-3 shrink-0">
+          <button onClick={() => setView('history')} className="btn-secondary flex-1 py-3">
             Geschiedenis
           </button>
-          <button onClick={() => setView('capture')} className="btn-primary flex-1">
+          <button onClick={() => setView('capture')} className="btn-primary flex-1 py-3">
             Start
           </button>
         </div>
