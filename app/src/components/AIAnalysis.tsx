@@ -6,34 +6,45 @@ import type { LabeledImage } from '../types';
 interface AIAnalysisProps {
   images: LabeledImage[];
   singleImage?: { blob: Blob; thumbnail: string };
+  videoFrames?: LabeledImage[]; // Automatisch geëxtraheerde frames uit video
   onComplete: (result: { type: string; description: string; aiAnalysis: AnalysisResult }) => void;
   onBack: () => void;
 }
 
-export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalysisProps) {
+export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBack }: AIAnalysisProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [analyzeAllImages, setAnalyzeAllImages] = useState(true);
 
-  // Verzamel alle beschikbare images
-  const allImages = singleImage
+  // Verzamel alle beschikbare images (handmatige foto's + video frames)
+  const manualImages = singleImage
     ? [{ label: 'foto' as const, blob: singleImage.blob, thumbnail: singleImage.thumbnail }]
     : images;
+
+  const allImages = [...manualImages, ...(videoFrames || [])];
+  const hasVideoFrames = videoFrames && videoFrames.length > 0;
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
     setResult(null);
 
     try {
-      // Gebruik de eerste/huidige afbeelding voor analyse
-      const imageToAnalyze = allImages[currentImageIndex];
-      if (!imageToAnalyze) {
+      if (allImages.length === 0) {
         setResult({ success: false, error: 'Geen afbeelding beschikbaar' });
         return;
       }
 
-      const base64 = await blobToBase64(imageToAnalyze.blob);
-      const analysisResult = await analyzeImage(base64);
+      // Bepaal welke afbeeldingen te analyseren
+      const imagesToAnalyze = analyzeAllImages
+        ? allImages.slice(0, 5) // Max 5 afbeeldingen voor kosten/snelheid
+        : [allImages[0]];
+
+      // Converteer alle afbeeldingen naar base64
+      const base64Images = await Promise.all(
+        imagesToAnalyze.map(img => blobToBase64(img.blob))
+      );
+
+      const analysisResult = await analyzeImage(base64Images);
       setResult(analysisResult);
     } catch (err) {
       setResult({
@@ -71,40 +82,76 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
       <div className="flex-1 overflow-y-auto p-3">
         {/* Afbeeldingen */}
         <div className="card mb-3">
-          <p className="text-xs text-stone-500 mb-2 font-medium">
-            {allImages.length > 1 ? 'JOUW AFBEELDINGEN' : 'JOUW AFBEELDING'}
-          </p>
-
-          {allImages.length > 1 ? (
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {allImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentImageIndex(idx)}
-                  className={`shrink-0 rounded border-2 overflow-hidden ${
-                    idx === currentImageIndex ? 'border-amber-500' : 'border-stone-200'
-                  }`}
-                >
-                  <img
-                    src={img.thumbnail}
-                    alt={img.label}
-                    className="h-16 w-16 object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          ) : (
-            <img
-              src={allImages[0]?.thumbnail}
-              alt="Artefact"
-              className="w-full max-h-48 object-contain rounded border border-stone-200"
-            />
+          {/* Handmatige foto's */}
+          {manualImages.length > 0 && (
+            <>
+              <p className="text-xs text-stone-500 mb-2 font-medium">
+                {manualImages.length > 1 ? "JOUW FOTO'S" : 'JOUW FOTO'}
+              </p>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {manualImages.map((img, idx) => (
+                  <div
+                    key={`manual-${idx}`}
+                    className="shrink-0 rounded border-2 border-stone-200 overflow-hidden relative"
+                  >
+                    <img
+                      src={img.thumbnail}
+                      alt={img.label}
+                      className="h-16 w-16 object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[10px] text-center">
+                      {img.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
 
+          {/* Video frames */}
+          {hasVideoFrames && (
+            <>
+              <p className="text-xs text-stone-500 mb-2 font-medium mt-2">
+                VIDEO FRAMES (automatisch)
+              </p>
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {videoFrames.map((img, idx) => (
+                  <div
+                    key={`frame-${idx}`}
+                    className="shrink-0 rounded border-2 border-blue-300 overflow-hidden relative"
+                  >
+                    <img
+                      src={img.thumbnail}
+                      alt={`Frame ${idx + 1}`}
+                      className="h-16 w-16 object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-blue-600/80 text-white text-[10px] text-center">
+                      frame {idx + 1}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Analyse optie */}
           {allImages.length > 1 && (
-            <p className="text-xs text-stone-500 mt-2 text-center">
-              Analyseren: {allImages[currentImageIndex]?.label || 'foto'}
-            </p>
+            <div className="mt-3 pt-3 border-t border-stone-200">
+              <label className="flex items-center gap-2 text-sm text-stone-700">
+                <input
+                  type="checkbox"
+                  checked={analyzeAllImages}
+                  onChange={(e) => setAnalyzeAllImages(e.target.checked)}
+                  className="rounded border-stone-300"
+                />
+                Alle {Math.min(allImages.length, 5)} afbeeldingen analyseren (nauwkeuriger)
+              </label>
+              <p className="text-xs text-stone-500 mt-1">
+                {analyzeAllImages
+                  ? 'Claude bekijkt alle afbeeldingen voor een complete analyse'
+                  : 'Alleen de eerste afbeelding wordt geanalyseerd (sneller/goedkoper)'}
+              </p>
+            </div>
           )}
         </div>
 
@@ -188,9 +235,14 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
           <div className="card bg-amber-50 border-amber-200">
             <p className="text-sm text-amber-800">
               <strong>AI Analyse</strong><br />
-              Claude analyseert je foto en bepaalt het type artefact, de periode,
+              Claude analyseert je {allImages.length > 1 ? `${allImages.length} afbeeldingen` : 'foto'} en bepaalt het type artefact, de periode,
               en geeft een uitgebreide beschrijving van de kenmerken.
             </p>
+            {hasVideoFrames && (
+              <p className="text-xs text-blue-600 mt-2">
+                Video frames worden automatisch meegenomen voor betere 3D-beoordeling.
+              </p>
+            )}
             <p className="text-xs text-amber-600 mt-2">
               Max 10 analyses per dag.
             </p>

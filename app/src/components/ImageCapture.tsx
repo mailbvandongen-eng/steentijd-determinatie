@@ -10,6 +10,7 @@ interface ImageCaptureProps {
     thumbnail?: string;
     images?: LabeledImage[];
     videoBlob?: Blob;
+    videoFrames?: LabeledImage[]; // Automatisch geëxtraheerde frames uit video
   }) => void;
 }
 
@@ -25,10 +26,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
   const [multiImages, setMultiImages] = useState<LabeledImage[]>([]);
+  const [multiVideo, setMultiVideo] = useState<{ blob: Blob; thumbnail: string } | null>(null);
   const [currentLabel, setCurrentLabel] = useState<LabeledImage['label']>('dorsaal');
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [addingVideoToMulti, setAddingVideoToMulti] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -136,12 +139,36 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       }
     };
 
-    mediaRecorderRef.current.onstop = () => {
+    mediaRecorderRef.current.onstop = async () => {
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-      setCapturedBlob(blob);
-      setPreviewUrl(URL.createObjectURL(blob));
-      setMode('preview-video');
-      stopCamera();
+
+      // Als we video toevoegen aan multi-photo, sla op en ga terug
+      if (addingVideoToMulti) {
+        const videoUrl = URL.createObjectURL(blob);
+        const video = document.createElement('video');
+        video.src = videoUrl;
+        video.muted = true;
+        await new Promise<void>((resolve) => {
+          video.onloadeddata = () => resolve();
+          video.load();
+        });
+        video.currentTime = 0;
+        await new Promise<void>((resolve) => {
+          video.onseeked = () => resolve();
+        });
+        const thumbnail = await createThumbnail(video);
+        URL.revokeObjectURL(videoUrl);
+
+        setMultiVideo({ blob, thumbnail });
+        setAddingVideoToMulti(false);
+        stopCamera();
+        setMode('multi-photo');
+      } else {
+        setCapturedBlob(blob);
+        setPreviewUrl(URL.createObjectURL(blob));
+        setMode('preview-video');
+        stopCamera();
+      }
     };
 
     mediaRecorderRef.current.start(100);
@@ -268,16 +295,27 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (nextLabel) setCurrentLabel(nextLabel.key);
   }, [capturedBlob, previewUrl, currentLabel, multiImages]);
 
-  const handleConfirmMulti = useCallback(() => {
-    if (multiImages.length === 0) return;
+  const handleConfirmMulti = useCallback(async () => {
+    if (multiImages.length === 0 && !multiVideo) return;
 
-    // Gebruik eerste foto als hoofdthumbnail
+    let videoFrames: LabeledImage[] | undefined;
+
+    // Extract frames uit video als die er is
+    if (multiVideo) {
+      videoFrames = await extractVideoFrames(multiVideo.blob);
+    }
+
+    // Gebruik eerste foto of video thumbnail als hoofdthumbnail
+    const thumbnail = multiImages[0]?.thumbnail || multiVideo?.thumbnail || '';
+
     onCapture({
       type: 'multi-photo',
       images: multiImages,
-      thumbnail: multiImages[0].thumbnail,
+      videoBlob: multiVideo?.blob,
+      videoFrames,
+      thumbnail,
     });
-  }, [multiImages, onCapture]);
+  }, [multiImages, multiVideo, onCapture]);
 
   const handleRetake = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -295,6 +333,55 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Extract frames uit video voor AI analyse (begin, midden, eind)
+  const extractVideoFrames = async (videoBlob: Blob): Promise<LabeledImage[]> => {
+    const video = document.createElement('video');
+    video.src = URL.createObjectURL(videoBlob);
+    video.muted = true;
+
+    await new Promise<void>((resolve) => {
+      video.onloadedmetadata = () => resolve();
+      video.load();
+    });
+
+    const duration = video.duration;
+    const frames: LabeledImage[] = [];
+    const timePoints = [0.1, duration / 2, duration - 0.1]; // Begin, midden, eind
+    const labels: Array<'dorsaal' | 'ventraal' | 'zijkant'> = ['dorsaal', 'ventraal', 'zijkant'];
+
+    for (let i = 0; i < timePoints.length; i++) {
+      video.currentTime = Math.max(0, Math.min(timePoints[i], duration));
+
+      await new Promise<void>((resolve) => {
+        video.onseeked = () => resolve();
+      });
+
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) continue;
+
+      ctx.drawImage(video, 0, 0);
+
+      const blob = await new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, 'image/jpeg', 0.85);
+      });
+
+      if (blob) {
+        const thumbnail = await createThumbnail(video);
+        frames.push({
+          label: labels[i],
+          blob,
+          thumbnail,
+        });
+      }
+    }
+
+    URL.revokeObjectURL(video.src);
+    return frames;
   };
 
   // Selectiescherm
@@ -439,8 +526,47 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             })}
           </div>
 
+          {/* Video sectie */}
+          <div className="mb-4">
+            <p className="text-xs text-stone-500 mb-2 font-medium">VIDEO (OPTIONEEL)</p>
+            {multiVideo ? (
+              <div className="relative border-2 border-green-500 rounded-lg overflow-hidden">
+                <img src={multiVideo.thumbnail} alt="Video" className="w-full h-24 object-cover" />
+                <button
+                  onClick={() => setMultiVideo(null)}
+                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                >
+                  ×
+                </button>
+                <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center flex items-center justify-center gap-1">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Video opgenomen
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  setAddingVideoToMulti(true);
+                  startCamera(true);
+                }}
+                className="w-full border-2 border-dashed border-stone-300 rounded-lg p-4 flex items-center justify-center gap-2 text-stone-400 hover:bg-stone-100"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm">Video toevoegen</span>
+              </button>
+            )}
+            <p className="text-xs text-stone-400 mt-1 text-center">
+              AI haalt automatisch frames uit de video
+            </p>
+          </div>
+
           <p className="text-xs text-stone-500 text-center">
-            Minimaal 1 foto nodig. Meer foto's = betere determinatie.
+            Minimaal 1 foto of video nodig. Meer = betere determinatie.
           </p>
         </div>
 
@@ -448,6 +574,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           <button
             onClick={() => {
               setMultiImages([]);
+              setMultiVideo(null);
               setMode('select');
             }}
             className="btn-secondary flex-1"
@@ -456,10 +583,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </button>
           <button
             onClick={handleConfirmMulti}
-            disabled={multiImages.length === 0}
+            disabled={multiImages.length === 0 && !multiVideo}
             className="btn-success flex-1 disabled:opacity-50"
           >
-            Doorgaan ({multiImages.length} foto's)
+            Doorgaan ({multiImages.length} foto's{multiVideo ? ' + video' : ''})
           </button>
         </div>
       </div>

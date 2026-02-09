@@ -81,11 +81,29 @@ export interface AnalysisResult {
 // Worker URL voor API calls (met rate limiting)
 const WORKER_URL = 'https://steentijd-api.mail-b-van-dongen.workers.dev';
 
+// Analyseer één of meerdere afbeeldingen
 export async function analyzeImage(
-  imageBase64: string,
+  imageBase64: string | string[], // Kan één of meerdere base64 strings zijn
   _apiKey?: string // niet meer nodig, worker heeft de key
 ): Promise<AnalysisResult> {
   try {
+    // Zorg dat we altijd een array hebben
+    const images = Array.isArray(imageBase64) ? imageBase64 : [imageBase64];
+
+    // Bouw content array met alle afbeeldingen
+    const imageContent = images.map((img) => ({
+      type: 'image' as const,
+      source: {
+        type: 'base64' as const,
+        media_type: 'image/jpeg' as const,
+        data: img.replace(/^data:image\/\w+;base64,/, ''),
+      },
+    }));
+
+    const multiImageNote = images.length > 1
+      ? `\n\nJe krijgt ${images.length} afbeeldingen van hetzelfde artefact vanuit verschillende hoeken. Gebruik alle afbeeldingen voor een complete analyse.`
+      : '';
+
     const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: {
@@ -98,19 +116,12 @@ export async function analyzeImage(
           {
             role: 'user',
             content: [
-              {
-                type: 'image',
-                source: {
-                  type: 'base64',
-                  media_type: 'image/jpeg',
-                  data: imageBase64.replace(/^data:image\/\w+;base64,/, ''),
-                },
-              },
+              ...imageContent,
               {
                 type: 'text',
-                text: `${DETERMINATION_CONTEXT}
+                text: `${DETERMINATION_CONTEXT}${multiImageNote}
 
-Analyseer deze foto van een mogelijk stenen artefact. Geef je analyse in het volgende format:
+Analyseer ${images.length > 1 ? 'deze foto\'s' : 'deze foto'} van een mogelijk stenen artefact. Geef je analyse in het volgende format:
 
 **Type:** [type artefact of "geen artefact" of "onduidelijk"]
 **Periode:** [geschatte periode of "onbekend"]

@@ -15,6 +15,7 @@ interface CapturedData {
   thumbnail?: string;
   images?: LabeledImage[];
   videoBlob?: Blob;
+  videoFrames?: LabeledImage[]; // Automatisch geëxtraheerde frames uit video
 }
 
 function App() {
@@ -160,6 +161,7 @@ function App() {
           blob: capturedData.blob,
           thumbnail: capturedData.thumbnail,
         } : undefined}
+        videoFrames={capturedData.videoFrames}
         onComplete={handleAnalysisComplete}
         onBack={handleBackFromAnalysis}
       />
