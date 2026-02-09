@@ -67,7 +67,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
   };
 
   return (
-    <div className="h-screen flex flex-col bg-stone-50">
+    <div className="h-full flex flex-col bg-stone-50 overflow-hidden">
       {/* Header */}
       <div className="bg-stone-800 p-3 flex items-center gap-3 shrink-0">
         <button onClick={onBack} className="text-white p-1">
@@ -251,7 +251,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
       </div>
 
       {/* Actions */}
-      <div className="p-3 bg-white border-t border-stone-200 shrink-0">
+      <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0">
         {result?.success ? (
           <div className="flex gap-2">
             <button onClick={handleAnalyze} className="btn-secondary flex-1">

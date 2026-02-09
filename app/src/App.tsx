@@ -9,6 +9,8 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'home' | 'capture' | 'analyze' | 'result' | 'history';
 
+const APP_VERSION = '1.0.1';
+
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
   blob?: Blob;
@@ -81,7 +83,7 @@ function App() {
   // Home screen
   if (view === 'home') {
     return (
-      <div className="h-screen flex flex-col overflow-hidden">
+      <div className="h-full flex flex-col overflow-hidden">
         {/* Hero - compact */}
         <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center shrink-0">
           <h1 className="text-2xl font-bold">Steentijd</h1>
@@ -118,10 +120,13 @@ function App() {
           <p className="text-xs text-stone-400 text-center">
             AWN Landelijke Werkgroep Steentijd
           </p>
+          <p className="text-xs text-stone-300 text-center mt-2">
+            v{APP_VERSION}
+          </p>
         </div>
 
-        {/* Actions - fixed at bottom */}
-        <div className="p-3 bg-white border-t border-stone-200 flex gap-3 shrink-0">
+        {/* Actions - fixed at bottom with safe area */}
+        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 flex gap-3 shrink-0">
           <button onClick={() => setView('history')} className="btn-secondary flex-1 py-3">
             Geschiedenis
           </button>
@@ -136,8 +141,8 @@ function App() {
   // Capture screen
   if (view === 'capture') {
     return (
-      <div className="min-h-screen flex flex-col">
-        <div className="bg-stone-800 p-4 flex items-center gap-3">
+      <div className="h-full flex flex-col overflow-hidden">
+        <div className="bg-stone-800 p-4 flex items-center gap-3 shrink-0">
           <button onClick={handleBack} className="text-white p-2">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -145,7 +150,7 @@ function App() {
           </button>
           <h1 className="text-white text-lg font-semibold">Nieuwe determinatie</h1>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 overflow-hidden">
           <ImageCapture onCapture={handleCapture} />
         </div>
       </div>

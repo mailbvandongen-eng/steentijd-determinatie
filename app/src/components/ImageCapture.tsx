@@ -570,7 +570,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </p>
         </div>
 
-        <div className="p-3 bg-white border-t border-stone-200 flex gap-2 shrink-0">
+        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 flex gap-2 shrink-0">
           <button
             onClick={() => {
               setMultiImages([]);
@@ -611,7 +611,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           )}
         </div>
-        <div className="p-4 bg-stone-900 flex justify-center gap-4 shrink-0">
+        <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-stone-900 flex justify-center gap-4 shrink-0">
           <button
             onClick={() => {
               stopCamera();
@@ -648,7 +648,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           )}
         </div>
-        <div className="p-4 bg-stone-900 flex justify-center gap-4 shrink-0">
+        <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-stone-900 flex justify-center gap-4 shrink-0">
           <button
             onClick={() => {
               if (isRecording) stopRecording();
@@ -686,7 +686,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         <div className="flex-1 bg-black flex items-center justify-center p-4">
           <img src={previewUrl} alt="Preview" className="max-h-full max-w-full object-contain" />
         </div>
-        <div className="p-3 bg-white flex flex-col gap-2 shrink-0">
+        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex flex-col gap-2 shrink-0">
           {multiImages.length > 0 || currentLabel !== 'dorsaal' ? (
             <>
               <p className="text-xs text-stone-500 text-center">
@@ -730,7 +730,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             className="max-h-full max-w-full"
           />
         </div>
-        <div className="p-3 bg-white flex gap-2 shrink-0">
+        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex gap-2 shrink-0">
           <button onClick={handleRetake} className="btn-secondary flex-1">
             Opnieuw
           </button>

@@ -44,9 +44,9 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-full flex flex-col overflow-hidden">
       {/* Header */}
-      <div className="bg-stone-800 p-4 flex items-center gap-3">
+      <div className="bg-stone-800 p-4 flex items-center gap-3 shrink-0">
         <button onClick={onBack} className="text-white p-2">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -56,7 +56,7 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-4 overflow-y-auto">
         {loading ? (
           <div className="text-center py-8">
             <p className="text-stone-500">Laden...</p>

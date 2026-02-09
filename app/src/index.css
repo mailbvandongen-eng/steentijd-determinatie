@@ -1,12 +1,37 @@
 @import "tailwindcss";
 
 @layer base {
+  /* Fix voor mobiele browsers met adresbalk/navigatiebalk */
+  :root {
+    --app-height: 100vh;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
   html {
     font-family: system-ui, -apple-system, sans-serif;
+    /* Voorkom scroll bounce op iOS */
+    overscroll-behavior: none;
+  }
+
+  html, body, #root {
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height - past aan voor browser UI */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 
   body {
-    @apply bg-stone-50 text-stone-900 min-h-screen;
+    @apply bg-stone-50 text-stone-900;
+    /* Safe area voor notch en home indicator */
+    padding-bottom: var(--safe-bottom);
+  }
+
+  /* Fallback voor browsers zonder dvh support */
+  @supports not (height: 100dvh) {
+    html, body, #root {
+      height: -webkit-fill-available;
+    }
   }
 }
 
