@@ -18,6 +18,13 @@ export interface DeterminationStep {
   timestamp: string;
 }
 
+// Afbeelding met label voor verschillende zijden
+export interface LabeledImage {
+  label: 'dorsaal' | 'ventraal' | 'zijkant' | 'extra';
+  blob: Blob;
+  thumbnail: string;
+}
+
 export interface DeterminationSession {
   id?: number;
   createdAt: string;
@@ -25,9 +32,15 @@ export interface DeterminationSession {
   status: 'in_progress' | 'completed' | 'abandoned';
 
   input: {
-    type: 'photo' | 'video';
+    type: 'photo' | 'video' | 'multi-photo';
+    // Enkelvoudige foto/video (backwards compatible)
     blob?: Blob;
     thumbnail?: string;
+    // Meerdere foto's
+    images?: LabeledImage[];
+    // Video
+    videoBlob?: Blob;
+    videoDuration?: number;
   };
 
   steps: DeterminationStep[];

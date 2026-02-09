@@ -4,7 +4,7 @@ import { DecisionNavigator } from './components/DecisionNavigator';
 import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
 import { createSession, addStep, completeSession, getSession } from './lib/db';
-import type { DeterminationSession, DeterminationStep } from './types';
+import type { DeterminationSession, DeterminationStep, LabeledImage } from './types';
 
 type View = 'home' | 'capture' | 'determine' | 'result' | 'history';
 
@@ -14,15 +14,23 @@ function App() {
   const [currentSession, setCurrentSession] = useState<DeterminationSession | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  const handleCapture = useCallback(async (blob: Blob, thumbnail: string) => {
-    // Maak nieuwe sessie
+  const handleCapture = useCallback(async (data: {
+    type: 'photo' | 'video' | 'multi-photo';
+    blob?: Blob;
+    thumbnail?: string;
+    images?: LabeledImage[];
+    videoBlob?: Blob;
+  }) => {
+    // Maak nieuwe sessie met de juiste input type
     const sessionId = await createSession({
-      type: 'photo',
-      blob,
-      thumbnail,
+      type: data.type,
+      blob: data.blob,
+      thumbnail: data.thumbnail,
+      images: data.images,
+      videoBlob: data.videoBlob,
     });
     setCurrentSessionId(sessionId);
-    setImageUrl(thumbnail);
+    setImageUrl(data.thumbnail || (data.images?.[0]?.thumbnail) || null);
     setView('determine');
   }, []);
 
