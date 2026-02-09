@@ -687,7 +687,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           <img src={previewUrl} alt="Preview" className="max-h-full max-w-full object-contain" />
         </div>
         <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex flex-col gap-2 shrink-0">
-          {multiImages.length > 0 || currentLabel !== 'dorsaal' ? (
+          {multiImages.length > 0 ? (
+            // Al bezig met multi-photo - alleen toevoegen
             <div className="flex gap-2">
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
@@ -697,6 +698,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               </button>
             </div>
           ) : (
+            // Eerste/enige foto - kan gebruiken of meer toevoegen
             <div className="flex gap-2">
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
