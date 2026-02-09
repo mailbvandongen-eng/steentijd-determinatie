@@ -32,8 +32,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [recordingTime, setRecordingTime] = useState(0);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [addingVideoToMulti, setAddingVideoToMulti] = useState(false);
+  const [isCropping, setIsCropping] = useState(false);
+  const [cropBox, setCropBox] = useState({ x: 50, y: 50, size: 200 });
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const previewImgRef = useRef<HTMLImageElement>(null);
+  const cropContainerRef = useRef<HTMLDivElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -323,11 +327,109 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setPreviewUrl(null);
     setMode('select');
     setRecordingTime(0);
+    setIsCropping(false);
   }, [previewUrl]);
 
   const handleRemoveImage = useCallback((label: LabeledImage['label']) => {
     setMultiImages((prev) => prev.filter((i) => i.label !== label));
   }, []);
+
+  // Crop functionaliteit
+  const initCrop = useCallback(() => {
+    if (previewImgRef.current && cropContainerRef.current) {
+      const container = cropContainerRef.current;
+      const size = Math.min(container.clientWidth, container.clientHeight) * 0.6;
+      setCropBox({
+        x: (container.clientWidth - size) / 2,
+        y: (container.clientHeight - size) / 2,
+        size,
+      });
+    }
+    setIsCropping(true);
+  }, []);
+
+  const applyCrop = useCallback(async () => {
+    if (!previewImgRef.current || !cropContainerRef.current || !capturedBlob) return;
+
+    const img = previewImgRef.current;
+    const container = cropContainerRef.current;
+
+    // Bereken schaal tussen weergave en originele afbeelding
+    const scaleX = img.naturalWidth / img.clientWidth;
+    const scaleY = img.naturalHeight / img.clientHeight;
+
+    // Bereken offset van afbeelding in container
+    const imgRect = img.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const offsetX = imgRect.left - containerRect.left;
+    const offsetY = imgRect.top - containerRect.top;
+
+    // Bereken crop positie op originele afbeelding
+    const cropX = Math.max(0, (cropBox.x - offsetX) * scaleX);
+    const cropY = Math.max(0, (cropBox.y - offsetY) * scaleY);
+    const cropSize = cropBox.size * Math.max(scaleX, scaleY);
+
+    // Maak canvas voor cropped afbeelding
+    const canvas = document.createElement('canvas');
+    canvas.width = cropSize;
+    canvas.height = cropSize;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.drawImage(img, cropX, cropY, cropSize, cropSize, 0, 0, cropSize, cropSize);
+
+    const croppedBlob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, 'image/jpeg', 0.9);
+    });
+
+    if (croppedBlob) {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      setCapturedBlob(croppedBlob);
+      setPreviewUrl(URL.createObjectURL(croppedBlob));
+    }
+    setIsCropping(false);
+  }, [cropBox, capturedBlob, previewUrl]);
+
+  const handleCropDrag = useCallback((e: React.TouchEvent | React.MouseEvent) => {
+    if (!cropContainerRef.current) return;
+
+    const container = cropContainerRef.current;
+    const containerRect = container.getBoundingClientRect();
+
+    const getPos = (event: TouchEvent | MouseEvent) => {
+      if ('touches' in event) {
+        return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+      }
+      return { x: (event as MouseEvent).clientX, y: (event as MouseEvent).clientY };
+    };
+
+    const startPos = getPos(e.nativeEvent as TouchEvent | MouseEvent);
+    const startBox = { ...cropBox };
+
+    const onMove = (event: TouchEvent | MouseEvent) => {
+      const pos = getPos(event);
+      const dx = pos.x - startPos.x;
+      const dy = pos.y - startPos.y;
+
+      setCropBox({
+        ...startBox,
+        x: Math.max(0, Math.min(containerRect.width - startBox.size, startBox.x + dx)),
+        y: Math.max(0, Math.min(containerRect.height - startBox.size, startBox.y + dy)),
+      });
+    };
+
+    const onEnd = () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+    };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchend', onEnd);
+  }, [cropBox]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -683,15 +785,62 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   if (mode === 'preview-photo' && previewUrl) {
     return (
       <div className="flex flex-col h-full">
-        <div className="flex-1 bg-black flex items-center justify-center p-4">
-          <img src={previewUrl} alt="Preview" className="max-h-full max-w-full object-contain" />
+        <div
+          ref={cropContainerRef}
+          className="flex-1 bg-black flex items-center justify-center p-4 relative overflow-hidden"
+        >
+          <img
+            ref={previewImgRef}
+            src={previewUrl}
+            alt="Preview"
+            className="max-h-full max-w-full object-contain"
+          />
+          {/* Crop overlay */}
+          {isCropping && (
+            <>
+              {/* Donkere overlay */}
+              <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+              {/* Crop box */}
+              <div
+                className="absolute border-2 border-white bg-transparent cursor-move touch-none"
+                style={{
+                  left: cropBox.x,
+                  top: cropBox.y,
+                  width: cropBox.size,
+                  height: cropBox.size,
+                  boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
+                }}
+                onMouseDown={handleCropDrag}
+                onTouchStart={handleCropDrag}
+              >
+                {/* Hoek markers */}
+                <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-white" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-white" />
+                <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-white" />
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-white" />
+              </div>
+            </>
+          )}
         </div>
         <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex flex-col gap-2 shrink-0">
-          {multiImages.length > 0 ? (
+          {isCropping ? (
+            // Crop modus
+            <div className="flex gap-2">
+              <button onClick={() => setIsCropping(false)} className="btn-secondary flex-1">
+                Annuleren
+              </button>
+              <button onClick={applyCrop} className="btn-success flex-1">
+                Bijsnijden
+              </button>
+            </div>
+          ) : multiImages.length > 0 ? (
             // Al bezig met multi-photo - alleen toevoegen
             <div className="flex gap-2">
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
+              </button>
+              <button onClick={initCrop} className="btn-secondary flex-1">
+                Bijsnijden
               </button>
               <button onClick={handleAddToMulti} className="btn-success flex-1">
                 Toevoegen
@@ -703,24 +852,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
               </button>
-              <button
-                onClick={async () => {
-                  // Voeg huidige foto toe aan multi-images en ga naar multi-photo mode
-                  if (capturedBlob && previewUrl) {
-                    const img = new Image();
-                    img.src = previewUrl;
-                    await new Promise<void>((resolve) => { img.onload = () => resolve(); });
-                    const thumbnail = await createThumbnail(img);
-                    setMultiImages([{ label: 'dorsaal', blob: capturedBlob, thumbnail }]);
-                    setCapturedBlob(null);
-                    setPreviewUrl(null);
-                    setCurrentLabel('ventraal');
-                    setMode('multi-photo');
-                  }
-                }}
-                className="btn-secondary flex-1"
-              >
-                + Meer
+              <button onClick={initCrop} className="btn-secondary flex-1">
+                Bijsnijden
               </button>
               <button onClick={handleConfirmSingle} className="btn-success flex-1">
                 Gebruiken

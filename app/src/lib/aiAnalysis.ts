@@ -84,7 +84,7 @@ const WORKER_URL = 'https://steentijd-api.mail-b-van-dongen.workers.dev';
 // Analyseer één of meerdere afbeeldingen
 export async function analyzeImage(
   imageBase64: string | string[], // Kan één of meerdere base64 strings zijn
-  _apiKey?: string // niet meer nodig, worker heeft de key
+  sizeInfo?: string // Optionele grootte informatie, bijv. "5x3 cm"
 ): Promise<AnalysisResult> {
   try {
     // Zorg dat we altijd een array hebben
@@ -104,6 +104,10 @@ export async function analyzeImage(
       ? `\n\nJe krijgt ${images.length} afbeeldingen van hetzelfde artefact vanuit verschillende hoeken. Gebruik alle afbeeldingen voor een complete analyse.`
       : '';
 
+    const sizeNote = sizeInfo
+      ? `\n\nDe gebruiker heeft aangegeven dat het artefact ongeveer ${sizeInfo} groot is. Gebruik deze informatie bij je determinatie.`
+      : '';
+
     const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: {
@@ -119,7 +123,7 @@ export async function analyzeImage(
               ...imageContent,
               {
                 type: 'text',
-                text: `${DETERMINATION_CONTEXT}${multiImageNote}
+                text: `${DETERMINATION_CONTEXT}${multiImageNote}${sizeNote}
 
 Analyseer ${images.length > 1 ? 'deze foto\'s' : 'deze foto'} van een mogelijk stenen artefact. Geef je analyse in het volgende format:
 
