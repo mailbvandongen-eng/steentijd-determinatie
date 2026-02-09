@@ -387,7 +387,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Selectiescherm
   if (mode === 'select') {
     return (
-      <div className="flex flex-col gap-4 p-4">
+      <div className="h-full flex flex-col gap-4 overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <h2 className="text-xl font-semibold text-center">Artefact vastleggen</h2>
         <p className="text-stone-600 text-center text-sm">
           Maak foto's, een video of upload bestaande bestanden
