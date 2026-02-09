@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { analyzeImage, getApiKey, saveApiKey, blobToBase64 } from '../lib/aiAnalysis';
+import { analyzeImage, blobToBase64 } from '../lib/aiAnalysis';
 import type { AnalysisResult } from '../lib/aiAnalysis';
 import type { LabeledImage } from '../types';
 
@@ -11,8 +11,6 @@ interface AIAnalysisProps {
 }
 
 export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalysisProps) {
-  const [apiKey, setApiKey] = useState<string>(getApiKey() || '');
-  const [showApiKeyInput, setShowApiKeyInput] = useState(!getApiKey());
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -22,19 +20,7 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
     ? [{ label: 'foto' as const, blob: singleImage.blob, thumbnail: singleImage.thumbnail }]
     : images;
 
-  const handleSaveApiKey = () => {
-    if (apiKey.trim()) {
-      saveApiKey(apiKey.trim());
-      setShowApiKeyInput(false);
-    }
-  };
-
   const handleAnalyze = async () => {
-    if (!apiKey) {
-      setShowApiKeyInput(true);
-      return;
-    }
-
     setIsAnalyzing(true);
     setResult(null);
 
@@ -47,13 +33,8 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
       }
 
       const base64 = await blobToBase64(imageToAnalyze.blob);
-      const analysisResult = await analyzeImage(base64, apiKey);
+      const analysisResult = await analyzeImage(base64);
       setResult(analysisResult);
-
-      if (analysisResult.success) {
-        // Automatisch opslaan na succesvolle analyse
-        // Gebruiker kan nog bekijken en bevestigen
-      }
     } catch (err) {
       setResult({
         success: false,
@@ -74,68 +55,6 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
     }
   };
 
-  // API key input scherm
-  if (showApiKeyInput) {
-    return (
-      <div className="h-screen flex flex-col bg-stone-50">
-        <div className="bg-stone-800 p-3 flex items-center gap-3 shrink-0">
-          <button onClick={onBack} className="text-white p-1">
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-white font-semibold">API Instellingen</h1>
-        </div>
-
-        <div className="flex-1 p-4 overflow-y-auto">
-          <div className="card">
-            <h2 className="font-semibold mb-2">Claude API Key</h2>
-            <p className="text-sm text-stone-600 mb-4">
-              Voor AI-analyse heb je een Anthropic API key nodig.
-              Deze wordt lokaal opgeslagen in je browser.
-            </p>
-
-            <div className="space-y-3">
-              <input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="sk-ant-..."
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              />
-
-              <p className="text-xs text-stone-500">
-                Krijg een API key op{' '}
-                <a
-                  href="https://console.anthropic.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-amber-600 underline"
-                >
-                  console.anthropic.com
-                </a>
-              </p>
-
-              <div className="flex gap-2">
-                <button onClick={onBack} className="btn-secondary flex-1">
-                  Annuleren
-                </button>
-                <button
-                  onClick={handleSaveApiKey}
-                  disabled={!apiKey.trim()}
-                  className="btn-primary flex-1 disabled:opacity-50"
-                >
-                  Opslaan
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Analyse scherm
   return (
     <div className="h-screen flex flex-col bg-stone-50">
       {/* Header */}
@@ -146,15 +65,6 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
           </svg>
         </button>
         <h1 className="text-white font-semibold">AI Analyse</h1>
-        <button
-          onClick={() => setShowApiKeyInput(true)}
-          className="ml-auto text-stone-400 hover:text-white"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </button>
       </div>
 
       {/* Content */}
@@ -204,7 +114,7 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
             {result.success ? (
               <>
                 {/* Type en periode */}
-                <div className="flex gap-2 mb-3">
+                <div className="flex flex-wrap gap-2 mb-3">
                   <span className="bg-amber-100 text-amber-800 px-2 py-1 rounded text-sm font-medium">
                     {result.type}
                   </span>
@@ -280,6 +190,9 @@ export function AIAnalysis({ images, singleImage, onComplete, onBack }: AIAnalys
               <strong>AI Analyse</strong><br />
               Claude analyseert je foto en bepaalt het type artefact, de periode,
               en geeft een uitgebreide beschrijving van de kenmerken.
+            </p>
+            <p className="text-xs text-amber-600 mt-2">
+              Max 10 analyses per dag.
             </p>
           </div>
         )}

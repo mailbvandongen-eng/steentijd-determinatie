@@ -1,0 +1,12 @@
+name = "steentijd-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+workers_dev = true
+
+[vars]
+DAILY_LIMIT = "10"
+
+# KV namespace for rate limiting - maak deze aan in Cloudflare dashboard
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "b8720db7e8a244639da7307d8b0e78b3"

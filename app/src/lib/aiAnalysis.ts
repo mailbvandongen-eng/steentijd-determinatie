@@ -78,22 +78,18 @@ export interface AnalysisResult {
   error?: string;
 }
 
+// Worker URL voor API calls (met rate limiting)
+const WORKER_URL = 'https://steentijd-api.mail-b-van-dongen.workers.dev';
+
 export async function analyzeImage(
   imageBase64: string,
-  apiKey: string
+  _apiKey?: string // niet meer nodig, worker heeft de key
 ): Promise<AnalysisResult> {
-  if (!apiKey) {
-    return { success: false, error: 'Geen API key ingesteld' };
-  }
-
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
@@ -183,19 +179,6 @@ Analyseer deze foto van een mogelijk stenen artefact. Geef je analyse in het vol
       error: err instanceof Error ? err.message : 'Onbekende fout bij analyse',
     };
   }
-}
-
-// API key opslaan in localStorage
-export function saveApiKey(key: string): void {
-  localStorage.setItem('claude_api_key', key);
-}
-
-export function getApiKey(): string | null {
-  return localStorage.getItem('claude_api_key');
-}
-
-export function clearApiKey(): void {
-  localStorage.removeItem('claude_api_key');
 }
 
 // Convert blob to base64
