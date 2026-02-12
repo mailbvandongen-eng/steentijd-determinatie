@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.17';
+const APP_VERSION = '1.0.18';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -98,20 +98,14 @@ function App() {
   if (view === 'capture') {
     return (
       <div className="h-full flex flex-col overflow-hidden">
-        <div className="bg-gradient-to-r from-amber-600 to-amber-700 p-3 flex items-center justify-between shrink-0">
-          <div>
-            <h1 className="text-white text-lg font-semibold">Steentijd-determinatie</h1>
-            <p className="text-amber-200 text-xs">v{APP_VERSION}</p>
-          </div>
-          <div className="flex items-center gap-1">
+        <div className="bg-gradient-to-r from-amber-600 to-amber-700 px-3 py-2 flex items-center justify-between shrink-0">
+          <h1 className="text-white font-semibold">Steentijd-determinatie <span className="text-amber-200 text-xs font-normal">v{APP_VERSION}</span></h1>
+          <div className="flex items-center">
             <button
               onClick={() => setView('history')}
-              className="text-white/80 hover:text-white px-2 py-1 rounded flex items-center gap-1 text-sm"
+              className="text-white/90 hover:text-white px-2 py-1 text-xs"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>Opgeslagen</span>
+              Opgeslagen
             </button>
             <SettingsMenu onShowWelcome={welcomeModal.open} />
           </div>
