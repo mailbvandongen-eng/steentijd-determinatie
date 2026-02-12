@@ -29,7 +29,7 @@ const compressVideo = async (file: File, onProgress?: (progress: number) => void
     return file;
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const video = document.createElement('video');
     const url = URL.createObjectURL(file);
     video.src = url;
