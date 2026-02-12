@@ -234,6 +234,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const chunksRef = useRef<Blob[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
+  const videoCaptureRef = useRef<HTMLInputElement>(null);
   const recordingTimerRef = useRef<number | null>(null);
 
   // Cleanup bij unmount
@@ -865,9 +866,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           </button>
 
-          {/* Video */}
+          {/* Video - gebruik native camera capture */}
           <button
-            onClick={() => startCamera(true)}
+            onClick={() => videoCaptureRef.current?.click()}
             className="w-full btn-secondary flex items-center gap-3 py-4"
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -875,9 +876,17 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
             <div className="text-left">
               <div className="font-semibold">Video opnemen</div>
-              <div className="text-xs opacity-80">Neem een video op</div>
+              <div className="text-xs opacity-80">Opent camera voor video</div>
             </div>
           </button>
+          <input
+            ref={videoCaptureRef}
+            type="file"
+            accept="video/*"
+            capture="environment"
+            onChange={(e) => handleFileSelect(e, true)}
+            className="hidden"
+          />
 
           {/* Upload sectie */}
           <div className="border-t border-stone-200 pt-3 mt-1">
