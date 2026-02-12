@@ -21,6 +21,194 @@ const IMAGE_LABELS = [
   { key: 'extra', label: 'Foto 4' },
 ] as const;
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+// Comprimeer video tot onder MAX_FILE_SIZE
+const compressVideo = async (file: File, onProgress?: (progress: number) => void): Promise<Blob> => {
+  if (!file.type.startsWith('video/') || file.size <= MAX_FILE_SIZE) {
+    return file;
+  }
+
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    const url = URL.createObjectURL(file);
+    video.src = url;
+    video.muted = true;
+
+    video.onloadedmetadata = async () => {
+      const duration = video.duration;
+      const width = Math.min(video.videoWidth, 1280); // Max 720p breedte
+      const height = Math.round((width / video.videoWidth) * video.videoHeight);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        URL.revokeObjectURL(url);
+        resolve(file);
+        return;
+      }
+
+      // Bereken target bitrate gebaseerd op gewenste bestandsgrootte
+      // Target: 4MB voor veilige marge, minus audio (~64kbps)
+      const targetSizeBits = 4 * 1024 * 1024 * 8;
+      const audioBits = 64000 * duration;
+      const videoBitrate = Math.max(500000, Math.floor((targetSizeBits - audioBits) / duration));
+
+      const stream = canvas.captureStream(30);
+
+      // Probeer audio toe te voegen als beschikbaar
+      try {
+        video.muted = false;
+        const audioCtx = new AudioContext();
+        const source = audioCtx.createMediaElementSource(video);
+        const dest = audioCtx.createMediaStreamDestination();
+        source.connect(dest);
+        source.connect(audioCtx.destination);
+        dest.stream.getAudioTracks().forEach(track => stream.addTrack(track));
+      } catch {
+        // Geen audio of niet ondersteund, ga door zonder
+      }
+
+      let recorder: MediaRecorder;
+      const chunks: Blob[] = [];
+
+      try {
+        recorder = new MediaRecorder(stream, {
+          mimeType: 'video/webm;codecs=vp8',
+          videoBitsPerSecond: videoBitrate,
+        });
+      } catch {
+        try {
+          recorder = new MediaRecorder(stream, {
+            videoBitsPerSecond: videoBitrate,
+          });
+        } catch {
+          URL.revokeObjectURL(url);
+          resolve(file);
+          return;
+        }
+      }
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        URL.revokeObjectURL(url);
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        resolve(blob);
+      };
+
+      recorder.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(file);
+      };
+
+      recorder.start(100);
+
+      // Speel video af en teken frames op canvas
+      video.currentTime = 0;
+      video.play();
+
+      const drawFrame = () => {
+        if (video.ended || video.paused) {
+          recorder.stop();
+          return;
+        }
+        ctx.drawImage(video, 0, 0, width, height);
+        if (onProgress) {
+          onProgress(video.currentTime / duration);
+        }
+        requestAnimationFrame(drawFrame);
+      };
+
+      video.onplay = drawFrame;
+      video.onended = () => recorder.stop();
+    };
+
+    video.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+  });
+};
+
+// Comprimeer afbeelding tot onder MAX_FILE_SIZE
+const compressImage = async (file: File): Promise<Blob> => {
+  // Als het geen afbeelding is of al klein genoeg, retourneer onveranderd
+  if (!file.type.startsWith('image/') || file.size <= MAX_FILE_SIZE) {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = async () => {
+      URL.revokeObjectURL(url);
+
+      let width = img.width;
+      let height = img.height;
+      let quality = 0.9;
+
+      // Begin met originele grootte, verklein indien nodig
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        resolve(file);
+        return;
+      }
+
+      // Probeer verschillende combinaties van grootte en kwaliteit
+      const tryCompress = async (): Promise<Blob> => {
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const blob = await new Promise<Blob | null>((res) => {
+          canvas.toBlob(res, 'image/jpeg', quality);
+        });
+
+        if (!blob) return file;
+
+        // Als klein genoeg, klaar
+        if (blob.size <= MAX_FILE_SIZE) {
+          return blob;
+        }
+
+        // Verlaag eerst kwaliteit
+        if (quality > 0.5) {
+          quality -= 0.1;
+          return tryCompress();
+        }
+
+        // Als kwaliteit al laag is, verklein afmetingen
+        if (width > 1000 || height > 1000) {
+          width = Math.round(width * 0.8);
+          height = Math.round(height * 0.8);
+          quality = 0.8; // Reset kwaliteit
+          return tryCompress();
+        }
+
+        // Laatste poging met minimale instellingen
+        return blob;
+      };
+
+      const result = await tryCompress();
+      resolve(result);
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+
+    img.src = url;
+  });
+};
+
 export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [mode, setMode] = useState<CaptureMode>('select');
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -34,6 +222,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [addingVideoToMulti, setAddingVideoToMulti] = useState(false);
   const [isCropping, setIsCropping] = useState(false);
   const [cropBox, setCropBox] = useState({ x: 50, y: 50, size: 200 });
+  const [isCompressing, setIsCompressing] = useState(false);
+  const [compressProgress, setCompressProgress] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const previewImgRef = useRef<HTMLImageElement>(null);
@@ -197,13 +387,37 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     }
   }, []);
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>, isVideo: boolean = false) => {
+  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>, isVideo: boolean = false) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setCapturedBlob(file);
-    setPreviewUrl(URL.createObjectURL(file));
-    setMode(isVideo ? 'preview-video' : 'preview-photo');
+    if (isVideo) {
+      // Comprimeer video als deze te groot is
+      if (file.size > MAX_FILE_SIZE) {
+        setIsCompressing(true);
+        setCompressProgress(0);
+        const compressedBlob = await compressVideo(file, (progress) => {
+          setCompressProgress(progress);
+        });
+        setIsCompressing(false);
+        setCapturedBlob(compressedBlob);
+        setPreviewUrl(URL.createObjectURL(compressedBlob));
+      } else {
+        setCapturedBlob(file);
+        setPreviewUrl(URL.createObjectURL(file));
+      }
+      setMode('preview-video');
+    } else {
+      // Comprimeer afbeelding als deze te groot is
+      if (file.size > MAX_FILE_SIZE) {
+        setIsCompressing(true);
+      }
+      const compressedBlob = await compressImage(file);
+      setIsCompressing(false);
+      setCapturedBlob(compressedBlob);
+      setPreviewUrl(URL.createObjectURL(compressedBlob));
+      setMode('preview-photo');
+    }
   }, []);
 
   const createThumbnail = (source: HTMLImageElement | HTMLVideoElement): Promise<string> => {
@@ -486,6 +700,32 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return frames;
   };
 
+  // Compressie loading scherm
+  if (isCompressing) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
+        <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+        <h2 className="text-lg font-semibold text-center">Bestand verkleinen...</h2>
+        <p className="text-stone-600 text-sm text-center">
+          Het bestand is groter dan 5 MB en wordt gecomprimeerd
+        </p>
+        {compressProgress > 0 && (
+          <div className="w-full max-w-xs">
+            <div className="bg-stone-200 rounded-full h-2">
+              <div
+                className="bg-amber-500 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${Math.round(compressProgress * 100)}%` }}
+              />
+            </div>
+            <p className="text-center text-xs text-stone-500 mt-1">
+              {Math.round(compressProgress * 100)}%
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   // Selectiescherm
   if (mode === 'select') {
     return (
@@ -698,14 +938,14 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Camera modus (foto)
   if (mode === 'camera-photo') {
     return (
-      <div className="flex flex-col h-full">
-        <div className="flex-1 bg-black relative">
+      <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex-1 min-h-0 bg-black relative">
           <video
             ref={videoRef}
             autoPlay
             playsInline
             muted
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
           {currentLabel && multiImages.length > 0 && (
             <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
@@ -734,14 +974,14 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Camera modus (video)
   if (mode === 'camera-video' || mode === 'recording') {
     return (
-      <div className="flex flex-col h-full">
-        <div className="flex-1 bg-black relative">
+      <div className="flex flex-col h-full overflow-hidden">
+        <div className="flex-1 min-h-0 bg-black relative">
           <video
             ref={videoRef}
             autoPlay
             playsInline
             muted
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
           {isRecording && (
             <div className="absolute top-4 left-4 flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-full">
