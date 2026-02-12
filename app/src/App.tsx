@@ -3,13 +3,14 @@ import { ImageCapture } from './components/ImageCapture';
 import { AIAnalysis } from './components/AIAnalysis';
 import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
+import { WelcomeModal, useWelcomeModal } from './components/WelcomeModal';
 import { createSession, completeSession, getSession } from './lib/db';
 import type { DeterminationSession, LabeledImage } from './types';
 import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'home' | 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.5';
+const APP_VERSION = '1.0.7';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -25,6 +26,7 @@ function App() {
   const [currentSessionId, setCurrentSessionId] = useState<number | null>(null);
   const [currentSession, setCurrentSession] = useState<DeterminationSession | null>(null);
   const [capturedData, setCapturedData] = useState<CapturedData | null>(null);
+  const welcomeModal = useWelcomeModal();
 
   const handleCapture = useCallback(async (data: CapturedData) => {
     // Maak nieuwe sessie
@@ -134,6 +136,9 @@ function App() {
             Start
           </button>
         </div>
+
+        {/* Welcome Modal */}
+        {welcomeModal.isOpen && <WelcomeModal onClose={welcomeModal.close} />}
       </div>
     );
   }
