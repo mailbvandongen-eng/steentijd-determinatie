@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.0.9', date: '12 feb 2025', changes: ['Instellingenmenu rechtsboven toegevoegd', 'Optie om welkomstscherm opnieuw te tonen'] },
   { version: '1.0.8', date: '12 feb 2025', changes: ['Wijzigingsbeheer toegevoegd aan welkomstscherm'] },
   { version: '1.0.7', date: '12 feb 2025', changes: ['Welkomstscherm met uitleg toegevoegd'] },
   { version: '1.0.6', date: '12 feb 2025', changes: ['Auto-compressie van grote foto\'s en video\'s (max 5MB)', 'Camera knoppen blijven nu zichtbaar op mobiel'] },
@@ -135,6 +136,10 @@ function StepItem({ number, title, description }: { number: number; title: strin
   );
 }
 
+export function resetWelcomeModal() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 export function useWelcomeModal() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -147,6 +152,7 @@ export function useWelcomeModal() {
 
   return {
     isOpen,
+    open: () => setIsOpen(true),
     close: () => setIsOpen(false),
   };
 }

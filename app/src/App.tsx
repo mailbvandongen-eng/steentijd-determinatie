@@ -4,13 +4,14 @@ import { AIAnalysis } from './components/AIAnalysis';
 import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
 import { WelcomeModal, useWelcomeModal } from './components/WelcomeModal';
+import { SettingsMenu } from './components/SettingsMenu';
 import { createSession, completeSession, getSession } from './lib/db';
 import type { DeterminationSession, LabeledImage } from './types';
 import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'home' | 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.8';
+const APP_VERSION = '1.0.9';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -87,7 +88,10 @@ function App() {
     return (
       <div className="h-full flex flex-col overflow-hidden">
         {/* Hero - compact */}
-        <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center shrink-0">
+        <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center shrink-0 relative">
+          <div className="absolute right-2 top-2">
+            <SettingsMenu onShowWelcome={welcomeModal.open} />
+          </div>
           <h1 className="text-2xl font-bold">Steentijd</h1>
           <p className="text-amber-200 text-sm">AI Determinatie van stenen artefacten</p>
         </div>
