@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { resetWelcomeModal } from './WelcomeModal';
+import { QueryViewer } from './QueryViewer';
 
 interface SettingsMenuProps {
   onShowWelcome: () => void;
@@ -7,10 +8,16 @@ interface SettingsMenuProps {
 
 export function SettingsMenu({ onShowWelcome }: SettingsMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [showQueryViewer, setShowQueryViewer] = useState(false);
 
   const handleResetWelcome = () => {
     resetWelcomeModal();
     onShowWelcome();
+    setIsOpen(false);
+  };
+
+  const handleShowQuery = () => {
+    setShowQueryViewer(true);
     setIsOpen(false);
   };
 
@@ -48,10 +55,22 @@ export function SettingsMenu({ onShowWelcome }: SettingsMenuProps) {
                 </svg>
                 Welkomstscherm tonen
               </button>
+              <button
+                onClick={handleShowQuery}
+                className="w-full px-4 py-3 text-left text-sm text-stone-700 hover:bg-stone-100 flex items-center gap-3"
+              >
+                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                AI Query bekijken
+              </button>
             </div>
           </div>
         </>
       )}
+
+      {/* Query Viewer Modal */}
+      <QueryViewer isOpen={showQueryViewer} onClose={() => setShowQueryViewer(false)} />
     </div>
   );
 }

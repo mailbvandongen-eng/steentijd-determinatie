@@ -220,6 +220,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [recordingTime, setRecordingTime] = useState(0);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [addingVideoToMulti, setAddingVideoToMulti] = useState(false);
+  const [isInMultiPhotoMode, setIsInMultiPhotoMode] = useState(false);
   const [isCropping, setIsCropping] = useState(false);
   const [cropBox, setCropBox] = useState({ x: 50, y: 50, size: 200 });
   const [isCompressing, setIsCompressing] = useState(false);
@@ -334,6 +335,14 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     };
 
     mediaRecorderRef.current.onstop = async () => {
+      // Controleer of er data is
+      if (chunksRef.current.length === 0) {
+        console.error('Geen video data opgenomen');
+        stopCamera();
+        setMode('select');
+        return;
+      }
+
       const blob = new Blob(chunksRef.current, { type: 'video/webm' });
 
       // Als we video toevoegen aan multi-photo, sla op en ga terug
@@ -526,6 +535,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     // Gebruik eerste foto of video thumbnail als hoofdthumbnail
     const thumbnail = multiImages[0]?.thumbnail || multiVideo?.thumbnail || '';
 
+    // Reset multi-photo mode
+    setIsInMultiPhotoMode(false);
+
     onCapture({
       type: 'multi-photo',
       images: multiImages,
@@ -539,10 +551,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setCapturedBlob(null);
     setPreviewUrl(null);
-    setMode('select');
     setRecordingTime(0);
     setIsCropping(false);
-  }, [previewUrl]);
+    // Als we in multi-photo mode zijn, ga terug naar multi-photo overzicht
+    if (isInMultiPhotoMode) {
+      setMode('multi-photo');
+    } else {
+      setMode('select');
+    }
+  }, [previewUrl, isInMultiPhotoMode]);
 
   const handleRemoveImage = useCallback((label: LabeledImage['label']) => {
     setMultiImages((prev) => prev.filter((i) => i.label !== label));
@@ -744,7 +761,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         <div className="space-y-3 mt-2">
           {/* Meerdere foto's */}
           <button
-            onClick={() => setMode('multi-photo')}
+            onClick={() => {
+              setIsInMultiPhotoMode(true);
+              setMode('multi-photo');
+            }}
             className="w-full btn-primary flex items-center gap-3 py-4"
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -917,6 +937,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             onClick={() => {
               setMultiImages([]);
               setMultiVideo(null);
+              setIsInMultiPhotoMode(false);
               setMode('select');
             }}
             className="btn-secondary flex-1"
@@ -1073,8 +1094,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                 Bijsnijden
               </button>
             </div>
-          ) : multiImages.length > 0 ? (
-            // Al bezig met multi-photo - alleen toevoegen
+          ) : isInMultiPhotoMode ? (
+            // Bezig met multi-photo - toevoegen aan collectie
             <div className="flex gap-2">
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
@@ -1087,7 +1108,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               </button>
             </div>
           ) : (
-            // Eerste/enige foto - kan gebruiken of meer toevoegen
+            // Enkele foto - kan gebruiken
             <div className="flex gap-2">
               <button onClick={handleRetake} className="btn-secondary flex-1">
                 Opnieuw
@@ -1113,6 +1134,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           <video
             src={previewUrl}
             controls
+            autoPlay
+            playsInline
             className="max-h-full max-w-full"
           />
         </div>
@@ -1120,7 +1143,11 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           <button onClick={handleRetake} className="btn-secondary flex-1">
             Opnieuw
           </button>
-          <button onClick={handleConfirmSingle} className="btn-success flex-1">
+          <button
+            onClick={handleConfirmSingle}
+            disabled={!capturedBlob}
+            className="btn-success flex-1 disabled:opacity-50"
+          >
             Gebruiken
           </button>
         </div>

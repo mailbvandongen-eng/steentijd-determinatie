@@ -1,7 +1,7 @@
 // AI Analyse service voor stenen artefacten determinatie
 // Gebruikt Claude API met determinatie-kennis als context
 
-const DETERMINATION_CONTEXT = `
+export const DETERMINATION_CONTEXT = `
 Je bent een expert in de determinatie van (vuur-)stenen artefacten uit de steentijd.
 Je analyseert foto's van stenen objecten en bepaalt of het artefacten zijn en zo ja, welk type.
 

@@ -62,6 +62,9 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
       onComplete({
         type: result.type || 'Onbekend',
         description: result.description || '',
+        period: result.period,
+        confidence: result.confidence,
+        characteristics: result.characteristics,
         aiAnalysis: result,
       });
     }

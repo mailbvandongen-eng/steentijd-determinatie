@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.0.10', date: '12 feb 2025', changes: ['Fix: meerdere foto\'s workflow', 'Fix: video opname preview', 'Volledige AI analyse wordt opgeslagen bij vondst', 'AI Query viewer in menu'] },
   { version: '1.0.9', date: '12 feb 2025', changes: ['Instellingenmenu rechtsboven toegevoegd', 'Optie om welkomstscherm opnieuw te tonen'] },
   { version: '1.0.8', date: '12 feb 2025', changes: ['Wijzigingsbeheer toegevoegd aan welkomstscherm'] },
   { version: '1.0.7', date: '12 feb 2025', changes: ['Welkomstscherm met uitleg toegevoegd'] },

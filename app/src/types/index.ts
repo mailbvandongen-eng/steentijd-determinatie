@@ -49,6 +49,10 @@ export interface DeterminationSession {
     type: string;
     category?: string;
     description?: string;
+    period?: string;
+    confidence?: 'laag' | 'gemiddeld' | 'hoog';
+    characteristics?: string[];
+    fullAnalysis?: string; // Volledige AI response
   };
 
   synced: boolean;

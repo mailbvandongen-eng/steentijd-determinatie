@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'home' | 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.9';
+const APP_VERSION = '1.0.10';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -44,11 +44,22 @@ function App() {
   }, []);
 
   const handleAnalysisComplete = useCallback(
-    async (result: { type: string; description: string; aiAnalysis: AnalysisResult }) => {
+    async (result: {
+      type: string;
+      description: string;
+      period?: string;
+      confidence?: 'laag' | 'gemiddeld' | 'hoog';
+      characteristics?: string[];
+      aiAnalysis: AnalysisResult;
+    }) => {
       if (currentSessionId) {
         await completeSession(currentSessionId, {
           type: result.type,
           description: result.description,
+          period: result.period,
+          confidence: result.confidence,
+          characteristics: result.characteristics,
+          fullAnalysis: result.aiAnalysis.description,
         });
         const session = await getSession(currentSessionId);
         if (session) {
