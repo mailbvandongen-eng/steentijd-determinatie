@@ -233,6 +233,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
   const recordingTimerRef = useRef<number | null>(null);
 
   // Cleanup bij unmount
@@ -319,14 +320,45 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (!streamRef.current) return;
 
     chunksRef.current = [];
-    const options = { mimeType: 'video/webm;codecs=vp9,opus' };
 
-    try {
-      mediaRecorderRef.current = new MediaRecorder(streamRef.current, options);
-    } catch {
-      // Fallback als vp9 niet wordt ondersteund
-      mediaRecorderRef.current = new MediaRecorder(streamRef.current);
+    // Probeer verschillende codecs in volgorde van compatibiliteit
+    const mimeTypes = [
+      'video/mp4;codecs=avc1.42E01E,mp4a.40.2', // H.264 + AAC - beste iOS support
+      'video/webm;codecs=vp8,opus',              // VP8 - goede Android/Chrome support
+      'video/webm;codecs=vp9,opus',              // VP9 - nieuwere browsers
+      'video/webm',                               // Basis WebM
+      'video/mp4',                                // Basis MP4
+    ];
+
+    let recorder: MediaRecorder | null = null;
+
+    for (const mimeType of mimeTypes) {
+      if (MediaRecorder.isTypeSupported(mimeType)) {
+        try {
+          recorder = new MediaRecorder(streamRef.current, { mimeType });
+          console.log('Using mimeType:', mimeType);
+          break;
+        } catch {
+          continue;
+        }
+      }
     }
+
+    // Laatste fallback: geen specifieke mimeType
+    if (!recorder) {
+      try {
+        recorder = new MediaRecorder(streamRef.current);
+        console.log('Using default mimeType');
+      } catch (err) {
+        console.error('MediaRecorder not supported:', err);
+        setCameraError('Video opname niet ondersteund op dit apparaat');
+        stopCamera();
+        setMode('select');
+        return;
+      }
+    }
+
+    mediaRecorderRef.current = recorder;
 
     mediaRecorderRef.current.ondataavailable = (e) => {
       if (e.data.size > 0) {
@@ -343,7 +375,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         return;
       }
 
-      const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+      // Gebruik de mimeType van de recorder of fallback naar video/webm
+      const mimeType = mediaRecorderRef.current?.mimeType || 'video/webm';
+      const blob = new Blob(chunksRef.current, { type: mimeType });
 
       // Als we video toevoegen aan multi-photo, sla op en ga terug
       if (addingVideoToMulti) {
@@ -806,29 +840,43 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           </button>
 
-          {/* Upload */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="flex-1 btn-secondary flex items-center justify-center gap-2 py-3"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-              </svg>
-              Upload foto
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*,video/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  handleFileSelect(e, file.type.startsWith('video/'));
-                }
-              }}
-              className="hidden"
-            />
+          {/* Upload sectie */}
+          <div className="border-t border-stone-200 pt-3 mt-1">
+            <p className="text-xs text-stone-500 mb-2 font-medium">OF UPLOAD BESTAAND BESTAND</p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex-1 btn-secondary flex items-center justify-center gap-2 py-3"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Foto
+              </button>
+              <button
+                onClick={() => videoInputRef.current?.click()}
+                className="flex-1 btn-secondary flex items-center justify-center gap-2 py-3"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Video
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileSelect(e, false)}
+                className="hidden"
+              />
+              <input
+                ref={videoInputRef}
+                type="file"
+                accept="video/*"
+                onChange={(e) => handleFileSelect(e, true)}
+                className="hidden"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -959,8 +1007,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Camera modus (foto)
   if (mode === 'camera-photo') {
     return (
-      <div className="flex flex-col h-full overflow-hidden">
-        <div className="flex-1 min-h-0 bg-black relative">
+      <div className="flex flex-col h-full overflow-hidden bg-black">
+        <div className="flex-1 min-h-0 relative">
           <video
             ref={videoRef}
             autoPlay
@@ -968,25 +1016,38 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             muted
             className="absolute inset-0 w-full h-full object-cover"
           />
+          {/* Label indicator */}
           {currentLabel && multiImages.length > 0 && (
-            <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm">
               {IMAGE_LABELS.find((l) => l.key === currentLabel)?.label}
             </div>
           )}
         </div>
-        <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-stone-900 flex justify-center gap-4 shrink-0">
-          <button
-            onClick={() => {
-              stopCamera();
-              setMode(multiImages.length > 0 ? 'multi-photo' : 'select');
-            }}
-            className="btn-secondary"
-          >
-            Annuleren
-          </button>
-          <button onClick={capturePhoto} className="w-16 h-16 bg-white rounded-full border-4 border-stone-400 hover:border-amber-500 transition-colors">
-            <span className="sr-only">Foto maken</span>
-          </button>
+        {/* Professional camera controls */}
+        <div className="p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black/90 to-transparent absolute bottom-0 left-0 right-0">
+          <div className="flex items-center justify-between max-w-xs mx-auto">
+            {/* Cancel button - links */}
+            <button
+              onClick={() => {
+                stopCamera();
+                setMode(multiImages.length > 0 ? 'multi-photo' : 'select');
+              }}
+              className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            {/* Shutter button - midden */}
+            <button
+              onClick={capturePhoto}
+              className="w-20 h-20 rounded-full bg-white border-4 border-white/30 shadow-lg active:scale-95 transition-transform"
+            >
+              <span className="sr-only">Foto maken</span>
+            </button>
+            {/* Placeholder voor symmetrie */}
+            <div className="w-12 h-12" />
+          </div>
         </div>
       </div>
     );
@@ -995,8 +1056,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Camera modus (video)
   if (mode === 'camera-video' || mode === 'recording') {
     return (
-      <div className="flex flex-col h-full overflow-hidden">
-        <div className="flex-1 min-h-0 bg-black relative">
+      <div className="flex flex-col h-full overflow-hidden bg-black">
+        <div className="flex-1 min-h-0 relative">
           <video
             ref={videoRef}
             autoPlay
@@ -1004,39 +1065,49 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             muted
             className="absolute inset-0 w-full h-full object-cover"
           />
+          {/* Recording indicator */}
           {isRecording && (
-            <div className="absolute top-4 left-4 flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-full">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-red-600/90 text-white px-4 py-1.5 rounded-full backdrop-blur-sm">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-              <span className="font-mono">{formatTime(recordingTime)}</span>
+              <span className="font-mono text-sm">{formatTime(recordingTime)}</span>
             </div>
           )}
         </div>
-        <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-stone-900 flex justify-center gap-4 shrink-0">
-          <button
-            onClick={() => {
-              if (isRecording) stopRecording();
-              stopCamera();
-              setMode('select');
-            }}
-            className="btn-secondary"
-          >
-            Annuleren
-          </button>
-          {!isRecording ? (
+        {/* Professional video controls */}
+        <div className="p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black/90 to-transparent absolute bottom-0 left-0 right-0">
+          <div className="flex items-center justify-between max-w-xs mx-auto">
+            {/* Cancel button - links */}
             <button
-              onClick={startRecording}
-              className="w-16 h-16 bg-red-500 rounded-full border-4 border-red-300 hover:bg-red-600 transition-colors flex items-center justify-center"
+              onClick={() => {
+                if (isRecording) stopRecording();
+                stopCamera();
+                setMode('select');
+              }}
+              className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
             >
-              <span className="w-4 h-4 bg-white rounded-sm" />
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
-          ) : (
-            <button
-              onClick={stopRecording}
-              className="w-16 h-16 bg-red-600 rounded-full border-4 border-red-300 animate-pulse flex items-center justify-center"
-            >
-              <span className="w-6 h-6 bg-white rounded-sm" />
-            </button>
-          )}
+            {/* Record/Stop button - midden */}
+            {!isRecording ? (
+              <button
+                onClick={startRecording}
+                className="w-20 h-20 rounded-full bg-red-500 border-4 border-white/30 shadow-lg active:scale-95 transition-transform flex items-center justify-center"
+              >
+                <span className="w-6 h-6 bg-white rounded-full" />
+              </button>
+            ) : (
+              <button
+                onClick={stopRecording}
+                className="w-20 h-20 rounded-full bg-red-600 border-4 border-red-400/50 shadow-lg active:scale-95 transition-transform flex items-center justify-center animate-pulse"
+              >
+                <span className="w-6 h-6 bg-white rounded-sm" />
+              </button>
+            )}
+            {/* Placeholder voor symmetrie */}
+            <div className="w-12 h-12" />
+          </div>
         </div>
       </div>
     );
