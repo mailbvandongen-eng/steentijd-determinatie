@@ -235,6 +235,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const videoCaptureRef = useRef<HTMLInputElement>(null);
+  const photoCaptureRef = useRef<HTMLInputElement>(null);
   const recordingTimerRef = useRef<number | null>(null);
 
   // Cleanup bij unmount
@@ -474,31 +475,48 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Reset file input zodat dezelfde file opnieuw geselecteerd kan worden
+    e.target.value = '';
+
     if (isVideo) {
+      let videoBlob: Blob = file;
+
       // Comprimeer video als deze te groot is
       if (file.size > MAX_FILE_SIZE) {
         setIsCompressing(true);
         setCompressProgress(0);
-        const compressedBlob = await compressVideo(file, (progress) => {
-          setCompressProgress(progress);
-        });
+        try {
+          videoBlob = await compressVideo(file, (progress) => {
+            setCompressProgress(progress);
+          });
+        } catch (err) {
+          console.error('Video compression failed:', err);
+        }
         setIsCompressing(false);
-        setCapturedBlob(compressedBlob);
-        setPreviewUrl(URL.createObjectURL(compressedBlob));
-      } else {
-        setCapturedBlob(file);
-        setPreviewUrl(URL.createObjectURL(file));
       }
+
+      // Stel blob en preview in
+      const url = URL.createObjectURL(videoBlob);
+      setCapturedBlob(videoBlob);
+      setPreviewUrl(url);
       setMode('preview-video');
     } else {
+      let imageBlob: Blob = file;
+
       // Comprimeer afbeelding als deze te groot is
       if (file.size > MAX_FILE_SIZE) {
         setIsCompressing(true);
+        try {
+          imageBlob = await compressImage(file);
+        } catch (err) {
+          console.error('Image compression failed:', err);
+        }
+        setIsCompressing(false);
       }
-      const compressedBlob = await compressImage(file);
-      setIsCompressing(false);
-      setCapturedBlob(compressedBlob);
-      setPreviewUrl(URL.createObjectURL(compressedBlob));
+
+      const url = URL.createObjectURL(imageBlob);
+      setCapturedBlob(imageBlob);
+      setPreviewUrl(url);
       setMode('preview-photo');
     }
   }, []);
@@ -851,9 +869,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           </button>
 
-          {/* Enkele foto */}
+          {/* Enkele foto - gebruik native camera */}
           <button
-            onClick={() => startCamera(false)}
+            onClick={() => photoCaptureRef.current?.click()}
             className="w-full btn-secondary flex items-center gap-3 py-4"
           >
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -862,9 +880,17 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
             <div className="text-left">
               <div className="font-semibold">Enkele foto</div>
-              <div className="text-xs opacity-80">Snelle opname met camera</div>
+              <div className="text-xs opacity-80">Opent camera voor foto</div>
             </div>
           </button>
+          <input
+            ref={photoCaptureRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={(e) => handleFileSelect(e, false)}
+            className="hidden"
+          />
 
           {/* Video - gebruik native camera capture */}
           <button
