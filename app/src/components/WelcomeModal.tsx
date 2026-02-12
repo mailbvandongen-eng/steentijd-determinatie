@@ -2,6 +2,18 @@ import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'steentijd-hide-welcome';
 
+// Changelog - nieuwste bovenaan
+const CHANGELOG = [
+  { version: '1.0.8', date: '12 feb 2025', changes: ['Wijzigingsbeheer toegevoegd aan welkomstscherm'] },
+  { version: '1.0.7', date: '12 feb 2025', changes: ['Welkomstscherm met uitleg toegevoegd'] },
+  { version: '1.0.6', date: '12 feb 2025', changes: ['Auto-compressie van grote foto\'s en video\'s (max 5MB)', 'Camera knoppen blijven nu zichtbaar op mobiel'] },
+  { version: '1.0.5', date: '11 feb 2025', changes: ['Foto bijsnijden functie', 'Formaat invoer voor artefact'] },
+  { version: '1.0.4', date: '10 feb 2025', changes: ['Verbeterde layout op mobiel'] },
+  { version: '1.0.3', date: '9 feb 2025', changes: ['Fix voor foto preview knoppen'] },
+  { version: '1.0.2', date: '8 feb 2025', changes: ['Vereenvoudigde interface', 'Meerdere foto\'s workflow'] },
+  { version: '1.0.1', date: '7 feb 2025', changes: ['Eerste publieke versie'] },
+];
+
 interface WelcomeModalProps {
   onClose: () => void;
 }
@@ -62,6 +74,26 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                 <strong>Let op:</strong> Dit is een hulpmiddel voor determinatie.
                 Raadpleeg bij twijfel altijd een expert van de AWN Landelijke Werkgroep Steentijd.
               </p>
+            </section>
+
+            {/* Changelog */}
+            <section>
+              <h3 className="font-semibold text-stone-800 mb-2">Wat is nieuw?</h3>
+              <div className="space-y-2 max-h-40 overflow-y-auto">
+                {CHANGELOG.map((release) => (
+                  <div key={release.version} className="text-xs border-l-2 border-amber-300 pl-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-stone-700">v{release.version}</span>
+                      <span className="text-stone-400">{release.date}</span>
+                    </div>
+                    <ul className="text-stone-500 mt-0.5">
+                      {release.changes.map((change, i) => (
+                        <li key={i}>• {change}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </section>
           </div>
 
