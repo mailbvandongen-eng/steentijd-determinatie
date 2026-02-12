@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'home' | 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.11';
+const APP_VERSION = '1.0.12';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -98,58 +98,43 @@ function App() {
   if (view === 'home') {
     return (
       <div className="h-full flex flex-col overflow-hidden">
-        {/* Hero - compact */}
-        <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center shrink-0 relative">
+        {/* Hero */}
+        <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-6 text-center shrink-0 relative">
           <div className="absolute right-2 top-2">
             <SettingsMenu onShowWelcome={welcomeModal.open} />
           </div>
-          <h1 className="text-2xl font-bold">Steentijd</h1>
-          <p className="text-amber-200 text-sm">AI Determinatie van stenen artefacten</p>
+          <h1 className="text-3xl font-bold">Steentijd</h1>
+          <p className="text-amber-200">AI Determinatie</p>
         </div>
 
-        {/* Info - scrollable */}
-        <div className="p-3 flex-1 overflow-y-auto">
-          <div className="card mb-3">
-            <h2 className="font-semibold mb-2">Hoe werkt het?</h2>
-            <ol className="text-sm text-stone-600 space-y-1">
-              <li className="flex gap-2 items-center">
-                <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span>
-                <span>Maak foto's van het artefact</span>
-              </li>
-              <li className="flex gap-2 items-center">
-                <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span>
-                <span>AI analyseert het object</span>
-              </li>
-              <li className="flex gap-2 items-center">
-                <span className="bg-amber-100 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span>
-                <span>Ontvang type, periode en beschrijving</span>
-              </li>
-            </ol>
-          </div>
+        {/* Main content - centered */}
+        <div className="flex-1 flex flex-col items-center justify-center p-6">
+          <button
+            onClick={() => setView('capture')}
+            className="w-32 h-32 rounded-full bg-amber-600 hover:bg-amber-700 text-white shadow-lg flex flex-col items-center justify-center gap-2 transition-all active:scale-95"
+          >
+            <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="font-semibold">Start</span>
+          </button>
 
-          <div className="card mb-3 bg-amber-50 border-amber-200">
-            <p className="text-sm text-amber-800">
-              <strong>AI-powered</strong><br />
-              Gebruikt Claude AI met kennis van het AWN determinatie-algoritme voor nauwkeurige analyse.
-            </p>
-          </div>
-
-          <p className="text-xs text-stone-400 text-center">
-            AWN Landelijke Werkgroep Steentijd
-          </p>
-          <p className="text-xs text-stone-300 text-center mt-2">
-            v{APP_VERSION}
-          </p>
-        </div>
-
-        {/* Actions - fixed at bottom with safe area */}
-        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 flex gap-3 shrink-0">
-          <button onClick={() => setView('history')} className="btn-secondary flex-1 py-3">
+          <button
+            onClick={() => setView('history')}
+            className="mt-6 text-stone-500 hover:text-stone-700 flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
             Geschiedenis
           </button>
-          <button onClick={() => setView('capture')} className="btn-primary flex-1 py-3">
-            Start
-          </button>
+        </div>
+
+        {/* Footer */}
+        <div className="p-3 text-center shrink-0">
+          <p className="text-xs text-stone-400">AWN Landelijke Werkgroep Steentijd</p>
+          <p className="text-xs text-stone-300">v{APP_VERSION}</p>
         </div>
 
         {/* Welcome Modal */}
