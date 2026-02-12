@@ -322,20 +322,22 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     chunksRef.current = [];
 
     // Probeer verschillende codecs in volgorde van compatibiliteit
+    // Let op: iOS ondersteunt alleen bepaalde formaten
     const mimeTypes = [
-      'video/mp4;codecs=avc1.42E01E,mp4a.40.2', // H.264 + AAC - beste iOS support
       'video/webm;codecs=vp8,opus',              // VP8 - goede Android/Chrome support
       'video/webm;codecs=vp9,opus',              // VP9 - nieuwere browsers
       'video/webm',                               // Basis WebM
-      'video/mp4',                                // Basis MP4
+      'video/mp4',                                // MP4 fallback
     ];
 
     let recorder: MediaRecorder | null = null;
+    let selectedMimeType = '';
 
     for (const mimeType of mimeTypes) {
       if (MediaRecorder.isTypeSupported(mimeType)) {
         try {
           recorder = new MediaRecorder(streamRef.current, { mimeType });
+          selectedMimeType = mimeType;
           console.log('Using mimeType:', mimeType);
           break;
         } catch {
@@ -348,7 +350,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (!recorder) {
       try {
         recorder = new MediaRecorder(streamRef.current);
-        console.log('Using default mimeType');
+        selectedMimeType = recorder.mimeType || 'video/webm';
+        console.log('Using default mimeType:', selectedMimeType);
       } catch (err) {
         console.error('MediaRecorder not supported:', err);
         setCameraError('Video opname niet ondersteund op dit apparaat');
@@ -361,23 +364,45 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     mediaRecorderRef.current = recorder;
 
     mediaRecorderRef.current.ondataavailable = (e) => {
+      console.log('Data available:', e.data.size, 'bytes');
       if (e.data.size > 0) {
         chunksRef.current.push(e.data);
       }
     };
 
+    mediaRecorderRef.current.onerror = (e) => {
+      console.error('MediaRecorder error:', e);
+      setCameraError('Fout bij video opname');
+      stopCamera();
+      setMode('select');
+    };
+
     mediaRecorderRef.current.onstop = async () => {
+      console.log('Recording stopped, chunks:', chunksRef.current.length);
+
       // Controleer of er data is
       if (chunksRef.current.length === 0) {
         console.error('Geen video data opgenomen');
-        stopCamera();
+        setCameraError('Geen video data opgenomen. Probeer opnieuw.');
         setMode('select');
         return;
       }
 
-      // Gebruik de mimeType van de recorder of fallback naar video/webm
-      const mimeType = mediaRecorderRef.current?.mimeType || 'video/webm';
+      // Bereken totale grootte
+      const totalSize = chunksRef.current.reduce((sum, chunk) => sum + chunk.size, 0);
+      console.log('Total video size:', totalSize, 'bytes');
+
+      if (totalSize === 0) {
+        console.error('Video data is leeg');
+        setCameraError('Video data is leeg. Probeer opnieuw.');
+        setMode('select');
+        return;
+      }
+
+      // Gebruik de mimeType van de recorder
+      const mimeType = selectedMimeType || mediaRecorderRef.current?.mimeType || 'video/webm';
       const blob = new Blob(chunksRef.current, { type: mimeType });
+      console.log('Created blob:', blob.size, 'bytes, type:', blob.type);
 
       // Als we video toevoegen aan multi-photo, sla op en ga terug
       if (addingVideoToMulti) {
@@ -385,13 +410,17 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         const video = document.createElement('video');
         video.src = videoUrl;
         video.muted = true;
-        await new Promise<void>((resolve) => {
+        video.playsInline = true;
+        await new Promise<void>((resolve, reject) => {
           video.onloadeddata = () => resolve();
+          video.onerror = () => reject(new Error('Video load failed'));
           video.load();
+          setTimeout(() => resolve(), 3000); // Timeout fallback
         });
         video.currentTime = 0;
         await new Promise<void>((resolve) => {
           video.onseeked = () => resolve();
+          setTimeout(() => resolve(), 1000); // Timeout fallback
         });
         const thumbnail = await createThumbnail(video);
         URL.revokeObjectURL(videoUrl);
@@ -408,7 +437,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       }
     };
 
-    mediaRecorderRef.current.start(100);
+    // Start met grotere timeslice voor betere compatibiliteit
+    mediaRecorderRef.current.start(1000);
     setIsRecording(true);
     setRecordingTime(0);
     setMode('recording');
@@ -421,7 +451,16 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
+      // Request remaining data before stopping
+      if (mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.requestData();
+      }
+      // Small delay to ensure data is collected
+      setTimeout(() => {
+        if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+          mediaRecorderRef.current.stop();
+        }
+      }, 100);
     }
     setIsRecording(false);
     if (recordingTimerRef.current) {
