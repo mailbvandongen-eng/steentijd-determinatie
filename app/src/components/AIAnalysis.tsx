@@ -7,7 +7,14 @@ interface AIAnalysisProps {
   images: LabeledImage[];
   singleImage?: { blob: Blob; thumbnail: string };
   videoFrames?: LabeledImage[]; // Automatisch geëxtraheerde frames uit video
-  onComplete: (result: { type: string; description: string; aiAnalysis: AnalysisResult }) => void;
+  onComplete: (result: {
+    type: string;
+    description: string;
+    period?: string;
+    confidence?: 'laag' | 'gemiddeld' | 'hoog';
+    characteristics?: string[];
+    aiAnalysis: AnalysisResult;
+  }) => void;
   onBack: () => void;
 }
 
