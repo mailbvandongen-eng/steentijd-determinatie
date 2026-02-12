@@ -1241,27 +1241,27 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           ) : isInMultiPhotoMode ? (
             // Bezig met multi-photo - toevoegen aan collectie
-            <div className="flex gap-2">
-              <button onClick={handleRetake} className="btn-secondary flex-1">
+            <div className="flex gap-1">
+              <button onClick={handleRetake} className="btn-secondary flex-1 px-2 py-2 text-sm">
                 Opnieuw
               </button>
-              <button onClick={initCrop} className="btn-secondary flex-1">
+              <button onClick={initCrop} className="btn-secondary flex-1 px-2 py-2 text-sm">
                 Bijsnijden
               </button>
-              <button onClick={handleAddToMulti} className="btn-success flex-1">
+              <button onClick={handleAddToMulti} className="btn-success flex-1 px-2 py-2 text-sm">
                 Toevoegen
               </button>
             </div>
           ) : (
             // Enkele foto - kan gebruiken
-            <div className="flex gap-2">
-              <button onClick={handleRetake} className="btn-secondary flex-1">
+            <div className="flex gap-1">
+              <button onClick={handleRetake} className="btn-secondary flex-1 px-2 py-2 text-sm">
                 Opnieuw
               </button>
-              <button onClick={initCrop} className="btn-secondary flex-1">
+              <button onClick={initCrop} className="btn-secondary flex-1 px-2 py-2 text-sm">
                 Bijsnijden
               </button>
-              <button onClick={handleConfirmSingle} className="btn-success flex-1">
+              <button onClick={handleConfirmSingle} className="btn-success flex-1 px-2 py-2 text-sm">
                 Gebruiken
               </button>
             </div>
@@ -1272,29 +1272,35 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   }
 
   // Preview video
-  if (mode === 'preview-video' && previewUrl) {
+  if (mode === 'preview-video') {
     return (
       <div className="flex flex-col h-full">
-        <div className="flex-1 bg-black flex items-center justify-center p-4">
-          <video
-            src={previewUrl}
-            controls
-            autoPlay
-            playsInline
-            className="max-h-full max-w-full"
-          />
+        <div className="flex-1 bg-black flex items-center justify-center p-4 min-h-0">
+          {previewUrl ? (
+            <video
+              src={previewUrl}
+              controls
+              autoPlay
+              playsInline
+              className="max-h-full max-w-full"
+            />
+          ) : (
+            <p className="text-white">Video laden...</p>
+          )}
         </div>
-        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex gap-2 shrink-0">
-          <button onClick={handleRetake} className="btn-secondary flex-1">
-            Opnieuw
-          </button>
-          <button
-            onClick={handleConfirmSingle}
-            disabled={!capturedBlob}
-            className="btn-success flex-1 disabled:opacity-50"
-          >
-            Gebruiken
-          </button>
+        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0">
+          <div className="flex gap-2">
+            <button onClick={handleRetake} className="btn-secondary flex-1 py-3">
+              Opnieuw
+            </button>
+            <button
+              onClick={handleConfirmSingle}
+              disabled={!capturedBlob}
+              className="btn-success flex-1 py-3 disabled:opacity-50"
+            >
+              Gebruiken
+            </button>
+          </div>
         </div>
       </div>
     );
