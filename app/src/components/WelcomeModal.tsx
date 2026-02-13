@@ -105,9 +105,6 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   <li>Betere herkenning door meer trainingsdata</li>
                   <li>Integratie met bestaande archeologische databases</li>
                 </ul>
-                <p className="text-blue-600 italic mt-2">
-                  Feedback en interesse in doorontwikkeling? Neem contact op met de AWN Werkgroep Steentijd.
-                </p>
               </div>
             </section>
 
