@@ -545,25 +545,51 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   };
 
   const handleConfirmSingle = useCallback(async () => {
-    if (!capturedBlob || !previewUrl) return;
+    if (!capturedBlob) {
+      setCameraError('Geen bestand beschikbaar');
+      setMode('select');
+      return;
+    }
 
     const isVideo = mode === 'preview-video';
 
     if (isVideo) {
-      // Video thumbnail van eerste frame
-      const video = document.createElement('video');
-      video.src = previewUrl;
-      video.muted = true;
-      await new Promise<void>((resolve) => {
-        video.onloadeddata = () => resolve();
-        video.load();
-      });
-      video.currentTime = 0;
-      await new Promise<void>((resolve) => {
-        video.onseeked = () => resolve();
-      });
+      // Voor video: maak een simpele thumbnail of gebruik placeholder
+      let thumbnail = '';
 
-      const thumbnail = await createThumbnail(video);
+      if (previewUrl) {
+        try {
+          const video = document.createElement('video');
+          video.src = previewUrl;
+          video.muted = true;
+          video.playsInline = true;
+
+          // Probeer video te laden met timeout
+          await Promise.race([
+            new Promise<void>((resolve, reject) => {
+              video.onloadeddata = () => resolve();
+              video.onerror = () => reject(new Error('Video load failed'));
+              video.load();
+            }),
+            new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+          ]);
+
+          video.currentTime = 0.1;
+
+          await Promise.race([
+            new Promise<void>((resolve) => {
+              video.onseeked = () => resolve();
+            }),
+            new Promise<void>((resolve) => setTimeout(resolve, 2000))
+          ]);
+
+          thumbnail = await createThumbnail(video);
+        } catch (err) {
+          console.error('Could not create video thumbnail:', err);
+          // Gebruik een lege thumbnail - video werkt nog steeds
+        }
+      }
+
       onCapture({
         type: 'video',
         videoBlob: capturedBlob,
@@ -571,13 +597,25 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       });
     } else {
       // Foto thumbnail
-      const img = new Image();
-      img.src = previewUrl;
-      await new Promise<void>((resolve) => {
-        img.onload = () => resolve();
-      });
+      let thumbnail = '';
 
-      const thumbnail = await createThumbnail(img);
+      if (previewUrl) {
+        try {
+          const img = new Image();
+          img.src = previewUrl;
+          await Promise.race([
+            new Promise<void>((resolve, reject) => {
+              img.onload = () => resolve();
+              img.onerror = () => reject(new Error('Image load failed'));
+            }),
+            new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+          ]);
+          thumbnail = await createThumbnail(img);
+        } catch (err) {
+          console.error('Could not create image thumbnail:', err);
+        }
+      }
+
       onCapture({
         type: 'photo',
         blob: capturedBlob,

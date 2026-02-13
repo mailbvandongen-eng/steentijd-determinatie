@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.19';
+const APP_VERSION = '1.0.20';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
