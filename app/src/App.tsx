@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.20';
+const APP_VERSION = '1.1.0';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -98,21 +98,24 @@ function App() {
   if (view === 'capture') {
     return (
       <div className="h-full flex flex-col overflow-hidden">
-        <div className="bg-stone-900 px-3 py-2 flex items-center justify-between shrink-0">
+        <header className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white shrink-0">
           <div className="flex items-center gap-2">
-            <div className="bg-amber-500 text-stone-900 px-2 py-0.5 font-black text-sm tracking-tight">STEENTIJD</div>
-            <span className="text-stone-400 text-xs">v{APP_VERSION}</span>
+            <span className="text-lg font-bold tracking-tight">STEENTIJD</span>
+            <span className="text-xs opacity-60">v{APP_VERSION}</span>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setView('history')}
-              className="text-stone-400 hover:text-white px-2 py-1 text-xs uppercase tracking-wide"
+              className="flex items-center gap-1 text-xs opacity-80 hover:opacity-100 transition-opacity"
             >
-              Opgeslagen
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+              </svg>
+              <span>Opgeslagen</span>
             </button>
             <SettingsMenu onShowWelcome={welcomeModal.open} />
           </div>
-        </div>
+        </header>
         <div className="flex-1 overflow-hidden">
           <ImageCapture onCapture={handleCapture} />
         </div>

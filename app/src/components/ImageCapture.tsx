@@ -876,50 +876,54 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Selectiescherm
   if (mode === 'select') {
     return (
-      <div className="h-full flex flex-col gap-4 overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <h2 className="text-xl font-semibold text-center">Artefact vastleggen</h2>
-        <p className="text-stone-600 text-center text-sm">
-          Maak foto's, een video of upload bestaande bestanden
-        </p>
-
+      <div className="h-full flex flex-col overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         {cameraError && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded text-sm">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded-lg text-sm mb-4">
             {cameraError}
           </div>
         )}
 
-        <div className="space-y-3 mt-2">
-          {/* Meerdere foto's */}
+        <div className="space-y-3">
+          {/* Meerdere foto's - Primary card */}
           <button
             onClick={() => {
               setIsInMultiPhotoMode(true);
               setMode('multi-photo');
             }}
-            className="w-full btn-primary flex items-center gap-3 py-4"
+            className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m3-3H9" />
-            </svg>
-            <div className="text-left">
-              <div className="font-semibold">Meerdere foto's</div>
-              <div className="text-xs opacity-80">Voeg meerdere foto's toe</div>
+            <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-7 h-7 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
             </div>
+            <div className="text-left flex-1">
+              <span className="font-semibold text-stone-900 block">Meerdere foto's</span>
+              <span className="text-sm text-stone-500">Meest nauwkeurige determinatie</span>
+            </div>
+            <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </button>
 
-          {/* Enkele foto - gebruik native camera */}
+          {/* Enkele foto */}
           <button
             onClick={() => photoCaptureRef.current?.click()}
-            className="w-full btn-secondary flex items-center gap-3 py-4"
+            className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <div className="text-left">
-              <div className="font-semibold">Enkele foto</div>
-              <div className="text-xs opacity-80">Opent camera voor foto</div>
+            <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-7 h-7 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
             </div>
+            <div className="text-left flex-1">
+              <span className="font-semibold text-stone-900 block">Enkele foto</span>
+              <span className="text-sm text-stone-500">Snelle opname</span>
+            </div>
+            <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </button>
           <input
             ref={photoCaptureRef}
@@ -930,18 +934,23 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             className="hidden"
           />
 
-          {/* Video - gebruik native camera capture */}
+          {/* Video */}
           <button
             onClick={() => videoCaptureRef.current?.click()}
-            className="w-full btn-secondary flex items-center gap-3 py-4"
+            className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-            <div className="text-left">
-              <div className="font-semibold">Video opnemen</div>
-              <div className="text-xs opacity-80">Opent camera voor video</div>
+            <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
             </div>
+            <div className="text-left flex-1">
+              <span className="font-semibold text-stone-900 block">Video opnemen</span>
+              <span className="text-sm text-stone-500">360° rondom bekijken</span>
+            </div>
+            <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </button>
           <input
             ref={videoCaptureRef}
@@ -952,44 +961,52 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             className="hidden"
           />
 
-          {/* Upload sectie */}
-          <div className="border-t border-stone-200 pt-3 mt-1">
-            <p className="text-xs text-stone-500 mb-2 font-medium">OF UPLOAD BESTAAND BESTAND</p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="flex-1 btn-secondary flex items-center justify-center gap-2 py-3"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          {/* Elegante divider */}
+          <div className="flex items-center gap-3 my-4">
+            <div className="flex-1 h-px bg-stone-200" />
+            <span className="text-xs text-stone-400 font-medium">of kies bestaand bestand</span>
+            <div className="flex-1 h-px bg-stone-200" />
+          </div>
+
+          {/* Upload knoppen */}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex flex-col items-center gap-2"
+            >
+              <div className="w-10 h-10 bg-stone-100 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Foto
-              </button>
-              <button
-                onClick={() => videoInputRef.current?.click()}
-                className="flex-1 btn-secondary flex items-center justify-center gap-2 py-3"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              </div>
+              <span className="text-sm font-medium text-stone-700">Foto uploaden</span>
+            </button>
+            <button
+              onClick={() => videoInputRef.current?.click()}
+              className="p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex flex-col items-center gap-2"
+            >
+              <div className="w-10 h-10 bg-stone-100 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
-                Video
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleFileSelect(e, false)}
-                className="hidden"
-              />
-              <input
-                ref={videoInputRef}
-                type="file"
-                accept="video/*"
-                onChange={(e) => handleFileSelect(e, true)}
-                className="hidden"
-              />
-            </div>
+              </div>
+              <span className="text-sm font-medium text-stone-700">Video uploaden</span>
+            </button>
           </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFileSelect(e, false)}
+            className="hidden"
+          />
+          <input
+            ref={videoInputRef}
+            type="file"
+            accept="video/*"
+            onChange={(e) => handleFileSelect(e, true)}
+            className="hidden"
+          />
         </div>
       </div>
     );
