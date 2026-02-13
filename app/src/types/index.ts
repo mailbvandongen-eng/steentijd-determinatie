@@ -20,7 +20,7 @@ export interface DeterminationStep {
 
 // Afbeelding met label voor verschillende zijden
 export interface LabeledImage {
-  label: 'dorsaal' | 'ventraal' | 'zijkant' | 'extra';
+  label: 'dorsaal' | 'ventraal' | 'zijkant' | 'extra' | 'frame1' | 'frame2' | 'frame3' | 'frame4' | 'frame5' | 'frame6' | 'frame7' | 'frame8';
   blob: Blob;
   thumbnail: string;
 }

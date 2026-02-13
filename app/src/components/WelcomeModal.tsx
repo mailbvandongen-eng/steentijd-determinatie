@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.3', date: '13 feb 2025', changes: ['Uitleg over werking en toekomst toegevoegd', 'Subtielere UI voor voltooide determinaties', 'Beeldmateriaal viewer bij resultaten', 'Opnieuw determineren met bestaande foto\'s', '8 video frames (selecteer er 5 voor analyse)'] },
   { version: '1.1.2', date: '13 feb 2025', changes: ['Fix: video analyse werkt nu correct', 'Automatische frame extractie uit video voor AI'] },
   { version: '1.0.13', date: '12 feb 2025', changes: ['Direct naar determinatie scherm', 'Verbeterde video opname', 'Consistente amber kleurenschema'] },
   { version: '1.0.11', date: '12 feb 2025', changes: ['Verbeterde video opname compatibiliteit (iOS/Android)', 'Aparte upload knoppen voor foto en video', 'Professionelere camera interface'] },
@@ -79,6 +80,35 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                 <strong>Let op:</strong> Dit is een hulpmiddel voor determinatie.
                 Raadpleeg bij twijfel altijd een expert van de AWN Landelijke Werkgroep Steentijd.
               </p>
+            </section>
+
+            {/* Over dit project */}
+            <section className="bg-blue-50 rounded-xl p-3 border border-blue-200">
+              <h3 className="text-sm font-semibold text-blue-800 mb-2">Over dit project</h3>
+              <div className="text-xs text-blue-700 space-y-2">
+                <p>
+                  <strong>Proof of Concept</strong> — Dit is een experimentele app om te onderzoeken
+                  of AI-gestuurde determinatie van stenen artefacten haalbaar en nuttig is.
+                </p>
+                <p>
+                  <strong>Hoe werkt de AI?</strong> — De app gebruikt Claude (Anthropic) als AI-model.
+                  Bij elke analyse wordt het AWN determinatie-algoritme als context meegestuurd.
+                  Het model is <em>stateless</em>: het onthoudt niets van eerdere sessies en wordt
+                  niet getraind door gebruik van deze app.
+                </p>
+                <p>
+                  <strong>Toekomstmogelijkheden</strong> — Bij voldoende potentie kan dit uitgebreid worden naar:
+                </p>
+                <ul className="list-disc list-inside ml-2 space-y-0.5">
+                  <li>Een trainbaar model specifiek voor steentijdartefacten</li>
+                  <li>Database met geverifieerde determinaties als referentie</li>
+                  <li>Betere herkenning door meer trainingsdata</li>
+                  <li>Integratie met bestaande archeologische databases</li>
+                </ul>
+                <p className="text-blue-600 italic mt-2">
+                  Feedback en interesse in doorontwikkeling? Neem contact op met de AWN Werkgroep Steentijd.
+                </p>
+              </div>
             </section>
 
             {/* Changelog */}

@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.1.2';
+const APP_VERSION = '1.1.3';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -94,6 +94,30 @@ function App() {
     setView('capture');
   }, []);
 
+  const handleRedeterminate = useCallback(async (session: DeterminationSession) => {
+    // Laad de foto's uit de bestaande sessie en ga naar analyse
+    const data: CapturedData = {
+      type: session.input.type,
+      images: session.input.images,
+      blob: session.input.blob,
+      thumbnail: session.input.thumbnail,
+      videoBlob: session.input.videoBlob,
+    };
+
+    // Maak nieuwe sessie met dezelfde input
+    const sessionId = await createSession({
+      type: data.type,
+      blob: data.blob,
+      thumbnail: data.thumbnail,
+      images: data.images,
+      videoBlob: data.videoBlob,
+    });
+
+    setCurrentSessionId(sessionId);
+    setCapturedData(data);
+    setView('analyze');
+  }, []);
+
   // Capture screen (main screen)
   if (view === 'capture') {
     return (
@@ -148,6 +172,7 @@ function App() {
         session={currentSession}
         onNewDetermination={handleNewDetermination}
         onViewHistory={() => setView('history')}
+        onRedeterminate={handleRedeterminate}
       />
     );
   }

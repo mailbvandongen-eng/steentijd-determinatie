@@ -29,8 +29,41 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
     ? [{ label: 'foto' as const, blob: singleImage.blob, thumbnail: singleImage.thumbnail }]
     : images;
 
-  const allImages = [...manualImages, ...(videoFrames || [])];
   const hasVideoFrames = videoFrames && videoFrames.length > 0;
+
+  // Frame selectie state - standaard eerste 5 geselecteerd
+  const [selectedFrameIndices, setSelectedFrameIndices] = useState<Set<number>>(() => {
+    if (!videoFrames) return new Set();
+    // Selecteer eerste 5 frames (of minder als er minder zijn)
+    const initialSelected = new Set<number>();
+    for (let i = 0; i < Math.min(5, videoFrames.length); i++) {
+      initialSelected.add(i);
+    }
+    return initialSelected;
+  });
+
+  // Max aantal frames dat nog geselecteerd kan worden (5 totaal minus handmatige foto's)
+  const maxSelectableFrames = Math.max(0, 5 - manualImages.length);
+
+  // Geselecteerde video frames
+  const selectedVideoFrames = videoFrames
+    ? videoFrames.filter((_, idx) => selectedFrameIndices.has(idx))
+    : [];
+
+  // Alle afbeeldingen voor analyse (handmatige + geselecteerde video frames)
+  const allImages = [...manualImages, ...selectedVideoFrames];
+
+  const toggleFrameSelection = (idx: number) => {
+    setSelectedFrameIndices(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(idx)) {
+        newSet.delete(idx);
+      } else if (newSet.size < maxSelectableFrames) {
+        newSet.add(idx);
+      }
+      return newSet;
+    });
+  };
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
@@ -38,13 +71,16 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
 
     try {
       if (allImages.length === 0) {
-        setResult({ success: false, error: 'Geen afbeelding beschikbaar' });
+        setResult({ success: false, error: 'Geen afbeelding beschikbaar. Selecteer minimaal 1 frame.' });
         return;
       }
 
-      // Bepaal welke afbeeldingen te analyseren
-      const imagesToAnalyze = analyzeAllImages
-        ? allImages.slice(0, 5) // Max 5 afbeeldingen voor kosten/snelheid
+      // Bij video frames gebruiken we altijd alle geselecteerde frames
+      // Bij alleen foto's respecteren we de analyzeAllImages toggle
+      const imagesToAnalyze = hasVideoFrames
+        ? allImages.slice(0, 5) // Gebruik geselecteerde frames (al gefilterd)
+        : analyzeAllImages
+        ? allImages.slice(0, 5)
         : [allImages[0]];
 
       // Converteer alle afbeeldingen naar base64
@@ -119,34 +155,65 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
             </>
           )}
 
-          {/* Video frames */}
+          {/* Video frames met selectie */}
           {hasVideoFrames && (
             <>
-              <p className="text-xs text-stone-500 mb-2 font-medium mt-2">
-                VIDEO FRAMES (automatisch)
-              </p>
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {videoFrames.map((img, idx) => (
-                  <div
-                    key={`frame-${idx}`}
-                    className="shrink-0 rounded border-2 border-blue-300 overflow-hidden relative"
-                  >
-                    <img
-                      src={img.thumbnail}
-                      alt={`Frame ${idx + 1}`}
-                      className="h-16 w-16 object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-blue-600/80 text-white text-[10px] text-center">
-                      frame {idx + 1}
-                    </div>
-                  </div>
-                ))}
+              <div className="flex items-center justify-between mt-2 mb-2">
+                <p className="text-xs text-stone-500 font-medium">
+                  VIDEO FRAMES ({selectedFrameIndices.size} van {videoFrames.length} geselecteerd)
+                </p>
+                {maxSelectableFrames > 0 && (
+                  <p className="text-xs text-blue-600">
+                    Max {maxSelectableFrames} selecteerbaar
+                  </p>
+                )}
               </div>
+              <div className="grid grid-cols-4 gap-2">
+                {videoFrames.map((img, idx) => {
+                  const isSelected = selectedFrameIndices.has(idx);
+                  const canSelect = isSelected || selectedFrameIndices.size < maxSelectableFrames;
+                  return (
+                    <button
+                      key={`frame-${idx}`}
+                      onClick={() => canSelect && toggleFrameSelection(idx)}
+                      disabled={!canSelect && !isSelected}
+                      className={`relative rounded overflow-hidden border-2 transition-all ${
+                        isSelected
+                          ? 'border-blue-500 ring-2 ring-blue-200'
+                          : canSelect
+                          ? 'border-stone-200 hover:border-blue-300'
+                          : 'border-stone-100 opacity-50'
+                      }`}
+                    >
+                      <img
+                        src={img.thumbnail}
+                        alt={`Frame ${idx + 1}`}
+                        className="w-full aspect-square object-cover"
+                      />
+                      <div className={`absolute bottom-0 left-0 right-0 text-white text-[10px] text-center py-0.5 ${
+                        isSelected ? 'bg-blue-600' : 'bg-black/50'
+                      }`}>
+                        {idx + 1}
+                      </div>
+                      {isSelected && (
+                        <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-stone-400 mt-2 text-center">
+                Tik op frames om te selecteren/deselecteren (max 5 totaal voor AI analyse)
+              </p>
             </>
           )}
 
           {/* Analyse optie */}
-          {allImages.length > 1 && (
+          {allImages.length > 1 && !hasVideoFrames && (
             <div className="mt-3 pt-3 border-t border-stone-200">
               <label className="flex items-center gap-2 text-sm text-stone-700">
                 <input
@@ -162,6 +229,22 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
                   ? 'Claude bekijkt alle afbeeldingen voor een complete analyse'
                   : 'Alleen de eerste afbeelding wordt geanalyseerd (sneller/goedkoper)'}
               </p>
+            </div>
+          )}
+
+          {/* Info over geselecteerde afbeeldingen bij video */}
+          {hasVideoFrames && allImages.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-stone-200">
+              <div className="flex items-center gap-2 text-sm text-stone-700">
+                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>
+                  {manualImages.length > 0
+                    ? `${manualImages.length} foto('s) + ${selectedFrameIndices.size} video frames = ${allImages.length} afbeeldingen`
+                    : `${selectedFrameIndices.size} video frames geselecteerd`}
+                </span>
+              </div>
             </div>
           )}
 

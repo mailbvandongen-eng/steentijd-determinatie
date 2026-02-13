@@ -809,7 +809,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Extract frames uit video voor AI analyse (begin, midden, eind)
+  // Extract frames uit video voor AI analyse (8 frames verspreid over de video)
   const extractVideoFrames = async (videoBlob: Blob): Promise<LabeledImage[]> => {
     const video = document.createElement('video');
     video.src = URL.createObjectURL(videoBlob);
@@ -822,8 +822,18 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
     const duration = video.duration;
     const frames: LabeledImage[] = [];
-    const timePoints = [0.1, duration / 2, duration - 0.1]; // Begin, midden, eind
-    const labels: Array<'dorsaal' | 'ventraal' | 'zijkant'> = ['dorsaal', 'ventraal', 'zijkant'];
+
+    // 8 frames verspreid over de video (met marge aan begin en eind)
+    const frameCount = 8;
+    const startMargin = 0.1;
+    const endMargin = 0.1;
+    const usableDuration = Math.max(0.1, duration - startMargin - endMargin);
+
+    const timePoints = Array.from({ length: frameCount }, (_, i) =>
+      startMargin + (usableDuration * i) / (frameCount - 1)
+    );
+
+    const labels: LabeledImage['label'][] = ['frame1', 'frame2', 'frame3', 'frame4', 'frame5', 'frame6', 'frame7', 'frame8'];
 
     for (let i = 0; i < timePoints.length; i++) {
       video.currentTime = Math.max(0, Math.min(timePoints[i], duration));
