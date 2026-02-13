@@ -234,8 +234,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const chunksRef = useRef<Blob[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
-  const videoCaptureRef = useRef<HTMLInputElement>(null);
-  const photoCaptureRef = useRef<HTMLInputElement>(null);
   const recordingTimerRef = useRef<number | null>(null);
 
   // Cleanup bij unmount
@@ -906,9 +904,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
           </button>
 
-          {/* Enkele foto */}
+          {/* Enkele foto - gebruik in-browser camera zoals multi-photo */}
           <button
-            onClick={() => photoCaptureRef.current?.click()}
+            onClick={() => {
+              setIsInMultiPhotoMode(false);
+              startCamera(false);
+            }}
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
@@ -925,18 +926,13 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          <input
-            ref={photoCaptureRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={(e) => handleFileSelect(e, false)}
-            className="hidden"
-          />
 
-          {/* Video */}
+          {/* Video - gebruik in-browser camera */}
           <button
-            onClick={() => videoCaptureRef.current?.click()}
+            onClick={() => {
+              setIsInMultiPhotoMode(false);
+              startCamera(true);
+            }}
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
@@ -952,14 +948,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          <input
-            ref={videoCaptureRef}
-            type="file"
-            accept="video/*"
-            capture="environment"
-            onChange={(e) => handleFileSelect(e, true)}
-            className="hidden"
-          />
 
           {/* Elegante divider */}
           <div className="flex items-center gap-3 my-4">
