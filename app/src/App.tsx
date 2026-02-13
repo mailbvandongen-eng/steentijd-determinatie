@@ -11,7 +11,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.0.18';
+const APP_VERSION = '1.0.19';
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -98,12 +98,15 @@ function App() {
   if (view === 'capture') {
     return (
       <div className="h-full flex flex-col overflow-hidden">
-        <div className="bg-gradient-to-r from-amber-600 to-amber-700 px-3 py-2 flex items-center justify-between shrink-0">
-          <h1 className="text-white font-semibold">Steentijd-determinatie <span className="text-amber-200 text-xs font-normal">v{APP_VERSION}</span></h1>
+        <div className="bg-stone-900 px-3 py-2 flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2">
+            <div className="bg-amber-500 text-stone-900 px-2 py-0.5 font-black text-sm tracking-tight">STEENTIJD</div>
+            <span className="text-stone-400 text-xs">v{APP_VERSION}</span>
+          </div>
           <div className="flex items-center">
             <button
               onClick={() => setView('history')}
-              className="text-white/90 hover:text-white px-2 py-1 text-xs"
+              className="text-stone-400 hover:text-white px-2 py-1 text-xs uppercase tracking-wide"
             >
               Opgeslagen
             </button>
