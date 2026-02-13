@@ -552,45 +552,58 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     const isVideo = mode === 'preview-video';
 
     if (isVideo) {
-      // Voor video: maak een simpele thumbnail of gebruik placeholder
+      // Voor video: extraheer frames voor AI analyse
       let thumbnail = '';
+      let videoFrames: LabeledImage[] = [];
 
-      if (previewUrl) {
-        try {
-          const video = document.createElement('video');
-          video.src = previewUrl;
-          video.muted = true;
-          video.playsInline = true;
+      try {
+        // Extraheer frames uit de video voor AI analyse
+        videoFrames = await extractVideoFrames(capturedBlob);
 
-          // Probeer video te laden met timeout
-          await Promise.race([
-            new Promise<void>((resolve, reject) => {
-              video.onloadeddata = () => resolve();
-              video.onerror = () => reject(new Error('Video load failed'));
-              video.load();
-            }),
-            new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
-          ]);
+        // Gebruik eerste frame als thumbnail
+        if (videoFrames.length > 0) {
+          thumbnail = videoFrames[0].thumbnail;
+        }
+      } catch (err) {
+        console.error('Could not extract video frames:', err);
 
-          video.currentTime = 0.1;
+        // Fallback: probeer alleen thumbnail te maken
+        if (previewUrl) {
+          try {
+            const video = document.createElement('video');
+            video.src = previewUrl;
+            video.muted = true;
+            video.playsInline = true;
 
-          await Promise.race([
-            new Promise<void>((resolve) => {
-              video.onseeked = () => resolve();
-            }),
-            new Promise<void>((resolve) => setTimeout(resolve, 2000))
-          ]);
+            await Promise.race([
+              new Promise<void>((resolve, reject) => {
+                video.onloadeddata = () => resolve();
+                video.onerror = () => reject(new Error('Video load failed'));
+                video.load();
+              }),
+              new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+            ]);
 
-          thumbnail = await createThumbnail(video);
-        } catch (err) {
-          console.error('Could not create video thumbnail:', err);
-          // Gebruik een lege thumbnail - video werkt nog steeds
+            video.currentTime = 0.1;
+
+            await Promise.race([
+              new Promise<void>((resolve) => {
+                video.onseeked = () => resolve();
+              }),
+              new Promise<void>((resolve) => setTimeout(resolve, 2000))
+            ]);
+
+            thumbnail = await createThumbnail(video);
+          } catch (thumbErr) {
+            console.error('Could not create video thumbnail:', thumbErr);
+          }
         }
       }
 
       onCapture({
         type: 'video',
         videoBlob: capturedBlob,
+        videoFrames: videoFrames.length > 0 ? videoFrames : undefined,
         thumbnail,
       });
     } else {

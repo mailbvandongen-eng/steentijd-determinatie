@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.2', date: '13 feb 2025', changes: ['Fix: video analyse werkt nu correct', 'Automatische frame extractie uit video voor AI'] },
   { version: '1.0.13', date: '12 feb 2025', changes: ['Direct naar determinatie scherm', 'Verbeterde video opname', 'Consistente amber kleurenschema'] },
   { version: '1.0.11', date: '12 feb 2025', changes: ['Verbeterde video opname compatibiliteit (iOS/Android)', 'Aparte upload knoppen voor foto en video', 'Professionelere camera interface'] },
   { version: '1.0.10', date: '12 feb 2025', changes: ['Fix: meerdere foto\'s workflow', 'Fix: video opname preview', 'Volledige AI analyse wordt opgeslagen bij vondst', 'AI Query viewer in menu'] },
