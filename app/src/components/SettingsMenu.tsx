@@ -4,9 +4,10 @@ import { QueryViewer } from './QueryViewer';
 
 interface SettingsMenuProps {
   onShowWelcome: () => void;
+  version: string;
 }
 
-export function SettingsMenu({ onShowWelcome }: SettingsMenuProps) {
+export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showQueryViewer, setShowQueryViewer] = useState(false);
 
@@ -64,6 +65,10 @@ export function SettingsMenu({ onShowWelcome }: SettingsMenuProps) {
                 </svg>
                 AI Query bekijken
               </button>
+            </div>
+            {/* Versie onderaan */}
+            <div className="px-4 py-2 border-t border-stone-100 text-xs text-stone-400 text-center">
+              v{version}
             </div>
           </div>
         </>

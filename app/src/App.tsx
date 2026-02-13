@@ -123,9 +123,9 @@ function App() {
     return (
       <div className="h-full flex flex-col overflow-hidden">
         <header className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-bold tracking-tight">STEENTIJD</span>
-            <span className="text-xs opacity-60">v{APP_VERSION}</span>
+          <div>
+            <span className="text-lg font-bold tracking-tight block">STEENTIJD</span>
+            <span className="text-xs opacity-80">Determineren van artefacten</span>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -137,7 +137,7 @@ function App() {
               </svg>
               <span>Opgeslagen</span>
             </button>
-            <SettingsMenu onShowWelcome={welcomeModal.open} />
+            <SettingsMenu onShowWelcome={welcomeModal.open} version={APP_VERSION} />
           </div>
         </header>
         <div className="flex-1 overflow-hidden">
