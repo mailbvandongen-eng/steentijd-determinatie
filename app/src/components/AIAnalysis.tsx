@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { analyzeImage, blobToBase64 } from '../lib/aiAnalysis';
 import type { AnalysisResult } from '../lib/aiAnalysis';
 import type { LabeledImage } from '../types';
@@ -26,24 +26,28 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
 
   // Verzamel alle beschikbare images (handmatige foto's + video frames)
   const manualImages = singleImage
-    ? [{ label: 'foto' as const, blob: singleImage.blob, thumbnail: singleImage.thumbnail }]
+    ? [{ label: 'dorsaal' as const, blob: singleImage.blob, thumbnail: singleImage.thumbnail }]
     : images;
 
   const hasVideoFrames = videoFrames && videoFrames.length > 0;
 
-  // Frame selectie state - standaard eerste 5 geselecteerd
-  const [selectedFrameIndices, setSelectedFrameIndices] = useState<Set<number>>(() => {
-    if (!videoFrames) return new Set();
-    // Selecteer eerste 5 frames (of minder als er minder zijn)
-    const initialSelected = new Set<number>();
-    for (let i = 0; i < Math.min(5, videoFrames.length); i++) {
-      initialSelected.add(i);
-    }
-    return initialSelected;
-  });
+  // Frame selectie state
+  const [selectedFrameIndices, setSelectedFrameIndices] = useState<Set<number>>(new Set());
 
   // Max aantal frames dat nog geselecteerd kan worden (5 totaal minus handmatige foto's)
   const maxSelectableFrames = Math.max(0, 5 - manualImages.length);
+
+  // Initialiseer frame selectie wanneer videoFrames beschikbaar wordt
+  useEffect(() => {
+    if (videoFrames && videoFrames.length > 0) {
+      const initialSelected = new Set<number>();
+      const framesToSelect = Math.min(maxSelectableFrames, videoFrames.length);
+      for (let i = 0; i < framesToSelect; i++) {
+        initialSelected.add(i);
+      }
+      setSelectedFrameIndices(initialSelected);
+    }
+  }, [videoFrames, maxSelectableFrames]);
 
   // Geselecteerde video frames
   const selectedVideoFrames = videoFrames
@@ -51,7 +55,12 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
     : [];
 
   // Alle afbeeldingen voor analyse (handmatige + geselecteerde video frames)
-  const allImages = [...manualImages, ...selectedVideoFrames];
+  // Als er geen selectie is maar wel video frames, gebruik dan alle frames (tot max 5)
+  const effectiveVideoFrames = selectedVideoFrames.length > 0
+    ? selectedVideoFrames
+    : (videoFrames || []).slice(0, maxSelectableFrames);
+
+  const allImages = [...manualImages, ...effectiveVideoFrames];
 
   const toggleFrameSelection = (idx: number) => {
     setSelectedFrameIndices(prev => {
