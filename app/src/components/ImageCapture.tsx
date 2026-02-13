@@ -336,7 +336,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   const handleConfirmSingle = useCallback(async () => {
     if (!capturedBlob) {
-      setCameraError('Geen bestand beschikbaar');
+      console.error('Geen bestand beschikbaar');
       setMode('select');
       return;
     }
@@ -484,7 +484,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setCapturedBlob(null);
     setPreviewUrl(null);
-    setRecordingTime(0);
     setIsCropping(false);
     // Als we in multi-photo mode zijn, ga terug naar multi-photo overzicht
     if (isInMultiPhotoMode) {
@@ -824,8 +823,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   // Multi-photo modus
   if (mode === 'multi-photo') {
-    // Ref voor de huidige label's camera input
-    const multiPhotoInputId = `multi-photo-input-${currentLabel}`;
     const multiVideoInputId = 'multi-video-input';
 
     return (
