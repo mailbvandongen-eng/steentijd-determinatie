@@ -4,21 +4,21 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
-  { version: '1.1.4', date: '13 feb 2025', changes: ['Altijd native telefoon camera (met zoom en scherpstelling)', 'Stabielere video opname'] },
-  { version: '1.1.3', date: '13 feb 2025', changes: ['Uitleg over werking en toekomst toegevoegd', 'Subtielere UI voor voltooide determinaties', 'Beeldmateriaal viewer bij resultaten', 'Opnieuw determineren met bestaande foto\'s', '8 video frames (selecteer er 5 voor analyse)'] },
-  { version: '1.1.2', date: '13 feb 2025', changes: ['Fix: video analyse werkt nu correct', 'Automatische frame extractie uit video voor AI'] },
-  { version: '1.0.13', date: '12 feb 2025', changes: ['Direct naar determinatie scherm', 'Verbeterde video opname', 'Consistente amber kleurenschema'] },
-  { version: '1.0.11', date: '12 feb 2025', changes: ['Verbeterde video opname compatibiliteit (iOS/Android)', 'Aparte upload knoppen voor foto en video', 'Professionelere camera interface'] },
-  { version: '1.0.10', date: '12 feb 2025', changes: ['Fix: meerdere foto\'s workflow', 'Fix: video opname preview', 'Volledige AI analyse wordt opgeslagen bij vondst', 'AI Query viewer in menu'] },
-  { version: '1.0.9', date: '12 feb 2025', changes: ['Instellingenmenu rechtsboven toegevoegd', 'Optie om welkomstscherm opnieuw te tonen'] },
-  { version: '1.0.8', date: '12 feb 2025', changes: ['Wijzigingsbeheer toegevoegd aan welkomstscherm'] },
-  { version: '1.0.7', date: '12 feb 2025', changes: ['Welkomstscherm met uitleg toegevoegd'] },
-  { version: '1.0.6', date: '12 feb 2025', changes: ['Auto-compressie van grote foto\'s en video\'s (max 5MB)', 'Camera knoppen blijven nu zichtbaar op mobiel'] },
-  { version: '1.0.5', date: '11 feb 2025', changes: ['Foto bijsnijden functie', 'Formaat invoer voor artefact'] },
-  { version: '1.0.4', date: '10 feb 2025', changes: ['Verbeterde layout op mobiel'] },
-  { version: '1.0.3', date: '9 feb 2025', changes: ['Fix voor foto preview knoppen'] },
-  { version: '1.0.2', date: '8 feb 2025', changes: ['Vereenvoudigde interface', 'Meerdere foto\'s workflow'] },
-  { version: '1.0.1', date: '7 feb 2025', changes: ['Eerste publieke versie'] },
+  { version: '1.1.4', date: '13 feb 2026', changes: ['Altijd native telefoon camera (met zoom en scherpstelling)', 'Stabielere video opname'] },
+  { version: '1.1.3', date: '13 feb 2026', changes: ['Uitleg over werking en toekomst toegevoegd', 'Subtielere UI voor voltooide determinaties', 'Beeldmateriaal viewer bij resultaten', 'Opnieuw determineren met bestaande foto\'s', '8 video frames (selecteer er 5 voor analyse)'] },
+  { version: '1.1.2', date: '13 feb 2026', changes: ['Fix: video analyse werkt nu correct', 'Automatische frame extractie uit video voor AI'] },
+  { version: '1.0.13', date: '12 feb 2026', changes: ['Direct naar determinatie scherm', 'Verbeterde video opname', 'Consistente amber kleurenschema'] },
+  { version: '1.0.11', date: '12 feb 2026', changes: ['Verbeterde video opname compatibiliteit (iOS/Android)', 'Aparte upload knoppen voor foto en video', 'Professionelere camera interface'] },
+  { version: '1.0.10', date: '12 feb 2026', changes: ['Fix: meerdere foto\'s workflow', 'Fix: video opname preview', 'Volledige AI analyse wordt opgeslagen bij vondst', 'AI Query viewer in menu'] },
+  { version: '1.0.9', date: '12 feb 2026', changes: ['Instellingenmenu rechtsboven toegevoegd', 'Optie om welkomstscherm opnieuw te tonen'] },
+  { version: '1.0.8', date: '12 feb 2026', changes: ['Wijzigingsbeheer toegevoegd aan welkomstscherm'] },
+  { version: '1.0.7', date: '12 feb 2026', changes: ['Welkomstscherm met uitleg toegevoegd'] },
+  { version: '1.0.6', date: '12 feb 2026', changes: ['Auto-compressie van grote foto\'s en video\'s (max 5MB)', 'Camera knoppen blijven nu zichtbaar op mobiel'] },
+  { version: '1.0.5', date: '11 feb 2026', changes: ['Foto bijsnijden functie', 'Formaat invoer voor artefact'] },
+  { version: '1.0.4', date: '10 feb 2026', changes: ['Verbeterde layout op mobiel'] },
+  { version: '1.0.3', date: '9 feb 2026', changes: ['Fix voor foto preview knoppen'] },
+  { version: '1.0.2', date: '8 feb 2026', changes: ['Vereenvoudigde interface', 'Meerdere foto\'s workflow'] },
+  { version: '1.0.1', date: '7 feb 2026', changes: ['Eerste publieke versie'] },
 ];
 
 interface WelcomeModalProps {
