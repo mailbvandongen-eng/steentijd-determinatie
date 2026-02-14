@@ -1,16 +1,14 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import type { LabeledImage } from '../types';
 
-type CaptureMode = 'select' | 'preview-photo' | 'preview-video' | 'multi-photo';
+type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
 
 interface ImageCaptureProps {
   onCapture: (data: {
-    type: 'photo' | 'video' | 'multi-photo';
+    type: 'photo' | 'multi-photo';
     blob?: Blob;
     thumbnail?: string;
     images?: LabeledImage[];
-    videoBlob?: Blob;
-    videoFrames?: LabeledImage[]; // Automatisch geëxtraheerde frames uit video
   }) => void;
 }
 
@@ -22,118 +20,6 @@ const IMAGE_LABELS = [
 ] as const;
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
-
-// Comprimeer video tot onder MAX_FILE_SIZE
-const compressVideo = async (file: File, onProgress?: (progress: number) => void): Promise<Blob> => {
-  if (!file.type.startsWith('video/') || file.size <= MAX_FILE_SIZE) {
-    return file;
-  }
-
-  return new Promise((resolve) => {
-    const video = document.createElement('video');
-    const url = URL.createObjectURL(file);
-    video.src = url;
-    video.muted = true;
-
-    video.onloadedmetadata = async () => {
-      const duration = video.duration;
-      const width = Math.min(video.videoWidth, 1280); // Max 720p breedte
-      const height = Math.round((width / video.videoWidth) * video.videoHeight);
-
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) {
-        URL.revokeObjectURL(url);
-        resolve(file);
-        return;
-      }
-
-      // Bereken target bitrate gebaseerd op gewenste bestandsgrootte
-      // Target: 4MB voor veilige marge, minus audio (~64kbps)
-      const targetSizeBits = 4 * 1024 * 1024 * 8;
-      const audioBits = 64000 * duration;
-      const videoBitrate = Math.max(500000, Math.floor((targetSizeBits - audioBits) / duration));
-
-      const stream = canvas.captureStream(30);
-
-      // Probeer audio toe te voegen als beschikbaar
-      try {
-        video.muted = false;
-        const audioCtx = new AudioContext();
-        const source = audioCtx.createMediaElementSource(video);
-        const dest = audioCtx.createMediaStreamDestination();
-        source.connect(dest);
-        source.connect(audioCtx.destination);
-        dest.stream.getAudioTracks().forEach(track => stream.addTrack(track));
-      } catch {
-        // Geen audio of niet ondersteund, ga door zonder
-      }
-
-      let recorder: MediaRecorder;
-      const chunks: Blob[] = [];
-
-      try {
-        recorder = new MediaRecorder(stream, {
-          mimeType: 'video/webm;codecs=vp8',
-          videoBitsPerSecond: videoBitrate,
-        });
-      } catch {
-        try {
-          recorder = new MediaRecorder(stream, {
-            videoBitsPerSecond: videoBitrate,
-          });
-        } catch {
-          URL.revokeObjectURL(url);
-          resolve(file);
-          return;
-        }
-      }
-
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunks.push(e.data);
-      };
-
-      recorder.onstop = () => {
-        URL.revokeObjectURL(url);
-        const blob = new Blob(chunks, { type: 'video/webm' });
-        resolve(blob);
-      };
-
-      recorder.onerror = () => {
-        URL.revokeObjectURL(url);
-        resolve(file);
-      };
-
-      recorder.start(100);
-
-      // Speel video af en teken frames op canvas
-      video.currentTime = 0;
-      video.play();
-
-      const drawFrame = () => {
-        if (video.ended || video.paused) {
-          recorder.stop();
-          return;
-        }
-        ctx.drawImage(video, 0, 0, width, height);
-        if (onProgress) {
-          onProgress(video.currentTime / duration);
-        }
-        requestAnimationFrame(drawFrame);
-      };
-
-      video.onplay = drawFrame;
-      video.onended = () => recorder.stop();
-    };
-
-    video.onerror = () => {
-      URL.revokeObjectURL(url);
-      resolve(file);
-    };
-  });
-};
 
 // Comprimeer afbeelding tot onder MAX_FILE_SIZE
 const compressImage = async (file: File): Promise<Blob> => {
@@ -214,21 +100,17 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
   const [multiImages, setMultiImages] = useState<LabeledImage[]>([]);
-  const [multiVideo, setMultiVideo] = useState<{ blob: Blob; thumbnail: string } | null>(null);
   const [currentLabel, setCurrentLabel] = useState<LabeledImage['label']>('dorsaal');
   const [isInMultiPhotoMode, setIsInMultiPhotoMode] = useState(false);
   const [isCropping, setIsCropping] = useState(false);
   const [cropBox, setCropBox] = useState({ x: 50, y: 50, size: 200 });
   const [isCompressing, setIsCompressing] = useState(false);
-  const [compressProgress, setCompressProgress] = useState(0);
 
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
   // Refs voor native camera inputs
   const photoInputRef = useRef<HTMLInputElement>(null);
-  const videoInputRef = useRef<HTMLInputElement>(null);
   const uploadPhotoInputRef = useRef<HTMLInputElement>(null);
-  const uploadVideoInputRef = useRef<HTMLInputElement>(null);
 
   // Cleanup bij unmount
   useEffect(() => {
@@ -237,81 +119,34 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     };
   }, []);
 
-  // Handler voor native camera foto/video capture
-  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>, isVideo: boolean = false, forMultiPhoto: boolean = false) => {
+  // Handler voor native camera foto capture
+  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     // Reset file input zodat dezelfde file opnieuw geselecteerd kan worden
     e.target.value = '';
 
-    if (isVideo) {
-      let videoBlob: Blob = file;
+    let imageBlob: Blob = file;
 
-      // Comprimeer video als deze te groot is
-      if (file.size > MAX_FILE_SIZE) {
-        setIsCompressing(true);
-        setCompressProgress(0);
-        try {
-          videoBlob = await compressVideo(file, (progress) => {
-            setCompressProgress(progress);
-          });
-        } catch (err) {
-          console.error('Video compression failed:', err);
-        }
-        setIsCompressing(false);
+    // Comprimeer afbeelding als deze te groot is
+    if (file.size > MAX_FILE_SIZE) {
+      setIsCompressing(true);
+      try {
+        imageBlob = await compressImage(file);
+      } catch (err) {
+        console.error('Image compression failed:', err);
       }
-
-      // Als het voor multi-photo is, voeg toe als multiVideo
-      if (forMultiPhoto) {
-        const videoUrl = URL.createObjectURL(videoBlob);
-        const video = document.createElement('video');
-        video.src = videoUrl;
-        video.muted = true;
-        video.playsInline = true;
-        await new Promise<void>((resolve) => {
-          video.onloadeddata = () => resolve();
-          video.load();
-          setTimeout(() => resolve(), 3000);
-        });
-        video.currentTime = 0;
-        await new Promise<void>((resolve) => {
-          video.onseeked = () => resolve();
-          setTimeout(() => resolve(), 1000);
-        });
-        const thumbnail = await createThumbnail(video);
-        URL.revokeObjectURL(videoUrl);
-        setMultiVideo({ blob: videoBlob, thumbnail });
-        // Blijf in multi-photo mode
-      } else {
-        // Stel blob en preview in
-        const url = URL.createObjectURL(videoBlob);
-        setCapturedBlob(videoBlob);
-        setPreviewUrl(url);
-        setMode('preview-video');
-      }
-    } else {
-      let imageBlob: Blob = file;
-
-      // Comprimeer afbeelding als deze te groot is
-      if (file.size > MAX_FILE_SIZE) {
-        setIsCompressing(true);
-        try {
-          imageBlob = await compressImage(file);
-        } catch (err) {
-          console.error('Image compression failed:', err);
-        }
-        setIsCompressing(false);
-      }
-
-      const url = URL.createObjectURL(imageBlob);
-      setCapturedBlob(imageBlob);
-      setPreviewUrl(url);
-      setMode('preview-photo');
+      setIsCompressing(false);
     }
+
+    const url = URL.createObjectURL(imageBlob);
+    setCapturedBlob(imageBlob);
+    setPreviewUrl(url);
+    setMode('preview-photo');
   }, []);
 
-  const createThumbnail = (source: HTMLImageElement | HTMLVideoElement): Promise<string> => {
+  const createThumbnail = (source: HTMLImageElement): Promise<string> => {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
       const size = 200;
@@ -323,8 +158,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         return;
       }
 
-      const srcWidth = source instanceof HTMLVideoElement ? source.videoWidth : source.width;
-      const srcHeight = source instanceof HTMLVideoElement ? source.videoHeight : source.height;
+      const srcWidth = source.width;
+      const srcHeight = source.height;
       const minDim = Math.min(srcWidth, srcHeight);
       const sx = (srcWidth - minDim) / 2;
       const sy = (srcHeight - minDim) / 2;
@@ -341,91 +176,32 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       return;
     }
 
-    const isVideo = mode === 'preview-video';
+    // Foto thumbnail
+    let thumbnail = '';
 
-    if (isVideo) {
-      // Voor video: extraheer frames voor AI analyse
-      let thumbnail = '';
-      let videoFrames: LabeledImage[] = [];
-
+    if (previewUrl) {
       try {
-        // Extraheer frames uit de video voor AI analyse
-        videoFrames = await extractVideoFrames(capturedBlob);
-
-        // Gebruik eerste frame als thumbnail
-        if (videoFrames.length > 0) {
-          thumbnail = videoFrames[0].thumbnail;
-        }
+        const img = new Image();
+        img.src = previewUrl;
+        await Promise.race([
+          new Promise<void>((resolve, reject) => {
+            img.onload = () => resolve();
+            img.onerror = () => reject(new Error('Image load failed'));
+          }),
+          new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+        ]);
+        thumbnail = await createThumbnail(img);
       } catch (err) {
-        console.error('Could not extract video frames:', err);
-
-        // Fallback: probeer alleen thumbnail te maken
-        if (previewUrl) {
-          try {
-            const video = document.createElement('video');
-            video.src = previewUrl;
-            video.muted = true;
-            video.playsInline = true;
-
-            await Promise.race([
-              new Promise<void>((resolve, reject) => {
-                video.onloadeddata = () => resolve();
-                video.onerror = () => reject(new Error('Video load failed'));
-                video.load();
-              }),
-              new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
-            ]);
-
-            video.currentTime = 0.1;
-
-            await Promise.race([
-              new Promise<void>((resolve) => {
-                video.onseeked = () => resolve();
-              }),
-              new Promise<void>((resolve) => setTimeout(resolve, 2000))
-            ]);
-
-            thumbnail = await createThumbnail(video);
-          } catch (thumbErr) {
-            console.error('Could not create video thumbnail:', thumbErr);
-          }
-        }
+        console.error('Could not create image thumbnail:', err);
       }
-
-      onCapture({
-        type: 'video',
-        videoBlob: capturedBlob,
-        videoFrames: videoFrames.length > 0 ? videoFrames : undefined,
-        thumbnail,
-      });
-    } else {
-      // Foto thumbnail
-      let thumbnail = '';
-
-      if (previewUrl) {
-        try {
-          const img = new Image();
-          img.src = previewUrl;
-          await Promise.race([
-            new Promise<void>((resolve, reject) => {
-              img.onload = () => resolve();
-              img.onerror = () => reject(new Error('Image load failed'));
-            }),
-            new Promise<void>((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
-          ]);
-          thumbnail = await createThumbnail(img);
-        } catch (err) {
-          console.error('Could not create image thumbnail:', err);
-        }
-      }
-
-      onCapture({
-        type: 'photo',
-        blob: capturedBlob,
-        thumbnail,
-      });
     }
-  }, [capturedBlob, previewUrl, mode, onCapture]);
+
+    onCapture({
+      type: 'photo',
+      blob: capturedBlob,
+      thumbnail,
+    });
+  }, [capturedBlob, previewUrl, onCapture]);
 
   const handleAddToMulti = useCallback(async () => {
     if (!capturedBlob || !previewUrl) return;
@@ -456,17 +232,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   }, [capturedBlob, previewUrl, currentLabel, multiImages]);
 
   const handleConfirmMulti = useCallback(async () => {
-    if (multiImages.length === 0 && !multiVideo) return;
+    if (multiImages.length === 0) return;
 
-    let videoFrames: LabeledImage[] | undefined;
-
-    // Extract frames uit video als die er is
-    if (multiVideo) {
-      videoFrames = await extractVideoFrames(multiVideo.blob);
-    }
-
-    // Gebruik eerste foto of video thumbnail als hoofdthumbnail
-    const thumbnail = multiImages[0]?.thumbnail || multiVideo?.thumbnail || '';
+    // Gebruik eerste foto thumbnail als hoofdthumbnail
+    const thumbnail = multiImages[0]?.thumbnail || '';
 
     // Reset multi-photo mode
     setIsInMultiPhotoMode(false);
@@ -474,11 +243,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     onCapture({
       type: 'multi-photo',
       images: multiImages,
-      videoBlob: multiVideo?.blob,
-      videoFrames,
       thumbnail,
     });
-  }, [multiImages, multiVideo, onCapture]);
+  }, [multiImages, onCapture]);
 
   const handleRetake = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -594,87 +361,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     document.addEventListener('touchend', onEnd);
   }, [cropBox]);
 
-  // Extract frames uit video voor AI analyse (8 frames verspreid over de video)
-  const extractVideoFrames = async (videoBlob: Blob): Promise<LabeledImage[]> => {
-    const video = document.createElement('video');
-    video.src = URL.createObjectURL(videoBlob);
-    video.muted = true;
-
-    await new Promise<void>((resolve) => {
-      video.onloadedmetadata = () => resolve();
-      video.load();
-    });
-
-    const duration = video.duration;
-    const frames: LabeledImage[] = [];
-
-    // 8 frames verspreid over de video (met marge aan begin en eind)
-    const frameCount = 8;
-    const startMargin = 0.1;
-    const endMargin = 0.1;
-    const usableDuration = Math.max(0.1, duration - startMargin - endMargin);
-
-    const timePoints = Array.from({ length: frameCount }, (_, i) =>
-      startMargin + (usableDuration * i) / (frameCount - 1)
-    );
-
-    const labels: LabeledImage['label'][] = ['frame1', 'frame2', 'frame3', 'frame4', 'frame5', 'frame6', 'frame7', 'frame8'];
-
-    for (let i = 0; i < timePoints.length; i++) {
-      video.currentTime = Math.max(0, Math.min(timePoints[i], duration));
-
-      await new Promise<void>((resolve) => {
-        video.onseeked = () => resolve();
-      });
-
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) continue;
-
-      ctx.drawImage(video, 0, 0);
-
-      const blob = await new Promise<Blob | null>((resolve) => {
-        canvas.toBlob(resolve, 'image/jpeg', 0.85);
-      });
-
-      if (blob) {
-        const thumbnail = await createThumbnail(video);
-        frames.push({
-          label: labels[i],
-          blob,
-          thumbnail,
-        });
-      }
-    }
-
-    URL.revokeObjectURL(video.src);
-    return frames;
-  };
-
   // Compressie loading scherm
   if (isCompressing) {
     return (
       <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
         <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-        <h2 className="text-lg font-semibold text-center">Bestand verkleinen...</h2>
+        <h2 className="text-lg font-semibold text-center">Foto verkleinen...</h2>
         <p className="text-stone-600 text-sm text-center">
-          Het bestand is groter dan 5 MB en wordt gecomprimeerd
+          De foto is groter dan 5 MB en wordt gecomprimeerd
         </p>
-        {compressProgress > 0 && (
-          <div className="w-full max-w-xs">
-            <div className="bg-stone-200 rounded-full h-2">
-              <div
-                className="bg-amber-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${Math.round(compressProgress * 100)}%` }}
-              />
-            </div>
-            <p className="text-center text-xs text-stone-500 mt-1">
-              {Math.round(compressProgress * 100)}%
-            </p>
-          </div>
-        )}
       </div>
     );
   }
@@ -729,91 +424,47 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
           </button>
 
-          {/* Video - opent native camera */}
+          {/* Elegante divider */}
+          <div className="flex items-center gap-3 my-4">
+            <div className="flex-1 h-px bg-stone-200" />
+            <span className="text-xs text-stone-400 font-medium">of kies bestaande foto</span>
+            <div className="flex-1 h-px bg-stone-200" />
+          </div>
+
+          {/* Upload knop */}
           <button
-            onClick={() => {
-              setIsInMultiPhotoMode(false);
-              videoInputRef.current?.click();
-            }}
+            onClick={() => uploadPhotoInputRef.current?.click()}
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
-            <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
-              <svg className="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
+              <svg className="w-7 h-7 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
             <div className="text-left flex-1">
-              <span className="font-semibold text-stone-900 block">Video opnemen</span>
-              <span className="text-sm text-stone-500">360° rondom met telefoon camera</span>
+              <span className="font-semibold text-stone-900 block">Foto uploaden</span>
+              <span className="text-sm text-stone-500">Kies een bestaande foto</span>
             </div>
             <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
 
-          {/* Elegante divider */}
-          <div className="flex items-center gap-3 my-4">
-            <div className="flex-1 h-px bg-stone-200" />
-            <span className="text-xs text-stone-400 font-medium">of kies bestaand bestand</span>
-            <div className="flex-1 h-px bg-stone-200" />
-          </div>
-
-          {/* Upload knoppen */}
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={() => uploadPhotoInputRef.current?.click()}
-              className="p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex flex-col items-center gap-2"
-            >
-              <div className="w-10 h-10 bg-stone-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <span className="text-sm font-medium text-stone-700">Foto uploaden</span>
-            </button>
-            <button
-              onClick={() => uploadVideoInputRef.current?.click()}
-              className="p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex flex-col items-center gap-2"
-            >
-              <div className="w-10 h-10 bg-stone-100 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <span className="text-sm font-medium text-stone-700">Video uploaden</span>
-            </button>
-          </div>
-
-          {/* Native camera inputs (met capture voor telefoon camera) */}
+          {/* Native camera input (met capture voor telefoon camera) */}
           <input
             ref={photoInputRef}
             type="file"
             accept="image/*"
             capture="environment"
-            onChange={(e) => handleFileSelect(e, false)}
+            onChange={handleFileSelect}
             className="hidden"
           />
-          <input
-            ref={videoInputRef}
-            type="file"
-            accept="video/*"
-            capture="environment"
-            onChange={(e) => handleFileSelect(e, true)}
-            className="hidden"
-          />
-          {/* Upload inputs (zonder capture, opent galerij) */}
+          {/* Upload input (zonder capture, opent galerij) */}
           <input
             ref={uploadPhotoInputRef}
             type="file"
             accept="image/*"
-            onChange={(e) => handleFileSelect(e, false)}
-            className="hidden"
-          />
-          <input
-            ref={uploadVideoInputRef}
-            type="file"
-            accept="video/*"
-            onChange={(e) => handleFileSelect(e, true)}
+            onChange={handleFileSelect}
             className="hidden"
           />
         </div>
@@ -823,8 +474,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   // Multi-photo modus
   if (mode === 'multi-photo') {
-    const multiVideoInputId = 'multi-video-input';
-
     return (
       <div className="flex flex-col h-full">
         <div className="bg-stone-800 p-3 shrink-0">
@@ -874,7 +523,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                         capture="environment"
                         onChange={(e) => {
                           setCurrentLabel(key);
-                          handleFileSelect(e, false);
+                          handleFileSelect(e);
                         }}
                         className="hidden"
                       />
@@ -885,52 +534,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             })}
           </div>
 
-          {/* Video sectie */}
-          <div className="mb-4">
-            <p className="text-xs text-stone-500 mb-2 font-medium">VIDEO (OPTIONEEL)</p>
-            {multiVideo ? (
-              <div className="relative border-2 border-green-500 rounded-lg overflow-hidden">
-                <img src={multiVideo.thumbnail} alt="Video" className="w-full h-24 object-cover" />
-                <button
-                  onClick={() => setMultiVideo(null)}
-                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
-                >
-                  ×
-                </button>
-                <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center flex items-center justify-center gap-1">
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Video opgenomen
-                </div>
-              </div>
-            ) : (
-              <label
-                htmlFor={multiVideoInputId}
-                className="w-full border-2 border-dashed border-stone-300 rounded-lg p-4 flex items-center justify-center gap-2 text-stone-400 hover:bg-stone-100 cursor-pointer"
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                <span className="text-sm">Video toevoegen</span>
-                <input
-                  id={multiVideoInputId}
-                  type="file"
-                  accept="video/*"
-                  capture="environment"
-                  onChange={(e) => handleFileSelect(e, true, true)}
-                  className="hidden"
-                />
-              </label>
-            )}
-            <p className="text-xs text-stone-400 mt-1 text-center">
-              AI haalt automatisch frames uit de video
-            </p>
-          </div>
-
           <p className="text-xs text-stone-500 text-center">
-            Minimaal 1 foto of video nodig. Meer = betere determinatie.
+            Minimaal 1 foto nodig. Meer foto's = betere determinatie.
           </p>
         </div>
 
@@ -938,7 +543,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           <button
             onClick={() => {
               setMultiImages([]);
-              setMultiVideo(null);
               setIsInMultiPhotoMode(false);
               setMode('select');
             }}
@@ -948,10 +552,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </button>
           <button
             onClick={handleConfirmMulti}
-            disabled={multiImages.length === 0 && !multiVideo}
+            disabled={multiImages.length === 0}
             className="btn-success flex-1 disabled:opacity-50"
           >
-            Doorgaan ({multiImages.length} foto's{multiVideo ? ' + video' : ''})
+            Doorgaan ({multiImages.length} foto's)
           </button>
         </div>
       </div>
@@ -1037,41 +641,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               </button>
             </div>
           )}
-        </div>
-      </div>
-    );
-  }
-
-  // Preview video
-  if (mode === 'preview-video') {
-    return (
-      <div className="flex flex-col h-full">
-        <div className="flex-1 bg-black flex items-center justify-center p-4 min-h-0">
-          {previewUrl ? (
-            <video
-              src={previewUrl}
-              controls
-              autoPlay
-              playsInline
-              className="max-h-full max-w-full"
-            />
-          ) : (
-            <p className="text-white">Video laden...</p>
-          )}
-        </div>
-        <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0">
-          <div className="flex gap-2">
-            <button onClick={handleRetake} className="btn-secondary flex-1 py-3">
-              Opnieuw
-            </button>
-            <button
-              onClick={handleConfirmSingle}
-              disabled={!capturedBlob}
-              className="btn-success flex-1 py-3 disabled:opacity-50"
-            >
-              Gebruiken
-            </button>
-          </div>
         </div>
       </div>
     );

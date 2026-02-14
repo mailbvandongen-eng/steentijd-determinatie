@@ -4,6 +4,8 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.6', date: '14 feb 2026', changes: ['Links naar AWN Werkgroep Steentijd toegevoegd', 'Informatie over determinatie-algoritme en vondstkaart'] },
+  { version: '1.1.5', date: '14 feb 2026', changes: ['Vereenvoudigde interface: alleen foto\'s', 'Video-analyse komt later met zelflerende AI'] },
   { version: '1.1.4', date: '13 feb 2026', changes: ['Altijd native telefoon camera (met zoom en scherpstelling)', 'Stabielere video opname'] },
   { version: '1.1.3', date: '13 feb 2026', changes: ['Uitleg over werking en toekomst toegevoegd', 'Subtielere UI voor voltooide determinaties', 'Beeldmateriaal viewer bij resultaten', 'Opnieuw determineren met bestaande foto\'s', '8 video frames (selecteer er 5 voor analyse)'] },
   { version: '1.1.2', date: '13 feb 2026', changes: ['Fix: video analyse werkt nu correct', 'Automatische frame extractie uit video voor AI'] },
@@ -76,19 +78,53 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
               </ul>
             </section>
 
-            <section className="bg-stone-50 rounded-xl p-3">
-              <p className="text-xs text-stone-600">
-                <strong>Let op:</strong> Dit is een hulpmiddel voor determinatie.
-                Raadpleeg bij twijfel altijd een expert van de AWN Landelijke Werkgroep Steentijd.
-              </p>
+            {/* AWN Werkgroep Steentijd */}
+            <section className="bg-stone-50 rounded-xl p-3 border border-stone-200">
+              <h3 className="text-sm font-semibold text-stone-800 mb-2">AWN Werkgroep Steentijd</h3>
+              <div className="text-xs text-stone-600 space-y-2">
+                <p>
+                  Deze app is gebaseerd op het <strong>determinatie-algoritme</strong> van de
+                  AWN Landelijke Werkgroep Steentijd. De werkgroep staat open voor iedereen
+                  met interesse in prehistorische stenen artefacten — van beginner tot expert.
+                </p>
+                <div className="space-y-1.5 mt-3">
+                  <a
+                    href="https://awn-archeologie.nl/werkgroep/steentijd/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors"
+                  >
+                    <span className="text-stone-400">→</span>
+                    <span>Over de werkgroep</span>
+                  </a>
+                  <a
+                    href="https://awn-archeologie.nl/werkgroep/steentijd/determinatie/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors"
+                  >
+                    <span className="text-stone-400">→</span>
+                    <span>Determinatie-algoritme</span>
+                  </a>
+                  <a
+                    href="https://awn-archeologie.nl/werkgroep/steentijd/vondstkaart/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors"
+                  >
+                    <span className="text-stone-400">→</span>
+                    <span>Vondstkaart Nederland</span>
+                  </a>
+                </div>
+              </div>
             </section>
 
             {/* Over dit project */}
-            <section className="bg-blue-50 rounded-xl p-3 border border-blue-200">
-              <h3 className="text-sm font-semibold text-blue-800 mb-2">Over dit project</h3>
-              <div className="text-xs text-blue-700 space-y-2">
+            <section className="bg-stone-50 rounded-xl p-3 border border-stone-200">
+              <h3 className="text-sm font-semibold text-stone-800 mb-2">Over deze app</h3>
+              <div className="text-xs text-stone-600 space-y-2">
                 <p>
-                  <strong>Proof of Concept</strong> — Dit is een experimentele app om te onderzoeken
+                  <strong>Proof of Concept</strong> — Experimentele app om te onderzoeken
                   of AI-gestuurde determinatie van stenen artefacten haalbaar en nuttig is.
                 </p>
                 <p>
@@ -98,15 +134,20 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   niet getraind door gebruik van deze app.
                 </p>
                 <p>
-                  <strong>Toekomstmogelijkheden</strong> — Bij voldoende potentie kan dit uitgebreid worden naar:
+                  <strong>Transparantie</strong> — Via het menu (☰) kun je de volledige AI-query
+                  bekijken die naar het model wordt gestuurd.
                 </p>
-                <ul className="list-disc list-inside ml-2 space-y-0.5">
-                  <li>Een trainbaar model specifiek voor steentijdartefacten</li>
-                  <li>Database met geverifieerde determinaties als referentie</li>
-                  <li>Betere herkenning door meer trainingsdata</li>
-                  <li>Integratie met bestaande archeologische databases</li>
-                </ul>
+                <p className="text-stone-500 pt-1">
+                  <strong>Toekomst:</strong> trainbaar model, referentiedatabase, video-analyse met zelflerende AI.
+                </p>
               </div>
+            </section>
+
+            <section className="rounded-xl p-3 border border-amber-200 bg-amber-50/50">
+              <p className="text-xs text-amber-800">
+                <strong>Let op:</strong> Dit is een hulpmiddel. Raadpleeg bij twijfel
+                altijd een expert van de AWN Werkgroep Steentijd.
+              </p>
             </section>
 
             {/* Changelog */}
