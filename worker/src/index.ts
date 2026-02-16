@@ -26,6 +26,7 @@ export default {
     // Get URL path to determine action
     const url = new URL(request.url);
     const isSketchRequest = url.pathname === '/sketch';
+    const isTestOpenAI = url.pathname === '/test-openai';
 
     // Get client IP for rate limiting
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
@@ -52,7 +53,9 @@ export default {
 
     try {
       // Route to appropriate handler
-      if (isSketchRequest) {
+      if (isTestOpenAI) {
+        return await handleTestOpenAI(env);
+      } else if (isSketchRequest) {
         return await handleSketchRequest(request, env, rateLimitKey, currentCount);
       } else {
         return await handleAnalysisRequest(request, env, rateLimitKey, currentCount);
@@ -70,6 +73,56 @@ export default {
     }
   },
 };
+
+// Test OpenAI connection
+async function handleTestOpenAI(env: Env): Promise<Response> {
+  if (!env.OPENAI_API_KEY) {
+    return new Response(
+      JSON.stringify({ ok: false, error: 'OPENAI_API_KEY not configured' }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // Simple completion test (no vision)
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        max_tokens: 10,
+        messages: [{ role: 'user', content: 'Say "test ok"' }],
+      }),
+    });
+
+    const text = await response.text();
+    let data: unknown;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = text;
+    }
+
+    return new Response(
+      JSON.stringify({
+        ok: response.ok,
+        status: response.status,
+        keyLength: env.OPENAI_API_KEY.length,
+        keyPrefix: env.OPENAI_API_KEY.substring(0, 7),
+        response: data,
+      }),
+      { status: 200, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ ok: false, error: String(err) }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+}
 
 // Handle Claude analysis requests (existing functionality)
 async function handleAnalysisRequest(
@@ -214,10 +267,37 @@ Geef een beknopte maar gedetailleerde beschrijving (max 100 woorden) die een tek
   console.log('Vision API response status:', visionResponse.status);
 
   if (!visionResponse.ok) {
-    const errorResult = await safeJsonParse(visionResponse, 'Vision API error');
-    const errorDetails = errorResult.ok ? errorResult.data : errorResult.error;
+    // Try to get any response text for debugging
+    let errorText = '';
+    try {
+      errorText = await visionResponse.text();
+    } catch {
+      errorText = 'Could not read response';
+    }
+    console.log('Vision API error response:', errorText || '(empty)');
+
+    // Try to parse as JSON
+    let errorDetails: unknown = `HTTP ${visionResponse.status}`;
+    if (errorText) {
+      try {
+        errorDetails = JSON.parse(errorText);
+      } catch {
+        errorDetails = errorText;
+      }
+    }
+
+    // Check for common OpenAI errors
+    const errorObj = errorDetails as { error?: { message?: string; type?: string; code?: string } };
+    const errorMessage = errorObj?.error?.message || `OpenAI API error: status ${visionResponse.status}`;
+
     return new Response(
-      JSON.stringify({ error: { message: 'Fout bij analyseren afbeelding', details: errorDetails } }),
+      JSON.stringify({
+        error: {
+          message: `Fout bij analyseren afbeelding: ${errorMessage}`,
+          details: errorDetails,
+          status: visionResponse.status
+        }
+      }),
       { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   }
@@ -260,10 +340,34 @@ Style: Scientific archaeological pencil drawing on white background. Black and w
   console.log('DALL-E API response status:', dalleResponse.status);
 
   if (!dalleResponse.ok) {
-    const errorResult = await safeJsonParse(dalleResponse, 'DALL-E API error');
-    const errorDetails = errorResult.ok ? errorResult.data : errorResult.error;
+    let errorText = '';
+    try {
+      errorText = await dalleResponse.text();
+    } catch {
+      errorText = 'Could not read response';
+    }
+    console.log('DALL-E API error response:', errorText || '(empty)');
+
+    let errorDetails: unknown = `HTTP ${dalleResponse.status}`;
+    if (errorText) {
+      try {
+        errorDetails = JSON.parse(errorText);
+      } catch {
+        errorDetails = errorText;
+      }
+    }
+
+    const errorObj = errorDetails as { error?: { message?: string } };
+    const errorMessage = errorObj?.error?.message || `DALL-E API error: status ${dalleResponse.status}`;
+
     return new Response(
-      JSON.stringify({ error: { message: 'Fout bij genereren tekening', details: errorDetails } }),
+      JSON.stringify({
+        error: {
+          message: `Fout bij genereren tekening: ${errorMessage}`,
+          details: errorDetails,
+          status: dalleResponse.status
+        }
+      }),
       { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   }
