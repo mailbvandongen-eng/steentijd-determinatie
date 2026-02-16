@@ -342,12 +342,12 @@ Genereer de tekening.`,
     }
   }
 
+  // Get text description from GPT-4o response (used for DALL-E fallback and response)
+  const description = typeof messageContent === 'string' ? messageContent : 'stone artifact';
+
   // If GPT-4o doesn't support native image generation via API, fall back to DALL-E 3
   if (!sketchBase64) {
     console.log('GPT-4o did not return an image, falling back to DALL-E 3');
-
-    // Get text description from GPT-4o response
-    const description = typeof messageContent === 'string' ? messageContent : 'stone artifact';
 
     const dallePrompt = `Technical archaeological line drawing of this exact stone artifact: ${description}
 
