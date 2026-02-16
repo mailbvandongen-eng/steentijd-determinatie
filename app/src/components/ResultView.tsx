@@ -449,33 +449,61 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           </div>
         )}
 
-        {/* Doorlopen pad */}
+        {/* AI Analyse details */}
         <div className="px-4 pb-4">
           <div className="card">
-            <h3 className="text-sm text-stone-500 mb-3">Doorlopen stappen ({session.steps.length})</h3>
-            <div className="space-y-2">
-              {session.steps.map((step, index) => (
-                <div
-                  key={index}
-                  className={`flex items-start gap-2 p-2 rounded ${
-                    step.answer === 'ja' ? 'bg-green-50' : 'bg-red-50'
-                  }`}
-                >
-                  <span
-                    className={`text-xs font-bold px-2 py-1 rounded ${
-                      step.answer === 'ja'
-                        ? 'bg-green-200 text-green-800'
-                        : 'bg-red-200 text-red-800'
-                    }`}
-                  >
-                    {step.answer.toUpperCase()}
+            <h3 className="text-sm text-stone-500 mb-3">AI Analyse</h3>
+            <div className="space-y-3">
+              {/* Periode */}
+              {session.result?.period && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-stone-500 w-24">Periode:</span>
+                  <span className="text-sm text-stone-700">{session.result.period}</span>
+                </div>
+              )}
+
+              {/* Betrouwbaarheid */}
+              {session.result?.confidence && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-stone-500 w-24">Zekerheid:</span>
+                  <span className={`text-xs font-bold px-2 py-1 rounded ${
+                    session.result.confidence === 'hoog'
+                      ? 'bg-green-100 text-green-800'
+                      : session.result.confidence === 'gemiddeld'
+                      ? 'bg-amber-100 text-amber-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}>
+                    {session.result.confidence.toUpperCase()}
                   </span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-stone-500">Vraag {step.questionId}</p>
-                    <p className="text-sm text-stone-700 truncate">{step.questionText}</p>
+                </div>
+              )}
+
+              {/* Kenmerken */}
+              {session.result?.characteristics && session.result.characteristics.length > 0 && (
+                <div>
+                  <span className="text-xs font-medium text-stone-500 block mb-1">Gevonden kenmerken:</span>
+                  <div className="space-y-1">
+                    {session.result.characteristics.map((char, idx) => (
+                      <div key={idx} className="flex items-start gap-2 p-2 bg-stone-50 rounded">
+                        <span className="text-amber-600 text-xs">•</span>
+                        <span className="text-sm text-stone-700">{char}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+              )}
+
+              {/* Volledige analyse (uitklapbaar) */}
+              {session.result?.fullAnalysis && (
+                <details className="mt-2">
+                  <summary className="text-xs text-amber-600 hover:text-amber-700 cursor-pointer font-medium">
+                    Volledige AI-analyse bekijken
+                  </summary>
+                  <div className="mt-2 p-3 bg-stone-50 rounded text-xs text-stone-600 whitespace-pre-wrap max-h-60 overflow-y-auto">
+                    {session.result.fullAnalysis}
+                  </div>
+                </details>
+              )}
             </div>
           </div>
         </div>
