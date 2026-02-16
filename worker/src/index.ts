@@ -227,7 +227,7 @@ async function handleSketchRequest(
 
   console.log('Image data received, length:', imageBase64.length, 'starts with:', imageBase64.substring(0, 30));
 
-  // Use GPT-4o with native image generation (like ChatGPT does)
+  // Use GPT-4o with native image generation via modalities parameter
   // This allows the model to SEE the original image and generate a drawing based on it
   const imageGenResponse = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -237,6 +237,7 @@ async function handleSketchRequest(
     },
     body: JSON.stringify({
       model: 'gpt-4o',
+      modalities: ['text', 'image'],
       max_tokens: 4096,
       messages: [
         {
@@ -260,7 +261,7 @@ Kenmerken van de tekening:
 - Witte achtergrond
 - Dezelfde vorm en oriëntatie als op de foto
 
-Genereer de tekening.`,
+Genereer de tekening als afbeelding.`,
             },
           ],
         },
@@ -315,12 +316,17 @@ Genereer de tekening.`,
   const gptResult = responseParseResult.data as {
     choices: Array<{
       message: {
-        content: string | Array<{ type: string; image_url?: { url: string }; text?: string }>;
+        content: string | Array<{
+          type: string;
+          image_url?: { url: string };
+          image?: { url: string; b64_json?: string };
+          text?: string;
+        }>;
       };
     }>;
   };
 
-  console.log('GPT-4o result:', JSON.stringify(gptResult).substring(0, 500));
+  console.log('GPT-4o result:', JSON.stringify(gptResult).substring(0, 1000));
 
   // Try to extract image from the response
   let sketchBase64: string | undefined;
@@ -329,13 +335,28 @@ Genereer de tekening.`,
   if (Array.isArray(messageContent)) {
     // Multi-modal response with image
     for (const part of messageContent) {
+      // Check various image formats that OpenAI might return
       if (part.type === 'image_url' && part.image_url?.url) {
         const imageUrl = part.image_url.url;
         if (imageUrl.startsWith('data:image')) {
-          // Extract base64 from data URL
           const base64Match = imageUrl.match(/base64,(.+)/);
           if (base64Match) {
             sketchBase64 = base64Match[1];
+            break;
+          }
+        }
+      }
+      // New format with image object
+      if (part.type === 'image' && part.image) {
+        if (part.image.b64_json) {
+          sketchBase64 = part.image.b64_json;
+          break;
+        }
+        if (part.image.url?.startsWith('data:image')) {
+          const base64Match = part.image.url.match(/base64,(.+)/);
+          if (base64Match) {
+            sketchBase64 = base64Match[1];
+            break;
           }
         }
       }
