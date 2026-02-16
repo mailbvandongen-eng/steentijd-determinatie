@@ -227,7 +227,7 @@ async function handleSketchRequest(
 
   console.log('Image data received, length:', imageBase64.length, 'starts with:', imageBase64.substring(0, 30));
 
-  // Use gpt-image-1 with input image for image-to-image generation
+  // Use gpt-image-1 with correct input structure (like ChatGPT suggested)
   // Extract pure base64 without data URL prefix
   const pureBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
 
@@ -263,7 +263,37 @@ IMPORTANT:
 - Use the photo as strict visual reference.
 - Accuracy over aesthetics.`;
 
-  console.log('Attempting gpt-image-1 with image input, base64 length:', pureBase64.length);
+  console.log('=== IMAGE GENERATION DEBUG ===');
+  console.log('Base64 length:', pureBase64.length);
+  console.log('Base64 starts with:', pureBase64.substring(0, 50));
+
+  // Try the correct gpt-image-1 structure with input array
+  const requestBody = {
+    model: 'gpt-image-1',
+    input: [
+      {
+        role: 'user',
+        content: [
+          {
+            type: 'input_image',
+            image_url: imageBase64.startsWith('data:') ? imageBase64 : `data:image/jpeg;base64,${imageBase64}`,
+          },
+          {
+            type: 'input_text',
+            text: prompt,
+          },
+        ],
+      },
+    ],
+    n: 1,
+    size: '1024x1024',
+  };
+
+  console.log('Request body structure:', JSON.stringify({
+    model: requestBody.model,
+    input_length: requestBody.input.length,
+    content_types: requestBody.input[0].content.map((c: {type: string}) => c.type),
+  }));
 
   const imageGenResponse = await fetch('https://api.openai.com/v1/images/generations', {
     method: 'POST',
@@ -271,19 +301,13 @@ IMPORTANT:
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
     },
-    body: JSON.stringify({
-      model: 'gpt-image-1',
-      prompt: prompt,
-      image: pureBase64,
-      n: 1,
-      size: '1024x1024',
-    }),
+    body: JSON.stringify(requestBody),
   });
 
   console.log('gpt-image-1 response status:', imageGenResponse.status);
 
   let sketchBase64: string | undefined;
-  let description = 'archaeological stone artifact';
+  const description = 'archaeological stone artifact';
 
   if (!imageGenResponse.ok) {
     let errorText = '';
@@ -294,7 +318,7 @@ IMPORTANT:
     }
     console.log('gpt-image-1 error response:', errorText || '(empty)');
 
-    // Parse error to check if model not available
+    // Parse error to check what went wrong
     let errorDetails: unknown;
     try {
       errorDetails = JSON.parse(errorText);
@@ -305,65 +329,22 @@ IMPORTANT:
     const errorObj = errorDetails as { error?: { message?: string; code?: string } };
     console.log('Error details:', JSON.stringify(errorObj));
 
-    // If gpt-image-1 not available, fall back to DALL-E 3
-    console.log('gpt-image-1 failed, falling back to DALL-E 3');
-
-    // First get a description using GPT-4o-mini
-    const descResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        max_tokens: 300,
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'image_url', image_url: { url: imageBase64.startsWith('data:') ? imageBase64 : `data:image/jpeg;base64,${imageBase64}` } },
-            { type: 'text', text: 'Describe this stone artifact in detail: exact shape, outline, surface features, flake scars, cortex areas. Be very specific about proportions and orientation. Max 100 words.' }
-          ]
-        }]
+    // NO FALLBACK - return the actual error so we can debug
+    return new Response(
+      JSON.stringify({
+        error: {
+          message: `gpt-image-1 failed: ${errorObj?.error?.message || 'Unknown error'}`,
+          details: errorObj,
+          status: imageGenResponse.status,
+          debug: {
+            base64_length: pureBase64.length,
+            model_used: 'gpt-image-1',
+            fallback: false,
+          }
+        }
       }),
-    });
-
-    if (descResponse.ok) {
-      const descResult = await descResponse.json() as { choices: Array<{ message: { content: string } }> };
-      description = descResult.choices?.[0]?.message?.content || description;
-      console.log('Got description:', description.substring(0, 100));
-    }
-
-    const dallePrompt = `${prompt}
-
-The artifact looks like: ${description}`;
-
-    const dalleResponse = await fetch('https://api.openai.com/v1/images/generations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'dall-e-3',
-        prompt: dallePrompt,
-        n: 1,
-        size: '1024x1024',
-        quality: 'standard',
-        response_format: 'b64_json',
-      }),
-    });
-
-    if (!dalleResponse.ok) {
-      const dalleError = await dalleResponse.text().catch(() => '');
-      return new Response(
-        JSON.stringify({ error: { message: 'Fout bij genereren tekening', details: dalleError, original_error: errorObj } }),
-        { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const dalleResult = await dalleResponse.json() as { data: Array<{ b64_json: string }> };
-    sketchBase64 = dalleResult.data?.[0]?.b64_json;
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
   } else {
     // gpt-image-1 succeeded - parse the response
     const responseParseResult = await safeJsonParse(imageGenResponse, 'gpt-image-1 response');
