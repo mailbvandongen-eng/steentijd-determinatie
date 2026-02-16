@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.8', date: '16 feb 2026', changes: ['AI-gegenereerde archeologische tekeningen (via OpenAI)', 'Deel determinatie via WhatsApp of e-mail'] },
   { version: '1.1.6', date: '14 feb 2026', changes: ['Links naar AWN Werkgroep Steentijd toegevoegd', 'Informatie over determinatie-algoritme en vondstkaart'] },
   { version: '1.1.5', date: '14 feb 2026', changes: ['Vereenvoudigde interface: alleen foto\'s', 'Video-analyse komt later met zelflerende AI'] },
   { version: '1.1.4', date: '13 feb 2026', changes: ['Altijd native telefoon camera (met zoom en scherpstelling)', 'Stabielere video opname'] },
@@ -65,6 +66,8 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                 <StepItem number={1} title="Foto's maken" description="Maak meerdere foto's van je artefact (bovenkant, onderkant, zijkanten)" />
                 <StepItem number={2} title="AI Analyse" description="De AI analyseert je foto's met kennis van het AWN determinatie-algoritme" />
                 <StepItem number={3} title="Resultaat" description="Ontvang een determinatie met type, periode en beschrijving" />
+                <StepItem number={4} title="Tekening maken" description="Genereer een wetenschappelijke archeologische tekening van je artefact" />
+                <StepItem number={5} title="Delen" description="Deel je determinatie inclusief foto's via WhatsApp of e-mail" />
               </div>
             </section>
 
