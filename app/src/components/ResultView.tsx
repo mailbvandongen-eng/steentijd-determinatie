@@ -28,6 +28,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   const [generatingSketch, setGeneratingSketch] = useState<string | null>(null);
   const [sketchError, setSketchError] = useState<string | null>(null);
   const [sketchProgress, setSketchProgress] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxShowDrawing, setLightboxShowDrawing] = useState(false);
 
   // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
   const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
@@ -291,9 +293,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                             <img
                               src={img.thumbnail}
                               alt={labelText}
-                              className="w-full aspect-square object-cover rounded-lg"
+                              className="w-full aspect-square object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                              onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(false); }}
                             />
-                            <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
+                            <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded pointer-events-none">
                               {labelText}
                             </div>
                           </div>
@@ -304,13 +307,14 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                               <img
                                 src={img.drawing}
                                 alt={`Tekening ${labelText}`}
-                                className="w-full aspect-square object-cover rounded-lg border border-stone-300"
+                                className="w-full aspect-square object-cover rounded-lg border border-stone-300 cursor-pointer hover:opacity-90 transition-opacity"
+                                onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(true); }}
                               />
-                              <div className="absolute bottom-1 left-1 bg-amber-600/80 text-white text-xs px-2 py-0.5 rounded">
+                              <div className="absolute bottom-1 left-1 bg-amber-600/80 text-white text-xs px-2 py-0.5 rounded pointer-events-none">
                                 Tekening
                               </div>
                               <button
-                                onClick={() => handleRemoveSketch(idx)}
+                                onClick={(e) => { e.stopPropagation(); handleRemoveSketch(idx); }}
                                 className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
                                 title="Verwijder tekening"
                               >
@@ -368,7 +372,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                   <img
                     src={session.input.thumbnail}
                     alt="Artefact"
-                    className="w-full max-w-xs mx-auto rounded-lg"
+                    className="w-full max-w-xs mx-auto rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                    onClick={() => { setLightboxIndex(0); setLightboxShowDrawing(false); }}
                   />
                   {/* Toon tekening knop ook bij enkele foto weergave */}
                   {allImages.length === 1 && (
@@ -527,6 +532,82 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           </button>
         </div>
       </div>
+
+      {/* Fullscreen Lightbox */}
+      {lightboxIndex !== null && allImages[lightboxIndex] && (
+        <div
+          className="fixed inset-0 z-50 bg-black flex flex-col"
+          onClick={() => setLightboxIndex(null)}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 text-white">
+            <span className="text-sm">
+              {lightboxIndex + 1} / {allImages.length}
+              {lightboxShowDrawing && allImages[lightboxIndex].drawing ? ' (Tekening)' : ' (Foto)'}
+            </span>
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
+              className="w-10 h-10 flex items-center justify-center text-2xl"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Image */}
+          <div
+            className="flex-1 flex items-center justify-center p-4 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxShowDrawing && allImages[lightboxIndex].drawing
+                ? allImages[lightboxIndex].drawing
+                : allImages[lightboxIndex].thumbnail}
+              alt={`Foto ${lightboxIndex + 1}`}
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+
+          {/* Controls */}
+          <div className="p-4 flex items-center justify-center gap-4">
+            {/* Vorige */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : allImages.length - 1);
+                setLightboxShowDrawing(false);
+              }}
+              className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/30"
+            >
+              ‹
+            </button>
+
+            {/* Toggle foto/tekening */}
+            {allImages[lightboxIndex].drawing && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxShowDrawing(!lightboxShowDrawing);
+                }}
+                className="px-4 py-2 rounded-full bg-white/20 text-white text-sm hover:bg-white/30"
+              >
+                {lightboxShowDrawing ? 'Toon foto' : 'Toon tekening'}
+              </button>
+            )}
+
+            {/* Volgende */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex(lightboxIndex < allImages.length - 1 ? lightboxIndex + 1 : 0);
+                setLightboxShowDrawing(false);
+              }}
+              className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/30"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
