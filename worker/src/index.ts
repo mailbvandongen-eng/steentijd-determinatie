@@ -267,32 +267,19 @@ IMPORTANT:
   console.log('Base64 length:', pureBase64.length);
   console.log('Base64 starts with:', pureBase64.substring(0, 50));
 
-  // Try the correct gpt-image-1 structure with input array
+  // Try gpt-image-1 with prompt + image fields
   const requestBody = {
     model: 'gpt-image-1',
-    input: [
-      {
-        role: 'user',
-        content: [
-          {
-            type: 'input_image',
-            image_url: imageBase64.startsWith('data:') ? imageBase64 : `data:image/jpeg;base64,${imageBase64}`,
-          },
-          {
-            type: 'input_text',
-            text: prompt,
-          },
-        ],
-      },
-    ],
+    prompt: prompt,
+    image: pureBase64,
     n: 1,
     size: '1024x1024',
   };
 
   console.log('Request body structure:', JSON.stringify({
     model: requestBody.model,
-    input_length: requestBody.input.length,
-    content_types: requestBody.input[0].content.map((c: {type: string}) => c.type),
+    prompt_length: requestBody.prompt.length,
+    image_length: requestBody.image.length,
   }));
 
   const imageGenResponse = await fetch('https://api.openai.com/v1/images/generations', {
