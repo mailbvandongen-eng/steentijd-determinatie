@@ -27,6 +27,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   const [showAllImages, setShowAllImages] = useState(false);
   const [generatingSketch, setGeneratingSketch] = useState<string | null>(null);
   const [sketchError, setSketchError] = useState<string | null>(null);
+  const [sketchProgress, setSketchProgress] = useState(0);
 
   // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
   const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
@@ -56,11 +57,22 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
     setGeneratingSketch(image.label);
     setSketchError(null);
+    setSketchProgress(0);
+
+    // Start progress timer (simuleer ~15 seconden)
+    const startTime = Date.now();
+    const progressInterval = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const progress = Math.min(95, Math.round((elapsed / 20) * 100));
+      setSketchProgress(progress);
+    }, 500);
 
     try {
       // Gebruik de thumbnail als bron (of blob indien beschikbaar)
       const source = image.thumbnail;
+      console.log('Start tekening generatie voor:', image.label);
       const sketchDataUrl = await createArchaeologicalSketch(source);
+      console.log('Tekening ontvangen, lengte:', sketchDataUrl?.length);
 
       // Update lokale state
       const updatedImages = [...localImages];
@@ -79,10 +91,13 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           },
         });
       }
+      setSketchProgress(100);
     } catch (err) {
       console.error('Tekening generatie mislukt:', err);
-      setSketchError('Kon geen tekening maken. Probeer het opnieuw.');
+      const errorMessage = err instanceof Error ? err.message : 'Onbekende fout';
+      setSketchError(`Fout: ${errorMessage}`);
     } finally {
+      clearInterval(progressInterval);
       setGeneratingSketch(null);
     }
   }, [localImages, generatingSketch, session]);
@@ -310,20 +325,31 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                           {!img.drawing ? (
                             <button
                               onClick={() => handleGenerateSketch(idx)}
-                              disabled={isGenerating}
-                              className="w-full py-2 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                              disabled={!!generatingSketch}
+                              className="w-full py-2 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex flex-col items-center justify-center gap-1 disabled:opacity-70"
                             >
                               {isGenerating ? (
                                 <>
-                                  <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                                  Tekening maken...
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                                    <span>AI tekent... {sketchProgress}%</span>
+                                  </div>
+                                  <div className="w-full bg-amber-200 rounded-full h-1.5 mt-1">
+                                    <div
+                                      className="bg-amber-600 h-1.5 rounded-full transition-all duration-500"
+                                      style={{ width: `${sketchProgress}%` }}
+                                    />
+                                  </div>
+                                  <span className="text-[10px] text-amber-500">Dit duurt 10-20 seconden</span>
                                 </>
                               ) : (
                                 <>
-                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                  </svg>
-                                  Maak tekening
+                                  <div className="flex items-center gap-2">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                    <span>Maak tekening</span>
+                                  </div>
                                 </>
                               )}
                             </button>
@@ -368,19 +394,30 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                         <button
                           onClick={() => handleGenerateSketch(0)}
                           disabled={generatingSketch !== null}
-                          className="w-full max-w-xs mx-auto py-2 text-sm font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                          className="w-full max-w-xs mx-auto py-3 text-sm font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex flex-col items-center justify-center gap-1 disabled:opacity-70"
                         >
                           {generatingSketch ? (
                             <>
-                              <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
-                              Tekening maken...
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                                <span>AI tekent... {sketchProgress}%</span>
+                              </div>
+                              <div className="w-full max-w-[200px] bg-amber-200 rounded-full h-1.5 mt-1">
+                                <div
+                                  className="bg-amber-600 h-1.5 rounded-full transition-all duration-500"
+                                  style={{ width: `${sketchProgress}%` }}
+                                />
+                              </div>
+                              <span className="text-xs text-amber-500">Dit duurt 10-20 seconden</span>
                             </>
                           ) : (
                             <>
-                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                              </svg>
-                              Maak archeologische tekening
+                              <div className="flex items-center gap-2">
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                                <span>Maak archeologische tekening</span>
+                              </div>
                             </>
                           )}
                         </button>
@@ -392,7 +429,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
               {/* Foutmelding */}
               {sketchError && (
-                <p className="text-xs text-red-500 text-center mt-2">{sketchError}</p>
+                <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-sm text-red-600 text-center">{sketchError}</p>
+                  <p className="text-xs text-red-400 text-center mt-1">Controleer je internetverbinding en probeer opnieuw</p>
+                </div>
               )}
 
               {hasMultipleImages && !showAllImages && (
