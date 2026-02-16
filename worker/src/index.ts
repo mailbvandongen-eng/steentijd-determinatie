@@ -227,31 +227,11 @@ async function handleSketchRequest(
 
   console.log('Image data received, length:', imageBase64.length, 'starts with:', imageBase64.substring(0, 30));
 
-  // Use GPT-4o with native image generation via modalities parameter
-  // This allows the model to SEE the original image and generate a drawing based on it
-  const imageGenResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o',
-      modalities: ['text', 'image'],
-      max_tokens: 4096,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'image_url',
-              image_url: {
-                url: imageBase64.startsWith('data:') ? imageBase64 : `data:image/jpeg;base64,${imageBase64}`,
-              },
-            },
-            {
-              type: 'text',
-              text: `Create a scientific archaeological pencil drawing based strictly on the attached photograph.
+  // Use gpt-image-1 with input image for image-to-image generation
+  // Extract pure base64 without data URL prefix
+  const pureBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+
+  const prompt = `Create a scientific archaeological pencil drawing based strictly on this photograph.
 
 OBJECT:
 - Single flint fragment.
@@ -281,16 +261,29 @@ BACKGROUND:
 
 IMPORTANT:
 - Use the photo as strict visual reference.
-- Accuracy over aesthetics.
-- Generate the drawing as an image.`,
-            },
-          ],
-        },
-      ],
+- Accuracy over aesthetics.`;
+
+  console.log('Attempting gpt-image-1 with image input, base64 length:', pureBase64.length);
+
+  const imageGenResponse = await fetch('https://api.openai.com/v1/images/generations', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-image-1',
+      prompt: prompt,
+      image: pureBase64,
+      n: 1,
+      size: '1024x1024',
     }),
   });
 
-  console.log('GPT-4o response status:', imageGenResponse.status);
+  console.log('gpt-image-1 response status:', imageGenResponse.status);
+
+  let sketchBase64: string | undefined;
+  let description = 'archaeological stone artifact';
 
   if (!imageGenResponse.ok) {
     let errorText = '';
@@ -299,108 +292,51 @@ IMPORTANT:
     } catch {
       errorText = 'Could not read response';
     }
-    console.log('GPT-4o error response:', errorText || '(empty)');
+    console.log('gpt-image-1 error response:', errorText || '(empty)');
 
-    let errorDetails: unknown = `HTTP ${imageGenResponse.status}`;
-    if (errorText) {
-      try {
-        errorDetails = JSON.parse(errorText);
-      } catch {
-        errorDetails = errorText;
-      }
+    // Parse error to check if model not available
+    let errorDetails: unknown;
+    try {
+      errorDetails = JSON.parse(errorText);
+    } catch {
+      errorDetails = errorText;
     }
 
-    const errorObj = errorDetails as { error?: { message?: string } };
-    const errorMessage = errorObj?.error?.message || `OpenAI API error: status ${imageGenResponse.status}`;
+    const errorObj = errorDetails as { error?: { message?: string; code?: string } };
+    console.log('Error details:', JSON.stringify(errorObj));
 
-    return new Response(
-      JSON.stringify({
-        error: {
-          message: `Fout bij genereren tekening: ${errorMessage}`,
-          details: errorDetails,
-          status: imageGenResponse.status
-        }
+    // If gpt-image-1 not available, fall back to DALL-E 3
+    console.log('gpt-image-1 failed, falling back to DALL-E 3');
+
+    // First get a description using GPT-4o-mini
+    const descResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        max_tokens: 300,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image_url', image_url: { url: imageBase64.startsWith('data:') ? imageBase64 : `data:image/jpeg;base64,${imageBase64}` } },
+            { type: 'text', text: 'Describe this stone artifact in detail: exact shape, outline, surface features, flake scars, cortex areas. Be very specific about proportions and orientation. Max 100 words.' }
+          ]
+        }]
       }),
-      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
-    );
-  }
+    });
 
-  const responseParseResult = await safeJsonParse(imageGenResponse, 'GPT-4o response');
-  if (!responseParseResult.ok) {
-    return new Response(
-      JSON.stringify({ error: { message: responseParseResult.error } }),
-      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
-    );
-  }
-
-  // Check if GPT-4o returned an image
-  const gptResult = responseParseResult.data as {
-    choices: Array<{
-      message: {
-        content: string | Array<{
-          type: string;
-          image_url?: { url: string };
-          image?: { url: string; b64_json?: string };
-          text?: string;
-        }>;
-      };
-    }>;
-  };
-
-  console.log('GPT-4o result:', JSON.stringify(gptResult).substring(0, 1000));
-
-  // Try to extract image from the response
-  let sketchBase64: string | undefined;
-  const messageContent = gptResult.choices?.[0]?.message?.content;
-
-  if (Array.isArray(messageContent)) {
-    // Multi-modal response with image
-    for (const part of messageContent) {
-      // Check various image formats that OpenAI might return
-      if (part.type === 'image_url' && part.image_url?.url) {
-        const imageUrl = part.image_url.url;
-        if (imageUrl.startsWith('data:image')) {
-          const base64Match = imageUrl.match(/base64,(.+)/);
-          if (base64Match) {
-            sketchBase64 = base64Match[1];
-            break;
-          }
-        }
-      }
-      // New format with image object
-      if (part.type === 'image' && part.image) {
-        if (part.image.b64_json) {
-          sketchBase64 = part.image.b64_json;
-          break;
-        }
-        if (part.image.url?.startsWith('data:image')) {
-          const base64Match = part.image.url.match(/base64,(.+)/);
-          if (base64Match) {
-            sketchBase64 = base64Match[1];
-            break;
-          }
-        }
-      }
+    if (descResponse.ok) {
+      const descResult = await descResponse.json() as { choices: Array<{ message: { content: string } }> };
+      description = descResult.choices?.[0]?.message?.content || description;
+      console.log('Got description:', description.substring(0, 100));
     }
-  }
 
-  // Get text description from GPT-4o response (used for DALL-E fallback and response)
-  const description = typeof messageContent === 'string' ? messageContent : 'stone artifact';
+    const dallePrompt = `${prompt}
 
-  // If GPT-4o doesn't support native image generation via API, fall back to DALL-E 3
-  if (!sketchBase64) {
-    console.log('GPT-4o did not return an image, falling back to DALL-E 3');
-
-    const dallePrompt = `Technical archaeological line drawing of this exact stone artifact: ${description}
-
-STRICT REQUIREMENTS:
-- ONLY the stone artifact, nothing else
-- NO hands, NO fingers, NO human body parts
-- White background
-- Black and white pencil drawing style
-- Cross-hatching for shading
-- Stippling for cortex texture
-- Museum-quality scientific illustration`;
+The artifact looks like: ${description}`;
 
     const dalleResponse = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
@@ -419,15 +355,46 @@ STRICT REQUIREMENTS:
     });
 
     if (!dalleResponse.ok) {
-      const errorText = await dalleResponse.text().catch(() => '');
+      const dalleError = await dalleResponse.text().catch(() => '');
       return new Response(
-        JSON.stringify({ error: { message: 'Fout bij genereren tekening', details: errorText } }),
+        JSON.stringify({ error: { message: 'Fout bij genereren tekening', details: dalleError, original_error: errorObj } }),
         { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
       );
     }
 
     const dalleResult = await dalleResponse.json() as { data: Array<{ b64_json: string }> };
     sketchBase64 = dalleResult.data?.[0]?.b64_json;
+  } else {
+    // gpt-image-1 succeeded - parse the response
+    const responseParseResult = await safeJsonParse(imageGenResponse, 'gpt-image-1 response');
+    if (!responseParseResult.ok) {
+      return new Response(
+        JSON.stringify({ error: { message: responseParseResult.error } }),
+        { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const imageResult = responseParseResult.data as {
+      data: Array<{ b64_json?: string; url?: string }>;
+    };
+
+    console.log('gpt-image-1 result keys:', Object.keys(imageResult));
+
+    // Extract base64 from response
+    const imageData = imageResult.data?.[0];
+    if (imageData?.b64_json) {
+      sketchBase64 = imageData.b64_json;
+    } else if (imageData?.url) {
+      // If URL returned, fetch and convert to base64
+      console.log('Got URL instead of b64, fetching...');
+      try {
+        const imgResponse = await fetch(imageData.url);
+        const imgBuffer = await imgResponse.arrayBuffer();
+        sketchBase64 = btoa(String.fromCharCode(...new Uint8Array(imgBuffer)));
+      } catch (e) {
+        console.log('Failed to fetch image URL:', e);
+      }
+    }
   }
 
   console.log('Sketch received, base64 length:', sketchBase64?.length || 0);
