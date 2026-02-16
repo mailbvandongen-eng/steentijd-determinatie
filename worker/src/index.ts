@@ -251,17 +251,38 @@ async function handleSketchRequest(
             },
             {
               type: 'text',
-              text: `Maak van deze vuursteen een mooie archeologische tekening zoals vuurstenen artefacten worden getekend in wetenschappelijke publicaties.
+              text: `Create a scientific archaeological pencil drawing based strictly on the attached photograph.
 
-Kenmerken van de tekening:
-- Potloodtekening stijl met mooie arcering
-- Cortex (schors) goed zichtbaar met stippen
-- Afslagvlakken met parallelle lijnen
-- ALLEEN de steen tekenen, NIET de hand of vingers
-- Witte achtergrond
-- Dezelfde vorm en oriëntatie als op de foto
+OBJECT:
+- Single flint fragment.
+- Maintain the exact outline and proportions from the photo.
+- Same orientation as the reference image.
+- Do not redesign, idealize, or improve the object.
+- DO NOT include hands, fingers, or any human body parts.
 
-Genereer de tekening als afbeelding.`,
+STYLE:
+- Black and white pencil illustration.
+- Scientific archaeological drawing style (publication standard).
+- Orthographic view (no perspective exaggeration).
+- No artistic or dramatic effects.
+
+SURFACE TREATMENT:
+- Cortex rendered using fine stippling (dot shading).
+- Flake scars rendered using light directional hatching.
+- Fresh flint surfaces lighter than cortex.
+- Follow actual flake scar directions visible in the photo.
+- Do not invent additional knapping patterns.
+- Do not exaggerate texture depth.
+
+BACKGROUND:
+- Plain white background.
+- No shadow beneath object.
+- No artistic lighting.
+
+IMPORTANT:
+- Use the photo as strict visual reference.
+- Accuracy over aesthetics.
+- Generate the drawing as an image.`,
             },
           ],
         },
