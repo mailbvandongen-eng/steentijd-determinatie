@@ -227,9 +227,21 @@ async function handleSketchRequest(
 
   console.log('Image data received, length:', imageBase64.length, 'starts with:', imageBase64.substring(0, 30));
 
-  // Use gpt-image-1 with correct input structure (like ChatGPT suggested)
-  // Extract pure base64 without data URL prefix
+  // Extract pure base64 and determine mime type
+  const mimeMatch = imageBase64.match(/^data:(image\/\w+);base64,/);
+  const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
   const pureBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+
+  // Convert base64 to binary array
+  const binaryString = atob(pureBase64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+
+  // Create Blob from binary data
+  const imageBlob = new Blob([bytes], { type: mimeType });
+  console.log('Image blob created, size:', imageBlob.size, 'type:', imageBlob.type);
 
   const prompt = `Create a scientific archaeological pencil drawing based strictly on this photograph.
 
@@ -263,35 +275,27 @@ IMPORTANT:
 - Use the photo as strict visual reference.
 - Accuracy over aesthetics.`;
 
-  console.log('=== IMAGE GENERATION DEBUG ===');
-  console.log('Base64 length:', pureBase64.length);
-  console.log('Base64 starts with:', pureBase64.substring(0, 50));
+  console.log('=== IMAGE EDIT DEBUG ===');
+  console.log('Blob size:', imageBlob.size);
+  console.log('Blob type:', imageBlob.type);
 
-  // Try gpt-image-1 with prompt + image fields
-  const requestBody = {
-    model: 'gpt-image-1',
-    prompt: prompt,
-    image: pureBase64,
-    n: 1,
-    size: '1024x1024',
-  };
+  // Use /v1/images/edits with multipart/form-data
+  const formData = new FormData();
+  formData.append('model', 'gpt-image-1');
+  formData.append('prompt', prompt);
+  formData.append('image', imageBlob, 'artifact.png');
+  formData.append('size', '1024x1024');
 
-  console.log('Request body structure:', JSON.stringify({
-    model: requestBody.model,
-    prompt_length: requestBody.prompt.length,
-    image_length: requestBody.image.length,
-  }));
-
-  const imageGenResponse = await fetch('https://api.openai.com/v1/images/generations', {
+  const imageGenResponse = await fetch('https://api.openai.com/v1/images/edits', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+      // Don't set Content-Type - fetch will set it with the boundary for FormData
     },
-    body: JSON.stringify(requestBody),
+    body: formData,
   });
 
-  console.log('gpt-image-1 response status:', imageGenResponse.status);
+  console.log('gpt-image-1 edits response status:', imageGenResponse.status);
 
   let sketchBase64: string | undefined;
   const description = 'archaeological stone artifact';
@@ -303,7 +307,7 @@ IMPORTANT:
     } catch {
       errorText = 'Could not read response';
     }
-    console.log('gpt-image-1 error response:', errorText || '(empty)');
+    console.log('gpt-image-1 edits error response:', errorText || '(empty)');
 
     // Parse error to check what went wrong
     let errorDetails: unknown;
@@ -320,21 +324,21 @@ IMPORTANT:
     return new Response(
       JSON.stringify({
         error: {
-          message: `gpt-image-1 failed: ${errorObj?.error?.message || 'Unknown error'}`,
+          message: `gpt-image-1 edits failed: ${errorObj?.error?.message || 'Unknown error'}`,
           details: errorObj,
           status: imageGenResponse.status,
           debug: {
-            base64_length: pureBase64.length,
+            blob_size: imageBlob.size,
             model_used: 'gpt-image-1',
-            fallback: false,
+            endpoint: '/v1/images/edits',
           }
         }
       }),
       { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   } else {
-    // gpt-image-1 succeeded - parse the response
-    const responseParseResult = await safeJsonParse(imageGenResponse, 'gpt-image-1 response');
+    // gpt-image-1 edits succeeded - parse the response
+    const responseParseResult = await safeJsonParse(imageGenResponse, 'gpt-image-1 edits response');
     if (!responseParseResult.ok) {
       return new Response(
         JSON.stringify({ error: { message: responseParseResult.error } }),
@@ -346,7 +350,7 @@ IMPORTANT:
       data: Array<{ b64_json?: string; url?: string }>;
     };
 
-    console.log('gpt-image-1 result keys:', Object.keys(imageResult));
+    console.log('gpt-image-1 edits result keys:', Object.keys(imageResult));
 
     // Extract base64 from response
     const imageData = imageResult.data?.[0];
