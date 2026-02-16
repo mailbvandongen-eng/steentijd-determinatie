@@ -317,9 +317,25 @@ Geef een beknopte maar gedetailleerde beschrijving (max 100 woorden) die een tek
   console.log('Vision description received, length:', description.length);
 
   // Step 2: Generate archaeological sketch with DALL-E 3
-  const dallePrompt = `A professional archaeological illustration of a stone artifact: ${description}
+  const dallePrompt = `Technical archaeological line drawing of a single stone tool artifact, isolated on pure white background.
 
-Style: Scientific archaeological pencil drawing on white background. Black and white with detailed shading showing flake scars, knapping patterns, and surface texture. Clean precise lines typical of archaeological publications. No hands, no background objects. The artifact should be centered and shown from one angle with careful attention to depicting worked edges and removal patterns. Museum-quality scientific illustration style.`;
+The artifact: ${description}
+
+STRICT REQUIREMENTS:
+- ONLY the stone artifact, absolutely nothing else
+- NO hands, NO fingers, NO human body parts
+- NO pencils, NO tools, NO props
+- NO shadows on the background
+- Pure white background (#FFFFFF)
+
+DRAWING STYLE:
+- Black ink line art with cross-hatching
+- Contour lines showing the 3D form
+- Parallel hatching lines indicating flake removal scars
+- Stippling dots for cortex texture
+- Clean technical illustration like in archaeology journals
+- Single view, centered in frame
+- Similar to lithic artifact illustrations in academic papers`;
 
   const dalleResponse = await fetch('https://api.openai.com/v1/images/generations', {
     method: 'POST',
