@@ -23,6 +23,8 @@ export interface LabeledImage {
   label: 'dorsaal' | 'ventraal' | 'zijkant' | 'extra' | 'frame1' | 'frame2' | 'frame3' | 'frame4' | 'frame5' | 'frame6' | 'frame7' | 'frame8';
   blob: Blob;
   thumbnail: string;
+  // Optionele archeologische tekening (schematische weergave)
+  drawing?: string; // base64 data URL van de tekening
 }
 
 export interface DeterminationSession {

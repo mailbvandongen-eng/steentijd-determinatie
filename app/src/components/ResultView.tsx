@@ -1,6 +1,20 @@
-import { useState } from 'react';
-import type { DeterminationSession } from '../types';
+import { useState, useCallback } from 'react';
+import type { DeterminationSession, LabeledImage } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
+import { createArchaeologicalSketch } from '../lib/sketch';
+import { updateSession } from '../lib/db';
+
+// Helper: converteer data URL naar File object
+async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
+  return new File([blob], filename, { type: blob.type });
+}
+
+// Helper: converteer blob naar File object
+function blobToFile(blob: Blob, filename: string): File {
+  return new File([blob], filename, { type: blob.type || 'image/jpeg' });
+}
 
 interface ResultViewProps {
   session: DeterminationSession;
@@ -11,10 +25,190 @@ interface ResultViewProps {
 
 export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate }: ResultViewProps) {
   const [showAllImages, setShowAllImages] = useState(false);
+  const [generatingSketch, setGeneratingSketch] = useState<string | null>(null);
+  const [sketchError, setSketchError] = useState<string | null>(null);
+
+  // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
+  const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
+    if (session.input.images && session.input.images.length > 0) {
+      return session.input.images;
+    }
+    // Voor enkele foto zonder images array, maak een tijdelijke LabeledImage
+    if (session.input.thumbnail) {
+      return [{
+        label: 'dorsaal' as const,
+        blob: session.input.blob || new Blob(),
+        thumbnail: session.input.thumbnail,
+        drawing: undefined,
+      }];
+    }
+    return [];
+  });
 
   // Verzamel alle beschikbare afbeeldingen
-  const allImages = session.input.images || [];
+  const allImages = localImages;
   const hasMultipleImages = allImages.length > 1;
+
+  // Genereer archeologische tekening voor een foto
+  const handleGenerateSketch = useCallback(async (imageIndex: number) => {
+    const image = localImages[imageIndex];
+    if (!image || generatingSketch) return;
+
+    setGeneratingSketch(image.label);
+    setSketchError(null);
+
+    try {
+      // Gebruik de thumbnail als bron (of blob indien beschikbaar)
+      const source = image.thumbnail;
+      const sketchDataUrl = await createArchaeologicalSketch(source);
+
+      // Update lokale state
+      const updatedImages = [...localImages];
+      updatedImages[imageIndex] = {
+        ...image,
+        drawing: sketchDataUrl,
+      };
+      setLocalImages(updatedImages);
+
+      // Sla op in database
+      if (session.id) {
+        await updateSession(session.id, {
+          input: {
+            ...session.input,
+            images: updatedImages,
+          },
+        });
+      }
+    } catch (err) {
+      console.error('Tekening generatie mislukt:', err);
+      setSketchError('Kon geen tekening maken. Probeer het opnieuw.');
+    } finally {
+      setGeneratingSketch(null);
+    }
+  }, [localImages, generatingSketch, session]);
+
+  // Verwijder tekening
+  const handleRemoveSketch = useCallback(async (imageIndex: number) => {
+    const image = localImages[imageIndex];
+    if (!image) return;
+
+    const updatedImages = [...localImages];
+    updatedImages[imageIndex] = {
+      ...image,
+      drawing: undefined,
+    };
+    setLocalImages(updatedImages);
+
+    // Sla op in database
+    if (session.id) {
+      await updateSession(session.id, {
+        input: {
+          ...session.input,
+          images: updatedImages,
+        },
+      });
+    }
+  }, [localImages, session]);
+
+  // State voor delen
+  const [isSharing, setIsSharing] = useState(false);
+  const [shareSuccess, setShareSuccess] = useState<string | null>(null);
+
+  // Deel determinatie via Web Share API of fallback
+  const handleShare = useCallback(async () => {
+    setIsSharing(true);
+    setShareSuccess(null);
+
+    try {
+      const typeName = session.result ? formatTypeName(session.result.type) : 'Onbekend artefact';
+      const description = session.result?.description || '';
+      const period = session.result?.period ? `Periode: ${session.result.period}` : '';
+      const characteristics = session.result?.characteristics?.length
+        ? `\nKenmerken:\n${session.result.characteristics.map(c => `• ${c}`).join('\n')}`
+        : '';
+
+      // Bouw de tekst op
+      const shareText = [
+        `🪨 Steentijd Determinatie`,
+        ``,
+        `Type: ${typeName}`,
+        period,
+        ``,
+        description,
+        characteristics,
+        ``,
+        `Gedetermineerd met de Steentijd app`,
+      ].filter(Boolean).join('\n');
+
+      // Verzamel afbeeldingen als files
+      const files: File[] = [];
+
+      for (let i = 0; i < localImages.length; i++) {
+        const img = localImages[i];
+        const labelNum = i + 1;
+
+        // Voeg foto toe
+        if (img.blob && img.blob.size > 0) {
+          files.push(blobToFile(img.blob, `artefact-foto-${labelNum}.jpg`));
+        } else if (img.thumbnail) {
+          try {
+            const file = await dataUrlToFile(img.thumbnail, `artefact-foto-${labelNum}.jpg`);
+            files.push(file);
+          } catch (e) {
+            console.warn('Kon thumbnail niet converteren:', e);
+          }
+        }
+
+        // Voeg tekening toe indien aanwezig
+        if (img.drawing) {
+          try {
+            const file = await dataUrlToFile(img.drawing, `artefact-tekening-${labelNum}.png`);
+            files.push(file);
+          } catch (e) {
+            console.warn('Kon tekening niet converteren:', e);
+          }
+        }
+      }
+
+      // Check of Web Share API beschikbaar is met file support
+      const canShareFiles = navigator.canShare && files.length > 0 && navigator.canShare({ files });
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: `Steentijd: ${typeName}`,
+            text: shareText,
+            ...(canShareFiles ? { files } : {}),
+          });
+          setShareSuccess('Gedeeld!');
+        } catch (err) {
+          // User cancelled of error
+          if ((err as Error).name !== 'AbortError') {
+            throw err;
+          }
+        }
+      } else {
+        // Fallback: kopieer naar klembord en toon opties
+        await navigator.clipboard.writeText(shareText);
+        setShareSuccess('Tekst gekopieerd! Plak in WhatsApp of e-mail.');
+      }
+    } catch (err) {
+      console.error('Delen mislukt:', err);
+      // Fallback: probeer tekst te kopiëren
+      try {
+        const typeName = session.result ? formatTypeName(session.result.type) : 'Onbekend artefact';
+        const simpleText = `Steentijd Determinatie: ${typeName}\n${session.result?.description || ''}`;
+        await navigator.clipboard.writeText(simpleText);
+        setShareSuccess('Tekst gekopieerd naar klembord');
+      } catch {
+        setShareSuccess('Delen niet beschikbaar op dit apparaat');
+      }
+    } finally {
+      setIsSharing(false);
+      // Verberg succes bericht na 3 seconden
+      setTimeout(() => setShareSuccess(null), 3000);
+    }
+  }, [session, localImages]);
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
@@ -67,33 +261,143 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
               {/* Hoofdafbeelding of grid van alle afbeeldingen */}
               {showAllImages && hasMultipleImages ? (
-                <div className="grid grid-cols-2 gap-2">
-                  {allImages.map((img, idx) => (
-                    <div key={idx} className="relative">
-                      <img
-                        src={img.thumbnail}
-                        alt={`Foto ${idx + 1}`}
-                        className="w-full aspect-square object-cover rounded-lg"
-                      />
-                      <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
-                        {img.label === 'dorsaal' ? 'Foto 1' :
-                         img.label === 'ventraal' ? 'Foto 2' :
-                         img.label === 'zijkant' ? 'Foto 3' : 'Foto 4'}
+                <div className="space-y-3">
+                  {allImages.map((img, idx) => {
+                    const labelText = img.label === 'dorsaal' ? 'Foto 1' :
+                                      img.label === 'ventraal' ? 'Foto 2' :
+                                      img.label === 'zijkant' ? 'Foto 3' : 'Foto 4';
+                    const isGenerating = generatingSketch === img.label;
+
+                    return (
+                      <div key={idx} className="border border-stone-200 rounded-lg p-2">
+                        <div className="flex gap-2">
+                          {/* Foto */}
+                          <div className="relative flex-1">
+                            <img
+                              src={img.thumbnail}
+                              alt={labelText}
+                              className="w-full aspect-square object-cover rounded-lg"
+                            />
+                            <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
+                              {labelText}
+                            </div>
+                          </div>
+
+                          {/* Tekening (indien aanwezig) */}
+                          {img.drawing && (
+                            <div className="relative flex-1">
+                              <img
+                                src={img.drawing}
+                                alt={`Tekening ${labelText}`}
+                                className="w-full aspect-square object-cover rounded-lg border border-stone-300"
+                              />
+                              <div className="absolute bottom-1 left-1 bg-amber-600/80 text-white text-xs px-2 py-0.5 rounded">
+                                Tekening
+                              </div>
+                              <button
+                                onClick={() => handleRemoveSketch(idx)}
+                                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                                title="Verwijder tekening"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Tekening genereer knop */}
+                        <div className="mt-2">
+                          {!img.drawing ? (
+                            <button
+                              onClick={() => handleGenerateSketch(idx)}
+                              disabled={isGenerating}
+                              className="w-full py-2 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                            >
+                              {isGenerating ? (
+                                <>
+                                  <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                                  Tekening maken...
+                                </>
+                              ) : (
+                                <>
+                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                  </svg>
+                                  Maak tekening
+                                </>
+                              )}
+                            </button>
+                          ) : (
+                            <p className="text-xs text-stone-500 text-center">
+                              Tekening toont bewerkingssporen
+                            </p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
-                <img
-                  src={session.input.thumbnail}
-                  alt="Artefact"
-                  className="w-full max-w-xs mx-auto rounded-lg"
-                />
+                <>
+                  <img
+                    src={session.input.thumbnail}
+                    alt="Artefact"
+                    className="w-full max-w-xs mx-auto rounded-lg"
+                  />
+                  {/* Toon tekening knop ook bij enkele foto weergave */}
+                  {allImages.length === 1 && (
+                    <div className="mt-3">
+                      {allImages[0]?.drawing ? (
+                        <div className="space-y-2">
+                          <img
+                            src={allImages[0].drawing}
+                            alt="Tekening"
+                            className="w-full max-w-xs mx-auto rounded-lg border border-stone-300"
+                          />
+                          <div className="flex gap-2 justify-center">
+                            <span className="text-xs text-amber-600 font-medium">Archeologische tekening</span>
+                            <button
+                              onClick={() => handleRemoveSketch(0)}
+                              className="text-xs text-red-500 hover:text-red-600"
+                            >
+                              Verwijderen
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handleGenerateSketch(0)}
+                          disabled={generatingSketch !== null}
+                          className="w-full max-w-xs mx-auto py-2 text-sm font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                        >
+                          {generatingSketch ? (
+                            <>
+                              <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                              Tekening maken...
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                              Maak archeologische tekening
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* Foutmelding */}
+              {sketchError && (
+                <p className="text-xs text-red-500 text-center mt-2">{sketchError}</p>
               )}
 
               {hasMultipleImages && !showAllImages && (
                 <p className="text-xs text-stone-400 text-center mt-2">
-                  {allImages.length} foto's beschikbaar
+                  {allImages.length} foto's beschikbaar - toon alle voor tekeningen
                 </p>
               )}
             </div>
@@ -134,6 +438,34 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
       {/* Acties */}
       <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0 space-y-2">
+        {/* Succes bericht voor delen */}
+        {shareSuccess && (
+          <div className="bg-green-50 border border-green-200 text-green-700 text-sm px-3 py-2 rounded-lg text-center">
+            {shareSuccess}
+          </div>
+        )}
+
+        {/* Delen knop */}
+        <button
+          onClick={handleShare}
+          disabled={isSharing}
+          className="w-full py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+        >
+          {isSharing ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Voorbereiden...
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+              Delen via WhatsApp of e-mail
+            </>
+          )}
+        </button>
+
         {/* Opnieuw determineren - alleen als er foto's zijn en callback beschikbaar is */}
         {onRedeterminate && (session.input.images?.length || session.input.thumbnail) && (
           <button
