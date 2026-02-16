@@ -58,8 +58,10 @@ export default {
         return await handleAnalysisRequest(request, env, rateLimitKey, currentCount);
       }
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Worker error:', errorMessage, error);
       return new Response(
-        JSON.stringify({ error: { message: 'Server error' } }),
+        JSON.stringify({ error: { message: `Server error: ${errorMessage}` } }),
         {
           status: 500,
           headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
@@ -109,6 +111,24 @@ async function handleAnalysisRequest(
   });
 }
 
+// Helper function to safely parse JSON
+async function safeJsonParse(response: Response, context: string): Promise<{ ok: true; data: unknown } | { ok: false; error: string }> {
+  try {
+    const text = await response.text();
+    if (!text || text.trim() === '') {
+      return { ok: false, error: `${context}: Lege response ontvangen (status ${response.status})` };
+    }
+    try {
+      const data = JSON.parse(text);
+      return { ok: true, data };
+    } catch {
+      return { ok: false, error: `${context}: Ongeldige JSON response: ${text.substring(0, 200)}` };
+    }
+  } catch (err) {
+    return { ok: false, error: `${context}: Kon response niet lezen: ${err}` };
+  }
+}
+
 // Handle OpenAI sketch generation requests
 async function handleSketchRequest(
   request: Request,
@@ -118,13 +138,32 @@ async function handleSketchRequest(
 ): Promise<Response> {
   if (!env.OPENAI_API_KEY) {
     return new Response(
-      JSON.stringify({ error: { message: 'OpenAI API key niet geconfigureerd.' } }),
+      JSON.stringify({ error: { message: 'OpenAI API key niet geconfigureerd. Voeg OPENAI_API_KEY toe als secret.' } }),
       { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   }
 
-  const body = await request.json() as { imageBase64: string };
-  const { imageBase64 } = body;
+  // Log dat we de key hebben (niet de key zelf!)
+  console.log('OpenAI key configured, length:', env.OPENAI_API_KEY.length);
+
+  // Parse request body safely
+  let imageBase64: string;
+  try {
+    const bodyText = await request.text();
+    if (!bodyText || bodyText.trim() === '') {
+      return new Response(
+        JSON.stringify({ error: { message: 'Lege request body ontvangen.' } }),
+        { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+      );
+    }
+    const body = JSON.parse(bodyText) as { imageBase64?: string };
+    imageBase64 = body.imageBase64 || '';
+  } catch (err) {
+    return new Response(
+      JSON.stringify({ error: { message: `Ongeldige JSON in request: ${err}` } }),
+      { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
 
   if (!imageBase64) {
     return new Response(
@@ -132,6 +171,8 @@ async function handleSketchRequest(
       { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   }
+
+  console.log('Image data received, length:', imageBase64.length, 'starts with:', imageBase64.substring(0, 30));
 
   // Step 1: Use GPT-4o-mini to analyze the image and create a detailed description
   const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -170,18 +211,30 @@ Geef een beknopte maar gedetailleerde beschrijving (max 100 woorden) die een tek
     }),
   });
 
+  console.log('Vision API response status:', visionResponse.status);
+
   if (!visionResponse.ok) {
-    const error = await visionResponse.json();
+    const errorResult = await safeJsonParse(visionResponse, 'Vision API error');
+    const errorDetails = errorResult.ok ? errorResult.data : errorResult.error;
     return new Response(
-      JSON.stringify({ error: { message: 'Fout bij analyseren afbeelding', details: error } }),
+      JSON.stringify({ error: { message: 'Fout bij analyseren afbeelding', details: errorDetails } }),
       { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   }
 
-  const visionResult = await visionResponse.json() as {
+  const visionParseResult = await safeJsonParse(visionResponse, 'Vision API response');
+  if (!visionParseResult.ok) {
+    return new Response(
+      JSON.stringify({ error: { message: visionParseResult.error } }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  const visionResult = visionParseResult.data as {
     choices: Array<{ message: { content: string } }>;
   };
   const description = visionResult.choices?.[0]?.message?.content || '';
+  console.log('Vision description received, length:', description.length);
 
   // Step 2: Generate archaeological sketch with DALL-E 3
   const dallePrompt = `A professional archaeological illustration of a stone artifact: ${description}
@@ -204,18 +257,30 @@ Style: Scientific archaeological pencil drawing on white background. Black and w
     }),
   });
 
+  console.log('DALL-E API response status:', dalleResponse.status);
+
   if (!dalleResponse.ok) {
-    const error = await dalleResponse.json();
+    const errorResult = await safeJsonParse(dalleResponse, 'DALL-E API error');
+    const errorDetails = errorResult.ok ? errorResult.data : errorResult.error;
     return new Response(
-      JSON.stringify({ error: { message: 'Fout bij genereren tekening', details: error } }),
+      JSON.stringify({ error: { message: 'Fout bij genereren tekening', details: errorDetails } }),
       { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
     );
   }
 
-  const dalleResult = await dalleResponse.json() as {
+  const dalleParseResult = await safeJsonParse(dalleResponse, 'DALL-E API response');
+  if (!dalleParseResult.ok) {
+    return new Response(
+      JSON.stringify({ error: { message: dalleParseResult.error } }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  const dalleResult = dalleParseResult.data as {
     data: Array<{ b64_json: string }>;
   };
   const sketchBase64 = dalleResult.data?.[0]?.b64_json;
+  console.log('DALL-E sketch received, base64 length:', sketchBase64?.length || 0);
 
   if (!sketchBase64) {
     return new Response(
