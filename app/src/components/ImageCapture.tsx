@@ -21,12 +21,12 @@ const IMAGE_LABELS = [
   { key: 'extra', label: 'Foto 4' },
 ] as const;
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+const MAX_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5 MB - lager voor betere API compatibiliteit
+const MAX_DIMENSION = 1500; // Max pixels voor langste zijde
 
-// Comprimeer afbeelding tot onder MAX_FILE_SIZE
+// Comprimeer afbeelding - ALTIJD verkleinen voor API
 const compressImage = async (file: File): Promise<Blob> => {
-  // Als het geen afbeelding is of al klein genoeg, retourneer onveranderd
-  if (!file.type.startsWith('image/') || file.size <= MAX_FILE_SIZE) {
+  if (!file.type.startsWith('image/')) {
     return file;
   }
 
@@ -37,11 +37,16 @@ const compressImage = async (file: File): Promise<Blob> => {
     img.onload = async () => {
       URL.revokeObjectURL(url);
 
+      // Bereken nieuwe dimensies (max 1500px langste zijde)
       let width = img.width;
       let height = img.height;
-      let quality = 0.9;
 
-      // Begin met originele grootte, verklein indien nodig
+      if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+        const scale = MAX_DIMENSION / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       if (!ctx) {
@@ -49,12 +54,14 @@ const compressImage = async (file: File): Promise<Blob> => {
         return;
       }
 
-      // Probeer verschillende combinaties van grootte en kwaliteit
-      const tryCompress = async (): Promise<Blob> => {
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
 
+      // Start met kwaliteit 0.85, verlaag tot bestand klein genoeg is
+      let quality = 0.85;
+
+      const tryCompress = async (): Promise<Blob> => {
         const blob = await new Promise<Blob | null>((res) => {
           canvas.toBlob(res, 'image/jpeg', quality);
         });
@@ -66,21 +73,24 @@ const compressImage = async (file: File): Promise<Blob> => {
           return blob;
         }
 
-        // Verlaag eerst kwaliteit
-        if (quality > 0.5) {
+        // Verlaag kwaliteit
+        if (quality > 0.4) {
           quality -= 0.1;
           return tryCompress();
         }
 
-        // Als kwaliteit al laag is, verklein afmetingen
-        if (width > 1000 || height > 1000) {
-          width = Math.round(width * 0.8);
-          height = Math.round(height * 0.8);
-          quality = 0.8; // Reset kwaliteit
+        // Als kwaliteit al laag is, verklein afmetingen verder
+        if (width > 800 || height > 800) {
+          width = Math.round(width * 0.75);
+          height = Math.round(height * 0.75);
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          quality = 0.7;
           return tryCompress();
         }
 
-        // Laatste poging met minimale instellingen
+        // Geef terug wat we hebben
         return blob;
       };
 
@@ -120,16 +130,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     };
   }, []);
 
-  // Helper: verwerk een file naar LabeledImage
+  // Helper: verwerk een file naar LabeledImage (altijd comprimeren)
   const processFileToImage = useCallback(async (file: File, label: LabeledImage['label']): Promise<LabeledImage> => {
     let imageBlob: Blob = file;
 
-    if (file.size > MAX_FILE_SIZE) {
-      try {
-        imageBlob = await compressImage(file);
-      } catch (err) {
-        console.error('Image compression failed:', err);
-      }
+    // Altijd comprimeren voor optimale API compatibiliteit
+    try {
+      imageBlob = await compressImage(file);
+    } catch (err) {
+      console.error('Foto verkleinen mislukt:', err);
     }
 
     // Maak thumbnail (behoud aspect ratio)
@@ -198,17 +207,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (!file) return;
     e.target.value = '';
 
+    // Altijd comprimeren voor optimale kwaliteit/grootte
+    setIsCompressing(true);
     let imageBlob: Blob = file;
-
-    if (file.size > MAX_FILE_SIZE) {
-      setIsCompressing(true);
-      try {
-        imageBlob = await compressImage(file);
-      } catch (err) {
-        console.error('Image compression failed:', err);
-      }
-      setIsCompressing(false);
+    try {
+      imageBlob = await compressImage(file);
+    } catch (err) {
+      console.error('Foto verkleinen mislukt:', err);
     }
+    setIsCompressing(false);
 
     const url = URL.createObjectURL(imageBlob);
     setCapturedBlob(imageBlob);
@@ -550,9 +557,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return (
       <div className="h-full flex flex-col items-center justify-center gap-4 p-4">
         <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-        <h2 className="text-lg font-semibold text-center">Foto verkleinen...</h2>
+        <h2 className="text-lg font-semibold text-center">Foto optimaliseren...</h2>
         <p className="text-stone-600 text-sm text-center">
-          De foto is groter dan 5 MB en wordt gecomprimeerd
+          Even geduld, de foto wordt verkleind voor analyse
         </p>
       </div>
     );
