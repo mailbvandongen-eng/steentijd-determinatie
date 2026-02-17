@@ -407,11 +407,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                                 </div>
                               )}
                             </button>
-                          ) : (
-                            <p className="text-xs text-stone-500 text-center">
-                              Tekening toont bewerkingssporen
-                            </p>
-                          )}
+                          ) : null}
                         </div>
                       </div>
                     );
