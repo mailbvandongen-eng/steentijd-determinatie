@@ -2,6 +2,7 @@ import { useRef, useState, useCallback, useEffect } from 'react';
 import type { LabeledImage } from '../types';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
+type CaptureSource = 'camera' | 'upload';
 
 interface ImageCaptureProps {
   onCapture: (data: {
@@ -105,12 +106,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [isCropping, setIsCropping] = useState(false);
   const [cropBox, setCropBox] = useState({ x: 50, y: 50, size: 200 });
   const [isCompressing, setIsCompressing] = useState(false);
+  const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
 
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
-  // Refs voor native camera inputs
+  // Ref voor native camera input (legacy)
   const photoInputRef = useRef<HTMLInputElement>(null);
-  const uploadPhotoInputRef = useRef<HTMLInputElement>(null);
 
   // Cleanup bij unmount
   useEffect(() => {
@@ -146,67 +147,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setMode('preview-photo');
   }, []);
 
-  // Handler voor multi-file upload
-  const handleMultiFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    // Reset file input
-    e.target.value = '';
-
-    setIsCompressing(true);
-    const newImages: LabeledImage[] = [];
-
-    // Verwerk max 4 bestanden
-    const filesToProcess = Array.from(files).slice(0, 4);
-
-    for (let i = 0; i < filesToProcess.length; i++) {
-      const file = filesToProcess[i];
-      let imageBlob: Blob = file;
-
-      // Comprimeer indien nodig
-      if (file.size > MAX_FILE_SIZE) {
-        try {
-          imageBlob = await compressImage(file);
-        } catch (err) {
-          console.error('Image compression failed:', err);
-        }
-      }
-
-      // Maak thumbnail
-      const url = URL.createObjectURL(imageBlob);
-      const img = new Image();
-      img.src = url;
-      await new Promise<void>((resolve) => {
-        img.onload = () => resolve();
-      });
-
-      const canvas = document.createElement('canvas');
-      const size = 200;
-      canvas.width = size;
-      canvas.height = size;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        const srcWidth = img.width;
-        const srcHeight = img.height;
-        const minDim = Math.min(srcWidth, srcHeight);
-        const sx = (srcWidth - minDim) / 2;
-        const sy = (srcHeight - minDim) / 2;
-        ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
-      }
-      const thumbnail = canvas.toDataURL('image/jpeg', 0.7);
-      URL.revokeObjectURL(url);
-
-      // Bepaal label
-      const label = IMAGE_LABELS[i].key;
-      newImages.push({ label, blob: imageBlob, thumbnail });
-    }
-
-    setIsCompressing(false);
-    setMultiImages(newImages);
-    setIsInMultiPhotoMode(true);
-    setMode('multi-photo');
-  }, []);
 
   const createThumbnail = (source: HTMLImageElement): Promise<string> => {
     return new Promise((resolve) => {
@@ -441,9 +381,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return (
       <div className="h-full flex flex-col overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <div className="space-y-3">
-          {/* Foto('s) maken - opent multi-photo mode */}
+          {/* Foto('s) maken - opent multi-photo mode met camera */}
           <button
             onClick={() => {
+              setCaptureSource('camera');
               setIsInMultiPhotoMode(true);
               setMode('multi-photo');
             }}
@@ -464,14 +405,18 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
           </button>
 
-          {/* Foto('s) uploaden - multi-select uit galerij */}
+          {/* Foto('s) uploaden - opent multi-photo mode met galerij */}
           <button
-            onClick={() => uploadPhotoInputRef.current?.click()}
+            onClick={() => {
+              setCaptureSource('upload');
+              setIsInMultiPhotoMode(true);
+              setMode('multi-photo');
+            }}
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
               <svg className="w-7 h-7 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
             <div className="text-left flex-1">
@@ -483,22 +428,13 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </svg>
           </button>
 
-          {/* Hidden inputs */}
+          {/* Hidden input voor enkele foto (alleen nog gebruikt voor legacy flow) */}
           <input
             ref={photoInputRef}
             type="file"
             accept="image/*"
             capture="environment"
             onChange={handleFileSelect}
-            className="hidden"
-          />
-          {/* Upload input - multiple files */}
-          <input
-            ref={uploadPhotoInputRef}
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleMultiFileSelect}
             className="hidden"
           />
         </div>
@@ -508,11 +444,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   // Multi-photo modus
   if (mode === 'multi-photo') {
+    const isCamera = captureSource === 'camera';
     return (
       <div className="flex flex-col h-full">
         <div className="bg-stone-800 p-3 shrink-0">
-          <h2 className="text-white font-semibold">Foto's toevoegen</h2>
-          <p className="text-stone-400 text-xs">Tik op een vakje om een foto te maken</p>
+          <h2 className="text-white font-semibold">Foto's {isCamera ? 'maken' : 'uploaden'}</h2>
+          <p className="text-stone-400 text-xs">Tik op een vakje om een foto {isCamera ? 'te maken' : 'te kiezen'}</p>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3">
@@ -547,14 +484,18 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                       className="w-full h-full flex flex-col items-center justify-center text-stone-400 hover:bg-stone-100 cursor-pointer"
                     >
                       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        {isCamera ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        ) : (
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        )}
                       </svg>
                       <span className="text-xs mt-1">{label}</span>
                       <input
                         id={inputId}
                         type="file"
                         accept="image/*"
-                        capture="environment"
+                        {...(isCamera ? { capture: 'environment' as const } : {})}
                         onChange={(e) => {
                           setCurrentLabel(key);
                           handleFileSelect(e);
