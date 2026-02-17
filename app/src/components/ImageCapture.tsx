@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { Camera, ImagePlus, ChevronRight, X, Plus } from 'lucide-react';
+import { Camera, ImagePlus, ChevronRight, X, Plus, Upload } from 'lucide-react';
 import type { LabeledImage } from '../types';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
@@ -108,6 +108,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [cropBox, setCropBox] = useState({ x: 50, y: 50, width: 200, height: 200 });
   const [isCompressing, setIsCompressing] = useState(false);
   const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
+  const [isDragging, setIsDragging] = useState(false);
 
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
@@ -215,6 +216,49 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setMode('preview-photo');
   }, []);
 
+  // Drag & drop handlers
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    if (files.length === 0) return;
+
+    // Ga naar multi-photo mode met upload source
+    setCaptureSource('upload');
+    setIsInMultiPhotoMode(true);
+    setMode('multi-photo');
+
+    // Verwerk bestanden
+    setIsCompressing(true);
+    const newImages: LabeledImage[] = [];
+    const filesToProcess = files.slice(0, 4);
+
+    for (const file of filesToProcess) {
+      const usedLabels = new Set(newImages.map(img => img.label));
+      const nextLabel = IMAGE_LABELS.find(l => !usedLabels.has(l.key));
+      if (nextLabel) {
+        const labeledImage = await processFileToImage(file, nextLabel.key);
+        newImages.push(labeledImage);
+      }
+    }
+
+    setMultiImages(newImages);
+    setIsCompressing(false);
+  }, [processFileToImage]);
 
   const createThumbnail = (source: HTMLImageElement): Promise<string> => {
     return new Promise((resolve) => {
@@ -517,7 +561,23 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Selectiescherm
   if (mode === 'select') {
     return (
-      <div className="h-full flex flex-col overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div
+        className="h-full flex flex-col overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
+        {/* Drop overlay */}
+        {isDragging && (
+          <div className="fixed inset-0 bg-amber-500/20 backdrop-blur-sm z-50 flex items-center justify-center pointer-events-none">
+            <div className="bg-white rounded-2xl p-8 shadow-xl border-2 border-dashed border-amber-500 flex flex-col items-center gap-3">
+              <Upload className="w-12 h-12 text-amber-600" />
+              <span className="text-lg font-semibold text-amber-700">Sleep foto's hierheen</span>
+              <span className="text-sm text-stone-500">Max 4 foto's</span>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-3">
           {/* Foto('s) maken - opent multi-photo mode met camera */}
           <button
@@ -557,6 +617,11 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             <ChevronRight className="w-5 h-5 text-stone-300" />
           </button>
 
+          {/* Drop zone hint */}
+          <div className="mt-4 p-4 border-2 border-dashed border-stone-200 rounded-xl text-center">
+            <Upload className="w-6 h-6 text-stone-400 mx-auto mb-1" />
+            <span className="text-sm text-stone-400">Of sleep foto's hierheen</span>
+          </div>
         </div>
       </div>
     );

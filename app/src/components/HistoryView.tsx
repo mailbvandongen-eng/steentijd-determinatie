@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import { Search, ChevronLeft, ChevronRight, Trash2, Image } from 'lucide-react';
 import { getAllSessions, deleteSession } from '../lib/db';
 import type { DeterminationSession } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
@@ -11,10 +12,30 @@ interface HistoryViewProps {
 export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     loadSessions();
   }, []);
+
+  // Filter sessies op basis van zoekterm
+  const filteredSessions = useMemo(() => {
+    if (!searchQuery.trim()) return sessions;
+
+    const query = searchQuery.toLowerCase();
+    return sessions.filter(session => {
+      if (!session.result) return false;
+      const type = formatTypeName(session.result.type || '').toLowerCase();
+      const period = (session.result.period || '').toLowerCase();
+      const description = (session.result.description || '').toLowerCase();
+      const characteristics = (session.result.characteristics || []).join(' ').toLowerCase();
+
+      return type.includes(query) ||
+             period.includes(query) ||
+             description.includes(query) ||
+             characteristics.includes(query);
+    });
+  }, [sessions, searchQuery]);
 
   const loadSessions = async () => {
     setLoading(true);
@@ -48,12 +69,31 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
       {/* Header */}
       <div className="bg-stone-800 p-4 flex items-center gap-3 shrink-0">
         <button onClick={onBack} className="text-white p-2">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <ChevronLeft className="w-6 h-6" />
         </button>
         <h1 className="text-white text-lg font-semibold">Geschiedenis</h1>
       </div>
+
+      {/* Zoekbalk */}
+      {sessions.length > 0 && (
+        <div className="px-4 pt-3 shrink-0">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Zoek op type, periode..."
+              className="w-full pl-10 pr-4 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+            />
+          </div>
+          {searchQuery && (
+            <p className="text-xs text-stone-500 mt-1">
+              {filteredSessions.length} van {sessions.length} determinaties
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Content */}
       <div className="flex-1 p-4 overflow-y-auto">
@@ -63,27 +103,26 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
           </div>
         ) : sessions.length === 0 ? (
           <div className="text-center py-8">
-            <svg
-              className="w-16 h-16 mx-auto text-stone-300 mb-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-              />
-            </svg>
+            <Image className="w-16 h-16 mx-auto text-stone-300 mb-4" />
             <p className="text-stone-500">Nog geen determinaties</p>
             <button onClick={onBack} className="btn-primary mt-4">
               Start eerste determinatie
             </button>
           </div>
+        ) : filteredSessions.length === 0 ? (
+          <div className="text-center py-8">
+            <Search className="w-12 h-12 mx-auto text-stone-300 mb-4" />
+            <p className="text-stone-500">Geen resultaten voor "{searchQuery}"</p>
+            <button
+              onClick={() => setSearchQuery('')}
+              className="text-amber-600 text-sm mt-2 hover:underline"
+            >
+              Wis zoekopdracht
+            </button>
+          </div>
         ) : (
           <div className="space-y-3">
-            {sessions.map((session) => {
+            {filteredSessions.map((session) => {
               const isCompleted = session.status === 'completed' && session.result;
               const resultType = session.result?.type;
 
@@ -105,14 +144,7 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
                     />
                   ) : (
                     <div className="w-16 h-16 rounded-lg bg-stone-200 flex items-center justify-center">
-                      <svg className="w-8 h-8 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
+                      <Image className="w-8 h-8 text-stone-400" />
                     </div>
                   )}
 
@@ -142,19 +174,10 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
                       className="p-2 text-stone-400 hover:text-red-500"
                       title="Verwijderen"
                     >
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        />
-                      </svg>
+                      <Trash2 className="w-5 h-5" />
                     </button>
                     {isCompleted && (
-                      <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                      <ChevronRight className="w-5 h-5 text-stone-300" />
                     )}
                   </div>
                 </div>

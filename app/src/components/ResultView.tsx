@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
-import { Check, ChevronDown, Pencil, Share2, RefreshCw, X } from 'lucide-react';
+import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download } from 'lucide-react';
 import type { DeterminationSession, LabeledImage } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
 import { updateSession } from '../lib/db';
+import { exportToPdf } from '../lib/pdfExport';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -528,6 +529,16 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
               <Share2 className="w-6 h-6" />
             )}
             <span className="text-xs">Delen</span>
+          </button>
+
+          {/* PDF Export */}
+          <button
+            onClick={() => exportToPdf(session)}
+            className="flex flex-col items-center gap-1 p-2 text-stone-500 hover:text-green-600 transition-colors"
+            title="Download PDF"
+          >
+            <Download className="w-6 h-6" />
+            <span className="text-xs">PDF</span>
           </button>
 
           {/* Opnieuw determineren */}
