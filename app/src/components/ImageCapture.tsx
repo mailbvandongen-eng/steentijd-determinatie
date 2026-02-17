@@ -119,7 +119,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     };
   }, []);
 
-  // Handler voor native camera foto capture
+  // Handler voor native camera foto capture (enkele foto)
   const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -144,6 +144,68 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setCapturedBlob(imageBlob);
     setPreviewUrl(url);
     setMode('preview-photo');
+  }, []);
+
+  // Handler voor multi-file upload
+  const handleMultiFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    // Reset file input
+    e.target.value = '';
+
+    setIsCompressing(true);
+    const newImages: LabeledImage[] = [];
+
+    // Verwerk max 4 bestanden
+    const filesToProcess = Array.from(files).slice(0, 4);
+
+    for (let i = 0; i < filesToProcess.length; i++) {
+      const file = filesToProcess[i];
+      let imageBlob: Blob = file;
+
+      // Comprimeer indien nodig
+      if (file.size > MAX_FILE_SIZE) {
+        try {
+          imageBlob = await compressImage(file);
+        } catch (err) {
+          console.error('Image compression failed:', err);
+        }
+      }
+
+      // Maak thumbnail
+      const url = URL.createObjectURL(imageBlob);
+      const img = new Image();
+      img.src = url;
+      await new Promise<void>((resolve) => {
+        img.onload = () => resolve();
+      });
+
+      const canvas = document.createElement('canvas');
+      const size = 200;
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const srcWidth = img.width;
+        const srcHeight = img.height;
+        const minDim = Math.min(srcWidth, srcHeight);
+        const sx = (srcWidth - minDim) / 2;
+        const sy = (srcHeight - minDim) / 2;
+        ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
+      }
+      const thumbnail = canvas.toDataURL('image/jpeg', 0.7);
+      URL.revokeObjectURL(url);
+
+      // Bepaal label
+      const label = IMAGE_LABELS[i].key;
+      newImages.push({ label, blob: imageBlob, thumbnail });
+    }
+
+    setIsCompressing(false);
+    setMultiImages(newImages);
+    setIsInMultiPhotoMode(true);
+    setMode('multi-photo');
   }, []);
 
   const createThumbnail = (source: HTMLImageElement): Promise<string> => {
@@ -379,7 +441,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return (
       <div className="h-full flex flex-col overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <div className="space-y-3">
-          {/* Meerdere foto's - Primary card */}
+          {/* Foto('s) maken - opent multi-photo mode */}
           <button
             onClick={() => {
               setIsInMultiPhotoMode(true);
@@ -389,49 +451,20 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           >
             <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
               <svg className="w-7 h-7 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div className="text-left flex-1">
-              <span className="font-semibold text-stone-900 block">Meerdere foto's</span>
-              <span className="text-sm text-stone-500">Meest nauwkeurige determinatie</span>
-            </div>
-            <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          {/* Enkele foto - opent native camera */}
-          <button
-            onClick={() => {
-              setIsInMultiPhotoMode(false);
-              photoInputRef.current?.click();
-            }}
-            className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
-          >
-            <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
-              <svg className="w-7 h-7 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
             <div className="text-left flex-1">
-              <span className="font-semibold text-stone-900 block">Enkele foto</span>
-              <span className="text-sm text-stone-500">Snelle opname met telefoon camera</span>
+              <span className="font-semibold text-stone-900 block">Foto('s) maken</span>
+              <span className="text-sm text-stone-500">Maak 1-4 foto's met je camera</span>
             </div>
             <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
 
-          {/* Elegante divider */}
-          <div className="flex items-center gap-3 my-4">
-            <div className="flex-1 h-px bg-stone-200" />
-            <span className="text-xs text-stone-400 font-medium">of kies bestaande foto</span>
-            <div className="flex-1 h-px bg-stone-200" />
-          </div>
-
-          {/* Upload knop */}
+          {/* Foto('s) uploaden - multi-select uit galerij */}
           <button
             onClick={() => uploadPhotoInputRef.current?.click()}
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
@@ -442,15 +475,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               </svg>
             </div>
             <div className="text-left flex-1">
-              <span className="font-semibold text-stone-900 block">Foto uploaden</span>
-              <span className="text-sm text-stone-500">Kies een bestaande foto</span>
+              <span className="font-semibold text-stone-900 block">Foto('s) uploaden</span>
+              <span className="text-sm text-stone-500">Kies 1-4 bestaande foto's</span>
             </div>
             <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
 
-          {/* Native camera input (met capture voor telefoon camera) */}
+          {/* Hidden inputs */}
           <input
             ref={photoInputRef}
             type="file"
@@ -459,12 +492,13 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             onChange={handleFileSelect}
             className="hidden"
           />
-          {/* Upload input (zonder capture, opent galerij) */}
+          {/* Upload input - multiple files */}
           <input
             ref={uploadPhotoInputRef}
             type="file"
             accept="image/*"
-            onChange={handleFileSelect}
+            multiple
+            onChange={handleMultiFileSelect}
             className="hidden"
           />
         </div>
