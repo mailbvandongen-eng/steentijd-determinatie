@@ -23,6 +23,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [analyzeAllImages, setAnalyzeAllImages] = useState(true);
   const [sizeInput, setSizeInput] = useState('');
+  const [contextInput, setContextInput] = useState('');
 
   // Verzamel alle beschikbare images (handmatige foto's + video frames)
   const manualImages = singleImage
@@ -97,7 +98,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
         imagesToAnalyze.map(img => blobToBase64(img.blob))
       );
 
-      const analysisResult = await analyzeImage(base64Images, sizeInput || undefined);
+      const analysisResult = await analyzeImage(base64Images, sizeInput || undefined, contextInput || undefined);
       setResult(analysisResult);
     } catch (err) {
       setResult({
@@ -269,8 +270,22 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
               placeholder="bijv. 5x3 cm of 8 cm lang"
               className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
+          </div>
+
+          {/* Vindplaats/context invoer */}
+          <div className="mt-3 pt-3 border-t border-stone-200">
+            <label className="block text-sm text-stone-700 mb-1">
+              Vindplaats/context (optioneel)
+            </label>
+            <input
+              type="text"
+              value={contextInput}
+              onChange={(e) => setContextInput(e.target.value)}
+              placeholder="bijv. veengebied Noord-Holland, grindpad Drenthe"
+              className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
             <p className="text-xs text-stone-500 mt-1">
-              Helpt bij het bepalen van het type artefact
+              Geologische/geografische context helpt bij de determinatie
             </p>
           </div>
         </div>

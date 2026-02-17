@@ -84,7 +84,8 @@ const WORKER_URL = 'https://steentijd-api.mail-b-van-dongen.workers.dev';
 // Analyseer één of meerdere afbeeldingen
 export async function analyzeImage(
   imageBase64: string | string[], // Kan één of meerdere base64 strings zijn
-  sizeInfo?: string // Optionele grootte informatie, bijv. "5x3 cm"
+  sizeInfo?: string, // Optionele grootte informatie, bijv. "5x3 cm"
+  contextInfo?: string // Optionele vindplaats/context informatie
 ): Promise<AnalysisResult> {
   try {
     // Zorg dat we altijd een array hebben
@@ -108,6 +109,10 @@ export async function analyzeImage(
       ? `\n\nDe gebruiker heeft aangegeven dat het artefact ongeveer ${sizeInfo} groot is. Gebruik deze informatie bij je determinatie.`
       : '';
 
+    const contextNote = contextInfo
+      ? `\n\nVINDPLAATS/CONTEXT: ${contextInfo}\nDit is belangrijke informatie! De geologische en geografische context kan veel zeggen over het type artefact en de periode. Veengebieden in Noord-Holland, grindpaden in Drenthe, of kalksteenrijke gebieden in Zuid-Frankrijk hebben elk hun eigen karakteristieke vondsten. Neem deze context mee in je analyse.`
+      : '';
+
     const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: {
@@ -123,7 +128,7 @@ export async function analyzeImage(
               ...imageContent,
               {
                 type: 'text',
-                text: `${DETERMINATION_CONTEXT}${multiImageNote}${sizeNote}
+                text: `${DETERMINATION_CONTEXT}${multiImageNote}${sizeNote}${contextNote}
 
 Analyseer ${images.length > 1 ? 'deze foto\'s' : 'deze foto'} van een mogelijk stenen artefact. Geef je analyse in het volgende format:
 

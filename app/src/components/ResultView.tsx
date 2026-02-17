@@ -30,6 +30,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   const [sketchProgress, setSketchProgress] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxShowDrawing, setLightboxShowDrawing] = useState(false);
+  const [showFullAnalysis, setShowFullAnalysis] = useState(false);
 
   // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
   const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
@@ -239,15 +240,75 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto">
-        {/* Resultaat */}
+        {/* Resultaat - compact met uitklapbare details */}
         <div className="p-4">
           <div className="card">
-            <h2 className="text-sm text-stone-500 uppercase tracking-wide">Resultaat</h2>
-            <p className="text-2xl font-bold text-amber-700 mt-1">
+            {/* Hoofdresultaat: Type */}
+            <p className="text-2xl font-bold text-amber-700">
               {session.result ? formatTypeName(session.result.type) : 'Onbekend'}
             </p>
-            {session.result?.description && (
-              <p className="text-stone-600 mt-2">{session.result.description}</p>
+
+            {/* Kerninfo: Periode + Betrouwbaarheid */}
+            <div className="flex flex-wrap items-center gap-2 mt-2">
+              {session.result?.period && session.result.period !== 'Onbekend' && (
+                <span className="text-sm text-stone-600 bg-stone-100 px-2 py-0.5 rounded">
+                  {session.result.period}
+                </span>
+              )}
+              {session.result?.confidence && (
+                <span className={`text-xs font-medium px-2 py-0.5 rounded ${
+                  session.result.confidence === 'hoog'
+                    ? 'bg-green-100 text-green-700'
+                    : session.result.confidence === 'gemiddeld'
+                    ? 'bg-amber-100 text-amber-700'
+                    : 'bg-red-100 text-red-700'
+                }`}>
+                  {session.result.confidence} zekerheid
+                </span>
+              )}
+            </div>
+
+            {/* Meer/minder knop */}
+            {(session.result?.characteristics?.length || session.result?.fullAnalysis) && (
+              <button
+                onClick={() => setShowFullAnalysis(!showFullAnalysis)}
+                className="mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
+              >
+                {showFullAnalysis ? 'Minder tonen' : 'Meer details...'}
+                <svg className={`w-4 h-4 transition-transform ${showFullAnalysis ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            )}
+
+            {/* Uitklapbare details */}
+            {showFullAnalysis && (
+              <div className="mt-3 pt-3 border-t border-stone-200 space-y-3">
+                {/* Kenmerken */}
+                {session.result?.characteristics && session.result.characteristics.length > 0 && (
+                  <div>
+                    <p className="text-xs font-medium text-stone-500 mb-1">Kenmerken:</p>
+                    <ul className="text-sm text-stone-700 space-y-1">
+                      {session.result.characteristics.map((char, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-amber-500">•</span>
+                          <span>{char}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Volledige analyse */}
+                {session.result?.fullAnalysis && (
+                  <div>
+                    <p className="text-xs font-medium text-stone-500 mb-1">Volledige AI-analyse:</p>
+                    <div className="text-xs text-stone-600 bg-stone-50 rounded p-2 whitespace-pre-wrap max-h-40 overflow-y-auto">
+                      {session.result.fullAnalysis}
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -449,68 +510,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           </div>
         )}
 
-        {/* AI Analyse details */}
-        <div className="px-4 pb-4">
-          <div className="card">
-            <h3 className="text-sm text-stone-500 mb-3">AI Analyse</h3>
-            <div className="space-y-3">
-              {/* Periode */}
-              {session.result?.period && (
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-stone-500 w-24">Periode:</span>
-                  <span className="text-sm text-stone-700">{session.result.period}</span>
-                </div>
-              )}
-
-              {/* Betrouwbaarheid */}
-              {session.result?.confidence && (
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-stone-500 w-24">Zekerheid:</span>
-                  <span className={`text-xs font-bold px-2 py-1 rounded ${
-                    session.result.confidence === 'hoog'
-                      ? 'bg-green-100 text-green-800'
-                      : session.result.confidence === 'gemiddeld'
-                      ? 'bg-amber-100 text-amber-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {session.result.confidence.toUpperCase()}
-                  </span>
-                </div>
-              )}
-
-              {/* Kenmerken */}
-              {session.result?.characteristics && session.result.characteristics.length > 0 && (
-                <div>
-                  <span className="text-xs font-medium text-stone-500 block mb-1">Gevonden kenmerken:</span>
-                  <div className="space-y-1">
-                    {session.result.characteristics.map((char, idx) => (
-                      <div key={idx} className="flex items-start gap-2 p-2 bg-stone-50 rounded">
-                        <span className="text-amber-600 text-xs">•</span>
-                        <span className="text-sm text-stone-700">{char}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Volledige analyse (uitklapbaar) */}
-              {session.result?.fullAnalysis && (
-                <details className="mt-2">
-                  <summary className="text-xs text-amber-600 hover:text-amber-700 cursor-pointer font-medium">
-                    Volledige AI-analyse bekijken
-                  </summary>
-                  <div className="mt-2 p-3 bg-stone-50 rounded text-xs text-stone-600 whitespace-pre-wrap max-h-60 overflow-y-auto">
-                    {session.result.fullAnalysis}
-                  </div>
-                </details>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Acties */}
-      <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0 space-y-2">
+      <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0 space-y-3">
         {/* Succes bericht voor delen */}
         {shareSuccess && (
           <div className="bg-green-50 border border-green-200 text-green-700 text-sm px-3 py-2 rounded-lg text-center">
@@ -518,39 +521,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           </div>
         )}
 
-        {/* Delen knop */}
-        <button
-          onClick={handleShare}
-          disabled={isSharing}
-          className="w-full py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-        >
-          {isSharing ? (
-            <>
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Voorbereiden...
-            </>
-          ) : (
-            <>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-              Delen via WhatsApp of e-mail
-            </>
-          )}
-        </button>
-
-        {/* Opnieuw determineren - alleen als er foto's zijn en callback beschikbaar is */}
-        {onRedeterminate && (session.input.images?.length || session.input.thumbnail) && (
-          <button
-            onClick={() => onRedeterminate(session)}
-            className="w-full py-2 text-sm font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors flex items-center justify-center gap-2"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            Opnieuw determineren met deze foto's
-          </button>
-        )}
+        {/* Hoofdknoppen: Nieuwe determinatie + Geschiedenis */}
         <div className="flex gap-3">
           <button onClick={onViewHistory} className="btn-secondary flex-1">
             Geschiedenis
@@ -558,6 +529,40 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           <button onClick={onNewDetermination} className="btn-primary flex-1">
             Nieuwe determinatie
           </button>
+        </div>
+
+        {/* Secundaire acties: iconen */}
+        <div className="flex items-center justify-center gap-4 pt-2 border-t border-stone-100">
+          {/* Delen */}
+          <button
+            onClick={handleShare}
+            disabled={isSharing}
+            className="flex flex-col items-center gap-1 p-2 text-stone-500 hover:text-blue-600 transition-colors disabled:opacity-50"
+            title="Delen"
+          >
+            {isSharing ? (
+              <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            )}
+            <span className="text-xs">Delen</span>
+          </button>
+
+          {/* Opnieuw determineren */}
+          {onRedeterminate && (session.input.images?.length || session.input.thumbnail) && (
+            <button
+              onClick={() => onRedeterminate(session)}
+              className="flex flex-col items-center gap-1 p-2 text-stone-500 hover:text-amber-600 transition-colors"
+              title="Opnieuw determineren"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span className="text-xs">Opnieuw</span>
+            </button>
+          )}
         </div>
       </div>
 
