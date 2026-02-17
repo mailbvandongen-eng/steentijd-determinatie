@@ -354,7 +354,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                             <img
                               src={img.thumbnail}
                               alt={labelText}
-                              className="w-full aspect-square object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                              className="w-full h-32 object-contain bg-stone-50 rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
                               onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(false); }}
                             />
                             <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded pointer-events-none">
@@ -368,7 +368,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                               <img
                                 src={img.drawing}
                                 alt={`Tekening ${labelText}`}
-                                className="w-full aspect-square object-cover rounded-lg border border-stone-300 cursor-pointer hover:opacity-90 transition-opacity"
+                                className="w-full h-32 object-contain bg-white rounded-lg border border-stone-300 cursor-pointer hover:opacity-90 transition-opacity"
                                 onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(true); }}
                               />
                               <div className="absolute bottom-1 left-1 bg-amber-600/80 text-white text-xs px-2 py-0.5 rounded pointer-events-none">

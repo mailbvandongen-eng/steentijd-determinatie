@@ -120,17 +120,66 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     };
   }, []);
 
-  // Handler voor native camera foto capture (enkele foto)
+  // Handler voor foto capture (enkele foto of multi-upload)
   const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     // Reset file input zodat dezelfde file opnieuw geselecteerd kan worden
     e.target.value = '';
 
+    // Multi-file upload: verwerk alle bestanden
+    if (files.length > 1) {
+      setIsCompressing(true);
+      const newImages: LabeledImage[] = [...multiImages];
+
+      for (let i = 0; i < Math.min(files.length, 4); i++) {
+        const file = files[i];
+        let imageBlob: Blob = file;
+
+        if (file.size > MAX_FILE_SIZE) {
+          try {
+            imageBlob = await compressImage(file);
+          } catch (err) {
+            console.error('Image compression failed:', err);
+          }
+        }
+
+        // Maak thumbnail (behoud aspect ratio)
+        const url = URL.createObjectURL(imageBlob);
+        const img = new Image();
+        img.src = url;
+        await new Promise<void>((resolve) => { img.onload = () => resolve(); });
+
+        const canvas = document.createElement('canvas');
+        const maxSize = 400;
+        const scale = Math.min(maxSize / img.width, maxSize / img.height);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+        const thumbnail = canvas.toDataURL('image/jpeg', 0.8);
+        URL.revokeObjectURL(url);
+
+        // Vind eerste lege slot
+        const usedLabels = new Set(newImages.map(img => img.label));
+        const nextLabel = IMAGE_LABELS.find(l => !usedLabels.has(l.key));
+        if (nextLabel) {
+          newImages.push({ label: nextLabel.key, blob: imageBlob, thumbnail });
+        }
+      }
+
+      setMultiImages(newImages);
+      setIsCompressing(false);
+      return;
+    }
+
+    // Enkele foto
+    const file = files[0];
     let imageBlob: Blob = file;
 
-    // Comprimeer afbeelding als deze te groot is
     if (file.size > MAX_FILE_SIZE) {
       setIsCompressing(true);
       try {
@@ -145,29 +194,25 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setCapturedBlob(imageBlob);
     setPreviewUrl(url);
     setMode('preview-photo');
-  }, []);
+  }, [multiImages]);
 
 
   const createThumbnail = (source: HTMLImageElement): Promise<string> => {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
-      const size = 200;
-      canvas.width = size;
-      canvas.height = size;
+      // Behoud aspect ratio, max 400px
+      const maxSize = 400;
+      const scale = Math.min(maxSize / source.width, maxSize / source.height);
+      canvas.width = source.width * scale;
+      canvas.height = source.height * scale;
       const ctx = canvas.getContext('2d');
       if (!ctx) {
         resolve('');
         return;
       }
 
-      const srcWidth = source.width;
-      const srcHeight = source.height;
-      const minDim = Math.min(srcWidth, srcHeight);
-      const sx = (srcWidth - minDim) / 2;
-      const sy = (srcHeight - minDim) / 2;
-      ctx.drawImage(source, sx, sy, minDim, minDim, 0, 0, size, size);
-
-      resolve(canvas.toDataURL('image/jpeg', 0.7));
+      ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/jpeg', 0.8));
     });
   };
 
@@ -445,15 +490,37 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Multi-photo modus
   if (mode === 'multi-photo') {
     const isCamera = captureSource === 'camera';
+    const emptySlots = IMAGE_LABELS.filter(l => !multiImages.find(img => img.label === l.key)).length;
+
     return (
       <div className="flex flex-col h-full">
         <div className="bg-stone-800 p-3 shrink-0">
           <h2 className="text-white font-semibold">Foto's {isCamera ? 'maken' : 'uploaden'}</h2>
-          <p className="text-stone-400 text-xs">Tik op een vakje om een foto {isCamera ? 'te maken' : 'te kiezen'}</p>
+          <p className="text-stone-400 text-xs">
+            {isCamera
+              ? 'Tik op een vakje om een foto te maken'
+              : `Tik op een vakje of selecteer meerdere foto's tegelijk`}
+          </p>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3">
-          {/* Bestaande foto's */}
+          {/* Multi-upload knop voor upload mode */}
+          {!isCamera && emptySlots > 0 && (
+            <label className="block mb-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-center cursor-pointer hover:bg-amber-100 transition-colors">
+              <span className="text-sm text-amber-700 font-medium">
+                Selecteer {emptySlots > 1 ? `tot ${emptySlots} foto's` : '1 foto'} tegelijk
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+            </label>
+          )}
+
+          {/* Foto grid */}
           <div className="grid grid-cols-2 gap-2 mb-4">
             {IMAGE_LABELS.map(({ key, label }) => {
               const img = multiImages.find((i) => i.label === key);
@@ -461,16 +528,20 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               return (
                 <div
                   key={key}
-                  className={`relative border-2 rounded-lg overflow-hidden aspect-square ${
-                    img ? 'border-green-500' : 'border-dashed border-stone-300'
+                  className={`relative border-2 rounded-lg overflow-hidden min-h-[120px] ${
+                    img ? 'border-green-500 bg-stone-100' : 'border-dashed border-stone-300 aspect-square'
                   }`}
                 >
                   {img ? (
                     <>
-                      <img src={img.thumbnail} alt={label} className="w-full h-full object-cover" />
+                      <img
+                        src={img.thumbnail}
+                        alt={label}
+                        className="w-full h-full object-contain bg-stone-50"
+                      />
                       <button
                         onClick={() => handleRemoveImage(key)}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold"
                       >
                         ×
                       </button>
