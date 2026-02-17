@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ChevronLeft, Check, Info } from 'lucide-react';
 import { analyzeImage, blobToBase64 } from '../lib/aiAnalysis';
 import type { AnalysisResult } from '../lib/aiAnalysis';
 import type { LabeledImage } from '../types';
@@ -128,9 +129,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
       {/* Header */}
       <div className="bg-stone-800 p-3 flex items-center gap-3 shrink-0">
         <button onClick={onBack} className="text-white p-1">
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <ChevronLeft className="w-6 h-6" />
         </button>
         <h1 className="text-white font-semibold">AI Analyse</h1>
       </div>
@@ -207,9 +206,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
                       </div>
                       {isSelected && (
                         <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                          <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
+                          <Check className="w-3 h-3 text-white" strokeWidth={3} />
                         </div>
                       )}
                     </button>
@@ -246,9 +243,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
           {hasVideoFrames && allImages.length > 0 && (
             <div className="mt-3 pt-3 border-t border-stone-200">
               <div className="flex items-center gap-2 text-sm text-stone-700">
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <Info className="w-4 h-4 text-blue-500" />
                 <span>
                   {manualImages.length > 0
                     ? `${manualImages.length} foto('s) + ${selectedFrameIndices.size} video frames = ${allImages.length} afbeeldingen`

@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
+import { Camera, ImagePlus, ChevronRight, X, Plus } from 'lucide-react';
 import type { LabeledImage } from '../types';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
@@ -104,14 +105,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [currentLabel, setCurrentLabel] = useState<LabeledImage['label']>('dorsaal');
   const [isInMultiPhotoMode, setIsInMultiPhotoMode] = useState(false);
   const [isCropping, setIsCropping] = useState(false);
-  const [cropBox, setCropBox] = useState({ x: 50, y: 50, size: 200 });
+  const [cropBox, setCropBox] = useState({ x: 50, y: 50, width: 200, height: 200 });
   const [isCompressing, setIsCompressing] = useState(false);
   const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
 
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
-  // Ref voor native camera input (legacy)
-  const photoInputRef = useRef<HTMLInputElement>(null);
 
   // Cleanup bij unmount
   useEffect(() => {
@@ -120,64 +119,84 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     };
   }, []);
 
-  // Handler voor foto capture (enkele foto of multi-upload)
-  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+  // Helper: verwerk een file naar LabeledImage
+  const processFileToImage = useCallback(async (file: File, label: LabeledImage['label']): Promise<LabeledImage> => {
+    let imageBlob: Blob = file;
 
-    // Reset file input zodat dezelfde file opnieuw geselecteerd kan worden
-    e.target.value = '';
-
-    // Multi-file upload: verwerk alle bestanden
-    if (files.length > 1) {
-      setIsCompressing(true);
-      const newImages: LabeledImage[] = [...multiImages];
-
-      for (let i = 0; i < Math.min(files.length, 4); i++) {
-        const file = files[i];
-        let imageBlob: Blob = file;
-
-        if (file.size > MAX_FILE_SIZE) {
-          try {
-            imageBlob = await compressImage(file);
-          } catch (err) {
-            console.error('Image compression failed:', err);
-          }
-        }
-
-        // Maak thumbnail (behoud aspect ratio)
-        const url = URL.createObjectURL(imageBlob);
-        const img = new Image();
-        img.src = url;
-        await new Promise<void>((resolve) => { img.onload = () => resolve(); });
-
-        const canvas = document.createElement('canvas');
-        const maxSize = 400;
-        const scale = Math.min(maxSize / img.width, maxSize / img.height);
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        }
-        const thumbnail = canvas.toDataURL('image/jpeg', 0.8);
-        URL.revokeObjectURL(url);
-
-        // Vind eerste lege slot
-        const usedLabels = new Set(newImages.map(img => img.label));
-        const nextLabel = IMAGE_LABELS.find(l => !usedLabels.has(l.key));
-        if (nextLabel) {
-          newImages.push({ label: nextLabel.key, blob: imageBlob, thumbnail });
-        }
+    if (file.size > MAX_FILE_SIZE) {
+      try {
+        imageBlob = await compressImage(file);
+      } catch (err) {
+        console.error('Image compression failed:', err);
       }
-
-      setMultiImages(newImages);
-      setIsCompressing(false);
-      return;
     }
 
-    // Enkele foto
-    const file = files[0];
+    // Maak thumbnail (behoud aspect ratio)
+    const url = URL.createObjectURL(imageBlob);
+    const img = new Image();
+    img.src = url;
+    await new Promise<void>((resolve) => { img.onload = () => resolve(); });
+
+    const canvas = document.createElement('canvas');
+    const maxSize = 400;
+    const scale = Math.min(maxSize / img.width, maxSize / img.height);
+    canvas.width = img.width * scale;
+    canvas.height = img.height * scale;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+    const thumbnail = canvas.toDataURL('image/jpeg', 0.8);
+    URL.revokeObjectURL(url);
+
+    return { label, blob: imageBlob, thumbnail };
+  }, []);
+
+  // Handler voor multi-file upload (bulk)
+  const handleMultiFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    e.target.value = '';
+
+    setIsCompressing(true);
+    const newImages: LabeledImage[] = [...multiImages];
+    const filesToProcess = Array.from(files).slice(0, 4 - newImages.length);
+
+    for (const file of filesToProcess) {
+      const usedLabels = new Set(newImages.map(img => img.label));
+      const nextLabel = IMAGE_LABELS.find(l => !usedLabels.has(l.key));
+      if (nextLabel) {
+        const labeledImage = await processFileToImage(file, nextLabel.key);
+        newImages.push(labeledImage);
+      }
+    }
+
+    setMultiImages(newImages);
+    setIsCompressing(false);
+  }, [multiImages, processFileToImage]);
+
+  // Handler voor enkele foto in grid (camera of upload)
+  const handleSingleFileForGrid = useCallback(async (e: React.ChangeEvent<HTMLInputElement>, targetLabel: LabeledImage['label']) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = '';
+
+    setIsCompressing(true);
+    const labeledImage = await processFileToImage(file, targetLabel);
+
+    setMultiImages(prev => {
+      const filtered = prev.filter(img => img.label !== targetLabel);
+      return [...filtered, labeledImage];
+    });
+    setIsCompressing(false);
+  }, [processFileToImage]);
+
+  // Handler voor camera foto capture (met preview)
+  const handleCameraCapture = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = '';
+
     let imageBlob: Blob = file;
 
     if (file.size > MAX_FILE_SIZE) {
@@ -194,7 +213,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setCapturedBlob(imageBlob);
     setPreviewUrl(url);
     setMode('preview-photo');
-  }, [multiImages]);
+  }, []);
 
 
   const createThumbnail = (source: HTMLImageElement): Promise<string> => {
@@ -315,11 +334,19 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const initCrop = useCallback(() => {
     if (previewImgRef.current && cropContainerRef.current) {
       const container = cropContainerRef.current;
-      const size = Math.min(container.clientWidth, container.clientHeight) * 0.6;
+      const img = previewImgRef.current;
+      // Start met 80% van de afbeelding, behoud aspect ratio
+      const imgRect = img.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const offsetX = imgRect.left - containerRect.left;
+      const offsetY = imgRect.top - containerRect.top;
+      const width = imgRect.width * 0.8;
+      const height = imgRect.height * 0.8;
       setCropBox({
-        x: (container.clientWidth - size) / 2,
-        y: (container.clientHeight - size) / 2,
-        size,
+        x: offsetX + (imgRect.width - width) / 2,
+        y: offsetY + (imgRect.height - height) / 2,
+        width,
+        height,
       });
     }
     setIsCropping(true);
@@ -344,16 +371,17 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     // Bereken crop positie op originele afbeelding
     const cropX = Math.max(0, (cropBox.x - offsetX) * scaleX);
     const cropY = Math.max(0, (cropBox.y - offsetY) * scaleY);
-    const cropSize = cropBox.size * Math.max(scaleX, scaleY);
+    const cropWidth = cropBox.width * scaleX;
+    const cropHeight = cropBox.height * scaleY;
 
     // Maak canvas voor cropped afbeelding
     const canvas = document.createElement('canvas');
-    canvas.width = cropSize;
-    canvas.height = cropSize;
+    canvas.width = cropWidth;
+    canvas.height = cropHeight;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.drawImage(img, cropX, cropY, cropSize, cropSize, 0, 0, cropSize, cropSize);
+    ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
 
     const croppedBlob = await new Promise<Blob | null>((resolve) => {
       canvas.toBlob(resolve, 'image/jpeg', 0.9);
@@ -367,8 +395,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     setIsCropping(false);
   }, [cropBox, capturedBlob, previewUrl]);
 
+  // Verplaats crop box
   const handleCropDrag = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     if (!cropContainerRef.current) return;
+    e.preventDefault();
 
     const container = cropContainerRef.current;
     const containerRect = container.getBoundingClientRect();
@@ -384,14 +414,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     const startBox = { ...cropBox };
 
     const onMove = (event: TouchEvent | MouseEvent) => {
+      event.preventDefault();
       const pos = getPos(event);
       const dx = pos.x - startPos.x;
       const dy = pos.y - startPos.y;
 
       setCropBox({
         ...startBox,
-        x: Math.max(0, Math.min(containerRect.width - startBox.size, startBox.x + dx)),
-        y: Math.max(0, Math.min(containerRect.height - startBox.size, startBox.y + dy)),
+        x: Math.max(0, Math.min(containerRect.width - startBox.width, startBox.x + dx)),
+        y: Math.max(0, Math.min(containerRect.height - startBox.height, startBox.y + dy)),
       });
     };
 
@@ -404,7 +435,69 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onEnd);
-    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onEnd);
+  }, [cropBox]);
+
+  // Resize crop box via hoeken
+  const handleCropResize = useCallback((corner: 'tl' | 'tr' | 'bl' | 'br', e: React.TouchEvent | React.MouseEvent) => {
+    if (!cropContainerRef.current) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const container = cropContainerRef.current;
+    const containerRect = container.getBoundingClientRect();
+    const minSize = 50;
+
+    const getPos = (event: TouchEvent | MouseEvent) => {
+      if ('touches' in event) {
+        return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+      }
+      return { x: (event as MouseEvent).clientX, y: (event as MouseEvent).clientY };
+    };
+
+    const startPos = getPos(e.nativeEvent as TouchEvent | MouseEvent);
+    const startBox = { ...cropBox };
+
+    const onMove = (event: TouchEvent | MouseEvent) => {
+      event.preventDefault();
+      const pos = getPos(event);
+      const dx = pos.x - startPos.x;
+      const dy = pos.y - startPos.y;
+
+      let newBox = { ...startBox };
+
+      if (corner === 'tl') {
+        newBox.x = Math.max(0, Math.min(startBox.x + startBox.width - minSize, startBox.x + dx));
+        newBox.y = Math.max(0, Math.min(startBox.y + startBox.height - minSize, startBox.y + dy));
+        newBox.width = startBox.width - (newBox.x - startBox.x);
+        newBox.height = startBox.height - (newBox.y - startBox.y);
+      } else if (corner === 'tr') {
+        newBox.y = Math.max(0, Math.min(startBox.y + startBox.height - minSize, startBox.y + dy));
+        newBox.width = Math.max(minSize, Math.min(containerRect.width - startBox.x, startBox.width + dx));
+        newBox.height = startBox.height - (newBox.y - startBox.y);
+      } else if (corner === 'bl') {
+        newBox.x = Math.max(0, Math.min(startBox.x + startBox.width - minSize, startBox.x + dx));
+        newBox.width = startBox.width - (newBox.x - startBox.x);
+        newBox.height = Math.max(minSize, Math.min(containerRect.height - startBox.y, startBox.height + dy));
+      } else if (corner === 'br') {
+        newBox.width = Math.max(minSize, Math.min(containerRect.width - startBox.x, startBox.width + dx));
+        newBox.height = Math.max(minSize, Math.min(containerRect.height - startBox.y, startBox.height + dy));
+      }
+
+      setCropBox(newBox);
+    };
+
+    const onEnd = () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+    };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove, { passive: false });
     document.addEventListener('touchend', onEnd);
   }, [cropBox]);
 
@@ -436,18 +529,13 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
-              <svg className="w-7 h-7 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <Camera className="w-7 h-7 text-amber-600" />
             </div>
             <div className="text-left flex-1">
               <span className="font-semibold text-stone-900 block">Foto('s) maken</span>
               <span className="text-sm text-stone-500">Maak 1-4 foto's met je camera</span>
             </div>
-            <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className="w-5 h-5 text-stone-300" />
           </button>
 
           {/* Foto('s) uploaden - opent multi-photo mode met galerij */}
@@ -460,28 +548,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
           >
             <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
-              <svg className="w-7 h-7 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+              <ImagePlus className="w-7 h-7 text-stone-600" />
             </div>
             <div className="text-left flex-1">
               <span className="font-semibold text-stone-900 block">Foto('s) uploaden</span>
               <span className="text-sm text-stone-500">Kies 1-4 bestaande foto's</span>
             </div>
-            <svg className="w-5 h-5 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className="w-5 h-5 text-stone-300" />
           </button>
 
-          {/* Hidden input voor enkele foto (alleen nog gebruikt voor legacy flow) */}
-          <input
-            ref={photoInputRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={handleFileSelect}
-            className="hidden"
-          />
         </div>
       </div>
     );
@@ -514,7 +589,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                 type="file"
                 accept="image/*"
                 multiple
-                onChange={handleFileSelect}
+                onChange={handleMultiFileUpload}
                 className="hidden"
               />
             </label>
@@ -541,9 +616,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                       />
                       <button
                         onClick={() => handleRemoveImage(key)}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold"
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
                       >
-                        ×
+                        <X className="w-4 h-4" />
                       </button>
                       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
                         {label}
@@ -554,13 +629,11 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                       htmlFor={inputId}
                       className="w-full h-full flex flex-col items-center justify-center text-stone-400 hover:bg-stone-100 cursor-pointer"
                     >
-                      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        {isCamera ? (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                        ) : (
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        )}
-                      </svg>
+                      {isCamera ? (
+                        <Camera className="w-8 h-8" />
+                      ) : (
+                        <Plus className="w-8 h-8" />
+                      )}
                       <span className="text-xs mt-1">{label}</span>
                       <input
                         id={inputId}
@@ -568,8 +641,12 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                         accept="image/*"
                         {...(isCamera ? { capture: 'environment' as const } : {})}
                         onChange={(e) => {
-                          setCurrentLabel(key);
-                          handleFileSelect(e);
+                          if (isCamera) {
+                            setCurrentLabel(key);
+                            handleCameraCapture(e);
+                          } else {
+                            handleSingleFileForGrid(e, key);
+                          }
                         }}
                         className="hidden"
                       />
@@ -633,18 +710,42 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                 style={{
                   left: cropBox.x,
                   top: cropBox.y,
-                  width: cropBox.size,
-                  height: cropBox.size,
+                  width: cropBox.width,
+                  height: cropBox.height,
                   boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
                 }}
                 onMouseDown={handleCropDrag}
                 onTouchStart={handleCropDrag}
               >
-                {/* Hoek markers */}
-                <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-white" />
-                <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-white" />
-                <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-white" />
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-white" />
+                {/* Hoek resize handles - grotere touch targets */}
+                <div
+                  className="absolute -top-2 -left-2 w-6 h-6 cursor-nw-resize touch-none flex items-center justify-center"
+                  onMouseDown={(e) => handleCropResize('tl', e)}
+                  onTouchStart={(e) => handleCropResize('tl', e)}
+                >
+                  <div className="w-3 h-3 border-t-2 border-l-2 border-white bg-amber-500/50" />
+                </div>
+                <div
+                  className="absolute -top-2 -right-2 w-6 h-6 cursor-ne-resize touch-none flex items-center justify-center"
+                  onMouseDown={(e) => handleCropResize('tr', e)}
+                  onTouchStart={(e) => handleCropResize('tr', e)}
+                >
+                  <div className="w-3 h-3 border-t-2 border-r-2 border-white bg-amber-500/50" />
+                </div>
+                <div
+                  className="absolute -bottom-2 -left-2 w-6 h-6 cursor-sw-resize touch-none flex items-center justify-center"
+                  onMouseDown={(e) => handleCropResize('bl', e)}
+                  onTouchStart={(e) => handleCropResize('bl', e)}
+                >
+                  <div className="w-3 h-3 border-b-2 border-l-2 border-white bg-amber-500/50" />
+                </div>
+                <div
+                  className="absolute -bottom-2 -right-2 w-6 h-6 cursor-se-resize touch-none flex items-center justify-center"
+                  onMouseDown={(e) => handleCropResize('br', e)}
+                  onTouchStart={(e) => handleCropResize('br', e)}
+                >
+                  <div className="w-3 h-3 border-b-2 border-r-2 border-white bg-amber-500/50" />
+                </div>
               </div>
             </>
           )}

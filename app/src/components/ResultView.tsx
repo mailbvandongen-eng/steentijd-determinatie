@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { Check, ChevronDown, Pencil, Share2, RefreshCw, X } from 'lucide-react';
 import type { DeterminationSession, LabeledImage } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
@@ -232,9 +233,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     <div className="h-full flex flex-col overflow-hidden">
       {/* Header - subtiele amber badge */}
       <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 flex items-center justify-center gap-2 shrink-0">
-        <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-        </svg>
+        <Check className="w-5 h-5 text-amber-600" />
         <span className="text-sm font-medium text-amber-700">Determinatie voltooid</span>
       </div>
 
@@ -275,9 +274,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                 className="mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
               >
                 {showFullAnalysis ? 'Minder tonen' : 'Meer details...'}
-                <svg className={`w-4 h-4 transition-transform ${showFullAnalysis ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showFullAnalysis ? 'rotate-180' : ''}`} />
               </button>
             )}
 
@@ -325,14 +322,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                     className="text-xs text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
                   >
                     {showAllImages ? 'Verberg' : 'Toon alle foto\'s'}
-                    <svg
-                      className={`w-4 h-4 transition-transform ${showAllImages ? 'rotate-180' : ''}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${showAllImages ? 'rotate-180' : ''}`} />
                   </button>
                 )}
               </div>
@@ -376,10 +366,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                               </div>
                               <button
                                 onClick={(e) => { e.stopPropagation(); handleRemoveSketch(idx); }}
-                                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600"
                                 title="Verwijder tekening"
                               >
-                                ×
+                                <X className="w-3 h-3" />
                               </button>
                             </div>
                           )}
@@ -408,14 +398,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                                   <span className="text-[10px] text-amber-500">Dit duurt 10-20 seconden</span>
                                 </>
                               ) : (
-                                <>
-                                  <div className="flex items-center gap-2">
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                    </svg>
-                                    <span>Maak tekening</span>
-                                  </div>
-                                </>
+                                <div className="flex items-center gap-2">
+                                  <Pencil className="w-4 h-4" />
+                                  <span>Maak tekening</span>
+                                </div>
                               )}
                             </button>
                           ) : (
@@ -477,14 +463,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                               <span className="text-xs text-amber-500">Dit duurt 10-20 seconden</span>
                             </>
                           ) : (
-                            <>
-                              <div className="flex items-center gap-2">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                </svg>
-                                <span>Maak archeologische tekening</span>
-                              </div>
-                            </>
+                            <div className="flex items-center gap-2">
+                              <Pencil className="w-4 h-4" />
+                              <span>Maak archeologische tekening</span>
+                            </div>
                           )}
                         </button>
                       )}
@@ -543,9 +525,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
             {isSharing ? (
               <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
             ) : (
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
+              <Share2 className="w-6 h-6" />
             )}
             <span className="text-xs">Delen</span>
           </button>
@@ -557,9 +537,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
               className="flex flex-col items-center gap-1 p-2 text-stone-500 hover:text-amber-600 transition-colors"
               title="Opnieuw determineren"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
+              <RefreshCw className="w-6 h-6" />
               <span className="text-xs">Opnieuw</span>
             </button>
           )}
@@ -580,9 +558,9 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
             </span>
             <button
               onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
-              className="w-10 h-10 flex items-center justify-center text-2xl"
+              className="w-10 h-10 flex items-center justify-center"
             >
-              ×
+              <X className="w-6 h-6" />
             </button>
           </div>
 

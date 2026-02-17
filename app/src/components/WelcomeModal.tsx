@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.13', date: '17 feb 2026', changes: ['Lucide iconen voor consistente UI', 'Dynamisch bijsnijden (sleep hoeken om formaat aan te passen)', 'Multi-foto upload fix'] },
   { version: '1.1.12', date: '17 feb 2026', changes: ['Vindplaats/context invoer voor betere determinatie', 'Compactere resultaat weergave met uitklapbare details', 'Icoon-knoppen voor delen en opnieuw determineren'] },
   { version: '1.1.11', date: '16 feb 2026', changes: ['AI analyse details tonen (periode, zekerheid, kenmerken)', 'Volledige AI-analyse uitklapbaar'] },
   { version: '1.1.10', date: '16 feb 2026', changes: ['Verbeterde foutafhandeling bij tekening generatie'] },
