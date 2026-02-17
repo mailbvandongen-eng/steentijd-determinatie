@@ -110,7 +110,7 @@ export async function analyzeImage(
       : '';
 
     const contextNote = contextInfo
-      ? `\n\nVINDPLAATS/CONTEXT: ${contextInfo}\nDit is belangrijke informatie! De geologische en geografische context kan veel zeggen over het type artefact en de periode. Veengebieden in Noord-Holland, grindpaden in Drenthe, of kalksteenrijke gebieden in Zuid-Frankrijk hebben elk hun eigen karakteristieke vondsten. Neem deze context mee in je analyse.`
+      ? `\n\nVINDPLAATS/CONTEXT: ${contextInfo}\nNeem deze informatie mee in je analyse. De locatie en vindcontext (oppervlaktevondst, in situ, etc.) kunnen relevant zijn voor de determinatie.`
       : '';
 
     const response = await fetch(WORKER_URL, {
