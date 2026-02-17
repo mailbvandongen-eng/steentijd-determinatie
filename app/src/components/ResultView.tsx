@@ -339,13 +339,13 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
                     return (
                       <div key={idx} className="border border-stone-200 rounded-lg p-2">
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className={img.drawing ? "grid grid-cols-2 gap-2" : ""}>
                           {/* Foto */}
-                          <div className="relative aspect-square bg-stone-50 rounded-lg overflow-hidden">
+                          <div className={`relative bg-stone-50 rounded-lg overflow-hidden ${img.drawing ? 'aspect-square' : 'max-w-[200px]'}`}>
                             <img
                               src={img.thumbnail}
                               alt={labelText}
-                              className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                              className={`cursor-pointer hover:opacity-90 transition-opacity ${img.drawing ? 'w-full h-full object-cover' : 'w-full h-auto rounded-lg'}`}
                               onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(false); }}
                             />
                             <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded pointer-events-none">
@@ -353,8 +353,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                             </div>
                           </div>
 
-                          {/* Tekening (indien aanwezig) of placeholder */}
-                          {img.drawing ? (
+                          {/* Tekening (indien aanwezig) */}
+                          {img.drawing && (
                             <div className="relative aspect-square bg-white rounded-lg border border-stone-300 overflow-hidden">
                               <img
                                 src={img.drawing}
@@ -373,8 +373,6 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                                 <X className="w-3 h-3" />
                               </button>
                             </div>
-                          ) : (
-                            <div className="aspect-square" />
                           )}
                         </div>
 
@@ -575,7 +573,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
           {/* Image */}
           <div
-            className="flex-1 flex items-center justify-center p-4 overflow-hidden"
+            className="flex-1 flex items-center justify-center px-4 py-2 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
@@ -583,7 +581,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                 ? allImages[lightboxIndex].drawing
                 : allImages[lightboxIndex].thumbnail}
               alt={`Foto ${lightboxIndex + 1}`}
-              className="max-w-full max-h-full object-contain"
+              className="max-w-[90%] max-h-full object-contain rounded-lg"
             />
           </div>
 
