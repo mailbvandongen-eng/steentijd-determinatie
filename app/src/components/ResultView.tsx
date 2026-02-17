@@ -339,13 +339,13 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
                     return (
                       <div key={idx} className="border border-stone-200 rounded-lg p-2">
-                        <div className="flex gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                           {/* Foto */}
-                          <div className="relative flex-1">
+                          <div className="relative aspect-square bg-stone-50 rounded-lg overflow-hidden">
                             <img
                               src={img.thumbnail}
                               alt={labelText}
-                              className="w-full h-32 object-contain bg-stone-50 rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                              className="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
                               onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(false); }}
                             />
                             <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded pointer-events-none">
@@ -353,13 +353,13 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                             </div>
                           </div>
 
-                          {/* Tekening (indien aanwezig) */}
-                          {img.drawing && (
-                            <div className="relative flex-1">
+                          {/* Tekening (indien aanwezig) of placeholder */}
+                          {img.drawing ? (
+                            <div className="relative aspect-square bg-white rounded-lg border border-stone-300 overflow-hidden">
                               <img
                                 src={img.drawing}
                                 alt={`Tekening ${labelText}`}
-                                className="w-full h-32 object-contain bg-white rounded-lg border border-stone-300 cursor-pointer hover:opacity-90 transition-opacity"
+                                className="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity"
                                 onClick={() => { setLightboxIndex(idx); setLightboxShowDrawing(true); }}
                               />
                               <div className="absolute bottom-1 left-1 bg-amber-600/80 text-white text-xs px-2 py-0.5 rounded pointer-events-none">
@@ -373,6 +373,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                                 <X className="w-3 h-3" />
                               </button>
                             </div>
+                          ) : (
+                            <div className="aspect-square" />
                           )}
                         </div>
 

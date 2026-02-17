@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.15', date: '17 feb 2026', changes: ['Onzinnige foto-labels verwijderd', 'Fix: foto/tekening layout in resultaat'] },
   { version: '1.1.14', date: '17 feb 2026', changes: ['PDF export van determinatie', 'Drag & drop foto upload', 'Zoeken in geschiedenis'] },
   { version: '1.1.13', date: '17 feb 2026', changes: ['Lucide iconen voor consistente UI', 'Dynamisch bijsnijden (sleep hoeken om formaat aan te passen)', 'Multi-foto upload fix'] },
   { version: '1.1.12', date: '17 feb 2026', changes: ['Vindplaats/context invoer voor betere determinatie', 'Compactere resultaat weergave met uitklapbare details', 'Icoon-knoppen voor delen en opnieuw determineren'] },

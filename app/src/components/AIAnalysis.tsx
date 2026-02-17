@@ -148,16 +148,13 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
                 {manualImages.map((img, idx) => (
                   <div
                     key={`manual-${idx}`}
-                    className="shrink-0 rounded border-2 border-stone-200 overflow-hidden relative"
+                    className="shrink-0 rounded border-2 border-stone-200 overflow-hidden"
                   >
                     <img
                       src={img.thumbnail}
-                      alt={img.label}
+                      alt={`Foto ${idx + 1}`}
                       className="h-16 w-16 object-cover"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[10px] text-center">
-                      {img.label}
-                    </div>
                   </div>
                 ))}
               </div>
