@@ -386,18 +386,18 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     if (previewImgRef.current && cropContainerRef.current) {
       const container = cropContainerRef.current;
       const img = previewImgRef.current;
-      // Start met 80% van de afbeelding, behoud aspect ratio
+      // Start met vierkante selectie (80% van kleinste zijde)
       const imgRect = img.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const offsetX = imgRect.left - containerRect.left;
       const offsetY = imgRect.top - containerRect.top;
-      const width = imgRect.width * 0.8;
-      const height = imgRect.height * 0.8;
+      // Vierkant: gebruik kleinste dimensie
+      const size = Math.min(imgRect.width, imgRect.height) * 0.8;
       setCropBox({
-        x: offsetX + (imgRect.width - width) / 2,
-        y: offsetY + (imgRect.height - height) / 2,
-        width,
-        height,
+        x: offsetX + (imgRect.width - size) / 2,
+        y: offsetY + (imgRect.height - size) / 2,
+        width: size,
+        height: size,
       });
     }
     setIsCropping(true);
@@ -516,24 +516,44 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       const dx = pos.x - startPos.x;
       const dy = pos.y - startPos.y;
 
+      // Gebruik grootste delta voor vierkante resize
+      const delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
       let newBox = { ...startBox };
 
       if (corner === 'tl') {
-        newBox.x = Math.max(0, Math.min(startBox.x + startBox.width - minSize, startBox.x + dx));
-        newBox.y = Math.max(0, Math.min(startBox.y + startBox.height - minSize, startBox.y + dy));
-        newBox.width = startBox.width - (newBox.x - startBox.x);
-        newBox.height = startBox.height - (newBox.y - startBox.y);
+        // Naar linksboven: negatieve delta = groter
+        const change = -delta;
+        const newSize = Math.max(minSize, startBox.width + change);
+        const actualChange = newSize - startBox.width;
+        newBox.x = Math.max(0, startBox.x - actualChange);
+        newBox.y = Math.max(0, startBox.y - actualChange);
+        newBox.width = newSize;
+        newBox.height = newSize;
       } else if (corner === 'tr') {
-        newBox.y = Math.max(0, Math.min(startBox.y + startBox.height - minSize, startBox.y + dy));
-        newBox.width = Math.max(minSize, Math.min(containerRect.width - startBox.x, startBox.width + dx));
-        newBox.height = startBox.height - (newBox.y - startBox.y);
+        // Naar rechtsboven: positieve dx of negatieve dy = groter
+        const change = Math.abs(dx) > Math.abs(dy) ? dx : -dy;
+        const newSize = Math.max(minSize, Math.min(containerRect.width - startBox.x, startBox.width + change));
+        const actualChange = newSize - startBox.width;
+        newBox.y = Math.max(0, startBox.y - actualChange);
+        newBox.width = newSize;
+        newBox.height = newSize;
       } else if (corner === 'bl') {
-        newBox.x = Math.max(0, Math.min(startBox.x + startBox.width - minSize, startBox.x + dx));
-        newBox.width = startBox.width - (newBox.x - startBox.x);
-        newBox.height = Math.max(minSize, Math.min(containerRect.height - startBox.y, startBox.height + dy));
+        // Naar linksonder: negatieve dx of positieve dy = groter
+        const change = Math.abs(dx) > Math.abs(dy) ? -dx : dy;
+        const newSize = Math.max(minSize, Math.min(containerRect.height - startBox.y, startBox.width + change));
+        const actualChange = newSize - startBox.width;
+        newBox.x = Math.max(0, startBox.x - actualChange);
+        newBox.width = newSize;
+        newBox.height = newSize;
       } else if (corner === 'br') {
-        newBox.width = Math.max(minSize, Math.min(containerRect.width - startBox.x, startBox.width + dx));
-        newBox.height = Math.max(minSize, Math.min(containerRect.height - startBox.y, startBox.height + dy));
+        // Naar rechtsonder: positieve delta = groter
+        const newSize = Math.max(minSize, Math.min(
+          containerRect.width - startBox.x,
+          containerRect.height - startBox.y,
+          startBox.width + delta
+        ));
+        newBox.width = newSize;
+        newBox.height = newSize;
       }
 
       setCropBox(newBox);
@@ -824,13 +844,13 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         </div>
         <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white flex flex-col gap-2 shrink-0">
           {isCropping ? (
-            // Crop modus
+            // Crop modus (altijd vierkant)
             <div className="flex gap-2">
               <button onClick={() => setIsCropping(false)} className="btn-secondary flex-1">
                 Annuleren
               </button>
               <button onClick={applyCrop} className="btn-success flex-1">
-                Bijsnijden
+                Vierkant maken
               </button>
             </div>
           ) : isInMultiPhotoMode ? (
@@ -840,7 +860,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                 Opnieuw
               </button>
               <button onClick={initCrop} className="btn-secondary flex-1 px-2 py-2 text-sm">
-                Bijsnijden
+                Vierkant
               </button>
               <button onClick={handleAddToMulti} className="btn-success flex-1 px-2 py-2 text-sm">
                 Toevoegen
@@ -853,7 +873,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                 Opnieuw
               </button>
               <button onClick={initCrop} className="btn-secondary flex-1 px-2 py-2 text-sm">
-                Bijsnijden
+                Vierkant
               </button>
               <button onClick={handleConfirmSingle} className="btn-success flex-1 px-2 py-2 text-sm">
                 Gebruiken

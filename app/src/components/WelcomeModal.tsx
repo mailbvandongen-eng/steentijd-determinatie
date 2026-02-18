@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.20', date: '18 feb 2026', changes: ['Vierkant bijsnijden (1:1 ratio, past bij AI tekeningen)', 'Duidelijkere UI voor vierkante foto\'s'] },
   { version: '1.1.19', date: '18 feb 2026', changes: ['Meer ruimte rond foto\'s in fullscreen viewer', 'Betere weergave tekeningen'] },
   { version: '1.1.18', date: '18 feb 2026', changes: ['Agressievere foto compressie (max 1.5MB, 1500px)', 'Alle foto\'s worden nu automatisch verkleind'] },
   { version: '1.1.17', date: '17 feb 2026', changes: ['Verbeterde foto/tekening layout in resultaten', 'Lightbox foto\'s met betere afstand tot randen'] },
@@ -85,6 +86,7 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
             <section className="bg-amber-50 rounded-xl p-3 border border-amber-200">
               <h3 className="text-sm font-semibold text-amber-800 mb-1">Tips voor goede foto's</h3>
               <ul className="text-xs text-amber-700 space-y-1">
+                <li>• <strong>Maak vierkante foto's</strong> (gebruik de "Vierkant" knop om bij te snijden)</li>
                 <li>• Gebruik goed licht (daglicht werkt het beste)</li>
                 <li>• Maak scherpe foto's van dichtbij</li>
                 <li>• Fotografeer meerdere kanten van het artefact</li>
