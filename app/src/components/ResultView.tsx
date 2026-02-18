@@ -573,7 +573,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
           {/* Image */}
           <div
-            className="flex-1 flex items-center justify-center px-4 py-2 overflow-hidden"
+            className="flex-1 flex items-center justify-center px-6 py-8 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <img
@@ -581,7 +581,11 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                 ? allImages[lightboxIndex].drawing
                 : allImages[lightboxIndex].thumbnail}
               alt={`Foto ${lightboxIndex + 1}`}
-              className="max-w-[90%] max-h-full object-contain rounded-lg"
+              className={`object-contain rounded-lg ${
+                lightboxShowDrawing && allImages[lightboxIndex].drawing
+                  ? 'max-w-[85%] max-h-[85%]'  // Tekening: iets kleiner voor betere verhoudingen
+                  : 'max-w-[90%] max-h-[90%]'  // Foto: normale grootte
+              }`}
             />
           </div>
 
