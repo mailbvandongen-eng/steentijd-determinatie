@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.21', date: '18 feb 2026', changes: ['Verduidelijking: Claude voor analyse, OpenAI voor tekeningen (betaalde diensten)'] },
   { version: '1.1.20', date: '18 feb 2026', changes: ['Vierkant bijsnijden (1:1 ratio, past bij AI tekeningen)', 'Duidelijkere UI voor vierkante foto\'s'] },
   { version: '1.1.19', date: '18 feb 2026', changes: ['Meer ruimte rond foto\'s in fullscreen viewer', 'Betere weergave tekeningen'] },
   { version: '1.1.18', date: '18 feb 2026', changes: ['Agressievere foto compressie (max 1.5MB, 1500px)', 'Alle foto\'s worden nu automatisch verkleind'] },
@@ -144,9 +145,11 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   of AI-gestuurde determinatie van stenen artefacten haalbaar en nuttig is.
                 </p>
                 <p>
-                  <strong>Hoe werkt de AI?</strong> — De app gebruikt Claude (Anthropic) als AI-model.
+                  <strong>Hoe werkt de AI?</strong> — De app gebruikt twee betaalde AI-diensten:
+                  <strong>Claude</strong> (Anthropic) voor de determinatie-analyse, en
+                  <strong>OpenAI</strong> voor het genereren van archeologische tekeningen.
                   Bij elke analyse wordt het AWN determinatie-algoritme als context meegestuurd.
-                  Het model is <em>stateless</em>: het onthoudt niets van eerdere sessies en wordt
+                  De modellen zijn <em>stateless</em>: ze onthouden niets van eerdere sessies en worden
                   niet getraind door gebruik van deze app.
                 </p>
                 <p>
