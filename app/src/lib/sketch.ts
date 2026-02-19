@@ -17,7 +17,7 @@ export interface SketchResult {
 
 /**
  * Genereert een archeologische tekening van een foto via AI
- * @param imageSource - data URL string van de afbeelding
+ * @param imageSource - data URL string van de afbeelding (moet vierkant zijn)
  * @returns Promise met de tekening als base64 data URL
  */
 export async function createArchaeologicalSketch(

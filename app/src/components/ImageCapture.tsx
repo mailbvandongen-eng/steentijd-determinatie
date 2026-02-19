@@ -23,6 +23,34 @@ const IMAGE_LABELS = [
 
 const MAX_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5 MB - lager voor betere API compatibiliteit
 const MAX_DIMENSION = 1500; // Max pixels voor langste zijde
+const MAX_SQUARE_SIZE = 1024; // Max grootte voor vierkante output (OpenAI limiet)
+
+/**
+ * Maakt een vierkant canvas met witruimte rondom de foto.
+ * De foto wordt gecentreerd op een wit vierkant canvas (grootste zijde).
+ */
+const makeSquareWithPadding = (img: HTMLImageElement): { canvas: HTMLCanvasElement; offsetX: number; offsetY: number } => {
+  const size = Math.max(img.naturalWidth, img.naturalHeight);
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    // Witte achtergrond
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, size, size);
+
+    // Foto gecentreerd plaatsen
+    const offsetX = Math.round((size - img.naturalWidth) / 2);
+    const offsetY = Math.round((size - img.naturalHeight) / 2);
+    ctx.drawImage(img, offsetX, offsetY);
+
+    return { canvas, offsetX, offsetY };
+  }
+
+  return { canvas, offsetX: 0, offsetY: 0 };
+};
 
 // Comprimeer afbeelding - ALTIJD verkleinen voor API
 const compressImage = async (file: File): Promise<Blob> => {
@@ -117,6 +145,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [isCropping, setIsCropping] = useState(false);
   const [cropBox, setCropBox] = useState({ x: 50, y: 50, width: 200, height: 200 });
   const [isCompressing, setIsCompressing] = useState(false);
+  const [squareCanvasUrl, setSquareCanvasUrl] = useState<string | null>(null); // Vierkant canvas met witruimte
   const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
   const [isDragging, setIsDragging] = useState(false);
 
@@ -162,44 +191,57 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return { label, blob: imageBlob, thumbnail };
   }, []);
 
-  // Handler voor multi-file upload (bulk)
-  const handleMultiFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    e.target.value = '';
-
-    setIsCompressing(true);
-    const newImages: LabeledImage[] = [...multiImages];
-    const filesToProcess = Array.from(files).slice(0, 4 - newImages.length);
-
-    for (const file of filesToProcess) {
-      const usedLabels = new Set(newImages.map(img => img.label));
-      const nextLabel = IMAGE_LABELS.find(l => !usedLabels.has(l.key));
-      if (nextLabel) {
-        const labeledImage = await processFileToImage(file, nextLabel.key);
-        newImages.push(labeledImage);
-      }
-    }
-
-    setMultiImages(newImages);
-    setIsCompressing(false);
-  }, [multiImages, processFileToImage]);
-
-  // Handler voor enkele foto in grid (camera of upload)
+  // Handler voor enkele foto in grid (upload) - gaat naar crop scherm
   const handleSingleFileForGrid = useCallback(async (e: React.ChangeEvent<HTMLInputElement>, targetLabel: LabeledImage['label']) => {
     const file = e.target.files?.[0];
     if (!file) return;
     e.target.value = '';
 
+    // Comprimeer foto
     setIsCompressing(true);
-    const labeledImage = await processFileToImage(file, targetLabel);
-
-    setMultiImages(prev => {
-      const filtered = prev.filter(img => img.label !== targetLabel);
-      return [...filtered, labeledImage];
-    });
+    let imageBlob: Blob = file;
+    try {
+      imageBlob = await compressImage(file);
+    } catch (err) {
+      console.error('Foto verkleinen mislukt:', err);
+    }
     setIsCompressing(false);
-  }, [processFileToImage]);
+
+    // Ga naar preview/crop scherm
+    const url = URL.createObjectURL(imageBlob);
+    setCurrentLabel(targetLabel);
+    setCapturedBlob(imageBlob);
+    setPreviewUrl(url);
+    setMode('preview-photo');
+
+    // Start crop automatisch na korte delay (wacht op image load)
+    setTimeout(() => {
+      if (previewImgRef.current && cropContainerRef.current) {
+        const img = previewImgRef.current;
+        const { canvas } = makeSquareWithPadding(img);
+        const squareUrl = canvas.toDataURL('image/jpeg', 0.95);
+        setSquareCanvasUrl(squareUrl);
+
+        setTimeout(() => {
+          if (previewImgRef.current && cropContainerRef.current) {
+            const container = cropContainerRef.current;
+            const newImg = previewImgRef.current;
+            const imgRect = newImg.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const offsetX = imgRect.left - containerRect.left;
+            const offsetY = imgRect.top - containerRect.top;
+            setCropBox({
+              x: offsetX,
+              y: offsetY,
+              width: imgRect.width,
+              height: imgRect.height,
+            });
+          }
+          setIsCropping(true);
+        }, 100);
+      }
+    }, 200);
+  }, []);
 
   // Handler voor camera foto capture (met preview)
   const handleCameraCapture = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -366,8 +408,10 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
   const handleRetake = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
+    if (squareCanvasUrl) URL.revokeObjectURL(squareCanvasUrl);
     setCapturedBlob(null);
     setPreviewUrl(null);
+    setSquareCanvasUrl(null);
     setIsCropping(false);
     // Als we in multi-photo mode zijn, ga terug naar multi-photo overzicht
     if (isInMultiPhotoMode) {
@@ -375,33 +419,48 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     } else {
       setMode('select');
     }
-  }, [previewUrl, isInMultiPhotoMode]);
+  }, [previewUrl, squareCanvasUrl, isInMultiPhotoMode]);
 
   const handleRemoveImage = useCallback((label: LabeledImage['label']) => {
     setMultiImages((prev) => prev.filter((i) => i.label !== label));
   }, []);
 
-  // Crop functionaliteit
-  const initCrop = useCallback(() => {
-    if (previewImgRef.current && cropContainerRef.current) {
-      const container = cropContainerRef.current;
-      const img = previewImgRef.current;
-      // Start met vierkante selectie (80% van kleinste zijde)
-      const imgRect = img.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      const offsetX = imgRect.left - containerRect.left;
-      const offsetY = imgRect.top - containerRect.top;
-      // Vierkant: gebruik kleinste dimensie
-      const size = Math.min(imgRect.width, imgRect.height) * 0.8;
-      setCropBox({
-        x: offsetX + (imgRect.width - size) / 2,
-        y: offsetY + (imgRect.height - size) / 2,
-        width: size,
-        height: size,
-      });
-    }
+  // Crop functionaliteit - maakt eerst vierkant canvas met witruimte
+  const initCrop = useCallback(async () => {
+    if (!previewImgRef.current || !cropContainerRef.current) return;
+
+    const img = previewImgRef.current;
+
+    // Maak vierkant canvas met witruimte
+    const { canvas } = makeSquareWithPadding(img);
+    const squareUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+    // Update preview naar vierkant canvas
+    if (squareCanvasUrl) URL.revokeObjectURL(squareCanvasUrl);
+    setSquareCanvasUrl(squareUrl);
+
+    // Wacht tot nieuwe afbeelding geladen is, dan cropbox initialiseren
+    setTimeout(() => {
+      if (previewImgRef.current && cropContainerRef.current) {
+        const container = cropContainerRef.current;
+        const newImg = previewImgRef.current;
+        const imgRect = newImg.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const offsetX = imgRect.left - containerRect.left;
+        const offsetY = imgRect.top - containerRect.top;
+
+        // Cropbox is het hele vierkant (gebruiker kan verkleinen/verplaatsen)
+        setCropBox({
+          x: offsetX,
+          y: offsetY,
+          width: imgRect.width,
+          height: imgRect.height,
+        });
+      }
+    }, 100);
+
     setIsCropping(true);
-  }, []);
+  }, [squareCanvasUrl]);
 
   const applyCrop = useCallback(async () => {
     if (!previewImgRef.current || !cropContainerRef.current || !capturedBlob) return;
@@ -422,17 +481,30 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     // Bereken crop positie op originele afbeelding
     const cropX = Math.max(0, (cropBox.x - offsetX) * scaleX);
     const cropY = Math.max(0, (cropBox.y - offsetY) * scaleY);
-    const cropWidth = cropBox.width * scaleX;
-    const cropHeight = cropBox.height * scaleY;
+    let cropWidth = cropBox.width * scaleX;
+    let cropHeight = cropBox.height * scaleY;
+
+    // Zorg dat het vierkant blijft (kleinste dimensie)
+    const cropSize = Math.min(cropWidth, cropHeight);
+    cropWidth = cropSize;
+    cropHeight = cropSize;
+
+    // Output grootte: max 1024x1024 voor OpenAI
+    const outputSize = Math.min(cropSize, MAX_SQUARE_SIZE);
 
     // Maak canvas voor cropped afbeelding
     const canvas = document.createElement('canvas');
-    canvas.width = cropWidth;
-    canvas.height = cropHeight;
+    canvas.width = outputSize;
+    canvas.height = outputSize;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    // Witte achtergrond (voor het geval er transparantie is)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, outputSize, outputSize);
+
+    // Teken gecropte en geschaalde afbeelding
+    ctx.drawImage(img, cropX, cropY, cropSize, cropSize, 0, 0, outputSize, outputSize);
 
     const croppedBlob = await new Promise<Blob | null>((resolve) => {
       canvas.toBlob(resolve, 'image/jpeg', 0.9);
@@ -440,11 +512,13 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
 
     if (croppedBlob) {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
+      if (squareCanvasUrl) URL.revokeObjectURL(squareCanvasUrl);
       setCapturedBlob(croppedBlob);
       setPreviewUrl(URL.createObjectURL(croppedBlob));
+      setSquareCanvasUrl(null);
     }
     setIsCropping(false);
-  }, [cropBox, capturedBlob, previewUrl]);
+  }, [cropBox, capturedBlob, previewUrl, squareCanvasUrl]);
 
   // Verplaats crop box
   const handleCropDrag = useCallback((e: React.TouchEvent | React.MouseEvent) => {
@@ -657,7 +731,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   // Multi-photo modus
   if (mode === 'multi-photo') {
     const isCamera = captureSource === 'camera';
-    const emptySlots = IMAGE_LABELS.filter(l => !multiImages.find(img => img.label === l.key)).length;
 
     return (
       <div className="flex flex-col h-full">
@@ -671,22 +744,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto p-3">
-          {/* Multi-upload knop voor upload mode */}
-          {!isCamera && emptySlots > 0 && (
-            <label className="block mb-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-center cursor-pointer hover:bg-amber-100 transition-colors">
-              <span className="text-sm text-amber-700 font-medium">
-                Selecteer {emptySlots > 1 ? `tot ${emptySlots} foto's` : '1 foto'} tegelijk
-              </span>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleMultiFileUpload}
-                className="hidden"
-              />
-            </label>
-          )}
-
           {/* Foto grid */}
           <div className="grid grid-cols-2 gap-2 mb-4">
             {IMAGE_LABELS.map(({ key, label }) => {
@@ -787,7 +844,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
         >
           <img
             ref={previewImgRef}
-            src={previewUrl}
+            src={isCropping && squareCanvasUrl ? squareCanvasUrl : previewUrl}
             alt="Preview"
             className="max-h-full max-w-full object-contain"
           />
@@ -846,7 +903,14 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           {isCropping ? (
             // Crop modus (altijd vierkant)
             <div className="flex gap-2">
-              <button onClick={() => setIsCropping(false)} className="btn-secondary flex-1">
+              <button
+                onClick={() => {
+                  setIsCropping(false);
+                  if (squareCanvasUrl) URL.revokeObjectURL(squareCanvasUrl);
+                  setSquareCanvasUrl(null);
+                }}
+                className="btn-secondary flex-1"
+              >
                 Annuleren
               </button>
               <button onClick={applyCrop} className="btn-success flex-1">
