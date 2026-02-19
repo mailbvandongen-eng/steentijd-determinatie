@@ -245,35 +245,35 @@ async function handleSketchRequest(
 
   const prompt = `Create a scientific archaeological pencil drawing based strictly on this photograph.
 
+CRITICAL - SCALE AND POSITION:
+- KEEP THE EXACT SAME SCALE: If the object fills 30% of the image, the drawing must also fill exactly 30%.
+- KEEP THE EXACT SAME POSITION: Draw the object in the same location within the frame.
+- DO NOT enlarge, zoom in, or "improve" the composition.
+- DO NOT center or reposition the object.
+- The white space around the object must remain proportionally the same.
+
 OBJECT:
-- Single flint fragment.
-- Maintain the exact outline and proportions from the photo.
+- Single flint/stone fragment only.
+- Maintain the exact outline shape from the photo.
 - Same orientation as the reference image.
-- Do not redesign, idealize, or improve the object.
-- DO NOT include hands, fingers, or any human body parts.
+- DO NOT include hands, fingers, or any human body parts - remove them but keep the stone at original scale.
 
 STYLE:
 - Black and white pencil illustration.
 - Scientific archaeological drawing style (publication standard).
-- Orthographic view (no perspective exaggeration).
-- No artistic or dramatic effects.
+- Orthographic view (no perspective).
 
 SURFACE TREATMENT:
-- Cortex rendered using fine stippling (dot shading).
-- Flake scars rendered using light directional hatching.
-- Fresh flint surfaces lighter than cortex.
-- Follow actual flake scar directions visible in the photo.
-- Do not invent additional knapping patterns.
-- Do not exaggerate texture depth.
+- Cortex: fine stippling (dots).
+- Flake scars: light directional hatching.
+- Follow actual flake scar directions from photo.
 
 BACKGROUND:
 - Plain white background.
-- No shadow beneath object.
-- No artistic lighting.
+- No shadows.
 
-IMPORTANT:
-- Use the photo as strict visual reference.
-- Accuracy over aesthetics.`;
+CRITICAL REMINDER:
+- DO NOT RESIZE THE OBJECT. Keep it at the exact same scale as in the photograph.`;
 
   console.log('=== IMAGE EDIT DEBUG ===');
   console.log('Blob size:', imageBlob.size);

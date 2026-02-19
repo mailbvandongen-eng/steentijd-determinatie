@@ -207,40 +207,43 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     }
     setIsCompressing(false);
 
-    // Ga naar preview/crop scherm
+    // Laad afbeelding om vierkant canvas te maken
     const url = URL.createObjectURL(imageBlob);
-    setCurrentLabel(targetLabel);
-    setCapturedBlob(imageBlob);
-    setPreviewUrl(url);
-    setMode('preview-photo');
+    const img = new Image();
+    img.onload = () => {
+      // Maak vierkant canvas met witruimte
+      const { canvas } = makeSquareWithPadding(img);
+      const squareUrl = canvas.toDataURL('image/jpeg', 0.95);
 
-    // Start crop automatisch na korte delay (wacht op image load)
-    setTimeout(() => {
-      if (previewImgRef.current && cropContainerRef.current) {
-        const img = previewImgRef.current;
-        const { canvas } = makeSquareWithPadding(img);
-        const squareUrl = canvas.toDataURL('image/jpeg', 0.95);
-        setSquareCanvasUrl(squareUrl);
+      setCurrentLabel(targetLabel);
+      setCapturedBlob(imageBlob);
+      setPreviewUrl(url);
+      setSquareCanvasUrl(squareUrl);
+      setMode('preview-photo');
 
-        setTimeout(() => {
-          if (previewImgRef.current && cropContainerRef.current) {
-            const container = cropContainerRef.current;
-            const newImg = previewImgRef.current;
-            const imgRect = newImg.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-            const offsetX = imgRect.left - containerRect.left;
-            const offsetY = imgRect.top - containerRect.top;
-            setCropBox({
-              x: offsetX,
-              y: offsetY,
-              width: imgRect.width,
-              height: imgRect.height,
-            });
-          }
-          setIsCropping(true);
-        }, 100);
-      }
-    }, 200);
+      // Wacht tot vierkante afbeelding gerenderd is, dan cropbox initialiseren
+      setTimeout(() => {
+        if (previewImgRef.current && cropContainerRef.current) {
+          const container = cropContainerRef.current;
+          const displayedImg = previewImgRef.current;
+          const imgRect = displayedImg.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          const offsetX = imgRect.left - containerRect.left;
+          const offsetY = imgRect.top - containerRect.top;
+
+          // Cropbox is vierkant (afbeelding is al vierkant)
+          const size = Math.min(imgRect.width, imgRect.height);
+          setCropBox({
+            x: offsetX + (imgRect.width - size) / 2,
+            y: offsetY + (imgRect.height - size) / 2,
+            width: size,
+            height: size,
+          });
+        }
+        setIsCropping(true);
+      }, 150);
+    };
+    img.src = url;
   }, []);
 
   // Handler voor camera foto capture (met preview)
