@@ -1,5 +1,12 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
-import { onAuthStateChanged, signInWithPopup, signOut as firebaseSignOut, type User } from 'firebase/auth';
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut as firebaseSignOut,
+  type User
+} from 'firebase/auth';
 import { auth, googleProvider } from '../lib/firebase';
 
 interface AuthContextType {
@@ -21,6 +28,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
+    // Check for redirect result (fallback login method)
+    getRedirectResult(auth).catch((error) => {
+      console.error('Redirect result error:', error);
+    });
+
     // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -37,11 +49,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      // Use popup instead of redirect - no bounce tracking issues!
+      // Try popup first
       await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error('Google sign in error:', error);
-      throw error;
+    } catch (error: unknown) {
+      const firebaseError = error as { code?: string };
+      // If popup blocked, fallback to redirect
+      if (firebaseError.code === 'auth/popup-blocked' ||
+          firebaseError.code === 'auth/popup-closed-by-user') {
+        console.log('Popup blocked, trying redirect...');
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        console.error('Google sign in error:', error);
+        throw error;
+      }
     }
   }, []);
 
