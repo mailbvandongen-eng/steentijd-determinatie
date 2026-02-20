@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.25', date: '20 feb 2026', changes: ['Zoom in op foto\'s en tekeningen (dubbeltik, pinch of scroll)'] },
   { version: '1.1.24', date: '20 feb 2026', changes: ['Cropper opent direct na foto maken met camera'] },
   { version: '1.1.23', date: '18 feb 2026', changes: ['Verduidelijking: Claude voor analyse, OpenAI voor tekeningen (betaalde diensten)'] },
   { version: '1.1.20', date: '18 feb 2026', changes: ['Vierkant bijsnijden (1:1 ratio, past bij AI tekeningen)', 'Duidelijkere UI voor vierkante foto\'s'] },

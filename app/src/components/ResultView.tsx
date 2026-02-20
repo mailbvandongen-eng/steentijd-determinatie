@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download } from 'lucide-react';
 import type { DeterminationSession, LabeledImage } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
@@ -551,85 +551,271 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
         </div>
       </div>
 
-      {/* Fullscreen Lightbox */}
+      {/* Fullscreen Lightbox met zoom */}
       {lightboxIndex !== null && allImages[lightboxIndex] && (
-        <div
-          className="fixed inset-0 z-50 bg-black flex flex-col"
-          onClick={() => setLightboxIndex(null)}
+        <LightboxWithZoom
+          images={allImages}
+          currentIndex={lightboxIndex}
+          showDrawing={lightboxShowDrawing}
+          onClose={() => setLightboxIndex(null)}
+          onNavigate={(newIndex) => { setLightboxIndex(newIndex); setLightboxShowDrawing(false); }}
+          onToggleDrawing={() => setLightboxShowDrawing(!lightboxShowDrawing)}
+        />
+      )}
+    </div>
+  );
+}
+
+// Lightbox component met zoom functionaliteit
+interface LightboxWithZoomProps {
+  images: LabeledImage[];
+  currentIndex: number;
+  showDrawing: boolean;
+  onClose: () => void;
+  onNavigate: (index: number) => void;
+  onToggleDrawing: () => void;
+}
+
+function LightboxWithZoom({
+  images,
+  currentIndex,
+  showDrawing,
+  onClose,
+  onNavigate,
+  onToggleDrawing,
+}: LightboxWithZoomProps) {
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastTapRef = useRef<number>(0);
+  const lastPinchDistRef = useRef<number>(0);
+  const dragStartRef = useRef({ x: 0, y: 0, panX: 0, panY: 0 });
+
+  const currentImage = images[currentIndex];
+  const imageSrc = showDrawing && currentImage.drawing
+    ? currentImage.drawing
+    : currentImage.thumbnail;
+
+  // Reset zoom bij navigatie of toggle
+  useEffect(() => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, [currentIndex, showDrawing]);
+
+  // Dubbeltik om in/uit te zoomen
+  const handleDoubleTap = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const now = Date.now();
+    if (now - lastTapRef.current < 300) {
+      // Dubbeltik gedetecteerd
+      if (zoom > 1) {
+        setZoom(1);
+        setPan({ x: 0, y: 0 });
+      } else {
+        setZoom(2.5);
+      }
+      lastTapRef.current = 0;
+    } else {
+      lastTapRef.current = now;
+    }
+  }, [zoom]);
+
+  // Touch handlers voor pinch zoom
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      // Pinch start
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      lastPinchDistRef.current = dist;
+    } else if (e.touches.length === 1 && zoom > 1) {
+      // Pan start
+      setIsDragging(true);
+      dragStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+        panX: pan.x,
+        panY: pan.y,
+      };
+    }
+  }, [zoom, pan]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      // Pinch zoom
+      e.preventDefault();
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      if (lastPinchDistRef.current > 0) {
+        const scale = dist / lastPinchDistRef.current;
+        setZoom(z => Math.max(1, Math.min(5, z * scale)));
+      }
+      lastPinchDistRef.current = dist;
+    } else if (e.touches.length === 1 && isDragging && zoom > 1) {
+      // Pan
+      e.preventDefault();
+      const dx = e.touches[0].clientX - dragStartRef.current.x;
+      const dy = e.touches[0].clientY - dragStartRef.current.y;
+      const maxPan = (zoom - 1) * 150;
+      setPan({
+        x: Math.max(-maxPan, Math.min(maxPan, dragStartRef.current.panX + dx)),
+        y: Math.max(-maxPan, Math.min(maxPan, dragStartRef.current.panY + dy)),
+      });
+    }
+  }, [isDragging, zoom]);
+
+  const handleTouchEnd = useCallback(() => {
+    lastPinchDistRef.current = 0;
+    setIsDragging(false);
+    // Reset zoom als het bijna 1 is
+    if (zoom < 1.1) {
+      setZoom(1);
+      setPan({ x: 0, y: 0 });
+    }
+  }, [zoom]);
+
+  // Mouse handlers voor desktop
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (zoom > 1) {
+      setIsDragging(true);
+      dragStartRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        panX: pan.x,
+        panY: pan.y,
+      };
+    }
+  }, [zoom, pan]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (isDragging && zoom > 1) {
+      const dx = e.clientX - dragStartRef.current.x;
+      const dy = e.clientY - dragStartRef.current.y;
+      const maxPan = (zoom - 1) * 150;
+      setPan({
+        x: Math.max(-maxPan, Math.min(maxPan, dragStartRef.current.panX + dx)),
+        y: Math.max(-maxPan, Math.min(maxPan, dragStartRef.current.panY + dy)),
+      });
+    }
+  }, [isDragging, zoom]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Scroll wheel zoom voor desktop
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    setZoom(z => {
+      const newZoom = Math.max(1, Math.min(5, z * delta));
+      if (newZoom === 1) {
+        setPan({ x: 0, y: 0 });
+      }
+      return newZoom;
+    });
+  }, []);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black flex flex-col"
+      onClick={() => zoom === 1 && onClose()}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between p-4 text-white shrink-0">
+        <span className="text-sm">
+          {currentIndex + 1} / {images.length}
+          {showDrawing && currentImage.drawing ? ' (Tekening)' : ' (Foto)'}
+          {zoom > 1 && ` • ${Math.round(zoom * 100)}%`}
+        </span>
+        <button
+          onClick={(e) => { e.stopPropagation(); onClose(); }}
+          className="w-10 h-10 flex items-center justify-center"
         >
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 text-white">
-            <span className="text-sm">
-              {lightboxIndex + 1} / {allImages.length}
-              {lightboxShowDrawing && allImages[lightboxIndex].drawing ? ' (Tekening)' : ' (Foto)'}
-            </span>
-            <button
-              onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
-              className="w-10 h-10 flex items-center justify-center"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
+          <X className="w-6 h-6" />
+        </button>
+      </div>
 
-          {/* Image */}
-          <div
-            className="flex-1 flex items-center justify-center px-6 py-8 overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={lightboxShowDrawing && allImages[lightboxIndex].drawing
-                ? allImages[lightboxIndex].drawing
-                : allImages[lightboxIndex].thumbnail}
-              alt={`Foto ${lightboxIndex + 1}`}
-              className={`object-contain rounded-lg ${
-                lightboxShowDrawing && allImages[lightboxIndex].drawing
-                  ? 'max-w-[85%] max-h-[85%]'  // Tekening: iets kleiner voor betere verhoudingen
-                  : 'max-w-[90%] max-h-[90%]'  // Foto: normale grootte
-              }`}
-            />
-          </div>
+      {/* Image container met zoom */}
+      <div
+        ref={containerRef}
+        className="flex-1 flex items-center justify-center overflow-hidden touch-none"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleDoubleTap(e);
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onWheel={handleWheel}
+        style={{ cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in' }}
+      >
+        <img
+          src={imageSrc}
+          alt={`Foto ${currentIndex + 1}`}
+          className="max-w-[90%] max-h-[85%] object-contain select-none"
+          style={{
+            transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
+            transition: isDragging ? 'none' : 'transform 0.2s ease-out',
+          }}
+          draggable={false}
+        />
+      </div>
 
-          {/* Controls */}
-          <div className="p-4 flex items-center justify-center gap-4">
-            {/* Vorige */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : allImages.length - 1);
-                setLightboxShowDrawing(false);
-              }}
-              className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/30"
-            >
-              ‹
-            </button>
-
-            {/* Toggle foto/tekening */}
-            {allImages[lightboxIndex].drawing && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightboxShowDrawing(!lightboxShowDrawing);
-                }}
-                className="px-4 py-2 rounded-full bg-white/20 text-white text-sm hover:bg-white/30"
-              >
-                {lightboxShowDrawing ? 'Toon foto' : 'Toon tekening'}
-              </button>
-            )}
-
-            {/* Volgende */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightboxIndex(lightboxIndex < allImages.length - 1 ? lightboxIndex + 1 : 0);
-                setLightboxShowDrawing(false);
-              }}
-              className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/30"
-            >
-              ›
-            </button>
-          </div>
+      {/* Zoom hint */}
+      {zoom === 1 && (
+        <div className="text-center text-white/50 text-xs py-1">
+          Dubbeltik of scroll om in te zoomen
         </div>
       )}
+
+      {/* Controls */}
+      <div className="p-4 flex items-center justify-center gap-4 shrink-0">
+        {/* Vorige */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigate(currentIndex > 0 ? currentIndex - 1 : images.length - 1);
+          }}
+          className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/30"
+        >
+          ‹
+        </button>
+
+        {/* Toggle foto/tekening */}
+        {currentImage.drawing && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleDrawing();
+            }}
+            className="px-4 py-2 rounded-full bg-white/20 text-white text-sm hover:bg-white/30"
+          >
+            {showDrawing ? 'Toon foto' : 'Toon tekening'}
+          </button>
+        )}
+
+        {/* Volgende */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNavigate(currentIndex < images.length - 1 ? currentIndex + 1 : 0);
+          }}
+          className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center text-xl hover:bg-white/30"
+        >
+          ›
+        </button>
+      </div>
     </div>
   );
 }
