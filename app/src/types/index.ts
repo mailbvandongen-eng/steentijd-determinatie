@@ -58,6 +58,8 @@ export interface DeterminationSession {
   };
 
   synced: boolean;
+  cloudId?: string;       // UUID van Supabase record
+  lastSyncedAt?: string;  // Laatste sync timestamp
 }
 
 // Image metadata types

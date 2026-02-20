@@ -4,6 +4,8 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.1.27', date: '20 feb 2026', changes: ['Firebase login (werkt in Chrome)', 'Popup login i.p.v. redirect'] },
+  { version: '1.1.26', date: '20 feb 2026', changes: ['Google login voor synchronisatie', 'Vondsten synchroniseren naar cloud', 'Vondsten ophalen op ander apparaat'] },
   { version: '1.1.25', date: '20 feb 2026', changes: ['Zoom in op foto\'s en tekeningen (dubbeltik, pinch of scroll)'] },
   { version: '1.1.24', date: '20 feb 2026', changes: ['Cropper opent direct na foto maken met camera'] },
   { version: '1.1.23', date: '18 feb 2026', changes: ['Verduidelijking: Claude voor analyse, OpenAI voor tekeningen (betaalde diensten)'] },

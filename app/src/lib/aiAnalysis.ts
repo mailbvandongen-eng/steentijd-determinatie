@@ -156,6 +156,12 @@ Analyseer ${images.length > 1 ? 'deze foto\'s' : 'deze foto'} van een mogelijk s
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+
+      // Vriendelijkere melding voor overbelasting
+      if (response.status === 529 || errorMessage.toLowerCase().includes('overload')) {
+        return { success: false, error: 'De AI-service is op dit moment druk. Probeer het over een minuutje opnieuw.' };
+      }
+
       return { success: false, error: `API fout: ${errorMessage}` };
     }
 

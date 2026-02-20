@@ -12,6 +12,12 @@ db.version(1).stores({
   images: '++id, name',
 });
 
+// Version 2: add cloudId index for sync
+db.version(2).stores({
+  sessions: '++id, createdAt, status, synced, cloudId',
+  images: '++id, name',
+});
+
 export { db };
 
 // Helper functies
@@ -72,4 +78,31 @@ export async function getSession(id: number): Promise<DeterminationSession | und
 
 export async function deleteSession(id: number): Promise<void> {
   await db.sessions.delete(id);
+}
+
+// Sync helpers
+export async function getUnsyncedSessions(): Promise<DeterminationSession[]> {
+  return await db.sessions
+    .filter(s => s.status === 'completed' && !s.cloudId)
+    .toArray();
+}
+
+export async function markSessionSynced(
+  id: number,
+  cloudId: string
+): Promise<void> {
+  await db.sessions.update(id, {
+    cloudId,
+    synced: true,
+    lastSyncedAt: new Date().toISOString(),
+  });
+}
+
+export async function getSessionByCloudId(cloudId: string): Promise<DeterminationSession | undefined> {
+  return await db.sessions.where('cloudId').equals(cloudId).first();
+}
+
+export async function addSessionFromCloud(session: Omit<DeterminationSession, 'id'>): Promise<number> {
+  const id = await db.sessions.add(session as DeterminationSession);
+  return id as number;
 }

@@ -930,6 +930,18 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                 >
                   <div className="w-3 h-3 border-b-2 border-r-2 border-white bg-amber-500/50" />
                 </div>
+                {/* Hulplijnen - regel van derden */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {/* Verticale lijnen */}
+                  <div className="absolute top-0 bottom-0 left-1/3 w-px bg-white/40" />
+                  <div className="absolute top-0 bottom-0 left-2/3 w-px bg-white/40" />
+                  {/* Horizontale lijnen */}
+                  <div className="absolute left-0 right-0 top-1/3 h-px bg-white/40" />
+                  <div className="absolute left-0 right-0 top-2/3 h-px bg-white/40" />
+                  {/* Center kruisje */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-px bg-white/70" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-px bg-white/70" />
+                </div>
               </div>
             </>
           )}
