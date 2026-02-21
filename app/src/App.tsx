@@ -13,7 +13,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.2.0';
+const APP_VERSION = '1.3.0';
 
 // Animation variants
 const pageVariants = {
@@ -35,6 +35,7 @@ interface CapturedData {
   images?: LabeledImage[];
   videoBlob?: Blob;
   videoFrames?: LabeledImage[]; // Automatisch geëxtraheerde frames uit video
+  locatie?: { lat: number; lng: number; naam?: string };
 }
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
       thumbnail: data.thumbnail,
       images: data.images,
       videoBlob: data.videoBlob,
+      locatie: data.locatie,
     });
     setCurrentSessionId(sessionId);
     setCapturedData(data);
@@ -117,6 +119,7 @@ function App() {
       blob: session.input.blob,
       thumbnail: session.input.thumbnail,
       videoBlob: session.input.videoBlob,
+      locatie: session.input.locatie,
     };
 
     // Maak nieuwe sessie met dezelfde input
@@ -126,6 +129,7 @@ function App() {
       thumbnail: data.thumbnail,
       images: data.images,
       videoBlob: data.videoBlob,
+      locatie: data.locatie,
     });
 
     setCurrentSessionId(sessionId);

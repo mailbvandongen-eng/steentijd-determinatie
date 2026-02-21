@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { getAllSessions, deleteSession } from '../lib/db';
 import type { DeterminationSession } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
+import { HistoryMap } from './HistoryMap';
 
 interface HistoryViewProps {
   onBack: () => void;
@@ -149,9 +150,16 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
         </motion.div>
       )}
 
+      {/* Kaart met vondsten */}
+      {sessions.length > 0 && (
+        <div className="px-4 pt-2 shrink-0">
+          <HistoryMap sessions={sessions} onSelectSession={onSelectSession} />
+        </div>
+      )}
+
       {/* Zoekbalk */}
       {sessions.length > 0 && (
-        <div className="px-4 shrink-0">
+        <div className="px-4 pt-3 shrink-0">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-muted)' }} />
             <input

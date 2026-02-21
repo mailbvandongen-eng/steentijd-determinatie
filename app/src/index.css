@@ -5,14 +5,14 @@
   :root {
     --app-height: 100vh;
     --safe-bottom: env(safe-area-inset-bottom, 0px);
-    /* Light mode colors */
-    --bg-primary: theme('colors.stone.50');
-    --bg-secondary: theme('colors.white');
+    /* Light mode colors - verbeterd contrast */
+    --bg-primary: theme('colors.stone.100');
+    --bg-secondary: theme('colors.stone.50');
     --bg-card: theme('colors.white');
-    --text-primary: theme('colors.stone.900');
-    --text-secondary: theme('colors.stone.600');
-    --text-muted: theme('colors.stone.400');
-    --border-color: theme('colors.stone.200');
+    --text-primary: theme('colors.stone.950');
+    --text-secondary: theme('colors.stone.700');
+    --text-muted: theme('colors.stone.500');
+    --border-color: theme('colors.stone.300');
     --accent: theme('colors.amber.600');
     --accent-hover: theme('colors.amber.700');
   }
@@ -124,5 +124,14 @@
 
   .desktop-main {
     @apply flex-1 flex flex-col overflow-hidden;
+  }
+
+  /* Leaflet map styling */
+  .leaflet-container {
+    font-family: inherit;
+  }
+
+  .amber-marker {
+    filter: hue-rotate(-30deg) saturate(1.5);
   }
 }

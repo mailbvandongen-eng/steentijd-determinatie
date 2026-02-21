@@ -27,6 +27,13 @@ export interface LabeledImage {
   drawing?: string; // base64 data URL van de tekening
 }
 
+// Locatie voor vondsten
+export interface VondstLocatie {
+  lat: number;
+  lng: number;
+  naam?: string; // Optionele plaatsnaam
+}
+
 export interface DeterminationSession {
   id?: number;
   createdAt: string;
@@ -43,6 +50,8 @@ export interface DeterminationSession {
     // Video
     videoBlob?: Blob;
     videoDuration?: number;
+    // Vindplaats
+    locatie?: VondstLocatie;
   };
 
   steps: DeterminationStep[];

@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.3.0', date: '21 feb 2026', changes: ['Vindplaats kaart toegevoegd', 'Vondsten zichtbaar op kaart', 'Verbeterd light mode contrast'] },
   { version: '1.2.1', date: '21 feb 2026', changes: ['Dark mode (standaard aan)', 'Sidebar navigatie op desktop', 'Statistieken in geschiedenis', 'Hover animaties op cards'] },
   { version: '1.1.27', date: '20 feb 2026', changes: ['Firebase login (werkt in Chrome)', 'Popup login i.p.v. redirect'] },
   { version: '1.1.26', date: '20 feb 2026', changes: ['Google login voor synchronisatie', 'Vondsten synchroniseren naar cloud', 'Vondsten ophalen op ander apparaat'] },

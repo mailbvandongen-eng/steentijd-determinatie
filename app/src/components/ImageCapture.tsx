@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { Camera, ImagePlus, ChevronRight, X, Plus, Upload } from 'lucide-react';
-import type { LabeledImage } from '../types';
+import type { LabeledImage, VondstLocatie } from '../types';
+import { LocationPicker } from './LocationPicker';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
 type CaptureSource = 'camera' | 'upload';
@@ -11,6 +12,7 @@ interface ImageCaptureProps {
     blob?: Blob;
     thumbnail?: string;
     images?: LabeledImage[];
+    locatie?: VondstLocatie;
   }) => void;
 }
 
@@ -148,6 +150,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [squareCanvasUrl, setSquareCanvasUrl] = useState<string | null>(null); // Vierkant canvas met witruimte
   const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
   const [isDragging, setIsDragging] = useState(false);
+  const [locatie, setLocatie] = useState<VondstLocatie | undefined>(undefined);
 
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
@@ -394,8 +397,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       type: 'photo',
       blob: capturedBlob,
       thumbnail,
+      locatie,
     });
-  }, [capturedBlob, previewUrl, onCapture]);
+  }, [capturedBlob, previewUrl, onCapture, locatie]);
 
   const handleAddToMulti = useCallback(async () => {
     if (!capturedBlob || !previewUrl) return;
@@ -438,8 +442,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       type: 'multi-photo',
       images: multiImages,
       thumbnail,
+      locatie,
     });
-  }, [multiImages, onCapture]);
+  }, [multiImages, onCapture, locatie]);
 
   const handleRetake = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -754,9 +759,18 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </button>
 
           {/* Drop zone hint */}
-          <div className="mt-4 p-4 border-2 border-dashed border-stone-200 rounded-xl text-center">
+          <div className="mt-4 p-4 border-2 border-dashed border-stone-200 dark:border-stone-700 rounded-xl text-center">
             <Upload className="w-6 h-6 text-stone-400 mx-auto mb-1" />
             <span className="text-sm text-stone-400">Of sleep foto's hierheen</span>
+          </div>
+
+          {/* Vindplaats kaart */}
+          <div className="mt-4">
+            <LocationPicker
+              value={locatie}
+              onChange={setLocatie}
+              compact={true}
+            />
           </div>
         </div>
       </div>
