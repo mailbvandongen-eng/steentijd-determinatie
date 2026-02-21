@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, Trash2, Image, TrendingUp, Calendar, Award } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Trash2, Image, TrendingUp, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getAllSessions, deleteSession } from '../lib/db';
 import type { DeterminationSession } from '../types';
@@ -60,18 +60,10 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
       }
     });
 
-    // Laatste 7 dagen
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    const recentCount = completedSessions.filter(s =>
-      new Date(s.createdAt) >= weekAgo
-    ).length;
-
     return {
       total: completedSessions.length,
       uniqueTypes: Object.keys(typeCounts).length,
       mostCommonType,
-      recentCount,
     };
   }, [sessions]);
 
@@ -125,7 +117,7 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
           animate={{ opacity: 1, y: 0 }}
           className="px-4 pt-3 shrink-0"
         >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
+          <div className="grid grid-cols-3 gap-2 mb-3">
             <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
               <TrendingUp className="w-5 h-5 mx-auto mb-1 text-amber-500" />
               <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
@@ -137,11 +129,6 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
               <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
             </div>
             <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-              <Calendar className="w-5 h-5 mx-auto mb-1 text-blue-500" />
-              <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.recentCount}</p>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Deze week</p>
-            </div>
-            <div className="card p-3 text-center col-span-2 lg:col-span-1" style={{ backgroundColor: 'var(--bg-card)' }}>
               <Image className="w-5 h-5 mx-auto mb-1 text-purple-500" />
               <p className="text-sm font-bold truncate" style={{ color: 'var(--text-primary)' }}>{stats.mostCommonType}</p>
               <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Meest gevonden</p>
@@ -210,7 +197,7 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
             </button>
           </div>
         ) : (
-          <div className="space-y-3 max-w-3xl">
+          <div className="space-y-3">
             {filteredSessions.map((session, index) => {
               const isCompleted = session.status === 'completed' && session.result;
               const resultType = session.result?.type;

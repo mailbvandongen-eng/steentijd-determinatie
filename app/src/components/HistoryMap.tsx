@@ -10,8 +10,8 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
-// Custom amber marker
-const amberIcon = new L.Icon({
+// Marker kleuren op basis van vertrouwen
+const createColoredIcon = (className: string) => new L.Icon({
   iconUrl: markerIcon,
   iconRetinaUrl: markerIcon2x,
   shadowUrl: markerShadow,
@@ -19,8 +19,15 @@ const amberIcon = new L.Icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
-  className: 'amber-marker',
+  className,
 });
+
+const markerIcons = {
+  hoog: createColoredIcon('marker-green'),
+  gemiddeld: createColoredIcon('marker-amber'),
+  laag: createColoredIcon('marker-orange'),
+  default: createColoredIcon('marker-amber'),
+};
 
 // Fix default marker icon
 L.Icon.Default.mergeOptions({
@@ -93,11 +100,14 @@ export function HistoryMap({ sessions, onSelectSession }: HistoryMapProps) {
           attributionControl={false}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {sessionsWithLocation.map((session) => (
+          {sessionsWithLocation.map((session) => {
+            const confidence = session.result?.confidence || 'default';
+            const icon = markerIcons[confidence as keyof typeof markerIcons] || markerIcons.default;
+            return (
             <Marker
               key={session.id}
               position={[session.input.locatie!.lat, session.input.locatie!.lng]}
-              icon={amberIcon}
+              icon={icon}
               eventHandlers={{
                 click: () => onSelectSession(session),
               }}
@@ -126,16 +136,28 @@ export function HistoryMap({ sessions, onSelectSession }: HistoryMapProps) {
                 </div>
               </Popup>
             </Marker>
-          ))}
+            );
+          })}
         </MapContainer>
       </div>
       <div
-        className="px-3 py-2 text-center"
+        className="px-3 py-2 flex items-center justify-between"
         style={{ backgroundColor: 'var(--bg-secondary)' }}
       >
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-          {sessionsWithLocation.length} vondst{sessionsWithLocation.length !== 1 ? 'en' : ''} op de kaart
+          {sessionsWithLocation.length} vondst{sessionsWithLocation.length !== 1 ? 'en' : ''}
         </span>
+        <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-green-500" /> hoog
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-amber-500" /> gemiddeld
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-orange-500" /> laag
+          </span>
+        </div>
       </div>
     </div>
   );

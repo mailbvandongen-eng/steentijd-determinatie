@@ -769,7 +769,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             <LocationPicker
               value={locatie}
               onChange={setLocatie}
-              compact={true}
             />
           </div>
         </div>
