@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { LogIn, LogOut, RefreshCw, Cloud, CloudOff } from 'lucide-react';
+import { LogIn, LogOut, RefreshCw, Cloud, CloudOff, Sun, Moon } from 'lucide-react';
 import { resetWelcomeModal } from './WelcomeModal';
 import { QueryViewer } from './QueryViewer';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { syncSessions, type SyncResult } from '../lib/sync';
 
 interface SettingsMenuProps {
@@ -17,6 +18,7 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
 
   const { user, loading, signInWithGoogle, signOut } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
 
   const handleResetWelcome = () => {
     resetWelcomeModal();
@@ -92,34 +94,34 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
           />
 
           {/* Menu */}
-          <div className="absolute right-0 top-full mt-1 w-64 bg-white rounded-lg shadow-lg border border-stone-200 z-50 overflow-hidden">
+          <div className="absolute right-0 top-full mt-1 w-64 rounded-lg shadow-lg z-50 overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
             {/* User section */}
-            <div className="px-4 py-3 border-b border-stone-100 bg-stone-50">
+            <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}>
               {loading ? (
-                <div className="flex items-center gap-2 text-sm text-stone-500">
-                  <div className="w-4 h-4 border-2 border-stone-300 border-t-transparent rounded-full animate-spin" />
+                <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'var(--text-muted)', borderTopColor: 'transparent' }} />
                   Laden...
                 </div>
               ) : user ? (
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <Cloud className="w-4 h-4 text-green-600" />
+                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                    <Cloud className="w-4 h-4 text-green-600 dark:text-green-400" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-stone-800 truncate">
+                    <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                       {user.displayName || user.email}
                     </p>
-                    <p className="text-xs text-green-600">Ingelogd</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">Ingelogd</p>
                   </div>
                 </div>
               ) : (
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-stone-200 rounded-full flex items-center justify-center">
-                    <CloudOff className="w-4 h-4 text-stone-500" />
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
+                    <CloudOff className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                   </div>
                   <div>
-                    <p className="text-sm text-stone-600">Niet ingelogd</p>
-                    <p className="text-xs text-stone-400">Vondsten zijn lokaal</p>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Niet ingelogd</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Vondsten zijn lokaal</p>
                   </div>
                 </div>
               )}
@@ -133,9 +135,10 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
                   <button
                     onClick={handleSync}
                     disabled={isSyncing}
-                    className="w-full px-4 py-3 text-left text-sm text-stone-700 hover:bg-stone-100 flex items-center gap-3 disabled:opacity-50"
+                    className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3 disabled:opacity-50"
+                    style={{ color: 'var(--text-primary)' }}
                   >
-                    <RefreshCw className={`w-5 h-5 text-stone-500 ${isSyncing ? 'animate-spin' : ''}`} />
+                    <RefreshCw className={`w-5 h-5 ${isSyncing ? 'animate-spin' : ''}`} style={{ color: 'var(--text-muted)' }} />
                     {isSyncing ? 'Synchroniseren...' : 'Synchroniseren'}
                   </button>
 
@@ -143,8 +146,8 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
                   {syncResult && (
                     <div className={`mx-4 mb-2 p-2 rounded text-xs ${
                       syncResult.errors.length > 0
-                        ? 'bg-red-50 text-red-700'
-                        : 'bg-green-50 text-green-700'
+                        ? 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                        : 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                     }`}>
                       {syncResult.errors.length > 0 ? (
                         <p>{syncResult.errors[0]}</p>
@@ -161,45 +164,66 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
 
                   <button
                     onClick={handleSignOut}
-                    className="w-full px-4 py-3 text-left text-sm text-stone-700 hover:bg-stone-100 flex items-center gap-3"
+                    className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3"
+                    style={{ color: 'var(--text-primary)' }}
                   >
-                    <LogOut className="w-5 h-5 text-stone-500" />
+                    <LogOut className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
                     Uitloggen
                   </button>
                 </>
               ) : (
                 <button
                   onClick={handleSignIn}
-                  className="w-full px-4 py-3 text-left text-sm text-stone-700 hover:bg-stone-100 flex items-center gap-3"
+                  className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3"
+                  style={{ color: 'var(--text-primary)' }}
                 >
-                  <LogIn className="w-5 h-5 text-stone-500" />
+                  <LogIn className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
                   Inloggen met Google
                 </button>
               )}
 
-              <div className="border-t border-stone-100 my-1" />
+              <div className="my-1" style={{ borderTop: '1px solid var(--border-color)' }} />
+
+              {/* Dark mode toggle */}
+              <button
+                onClick={() => {
+                  toggleTheme();
+                  setIsOpen(false);
+                }}
+                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                {isDark ? (
+                  <Sun className="w-5 h-5 text-amber-500" />
+                ) : (
+                  <Moon className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
+                )}
+                {isDark ? 'Light mode' : 'Dark mode'}
+              </button>
 
               <button
                 onClick={handleResetWelcome}
-                className="w-full px-4 py-3 text-left text-sm text-stone-700 hover:bg-stone-100 flex items-center gap-3"
+                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3"
+                style={{ color: 'var(--text-primary)' }}
               >
-                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5" style={{ color: 'var(--text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Welkomstscherm tonen
               </button>
               <button
                 onClick={handleShowQuery}
-                className="w-full px-4 py-3 text-left text-sm text-stone-700 hover:bg-stone-100 flex items-center gap-3"
+                className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3"
+                style={{ color: 'var(--text-primary)' }}
               >
-                <svg className="w-5 h-5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5" style={{ color: 'var(--text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
                 AI Query bekijken
               </button>
             </div>
             {/* Versie onderaan */}
-            <div className="px-4 py-2 border-t border-stone-100 text-xs text-stone-400 text-center">
+            <div className="px-4 py-2 text-xs text-center" style={{ borderTop: '1px solid var(--border-color)', color: 'var(--text-muted)' }}>
               v{version}
             </div>
           </div>
