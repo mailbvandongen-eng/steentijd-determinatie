@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, Trash2, Image } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Trash2, Image, TrendingUp, Calendar, Award } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { getAllSessions, deleteSession } from '../lib/db';
 import type { DeterminationSession } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
@@ -37,6 +38,42 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
     });
   }, [sessions, searchQuery]);
 
+  // Bereken statistieken
+  const stats = useMemo(() => {
+    const completedSessions = sessions.filter(s => s.status === 'completed' && s.result);
+
+    // Tel unieke types
+    const typeCounts: Record<string, number> = {};
+    completedSessions.forEach(s => {
+      const type = s.result?.type || 'Onbekend';
+      typeCounts[type] = (typeCounts[type] || 0) + 1;
+    });
+
+    // Meest voorkomende type
+    let mostCommonType = '-';
+    let maxCount = 0;
+    Object.entries(typeCounts).forEach(([type, count]) => {
+      if (count > maxCount) {
+        maxCount = count;
+        mostCommonType = formatTypeName(type);
+      }
+    });
+
+    // Laatste 7 dagen
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const recentCount = completedSessions.filter(s =>
+      new Date(s.createdAt) >= weekAgo
+    ).length;
+
+    return {
+      total: completedSessions.length,
+      uniqueTypes: Object.keys(typeCounts).length,
+      mostCommonType,
+      recentCount,
+    };
+  }, [sessions]);
+
   const loadSessions = async () => {
     setLoading(true);
     const data = await getAllSessions();
@@ -65,30 +102,74 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   };
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
-      {/* Header */}
-      <div className="bg-stone-800 p-4 flex items-center gap-3 shrink-0">
+    <div className="h-full flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      {/* Header - alleen op mobiel */}
+      <div className="lg:hidden bg-stone-800 dark:bg-stone-900 p-4 flex items-center gap-3 shrink-0">
         <button onClick={onBack} className="text-white p-2">
           <ChevronLeft className="w-6 h-6" />
         </button>
         <h1 className="text-white text-lg font-semibold">Geschiedenis</h1>
       </div>
 
+      {/* Desktop header */}
+      <div className="hidden lg:block p-6 pb-0 shrink-0">
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Geschiedenis</h1>
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Bekijk en beheer je opgeslagen determinaties</p>
+      </div>
+
+      {/* Statistieken */}
+      {sessions.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="px-4 pt-3 shrink-0"
+        >
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
+            <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
+              <TrendingUp className="w-5 h-5 mx-auto mb-1 text-amber-500" />
+              <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Determinaties</p>
+            </div>
+            <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
+              <Award className="w-5 h-5 mx-auto mb-1 text-green-500" />
+              <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.uniqueTypes}</p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
+            </div>
+            <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
+              <Calendar className="w-5 h-5 mx-auto mb-1 text-blue-500" />
+              <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.recentCount}</p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Deze week</p>
+            </div>
+            <div className="card p-3 text-center col-span-2 lg:col-span-1" style={{ backgroundColor: 'var(--bg-card)' }}>
+              <Image className="w-5 h-5 mx-auto mb-1 text-purple-500" />
+              <p className="text-sm font-bold truncate" style={{ color: 'var(--text-primary)' }}>{stats.mostCommonType}</p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Meest gevonden</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Zoekbalk */}
       {sessions.length > 0 && (
-        <div className="px-4 pt-3 shrink-0">
+        <div className="px-4 shrink-0">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-muted)' }} />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Zoek op type, periode..."
-              className="w-full pl-10 pr-4 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                borderColor: 'var(--border-color)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-color)',
+              }}
             />
           </div>
           {searchQuery && (
-            <p className="text-xs text-stone-500 mt-1">
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
               {filteredSessions.length} van {sessions.length} determinaties
             </p>
           )}
@@ -96,45 +177,49 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
       )}
 
       {/* Content */}
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 lg:px-6 overflow-y-auto">
         {loading ? (
           <div className="text-center py-8">
-            <p className="text-stone-500">Laden...</p>
+            <p style={{ color: 'var(--text-secondary)' }}>Laden...</p>
           </div>
         ) : sessions.length === 0 ? (
           <div className="text-center py-8">
-            <Image className="w-16 h-16 mx-auto text-stone-300 mb-4" />
-            <p className="text-stone-500">Nog geen determinaties</p>
+            <Image className="w-16 h-16 mx-auto mb-4" style={{ color: 'var(--text-muted)' }} />
+            <p style={{ color: 'var(--text-secondary)' }}>Nog geen determinaties</p>
             <button onClick={onBack} className="btn-primary mt-4">
               Start eerste determinatie
             </button>
           </div>
         ) : filteredSessions.length === 0 ? (
           <div className="text-center py-8">
-            <Search className="w-12 h-12 mx-auto text-stone-300 mb-4" />
-            <p className="text-stone-500">Geen resultaten voor "{searchQuery}"</p>
+            <Search className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--text-muted)' }} />
+            <p style={{ color: 'var(--text-secondary)' }}>Geen resultaten voor "{searchQuery}"</p>
             <button
               onClick={() => setSearchQuery('')}
-              className="text-amber-600 text-sm mt-2 hover:underline"
+              className="text-amber-600 dark:text-amber-400 text-sm mt-2 hover:underline"
             >
               Wis zoekopdracht
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
-            {filteredSessions.map((session) => {
+          <div className="space-y-3 max-w-3xl">
+            {filteredSessions.map((session, index) => {
               const isCompleted = session.status === 'completed' && session.result;
               const resultType = session.result?.type;
 
               return (
-                <div
+                <motion.div
                   key={session.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.2 }}
                   onClick={() => isCompleted ? onSelectSession(session) : undefined}
-                  className={`card flex items-center gap-3 transition-shadow ${
+                  className={`card flex items-center gap-3 transition-all duration-200 ${
                     isCompleted
-                      ? 'cursor-pointer hover:shadow-lg'
+                      ? 'cursor-pointer hover:shadow-lg hover:-translate-y-0.5'
                       : 'opacity-60'
                   }`}
+                  style={{ backgroundColor: 'var(--bg-card)' }}
                 >
                   {session.input.thumbnail ? (
                     <img
@@ -143,26 +228,26 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
                       className="w-16 h-16 rounded-lg object-cover"
                     />
                   ) : (
-                    <div className="w-16 h-16 rounded-lg bg-stone-200 flex items-center justify-center">
-                      <Image className="w-8 h-8 text-stone-400" />
+                    <div className="w-16 h-16 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                      <Image className="w-8 h-8" style={{ color: 'var(--text-muted)' }} />
                     </div>
                   )}
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className={`font-medium truncate ${isCompleted ? 'text-stone-900' : 'text-stone-500'}`}>
+                      <p className="font-medium truncate" style={{ color: isCompleted ? 'var(--text-primary)' : 'var(--text-muted)' }}>
                         {isCompleted ? formatTypeName(resultType || '') : 'Afgebroken'}
                       </p>
                       {isCompleted && (
                         <span className="shrink-0 w-2 h-2 bg-green-500 rounded-full" title="Voltooid" />
                       )}
                     </div>
-                    <p className="text-sm text-stone-500">{formatDate(session.createdAt)}</p>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{formatDate(session.createdAt)}</p>
                     {isCompleted && session.result?.confidence && (
                       <p className={`text-xs ${
-                        session.result.confidence === 'hoog' ? 'text-green-600' :
-                        session.result.confidence === 'laag' ? 'text-orange-600' : 'text-stone-400'
-                      }`}>
+                        session.result.confidence === 'hoog' ? 'text-green-600 dark:text-green-400' :
+                        session.result.confidence === 'laag' ? 'text-orange-600 dark:text-orange-400' : ''
+                      }`} style={{ color: session.result.confidence === 'gemiddeld' ? 'var(--text-muted)' : undefined }}>
                         {session.result.confidence} vertrouwen
                       </p>
                     )}
@@ -171,24 +256,25 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={(e) => handleDelete(session.id, e)}
-                      className="p-2 text-stone-400 hover:text-red-500"
+                      className="p-2 hover:text-red-500 transition-colors"
+                      style={{ color: 'var(--text-muted)' }}
                       title="Verwijderen"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
                     {isCompleted && (
-                      <ChevronRight className="w-5 h-5 text-stone-300" />
+                      <ChevronRight className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
                     )}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
         )}
       </div>
 
-      {/* Footer met terug naar start */}
-      <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0">
+      {/* Footer met terug naar start - alleen op mobiel */}
+      <div className="lg:hidden p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shrink-0" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <button onClick={onBack} className="btn-primary w-full py-3">
           Nieuwe determinatie
         </button>

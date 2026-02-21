@@ -1,17 +1,32 @@
 import { useState, useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ImageCapture } from './components/ImageCapture';
 import { AIAnalysis } from './components/AIAnalysis';
 import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
 import { WelcomeModal, useWelcomeModal } from './components/WelcomeModal';
 import { SettingsMenu } from './components/SettingsMenu';
+import { Sidebar } from './components/Sidebar';
 import { createSession, completeSession, getSession } from './lib/db';
 import type { DeterminationSession, LabeledImage } from './types';
 import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.1.29';
+const APP_VERSION = '1.2.0';
+
+// Animation variants
+const pageVariants = {
+  initial: { opacity: 0, y: 10 },
+  in: { opacity: 1, y: 0 },
+  out: { opacity: 0, y: -10 },
+};
+
+const pageTransition = {
+  type: 'tween' as const,
+  ease: 'easeInOut' as const,
+  duration: 0.2,
+};
 
 interface CapturedData {
   type: 'photo' | 'video' | 'multi-photo';
@@ -118,11 +133,47 @@ function App() {
     setView('analyze');
   }, []);
 
-  // Capture screen (main screen)
-  if (view === 'capture') {
+  const handleNavigate = useCallback((newView: 'capture' | 'history') => {
+    setView(newView);
+  }, []);
+
+  // Render current view content
+  const renderContent = () => {
+    if (view === 'analyze' && capturedData) {
+      return (
+        <AIAnalysis
+          images={capturedData.images || []}
+          singleImage={capturedData.blob && capturedData.thumbnail ? {
+            blob: capturedData.blob,
+            thumbnail: capturedData.thumbnail,
+          } : undefined}
+          videoFrames={capturedData.videoFrames}
+          onComplete={handleAnalysisComplete}
+          onBack={handleBackFromAnalysis}
+        />
+      );
+    }
+
+    if (view === 'result' && currentSession) {
+      return (
+        <ResultView
+          session={currentSession}
+          onNewDetermination={handleNewDetermination}
+          onViewHistory={() => setView('history')}
+          onRedeterminate={handleRedeterminate}
+        />
+      );
+    }
+
+    if (view === 'history') {
+      return <HistoryView onBack={handleBack} onSelectSession={handleSelectSession} />;
+    }
+
+    // Default: capture
     return (
       <div className="h-full flex flex-col overflow-hidden">
-        <header className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white shrink-0">
+        {/* Mobile header - hidden on desktop */}
+        <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white shrink-0">
           <div>
             <span className="text-lg font-bold tracking-tight block">STEENTIJD</span>
             <span className="text-xs opacity-80">Determineren van artefacten</span>
@@ -143,46 +194,40 @@ function App() {
         <div className="flex-1 overflow-hidden">
           <ImageCapture onCapture={handleCapture} />
         </div>
-        {/* Welcome Modal */}
-        {welcomeModal.isOpen && <WelcomeModal onClose={welcomeModal.close} />}
       </div>
     );
-  }
+  };
 
-  // AI Analysis screen
-  if (view === 'analyze' && capturedData) {
-    return (
-      <AIAnalysis
-        images={capturedData.images || []}
-        singleImage={capturedData.blob && capturedData.thumbnail ? {
-          blob: capturedData.blob,
-          thumbnail: capturedData.thumbnail,
-        } : undefined}
-        videoFrames={capturedData.videoFrames}
-        onComplete={handleAnalysisComplete}
-        onBack={handleBackFromAnalysis}
+  return (
+    <div className="desktop-layout">
+      {/* Desktop Sidebar */}
+      <Sidebar
+        currentView={view}
+        onNavigate={handleNavigate}
+        onShowWelcome={welcomeModal.open}
       />
-    );
-  }
 
-  // Result screen
-  if (view === 'result' && currentSession) {
-    return (
-      <ResultView
-        session={currentSession}
-        onNewDetermination={handleNewDetermination}
-        onViewHistory={() => setView('history')}
-        onRedeterminate={handleRedeterminate}
-      />
-    );
-  }
+      {/* Main content area */}
+      <main className="desktop-main">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={view}
+            initial="initial"
+            animate="in"
+            exit="out"
+            variants={pageVariants}
+            transition={pageTransition}
+            className="h-full"
+          >
+            {renderContent()}
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
-  // History screen
-  if (view === 'history') {
-    return <HistoryView onBack={handleBack} onSelectSession={handleSelectSession} />;
-  }
-
-  return null;
+      {/* Welcome Modal */}
+      {welcomeModal.isOpen && <WelcomeModal onClose={welcomeModal.close} />}
+    </div>
+  );
 }
 
 export default App;
