@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Maximize2, Minimize2, Search, X } from 'lucide-react';
+import { Navigation, Maximize2, Minimize2, Search, X, MapPin } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { VondstLocatie } from '../types';
@@ -35,12 +35,10 @@ interface LocationPickerProps {
 }
 
 // Component om kaart events te handelen
-function MapClickHandler({ onLocationSelect, enabled }: { onLocationSelect: (lat: number, lng: number) => void; enabled: boolean }) {
+function MapClickHandler({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number) => void }) {
   useMapEvents({
     click: (e) => {
-      if (enabled) {
-        onLocationSelect(e.latlng.lat, e.latlng.lng);
-      }
+      onLocationSelect(e.latlng.lat, e.latlng.lng);
     },
   });
   return null;
@@ -60,7 +58,7 @@ function FlyToLocation({ location }: { location: { lat: number; lng: number } | 
 }
 
 // Zoek component
-function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name: string) => void }) {
+function SearchControl({ onSearch, dark = false }: { onSearch: (lat: number, lng: number, name: string) => void; dark?: boolean }) {
   const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -70,7 +68,6 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
     setIsSearching(true);
 
     try {
-      // Gebruik Nominatim (OpenStreetMap) voor geocoding
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=1`
       );
@@ -95,11 +92,11 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
     return (
       <button
         onClick={() => setShowInput(true)}
-        className="p-1.5 rounded-lg transition-colors"
-        style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
+        className={`p-2 rounded-lg transition-colors ${dark ? 'bg-white/20 hover:bg-white/30' : ''}`}
+        style={dark ? {} : { backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
         title="Zoek locatie"
       >
-        <Search className="w-4 h-4" />
+        <Search className={`w-4 h-4 ${dark ? 'text-white' : ''}`} />
       </button>
     );
   }
@@ -112,8 +109,11 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         placeholder="Zoek plaats..."
-        className="w-32 px-2 py-1 text-xs rounded-lg"
-        style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
+        className="w-28 px-2 py-1.5 text-xs rounded-lg"
+        style={dark
+          ? { backgroundColor: 'rgba(255,255,255,0.2)', color: 'white', border: 'none' }
+          : { backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }
+        }
         autoFocus
       />
       <button
@@ -127,7 +127,7 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
       <button
         onClick={() => { setShowInput(false); setQuery(''); }}
         className="p-1.5 rounded-lg transition-colors"
-        style={{ color: 'var(--text-muted)' }}
+        style={{ color: dark ? 'white' : 'var(--text-muted)' }}
       >
         <X className="w-3 h-3" />
       </button>
@@ -139,29 +139,20 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Nederland centrum als default
   const defaultCenter: [number, number] = [52.1326, 5.2913];
   const center: [number, number] = value ? [value.lat, value.lng] : defaultCenter;
-
-  const isEnabled = !!value;
 
   const handleLocationSelect = useCallback((lat: number, lng: number) => {
     onChange({ lat, lng });
     setFlyTo({ lat, lng });
   }, [onChange]);
 
-  const handleToggleLocation = useCallback(() => {
-    if (value) {
-      // Uit zetten
-      onChange(undefined);
-      setFlyTo(null);
-    } else {
-      // Aan zetten met GPS
-      handleGetCurrentLocation();
-    }
-  }, [value, onChange]);
+  const handleClearLocation = useCallback(() => {
+    onChange(undefined);
+    setFlyTo(null);
+  }, [onChange]);
 
   const handleGetCurrentLocation = useCallback(() => {
     if (!navigator.geolocation) {
@@ -180,8 +171,7 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
       (error) => {
         console.error('Geolocatie fout:', error);
         setIsLocating(false);
-        // Bij fout toch locatie mode inschakelen met default
-        onChange({ lat: 52.1326, lng: 5.2913 });
+        alert('Kon locatie niet bepalen. Tik op de kaart om handmatig te kiezen.');
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -211,7 +201,7 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
   const mapContent = (
     <>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <MapClickHandler onLocationSelect={handleLocationSelect} enabled={true} />
+      <MapClickHandler onLocationSelect={handleLocationSelect} />
       <FlyToLocation location={flyTo} />
       {value && (
         <Marker position={[value.lat, value.lng]} icon={amberIcon} />
@@ -226,7 +216,7 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
         {/* Header */}
         <div className="absolute top-0 left-0 right-0 z-[1000] p-3 flex items-center justify-between" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
           <div className="flex items-center gap-2">
-            <span className="text-white text-sm font-medium">Vindplaats kiezen</span>
+            <span className="text-white text-sm font-medium">Locatie kiezen</span>
             {value && (
               <span className="text-white/60 text-xs">
                 {value.lat.toFixed(5)}, {value.lng.toFixed(5)}
@@ -234,7 +224,7 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
             )}
           </div>
           <div className="flex items-center gap-2">
-            <SearchControl onSearch={handleSearchResult} />
+            <SearchControl onSearch={handleSearchResult} dark />
             <button
               onClick={handleGetCurrentLocation}
               disabled={isLocating}
@@ -243,6 +233,15 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
             >
               <Navigation className={`w-4 h-4 text-white ${isLocating ? 'animate-pulse' : ''}`} />
             </button>
+            {value && (
+              <button
+                onClick={handleClearLocation}
+                className="p-2 rounded-lg bg-red-500/80 hover:bg-red-500 transition-colors"
+                title="Locatie wissen"
+              >
+                <X className="w-4 h-4 text-white" />
+              </button>
+            )}
             <button
               onClick={toggleFullscreen}
               className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
@@ -265,95 +264,80 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
 
         {/* Footer hint */}
         <div className="absolute bottom-0 left-0 right-0 z-[1000] p-2 text-center" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
-          <span className="text-white/80 text-xs">Tik op de kaart om vindplaats te markeren</span>
+          <span className="text-white/80 text-xs">Tik op de kaart om locatie te markeren</span>
         </div>
       </div>
     );
   }
 
+  // Normale weergave - kaart altijd zichtbaar
   return (
-    <div
-      ref={containerRef}
-      className="rounded-xl overflow-hidden border transition-all"
-      style={{
-        borderColor: isEnabled ? 'var(--accent)' : 'var(--border-color)',
-        backgroundColor: 'var(--bg-card)',
-        borderWidth: isEnabled ? '2px' : '1px',
-      }}
-    >
-      {/* Header met toggle */}
-      <div
-        className="px-3 py-2 flex items-center justify-between cursor-pointer"
-        style={{ backgroundColor: isEnabled ? 'rgb(251 191 36 / 0.1)' : 'transparent' }}
-        onClick={handleToggleLocation}
-      >
-        <div className="flex items-center gap-2">
-          {/* Toggle indicator */}
-          <div
-            className="w-8 h-4 rounded-full relative transition-colors"
-            style={{ backgroundColor: isEnabled ? 'var(--accent)' : 'var(--border-color)' }}
-          >
-            <div
-              className="absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-all"
-              style={{ left: isEnabled ? '18px' : '2px' }}
-            />
-          </div>
-          <span className="text-sm" style={{ color: 'var(--text-primary)' }}>
-            Vindplaats
-          </span>
-          {value && (
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              ({value.lat.toFixed(4)}, {value.lng.toFixed(4)})
-            </span>
-          )}
-        </div>
-        {isLocating && (
-          <span className="text-xs" style={{ color: 'var(--accent)' }}>Locatie bepalen...</span>
-        )}
-      </div>
+    <div className="h-full flex flex-col rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border-color)' }}>
+      {/* Kaart - neemt alle ruimte */}
+      <div className="flex-1 relative min-h-[200px]">
+        <MapContainer
+          center={center}
+          zoom={value ? 12 : 7}
+          className="h-full w-full"
+          zoomControl={false}
+          attributionControl={false}
+        >
+          {mapContent}
+        </MapContainer>
 
-      {/* Kaart - alleen tonen als enabled */}
-      {isEnabled && (
-        <>
-          {/* Toolbar */}
-          <div
-            className="px-2 py-1.5 flex items-center justify-between"
-            style={{ borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}
-          >
-            <SearchControl onSearch={handleSearchResult} />
-            <div className="flex items-center gap-1">
+        {/* Controls overlay */}
+        <div className="absolute top-2 left-2 right-2 z-[1000] flex items-center justify-between">
+          <SearchControl onSearch={handleSearchResult} />
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handleGetCurrentLocation}
+              disabled={isLocating}
+              className="p-2 rounded-lg shadow-md transition-colors"
+              style={{ backgroundColor: 'var(--bg-card)' }}
+              title="Mijn locatie"
+            >
+              <Navigation className={`w-4 h-4 ${isLocating ? 'animate-pulse' : ''}`} style={{ color: 'var(--accent)' }} />
+            </button>
+            <button
+              onClick={toggleFullscreen}
+              className="p-2 rounded-lg shadow-md transition-colors"
+              style={{ backgroundColor: 'var(--bg-card)' }}
+              title="Volledig scherm"
+            >
+              <Maximize2 className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+            </button>
+          </div>
+        </div>
+
+        {/* Locatie status badge */}
+        <div className="absolute bottom-2 left-2 right-2 z-[1000] flex items-center justify-between">
+          {value ? (
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg shadow-md"
+              style={{ backgroundColor: 'var(--accent)', color: 'white' }}
+            >
+              <MapPin className="w-4 h-4" />
+              <span className="text-xs font-medium">
+                {value.lat.toFixed(4)}, {value.lng.toFixed(4)}
+              </span>
               <button
-                onClick={(e) => { e.stopPropagation(); handleGetCurrentLocation(); }}
-                disabled={isLocating}
-                className="p-1.5 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
-                title="Mijn locatie"
+                onClick={handleClearLocation}
+                className="p-0.5 rounded hover:bg-white/20 transition-colors"
+                title="Locatie wissen"
               >
-                <Navigation className={`w-4 h-4 ${isLocating ? 'animate-pulse' : ''}`} style={{ color: 'var(--accent)' }} />
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-                className="p-1.5 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
-                title="Volledig scherm"
-              >
-                <Maximize2 className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                <X className="w-3 h-3" />
               </button>
             </div>
-          </div>
-
-          {/* Map */}
-          <div className="h-32 lg:h-40">
-            <MapContainer
-              center={center}
-              zoom={value ? 13 : 7}
-              className="h-full w-full"
-              zoomControl={false}
-              attributionControl={false}
+          ) : (
+            <div
+              className="px-3 py-1.5 rounded-lg shadow-md text-xs"
+              style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
             >
-              {mapContent}
-            </MapContainer>
-          </div>
-        </>
-      )}
+              Tik om locatie te kiezen
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

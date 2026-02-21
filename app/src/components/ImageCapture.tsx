@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { Camera, ImagePlus, ChevronRight, X, Plus, Upload } from 'lucide-react';
+import { Camera, ImagePlus, X, Plus, Upload } from 'lucide-react';
 import type { LabeledImage, VondstLocatie } from '../types';
 import { LocationPicker } from './LocationPicker';
 
@@ -719,53 +719,44 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </div>
         )}
 
-        <div className="space-y-3">
-          {/* Foto('s) maken - opent multi-photo mode met camera */}
-          <button
-            onClick={() => {
-              setCaptureSource('camera');
-              setIsInMultiPhotoMode(true);
-              setMode('multi-photo');
-            }}
-            className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
-          >
-            <div className="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
-              <Camera className="w-7 h-7 text-amber-600" />
-            </div>
-            <div className="text-left flex-1">
-              <span className="font-semibold text-stone-900 block">Foto('s) maken</span>
-              <span className="text-sm text-stone-500">Maak 1-4 foto's met je camera</span>
-            </div>
-            <ChevronRight className="w-5 h-5 text-stone-300" />
-          </button>
+        <div className="flex flex-col h-full">
+          {/* Foto knoppen naast elkaar */}
+          <div className="grid grid-cols-2 gap-2 mb-3 shrink-0">
+            {/* Foto('s) maken */}
+            <button
+              onClick={() => {
+                setCaptureSource('camera');
+                setIsInMultiPhotoMode(true);
+                setMode('multi-photo');
+              }}
+              className="p-3 rounded-xl shadow-sm border transition-all flex flex-col items-center gap-2 hover:shadow-md"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+            >
+              <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
+                <Camera className="w-5 h-5 text-amber-600" />
+              </div>
+              <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Foto's maken</span>
+            </button>
 
-          {/* Foto('s) uploaden - opent multi-photo mode met galerij */}
-          <button
-            onClick={() => {
-              setCaptureSource('upload');
-              setIsInMultiPhotoMode(true);
-              setMode('multi-photo');
-            }}
-            className="w-full p-4 bg-white rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all flex items-center gap-4"
-          >
-            <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center shrink-0">
-              <ImagePlus className="w-7 h-7 text-stone-600" />
-            </div>
-            <div className="text-left flex-1">
-              <span className="font-semibold text-stone-900 block">Foto('s) uploaden</span>
-              <span className="text-sm text-stone-500">Kies 1-4 bestaande foto's</span>
-            </div>
-            <ChevronRight className="w-5 h-5 text-stone-300" />
-          </button>
-
-          {/* Drop zone hint */}
-          <div className="mt-4 p-4 border-2 border-dashed border-stone-200 dark:border-stone-700 rounded-xl text-center">
-            <Upload className="w-6 h-6 text-stone-400 mx-auto mb-1" />
-            <span className="text-sm text-stone-400">Of sleep foto's hierheen</span>
+            {/* Foto('s) uploaden */}
+            <button
+              onClick={() => {
+                setCaptureSource('upload');
+                setIsInMultiPhotoMode(true);
+                setMode('multi-photo');
+              }}
+              className="p-3 rounded-xl shadow-sm border transition-all flex flex-col items-center gap-2 hover:shadow-md"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+            >
+              <div className="w-10 h-10 bg-stone-100 dark:bg-stone-700 rounded-lg flex items-center justify-center">
+                <ImagePlus className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
+              </div>
+              <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Uploaden</span>
+            </button>
           </div>
 
-          {/* Vindplaats kaart */}
-          <div className="mt-4">
+          {/* Locatie kaart - neemt rest van de ruimte */}
+          <div className="flex-1 min-h-0">
             <LocationPicker
               value={locatie}
               onChange={setLocatie}
