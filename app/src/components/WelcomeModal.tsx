@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '1.2.1', date: '21 feb 2026', changes: ['Dark mode (standaard aan)', 'Sidebar navigatie op desktop', 'Statistieken in geschiedenis', 'Hover animaties op cards'] },
   { version: '1.1.27', date: '20 feb 2026', changes: ['Firebase login (werkt in Chrome)', 'Popup login i.p.v. redirect'] },
   { version: '1.1.26', date: '20 feb 2026', changes: ['Google login voor synchronisatie', 'Vondsten synchroniseren naar cloud', 'Vondsten ophalen op ander apparaat'] },
   { version: '1.1.25', date: '20 feb 2026', changes: ['Zoom in op foto\'s en tekeningen (dubbeltik, pinch of scroll)'] },
@@ -66,7 +67,8 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
       {/* Modal */}
       <div className="fixed inset-4 z-50 flex items-center justify-center pointer-events-none">
         <div
-          className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col w-full max-w-md max-h-full pointer-events-auto"
+          className="rounded-2xl shadow-2xl overflow-hidden flex flex-col w-full max-w-md max-h-full pointer-events-auto"
+          style={{ backgroundColor: 'var(--bg-card)' }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -78,7 +80,7 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
           {/* Content - scrollable */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <section>
-              <h3 className="font-semibold text-stone-800 mb-2">Hoe werkt het?</h3>
+              <h3 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Hoe werkt het?</h3>
               <div className="space-y-3">
                 <StepItem number={1} title="Foto's maken" description="Maak meerdere foto's van je artefact (bovenkant, onderkant, zijkanten)" />
                 <StepItem number={2} title="AI Analyse" description="De AI analyseert je foto's met kennis van het AWN determinatie-algoritme" />
@@ -88,9 +90,9 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
               </div>
             </section>
 
-            <section className="bg-amber-50 rounded-xl p-3 border border-amber-200">
-              <h3 className="text-sm font-semibold text-amber-800 mb-1">Tips voor goede foto's</h3>
-              <ul className="text-xs text-amber-700 space-y-1">
+            <section className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-3 border border-amber-200 dark:border-amber-800">
+              <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-400 mb-1">Tips voor goede foto's</h3>
+              <ul className="text-xs text-amber-700 dark:text-amber-300 space-y-1">
                 <li>• <strong>Maak vierkante foto's</strong> (gebruik de "Vierkant" knop om bij te snijden)</li>
                 <li>• Gebruik goed licht (daglicht werkt het beste)</li>
                 <li>• Maak scherpe foto's van dichtbij</li>
@@ -100,9 +102,9 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
             </section>
 
             {/* AWN Werkgroep Steentijd */}
-            <section className="bg-stone-50 rounded-xl p-3 border border-stone-200">
-              <h3 className="text-sm font-semibold text-stone-800 mb-2">AWN Werkgroep Steentijd</h3>
-              <div className="text-xs text-stone-600 space-y-2">
+            <section className="rounded-xl p-3 border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
+              <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>AWN Werkgroep Steentijd</h3>
+              <div className="text-xs space-y-2" style={{ color: 'var(--text-secondary)' }}>
                 <p>
                   Deze app is gebaseerd op het <strong>determinatie-algoritme</strong> van de
                   AWN Landelijke Werkgroep Steentijd. De werkgroep staat open voor iedereen
@@ -113,27 +115,30 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                     href="https://awn-archeologie.nl/werkgroep/steentijd/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors"
+                    className="flex items-center gap-2 hover:text-amber-500 transition-colors"
+                    style={{ color: 'var(--text-primary)' }}
                   >
-                    <span className="text-stone-400">→</span>
+                    <span style={{ color: 'var(--text-muted)' }}>→</span>
                     <span>Over de werkgroep</span>
                   </a>
                   <a
                     href="https://awn-archeologie.nl/werkgroep/steentijd/determinatie/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors"
+                    className="flex items-center gap-2 hover:text-amber-500 transition-colors"
+                    style={{ color: 'var(--text-primary)' }}
                   >
-                    <span className="text-stone-400">→</span>
+                    <span style={{ color: 'var(--text-muted)' }}>→</span>
                     <span>Determinatie-algoritme</span>
                   </a>
                   <a
                     href="https://awn-archeologie.nl/werkgroep/steentijd/vondstkaart/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors"
+                    className="flex items-center gap-2 hover:text-amber-500 transition-colors"
+                    style={{ color: 'var(--text-primary)' }}
                   >
-                    <span className="text-stone-400">→</span>
+                    <span style={{ color: 'var(--text-muted)' }}>→</span>
                     <span>Vondstkaart Nederland</span>
                   </a>
                 </div>
@@ -141,17 +146,17 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
             </section>
 
             {/* Over dit project */}
-            <section className="bg-stone-50 rounded-xl p-3 border border-stone-200">
-              <h3 className="text-sm font-semibold text-stone-800 mb-2">Over deze app</h3>
-              <div className="text-xs text-stone-600 space-y-2">
+            <section className="rounded-xl p-3 border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
+              <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Over deze app</h3>
+              <div className="text-xs space-y-2" style={{ color: 'var(--text-secondary)' }}>
                 <p>
                   <strong>Proof of Concept</strong> — Experimentele app om te onderzoeken
                   of AI-gestuurde determinatie van stenen artefacten haalbaar en nuttig is.
                 </p>
                 <p>
                   <strong>Hoe werkt de AI?</strong> — De app gebruikt twee betaalde AI-diensten:
-                  <strong>Claude</strong> (Anthropic) voor de determinatie-analyse, en
-                  <strong>OpenAI</strong> voor het genereren van archeologische tekeningen.
+                  <strong> Claude</strong> (Anthropic) voor de determinatie-analyse, en
+                  <strong> OpenAI</strong> voor het genereren van archeologische tekeningen.
                   Bij elke analyse wordt het AWN determinatie-algoritme als context meegestuurd.
                   De modellen zijn <em>stateless</em>: ze onthouden niets van eerdere sessies en worden
                   niet getraind door gebruik van deze app.
@@ -160,14 +165,14 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   <strong>Transparantie</strong> — Via het menu (☰) kun je de volledige AI-query
                   bekijken die naar het model wordt gestuurd.
                 </p>
-                <p className="text-stone-500 pt-1">
+                <p className="pt-1" style={{ color: 'var(--text-muted)' }}>
                   <strong>Toekomst:</strong> trainbaar model, referentiedatabase, video-analyse met zelflerende AI.
                 </p>
               </div>
             </section>
 
-            <section className="rounded-xl p-3 border border-amber-200 bg-amber-50/50">
-              <p className="text-xs text-amber-800">
+            <section className="rounded-xl p-3 border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/20">
+              <p className="text-xs text-amber-800 dark:text-amber-400">
                 <strong>Let op:</strong> Dit is een hulpmiddel. Raadpleeg bij twijfel
                 altijd een expert van de AWN Werkgroep Steentijd.
               </p>
@@ -175,15 +180,15 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
 
             {/* Changelog */}
             <section>
-              <h3 className="font-semibold text-stone-800 mb-2">Wat is nieuw?</h3>
+              <h3 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Wat is nieuw?</h3>
               <div className="space-y-2 max-h-40 overflow-y-auto">
                 {CHANGELOG.map((release) => (
-                  <div key={release.version} className="text-xs border-l-2 border-amber-300 pl-2">
+                  <div key={release.version} className="text-xs border-l-2 border-amber-400 dark:border-amber-600 pl-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-stone-700">v{release.version}</span>
-                      <span className="text-stone-400">{release.date}</span>
+                      <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>v{release.version}</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{release.date}</span>
                     </div>
-                    <ul className="text-stone-500 mt-0.5">
+                    <ul className="mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                       {release.changes.map((change, i) => (
                         <li key={i}>• {change}</li>
                       ))}
@@ -195,15 +200,15 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between px-4 py-3 border-t border-stone-200 bg-stone-50">
+          <div className="flex items-center justify-between px-4 py-3" style={{ borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}>
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={dontShowAgain}
                 onChange={(e) => setDontShowAgain(e.target.checked)}
-                className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 cursor-pointer"
+                className="w-4 h-4 rounded border-stone-300 dark:border-stone-600 text-amber-600 focus:ring-amber-500 cursor-pointer"
               />
-              <span className="text-sm text-stone-600">Niet meer tonen</span>
+              <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>Niet meer tonen</span>
             </label>
             <button
               onClick={handleClose}
@@ -221,12 +226,12 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
 function StepItem({ number, title, description }: { number: number; title: string; description: string }) {
   return (
     <div className="flex gap-3">
-      <div className="w-7 h-7 flex items-center justify-center bg-amber-100 text-amber-800 rounded-full text-sm font-bold flex-shrink-0">
+      <div className="w-7 h-7 flex items-center justify-center bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-400 rounded-full text-sm font-bold flex-shrink-0">
         {number}
       </div>
       <div>
-        <h4 className="text-sm font-medium text-stone-800">{title}</h4>
-        <p className="text-xs text-stone-500">{description}</p>
+        <h4 className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{title}</h4>
+        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{description}</p>
       </div>
     </div>
   );
