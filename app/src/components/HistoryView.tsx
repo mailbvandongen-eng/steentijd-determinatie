@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, Trash2, Image, TrendingUp, Award } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Trash2, Image, TrendingUp, Award, Map } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getAllSessions, deleteSession } from '../lib/db';
 import type { DeterminationSession } from '../types';
@@ -15,6 +15,7 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => {
     loadSessions();
@@ -110,37 +111,62 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Bekijk en beheer je opgeslagen determinaties</p>
       </div>
 
-      {/* Statistieken */}
+      {/* Dashboard toggle + inhoud */}
       {sessions.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="px-4 pt-3 shrink-0"
-        >
-          <div className="grid grid-cols-3 gap-2 mb-3">
-            <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-              <TrendingUp className="w-5 h-5 mx-auto mb-1 text-amber-500" />
-              <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Determinaties</p>
+        <div className="px-4 pt-3 shrink-0">
+          {/* Toggle knop */}
+          <button
+            onClick={() => setShowDashboard(!showDashboard)}
+            className="w-full flex items-center justify-between p-2 rounded-lg mb-2 transition-colors"
+            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+          >
+            <div className="flex items-center gap-2">
+              <Map className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                Dashboard & Kaart
+              </span>
+              <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--accent)', color: 'white' }}>
+                {stats.total}
+              </span>
             </div>
-            <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-              <Award className="w-5 h-5 mx-auto mb-1 text-green-500" />
-              <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.uniqueTypes}</p>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
-            </div>
-            <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-              <Image className="w-5 h-5 mx-auto mb-1 text-purple-500" />
-              <p className="text-sm font-bold truncate" style={{ color: 'var(--text-primary)' }}>{stats.mostCommonType}</p>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Meest gevonden</p>
-            </div>
-          </div>
-        </motion.div>
-      )}
+            {showDashboard ? (
+              <ChevronUp className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+            ) : (
+              <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+            )}
+          </button>
 
-      {/* Kaart met vondsten */}
-      {sessions.length > 0 && (
-        <div className="px-4 pt-2 shrink-0">
-          <HistoryMap sessions={sessions} onSelectSession={onSelectSession} />
+          {/* Dashboard inhoud (uitklapbaar) */}
+          {showDashboard && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="overflow-hidden"
+            >
+              {/* Statistieken */}
+              <div className="grid grid-cols-3 gap-2 mb-3">
+                <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
+                  <TrendingUp className="w-5 h-5 mx-auto mb-1 text-amber-500" />
+                  <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Determinaties</p>
+                </div>
+                <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
+                  <Award className="w-5 h-5 mx-auto mb-1 text-green-500" />
+                  <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.uniqueTypes}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
+                </div>
+                <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
+                  <Image className="w-5 h-5 mx-auto mb-1 text-purple-500" />
+                  <p className="text-sm font-bold truncate" style={{ color: 'var(--text-primary)' }}>{stats.mostCommonType}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Meest gevonden</p>
+                </div>
+              </div>
+
+              {/* Kaart met vondsten */}
+              <HistoryMap sessions={sessions} onSelectSession={onSelectSession} />
+            </motion.div>
+          )}
         </div>
       )}
 
