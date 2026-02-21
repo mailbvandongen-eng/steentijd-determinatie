@@ -89,12 +89,12 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-[2000]"
             onClick={() => setIsOpen(false)}
           />
 
           {/* Menu */}
-          <div className="absolute right-0 top-full mt-1 w-64 rounded-lg shadow-lg z-50 overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+          <div className="absolute right-0 top-full mt-1 w-64 rounded-lg shadow-lg z-[2001] overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
             {/* User section */}
             <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--bg-secondary)' }}>
               {loading ? (
