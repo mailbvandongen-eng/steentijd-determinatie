@@ -1,62 +1,82 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, MapPin, Layers, Eye, EyeOff, Gem, Check, Move, Satellite } from 'lucide-react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { Navigation, Search, X, MapPin, Layers, Eye, EyeOff, Check, Move, Satellite } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { VondstLocatie, DeterminationSession, SavedLocation } from '../types';
 import { getAllSessions, getAllLocations, updateSession, updateLocation } from '../lib/db';
 import { formatTypeName } from '../lib/decisionTree';
 
-// Marker grootte (consistent voor alle markers)
-const MARKER_SIZE = 32;
+// Arrowhead SVG (steentijd pijlpunt)
+const ArrowheadSvg = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 14h5v8h6v-8h5L12 2z"/></svg>`;
 
-// Maak een Lucide icon marker
-const createLucideIcon = (
-  IconComponent: React.ComponentType<{ className?: string; style?: React.CSSProperties }>,
+// Maak een marker met schaalbare grootte
+const createScaledIcon = (
+  svgContent: string,
   bgColor: string,
+  size: number,
   iconColor: string = 'white'
 ) => {
-  const iconHtml = renderToStaticMarkup(
-    <div
-      style={{
-        width: MARKER_SIZE,
-        height: MARKER_SIZE,
-        backgroundColor: bgColor,
-        borderRadius: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-        border: '2px solid white',
-      }}
-    >
-      <IconComponent style={{ width: 18, height: 18, color: iconColor }} />
+  const iconHtml = `
+    <div style="
+      width: ${size}px;
+      height: ${size}px;
+      background-color: ${bgColor};
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      border: 2px solid white;
+      color: ${iconColor};
+    ">
+      <div style="width: ${size * 0.55}px; height: ${size * 0.55}px;">
+        ${svgContent}
+      </div>
     </div>
-  );
+  `;
 
   return L.divIcon({
     html: iconHtml,
     className: 'lucide-marker',
-    iconSize: [MARKER_SIZE, MARKER_SIZE],
-    iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2],
-    popupAnchor: [0, -MARKER_SIZE / 2],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, -size / 2],
   });
 };
 
-// Pre-built icons
-const markerIcons = {
-  // Determinaties op basis van vertrouwen
-  hoog: createLucideIcon(Gem, '#16a34a'), // green-600
-  gemiddeld: createLucideIcon(Gem, '#d97706'), // amber-600
-  laag: createLucideIcon(Gem, '#ea580c'), // orange-600
-  default: createLucideIcon(Gem, '#d97706'),
-  // Standalone locaties
-  location: createLucideIcon(MapPin, '#2563eb'), // blue-600
-  // Nieuwe/geselecteerde locatie
-  selected: createLucideIcon(MapPin, '#d97706'), // amber-600
-  // Edit mode marker
-  editing: createLucideIcon(Move, '#7c3aed'), // violet-600
+// MapPin SVG
+const MapPinSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+// Move SVG
+const MoveSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" x2="22" y1="12" y2="12"/><line x1="12" x2="12" y1="2" y2="22"/></svg>`;
+
+// Functie om icons te maken op basis van zoom
+const getMarkerSize = (zoom: number): number => {
+  if (zoom >= 14) return 32;
+  if (zoom >= 12) return 28;
+  if (zoom >= 10) return 24;
+  if (zoom >= 8) return 20;
+  if (zoom >= 6) return 16;
+  return 12;
+};
+
+// Icon cache per zoom level
+const iconCache: Record<string, Record<number, L.DivIcon>> = {};
+
+const getIcon = (type: string, bgColor: string, zoom: number, svg: string = ArrowheadSvg): L.DivIcon => {
+  const size = getMarkerSize(zoom);
+  const key = `${type}-${size}`;
+
+  if (!iconCache[key]) {
+    iconCache[key] = {};
+  }
+
+  if (!iconCache[key][size]) {
+    iconCache[key][size] = createScaledIcon(svg, bgColor, size);
+  }
+
+  return iconCache[key][size];
 };
 
 interface HomeMapProps {
@@ -68,18 +88,31 @@ interface HomeMapProps {
 // Component om kaart events te handelen
 function MapClickHandler({
   onLocationSelect,
+  onZoomChange,
   disabled
 }: {
   onLocationSelect: (lat: number, lng: number) => void;
+  onZoomChange: (zoom: number) => void;
   disabled?: boolean;
 }) {
+  const map = useMap();
+
   useMapEvents({
     click: (e) => {
       if (!disabled) {
         onLocationSelect(e.latlng.lat, e.latlng.lng);
       }
     },
+    zoomend: () => {
+      onZoomChange(map.getZoom());
+    },
   });
+
+  // Initial zoom
+  useEffect(() => {
+    onZoomChange(map.getZoom());
+  }, [map, onZoomChange]);
+
   return null;
 }
 
@@ -190,6 +223,8 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
   const [useSatellite, setUseSatellite] = useState(false);
   // Pending location: geselecteerd maar nog niet bevestigd
   const [pendingLocation, setPendingLocation] = useState<VondstLocatie | null>(null);
+  // Zoom level voor marker scaling
+  const [zoomLevel, setZoomLevel] = useState(7);
 
   // Laad bestaande sessies en locaties
   const loadData = useCallback(async () => {
@@ -369,24 +404,24 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
           ) : (
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           )}
-          <MapClickHandler onLocationSelect={handleLocationSelect} />
+          <MapClickHandler onLocationSelect={handleLocationSelect} onZoomChange={setZoomLevel} />
           <FlyToLocation location={flyTo} />
 
-          {/* Opgeslagen locatie marker (groen vinkje) */}
+          {/* Opgeslagen locatie marker */}
           {value && !isEditing && !pendingLocation && (
-            <Marker position={[value.lat, value.lng]} icon={markerIcons.selected} />
+            <Marker position={[value.lat, value.lng]} icon={getIcon('selected', '#d97706', zoomLevel, MapPinSvg)} />
           )}
 
           {/* Pending locatie marker (nog niet opgeslagen) */}
           {pendingLocation && !isEditing && (
-            <Marker position={[pendingLocation.lat, pendingLocation.lng]} icon={markerIcons.selected} />
+            <Marker position={[pendingLocation.lat, pendingLocation.lng]} icon={getIcon('pending', '#d97706', zoomLevel, MapPinSvg)} />
           )}
 
           {/* Edit mode marker */}
           {isEditing && (
             <Marker
               position={[editState.newLocation.lat, editState.newLocation.lng]}
-              icon={markerIcons.editing}
+              icon={getIcon('editing', '#7c3aed', zoomLevel, MoveSvg)}
               draggable={true}
               eventHandlers={{
                 dragend: (e) => {
@@ -409,13 +444,19 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
               return null;
             }
 
-            const confidence = session.result?.confidence || 'default';
-            const icon = markerIcons[confidence as keyof typeof markerIcons] || markerIcons.default;
+            const confidence = session.result?.confidence || 'gemiddeld';
+            const colors: Record<string, string> = {
+              hoog: '#16a34a',
+              gemiddeld: '#d97706',
+              laag: '#ea580c',
+            };
+            const bgColor = colors[confidence] || colors.gemiddeld;
+
             return (
               <Marker
                 key={`session-${session.id}`}
                 position={[session.input.locatie!.lat, session.input.locatie!.lng]}
-                icon={icon}
+                icon={getIcon(`session-${confidence}`, bgColor, zoomLevel, ArrowheadSvg)}
               >
                 <Popup>
                   <div className="text-center min-w-[140px]">
@@ -465,7 +506,7 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
               <Marker
                 key={`location-${location.id}`}
                 position={[location.lat, location.lng]}
-                icon={markerIcons.location}
+                icon={getIcon('location', '#2563eb', zoomLevel, MapPinSvg)}
               >
                 <Popup>
                   <div className="text-center min-w-[120px]">

@@ -1,55 +1,74 @@
-import { useMemo, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Plus, MapPin, Gem, Satellite } from 'lucide-react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { useMemo, useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import { Plus, MapPin, Satellite } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 
-// Marker grootte (consistent voor alle markers)
-const MARKER_SIZE = 32;
+// Arrowhead SVG (steentijd pijlpunt)
+const ArrowheadSvg = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 14h5v8h6v-8h5L12 2z"/></svg>`;
 
-// Maak een Lucide icon marker
-const createLucideIcon = (
-  IconComponent: React.ComponentType<{ className?: string; style?: React.CSSProperties }>,
+// MapPin SVG
+const MapPinSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+
+// Maak een marker met schaalbare grootte
+const createScaledIcon = (
+  svgContent: string,
   bgColor: string,
+  size: number,
   iconColor: string = 'white'
 ) => {
-  const iconHtml = renderToStaticMarkup(
-    <div
-      style={{
-        width: MARKER_SIZE,
-        height: MARKER_SIZE,
-        backgroundColor: bgColor,
-        borderRadius: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-        border: '2px solid white',
-      }}
-    >
-      <IconComponent style={{ width: 18, height: 18, color: iconColor }} />
+  const iconHtml = `
+    <div style="
+      width: ${size}px;
+      height: ${size}px;
+      background-color: ${bgColor};
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      border: 2px solid white;
+      color: ${iconColor};
+    ">
+      <div style="width: ${size * 0.55}px; height: ${size * 0.55}px;">
+        ${svgContent}
+      </div>
     </div>
-  );
+  `;
 
   return L.divIcon({
     html: iconHtml,
     className: 'lucide-marker',
-    iconSize: [MARKER_SIZE, MARKER_SIZE],
-    iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2],
-    popupAnchor: [0, -MARKER_SIZE / 2],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, -size / 2],
   });
 };
 
-// Pre-built icons
-const markerIcons = {
-  hoog: createLucideIcon(Gem, '#16a34a'), // green-600
-  gemiddeld: createLucideIcon(Gem, '#d97706'), // amber-600
-  laag: createLucideIcon(Gem, '#ea580c'), // orange-600
-  location: createLucideIcon(MapPin, '#2563eb'), // blue-600
-  default: createLucideIcon(Gem, '#d97706'),
+// Functie om icons te maken op basis van zoom
+const getMarkerSize = (zoom: number): number => {
+  if (zoom >= 14) return 32;
+  if (zoom >= 12) return 28;
+  if (zoom >= 10) return 24;
+  if (zoom >= 8) return 20;
+  if (zoom >= 6) return 16;
+  return 12;
+};
+
+// Icon cache per zoom level
+const iconCache: Record<string, L.DivIcon> = {};
+
+const getIcon = (type: string, bgColor: string, zoom: number, svg: string = ArrowheadSvg): L.DivIcon => {
+  const size = getMarkerSize(zoom);
+  const key = `${type}-${size}`;
+
+  if (!iconCache[key]) {
+    iconCache[key] = createScaledIcon(svg, bgColor, size);
+  }
+
+  return iconCache[key];
 };
 
 interface HistoryMapProps {
@@ -60,8 +79,26 @@ interface HistoryMapProps {
   onAddLocation: () => void;
 }
 
+// Zoom tracker component
+function ZoomTracker({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  const map = useMap();
+
+  useMapEvents({
+    zoomend: () => {
+      onZoomChange(map.getZoom());
+    },
+  });
+
+  useEffect(() => {
+    onZoomChange(map.getZoom());
+  }, [map, onZoomChange]);
+
+  return null;
+}
+
 export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocation, onAddLocation }: HistoryMapProps) {
   const [useSatellite, setUseSatellite] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(8);
 
   // Filter sessies met locatie
   const sessionsWithLocation = useMemo(() => {
@@ -97,7 +134,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
 
   // Bereken zoom level
   const totalMarkers = sessionsWithLocation.length + locations.length;
-  const zoom = useMemo(() => {
+  const initialZoom = useMemo(() => {
     if (totalMarkers === 0) return 7;
     if (totalMarkers === 1) return 12;
     return 8;
@@ -133,7 +170,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
       <div className="h-48 lg:h-64 relative">
         <MapContainer
           center={center}
-          zoom={zoom}
+          zoom={initialZoom}
           className="h-full w-full"
           zoomControl={false}
           attributionControl={false}
@@ -147,15 +184,23 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           )}
 
+          <ZoomTracker onZoomChange={setZoomLevel} />
+
           {/* Session markers */}
           {sessionsWithLocation.map((session) => {
-            const confidence = session.result?.confidence || 'default';
-            const icon = markerIcons[confidence as keyof typeof markerIcons] || markerIcons.default;
+            const confidence = session.result?.confidence || 'gemiddeld';
+            const colors: Record<string, string> = {
+              hoog: '#16a34a',
+              gemiddeld: '#d97706',
+              laag: '#ea580c',
+            };
+            const bgColor = colors[confidence] || colors.gemiddeld;
+
             return (
               <Marker
                 key={`session-${session.id}`}
                 position={[session.input.locatie!.lat, session.input.locatie!.lng]}
-                icon={icon}
+                icon={getIcon(`session-${confidence}`, bgColor, zoomLevel, ArrowheadSvg)}
                 eventHandlers={{
                   click: () => onSelectSession(session),
                 }}
@@ -192,7 +237,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
             <Marker
               key={`location-${location.id}`}
               position={[location.lat, location.lng]}
-              icon={markerIcons.location}
+              icon={getIcon('location', '#2563eb', zoomLevel, MapPinSvg)}
               eventHandlers={{
                 click: () => onSelectLocation(location),
               }}
