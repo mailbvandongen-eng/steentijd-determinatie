@@ -61,12 +61,12 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-50"
+        className="fixed inset-0 bg-black/50 z-[2000]"
         onClick={handleClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-4 z-50 flex items-center justify-center pointer-events-none">
+      <div className="fixed inset-4 z-[2000] flex items-center justify-center pointer-events-none">
         <div
           className="rounded-2xl shadow-2xl overflow-hidden flex flex-col w-full max-w-md max-h-full pointer-events-auto"
           style={{ backgroundColor: 'var(--bg-card)' }}
