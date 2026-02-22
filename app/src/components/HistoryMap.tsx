@@ -6,44 +6,30 @@ import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 
-// Arrowhead SVG (steentijd pijlpunt)
-const ArrowheadSvg = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 14h5v8h6v-8h5L12 2z"/></svg>`;
+// Simple SVG icons (no background, just the shape)
+// Vuursteen/Stone icon voor determinaties
+const StoneIcon = (color: string, size: number) => `
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L3 9L6 20H18L21 9L12 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+`;
 
-// MapPin SVG
-const MapPinSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+// MapPin icon voor locaties
+const PinIcon = (color: string, size: number) => `
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="white" stroke-width="1.5"/>
+    <circle cx="12" cy="9" r="2.5" fill="white"/>
+  </svg>
+`;
 
-// Maak een marker met schaalbare grootte
-const createScaledIcon = (
-  svgContent: string,
-  bgColor: string,
-  size: number,
-  iconColor: string = 'white'
-) => {
-  const iconHtml = `
-    <div style="
-      width: ${size}px;
-      height: ${size}px;
-      background-color: ${bgColor};
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      border: 2px solid white;
-      color: ${iconColor};
-    ">
-      <div style="width: ${size * 0.55}px; height: ${size * 0.55}px;">
-        ${svgContent}
-      </div>
-    </div>
-  `;
-
+// Icon factory
+const createIcon = (svgFn: (color: string, size: number) => string, color: string, size: number): L.DivIcon => {
   return L.divIcon({
-    html: iconHtml,
-    className: 'lucide-marker',
+    html: svgFn(color, size),
+    className: 'custom-marker',
     iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-    popupAnchor: [0, -size / 2],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
   });
 };
 
@@ -57,17 +43,24 @@ const getMarkerSize = (zoom: number): number => {
   return 12;
 };
 
-// Icon cache per zoom level
+// Icon cache
 const iconCache: Record<string, L.DivIcon> = {};
 
-const getIcon = (type: string, bgColor: string, zoom: number, svg: string = ArrowheadSvg): L.DivIcon => {
+const getStoneIcon = (color: string, zoom: number): L.DivIcon => {
   const size = getMarkerSize(zoom);
-  const key = `${type}-${size}`;
-
+  const key = `stone-${color}-${size}`;
   if (!iconCache[key]) {
-    iconCache[key] = createScaledIcon(svg, bgColor, size);
+    iconCache[key] = createIcon(StoneIcon, color, size);
   }
+  return iconCache[key];
+};
 
+const getPinIcon = (color: string, zoom: number): L.DivIcon => {
+  const size = getMarkerSize(zoom);
+  const key = `pin-${color}-${size}`;
+  if (!iconCache[key]) {
+    iconCache[key] = createIcon(PinIcon, color, size);
+  }
   return iconCache[key];
 };
 
@@ -200,7 +193,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
               <Marker
                 key={`session-${session.id}`}
                 position={[session.input.locatie!.lat, session.input.locatie!.lng]}
-                icon={getIcon(`session-${confidence}`, bgColor, zoomLevel, ArrowheadSvg)}
+                icon={getStoneIcon(bgColor, zoomLevel)}
                 eventHandlers={{
                   click: () => onSelectSession(session),
                 }}
@@ -237,7 +230,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
             <Marker
               key={`location-${location.id}`}
               position={[location.lat, location.lng]}
-              icon={getIcon('location', '#2563eb', zoomLevel, MapPinSvg)}
+              icon={getPinIcon('#2563eb', zoomLevel)}
               eventHandlers={{
                 click: () => onSelectLocation(location),
               }}

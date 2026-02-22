@@ -1,114 +1,102 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, MapPin, Layers, Eye, EyeOff, Check, Move, Satellite } from 'lucide-react';
+import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Pencil, Trash2, ExternalLink, Check } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import type { VondstLocatie, DeterminationSession, SavedLocation } from '../types';
-import { getAllSessions, getAllLocations, updateSession, updateLocation } from '../lib/db';
+import type { DeterminationSession, SavedLocation, VondstLocatie } from '../types';
+import { getAllSessions, getAllLocations, updateSession, updateLocation, deleteSession, deleteLocation } from '../lib/db';
 import { formatTypeName } from '../lib/decisionTree';
+import { AddLocationModal } from './AddLocationModal';
 
-// Arrowhead SVG (steentijd pijlpunt)
-const ArrowheadSvg = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 14h5v8h6v-8h5L12 2z"/></svg>`;
+// Simple SVG icons (no background, just the shape)
+// Vuursteen/Stone icon voor determinaties
+const StoneIcon = (color: string, size: number) => `
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L3 9L6 20H18L21 9L12 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+`;
 
-// Maak een marker met schaalbare grootte
-const createScaledIcon = (
-  svgContent: string,
-  bgColor: string,
-  size: number,
-  iconColor: string = 'white'
-) => {
-  const iconHtml = `
-    <div style="
-      width: ${size}px;
-      height: ${size}px;
-      background-color: ${bgColor};
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      border: 2px solid white;
-      color: ${iconColor};
-    ">
-      <div style="width: ${size * 0.55}px; height: ${size * 0.55}px;">
-        ${svgContent}
-      </div>
-    </div>
-  `;
+// MapPin icon voor locaties
+const PinIcon = (color: string, size: number) => `
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="white" stroke-width="1.5"/>
+    <circle cx="12" cy="9" r="2.5" fill="white"/>
+  </svg>
+`;
 
-  return L.divIcon({
-    html: iconHtml,
-    className: 'lucide-marker',
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-    popupAnchor: [0, -size / 2],
-  });
-};
+// Move icon voor edit mode
+const MoveIcon = (color: string, size: number) => `
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+`;
 
-// MapPin SVG
-const MapPinSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
-
-// Move SVG
-const MoveSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" x2="22" y1="12" y2="12"/><line x1="12" x2="12" y1="2" y2="22"/></svg>`;
-
-// Functie om icons te maken op basis van zoom
+// Marker grootte op basis van zoom
 const getMarkerSize = (zoom: number): number => {
-  if (zoom >= 14) return 32;
-  if (zoom >= 12) return 28;
-  if (zoom >= 10) return 24;
-  if (zoom >= 8) return 20;
-  if (zoom >= 6) return 16;
+  if (zoom >= 14) return 28;
+  if (zoom >= 12) return 24;
+  if (zoom >= 10) return 20;
+  if (zoom >= 8) return 16;
+  if (zoom >= 6) return 14;
   return 12;
 };
 
-// Icon cache per zoom level
-const iconCache: Record<string, Record<number, L.DivIcon>> = {};
+// Icon factory
+const createIcon = (svgFn: (color: string, size: number) => string, color: string, size: number): L.DivIcon => {
+  return L.divIcon({
+    html: svgFn(color, size),
+    className: 'custom-marker',
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
+  });
+};
 
-const getIcon = (type: string, bgColor: string, zoom: number, svg: string = ArrowheadSvg): L.DivIcon => {
+// Icon cache
+const iconCache: Record<string, L.DivIcon> = {};
+
+const getStoneIcon = (color: string, zoom: number): L.DivIcon => {
   const size = getMarkerSize(zoom);
-  const key = `${type}-${size}`;
-
+  const key = `stone-${color}-${size}`;
   if (!iconCache[key]) {
-    iconCache[key] = {};
+    iconCache[key] = createIcon(StoneIcon, color, size);
   }
+  return iconCache[key];
+};
 
-  if (!iconCache[key][size]) {
-    iconCache[key][size] = createScaledIcon(svg, bgColor, size);
+const getPinIcon = (color: string, zoom: number): L.DivIcon => {
+  const size = getMarkerSize(zoom);
+  const key = `pin-${color}-${size}`;
+  if (!iconCache[key]) {
+    iconCache[key] = createIcon(PinIcon, color, size);
   }
+  return iconCache[key];
+};
 
-  return iconCache[key][size];
+const getMoveIcon = (zoom: number): L.DivIcon => {
+  const size = getMarkerSize(zoom);
+  const key = `move-${size}`;
+  if (!iconCache[key]) {
+    iconCache[key] = createIcon(MoveIcon, '#7c3aed', size);
+  }
+  return iconCache[key];
 };
 
 interface HomeMapProps {
-  value?: VondstLocatie;
-  onChange: (location: VondstLocatie | undefined) => void;
   onSelectSession?: (session: DeterminationSession) => void;
+  // Optional: For use as location picker in ImageCapture
+  value?: VondstLocatie;
+  onChange?: (location: VondstLocatie | undefined) => void;
 }
 
-// Component om kaart events te handelen
-function MapClickHandler({
-  onLocationSelect,
-  onZoomChange,
-  disabled
-}: {
-  onLocationSelect: (lat: number, lng: number) => void;
-  onZoomChange: (zoom: number) => void;
-  disabled?: boolean;
-}) {
+// Zoom tracker
+function ZoomTracker({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
   const map = useMap();
 
   useMapEvents({
-    click: (e) => {
-      if (!disabled) {
-        onLocationSelect(e.latlng.lat, e.latlng.lng);
-      }
-    },
-    zoomend: () => {
-      onZoomChange(map.getZoom());
-    },
+    zoomend: () => onZoomChange(map.getZoom()),
   });
 
-  // Initial zoom
   useEffect(() => {
     onZoomChange(map.getZoom());
   }, [map, onZoomChange]);
@@ -116,21 +104,37 @@ function MapClickHandler({
   return null;
 }
 
-// Component om naar locatie te vliegen
+// Map click handler (for editing and picker mode)
+function MapClickHandler({
+  onLocationSelect,
+  enabled
+}: {
+  onLocationSelect: (lat: number, lng: number) => void;
+  enabled: boolean;
+}) {
+  useMapEvents({
+    click: (e) => {
+      if (enabled) {
+        onLocationSelect(e.latlng.lat, e.latlng.lng);
+      }
+    },
+  });
+  return null;
+}
+
+// Fly to location
 function FlyToLocation({ location }: { location: { lat: number; lng: number } | null }) {
   const map = useMap();
-
   useEffect(() => {
     if (location) {
       map.flyTo([location.lat, location.lng], 14, { duration: 0.8 });
     }
   }, [location, map]);
-
   return null;
 }
 
-// Zoek component
-function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name: string) => void }) {
+// Search component
+function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number) => void }) {
   const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -138,23 +142,20 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
   const handleSearch = async () => {
     if (!query.trim()) return;
     setIsSearching(true);
-
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=nl&limit=1`
       );
       const data = await response.json();
-
       if (data.length > 0) {
-        const { lat, lon, display_name } = data[0];
-        onSearch(parseFloat(lat), parseFloat(lon), display_name);
+        onSearch(parseFloat(data[0].lat), parseFloat(data[0].lon));
         setQuery('');
         setShowInput(false);
       } else {
-        alert('Locatie niet gevonden. Probeer een andere zoekterm.');
+        alert('Locatie niet gevonden');
       }
     } catch {
-      alert('Zoeken mislukt. Controleer je internetverbinding.');
+      alert('Zoeken mislukt');
     } finally {
       setIsSearching(false);
     }
@@ -164,9 +165,9 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
     return (
       <button
         onClick={() => setShowInput(true)}
-        className="p-2 rounded-lg shadow-md transition-colors"
+        className="p-2 rounded-lg shadow-md"
         style={{ backgroundColor: 'var(--bg-card)' }}
-        title="Zoek locatie"
+        title="Zoek"
       >
         <Search className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
       </button>
@@ -180,53 +181,44 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number, name
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-        placeholder="Zoek plaats..."
+        placeholder="Zoek..."
         className="w-28 px-2 py-1.5 text-xs rounded-lg"
         style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
         autoFocus
       />
-      <button
-        onClick={handleSearch}
-        disabled={isSearching}
-        className="p-1.5 rounded-lg transition-colors"
-        style={{ backgroundColor: 'var(--accent)', color: 'white' }}
-      >
+      <button onClick={handleSearch} disabled={isSearching} className="p-1.5 rounded-lg bg-amber-500 text-white">
         <Search className={`w-3 h-3 ${isSearching ? 'animate-pulse' : ''}`} />
       </button>
-      <button
-        onClick={() => { setShowInput(false); setQuery(''); }}
-        className="p-1.5 rounded-lg transition-colors"
-        style={{ color: 'var(--text-muted)' }}
-      >
+      <button onClick={() => { setShowInput(false); setQuery(''); }} className="p-1.5" style={{ color: 'var(--text-muted)' }}>
         <X className="w-3 h-3" />
       </button>
     </div>
   );
 }
 
-// Edit state type
+// Edit state
 type EditState =
   | { type: 'none' }
-  | { type: 'session'; session: DeterminationSession; newLocation: VondstLocatie }
-  | { type: 'location'; location: SavedLocation; newLocation: VondstLocatie };
+  | { type: 'session'; session: DeterminationSession; newLocation: { lat: number; lng: number } }
+  | { type: 'location'; location: SavedLocation; newLocation: { lat: number; lng: number } };
 
-export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
-  const [isLocating, setIsLocating] = useState(false);
-  const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null);
+export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
   const [locations, setLocations] = useState<SavedLocation[]>([]);
+  const [zoomLevel, setZoomLevel] = useState(7);
+  const [useSatellite, setUseSatellite] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showDeterminations, setShowDeterminations] = useState(true);
   const [showLocations, setShowLocations] = useState(true);
   const [editState, setEditState] = useState<EditState>({ type: 'none' });
+  const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [useSatellite, setUseSatellite] = useState(false);
-  // Pending location: geselecteerd maar nog niet bevestigd
-  const [pendingLocation, setPendingLocation] = useState<VondstLocatie | null>(null);
-  // Zoom level voor marker scaling
-  const [zoomLevel, setZoomLevel] = useState(7);
 
-  // Laad bestaande sessies en locaties
+  // Check if we're in picker mode (for ImageCapture)
+  const isPickerMode = onChange !== undefined;
+
+  // Load data
   const loadData = useCallback(async () => {
     const [allSessions, allLocations] = await Promise.all([
       getAllSessions(),
@@ -240,130 +232,52 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
     loadData();
   }, [loadData]);
 
-  // Filter sessies met locatie
+  // Filter sessions with location
   const sessionsWithLocation = useMemo(() => {
-    return sessions.filter(
-      (s) => s.status === 'completed' && s.input.locatie && s.result
-    );
+    return sessions.filter((s) => s.status === 'completed' && s.input.locatie && s.result);
   }, [sessions]);
 
-  // Nederland centrum als default
-  const defaultCenter: [number, number] = [52.1326, 5.2913];
-  const center: [number, number] = value ? [value.lat, value.lng] : defaultCenter;
-
-  // Check of we in edit mode zijn
   const isEditing = editState.type !== 'none';
 
-  const handleLocationSelect = useCallback((lat: number, lng: number) => {
-    if (editState.type !== 'none') {
-      // In edit mode: update de nieuwe locatie
-      if (editState.type === 'session') {
-        setEditState({ ...editState, newLocation: { lat, lng } });
-      } else {
-        setEditState({ ...editState, newLocation: { lat, lng } });
-      }
-    } else {
-      // Normale modus: zet als pending (nog niet opgeslagen)
-      setPendingLocation({ lat, lng });
+  // Picker mode handler
+  const handlePickerClick = useCallback((lat: number, lng: number) => {
+    if (isPickerMode && onChange) {
+      onChange({ lat, lng });
+      setFlyTo({ lat, lng });
+    }
+  }, [isPickerMode, onChange]);
+
+  // Handlers
+  const handleEditLocationSelect = useCallback((lat: number, lng: number) => {
+    if (editState.type === 'session') {
+      setEditState({ ...editState, newLocation: { lat, lng } });
+    } else if (editState.type === 'location') {
+      setEditState({ ...editState, newLocation: { lat, lng } });
     }
     setFlyTo({ lat, lng });
   }, [editState]);
 
-  const handleConfirmLocation = useCallback(() => {
-    if (pendingLocation) {
-      onChange(pendingLocation);
-      setPendingLocation(null);
-    }
-  }, [pendingLocation, onChange]);
-
-  const handleClearPending = useCallback(() => {
-    setPendingLocation(null);
-  }, []);
-
-  const handleClearLocation = useCallback(() => {
-    onChange(undefined);
-    setPendingLocation(null);
-    setFlyTo(null);
-  }, [onChange]);
-
-  const handleGetCurrentLocation = useCallback(() => {
-    if (!navigator.geolocation) {
-      alert('Geolocatie wordt niet ondersteund door je browser');
-      return;
-    }
-
-    setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        if (editState.type !== 'none') {
-          if (editState.type === 'session') {
-            setEditState({ ...editState, newLocation: { lat: latitude, lng: longitude } });
-          } else {
-            setEditState({ ...editState, newLocation: { lat: latitude, lng: longitude } });
-          }
-        } else {
-          // Zet als pending, niet direct opslaan
-          setPendingLocation({ lat: latitude, lng: longitude });
-        }
-        setFlyTo({ lat: latitude, lng: longitude });
-        setIsLocating(false);
-      },
-      (error) => {
-        console.error('Geolocatie fout:', error);
-        setIsLocating(false);
-        alert('Kon locatie niet bepalen. Tik op de kaart om handmatig te kiezen.');
-      },
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  }, [editState]);
-
-  const handleSearchResult = useCallback((lat: number, lng: number, _name: string) => {
-    if (editState.type !== 'none') {
-      handleLocationSelect(lat, lng);
-    } else {
-      setPendingLocation({ lat, lng });
-      setFlyTo({ lat, lng });
-    }
-  }, [editState, handleLocationSelect]);
-
-  // Start editing a session
-  const handleEditSession = useCallback((session: DeterminationSession) => {
+  const handleStartEditSession = useCallback((session: DeterminationSession) => {
     if (session.input.locatie) {
-      setEditState({
-        type: 'session',
-        session,
-        newLocation: { ...session.input.locatie },
-      });
+      setEditState({ type: 'session', session, newLocation: { ...session.input.locatie } });
     }
   }, []);
 
-  // Start editing a location
-  const handleEditLocation = useCallback((location: SavedLocation) => {
-    setEditState({
-      type: 'location',
-      location,
-      newLocation: { lat: location.lat, lng: location.lng },
-    });
+  const handleStartEditLocation = useCallback((location: SavedLocation) => {
+    setEditState({ type: 'location', location, newLocation: { lat: location.lat, lng: location.lng } });
   }, []);
 
-  // Cancel editing
   const handleCancelEdit = useCallback(() => {
     setEditState({ type: 'none' });
   }, []);
 
-  // Save edited location
   const handleSaveEdit = useCallback(async () => {
     if (editState.type === 'none') return;
-
     setIsSaving(true);
     try {
       if (editState.type === 'session' && editState.session.id) {
         await updateSession(editState.session.id, {
-          input: {
-            ...editState.session.input,
-            locatie: editState.newLocation,
-          },
+          input: { ...editState.session.input, locatie: editState.newLocation },
         });
       } else if (editState.type === 'location' && editState.location.id) {
         await updateLocation(editState.location.id, {
@@ -374,59 +288,74 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
       await loadData();
       setEditState({ type: 'none' });
     } catch (error) {
-      console.error('Opslaan mislukt:', error);
-      alert('Kon locatie niet opslaan. Probeer opnieuw.');
+      console.error('Save failed:', error);
+      alert('Opslaan mislukt');
     } finally {
       setIsSaving(false);
     }
   }, [editState, loadData]);
 
-  // Bereken totaal aantal markers
+  const handleDeleteSession = useCallback(async (session: DeterminationSession) => {
+    if (!session.id) return;
+    if (!confirm(`Weet je zeker dat je deze determinatie wilt verwijderen?\n\n${formatTypeName(session.result?.type || 'Onbekend')}`)) return;
+    try {
+      await deleteSession(session.id);
+      await loadData();
+    } catch (error) {
+      console.error('Delete failed:', error);
+      alert('Verwijderen mislukt');
+    }
+  }, [loadData]);
+
+  const handleDeleteLocation = useCallback(async (location: SavedLocation) => {
+    if (!location.id) return;
+    if (!confirm(`Weet je zeker dat je deze locatie wilt verwijderen?\n\n${location.naam || 'Zoeklocatie'}`)) return;
+    try {
+      await deleteLocation(location.id);
+      await loadData();
+    } catch (error) {
+      console.error('Delete failed:', error);
+      alert('Verwijderen mislukt');
+    }
+  }, [loadData]);
+
+  const handleLocationAdded = useCallback(() => {
+    setShowAddModal(false);
+    loadData();
+  }, [loadData]);
+
+  const defaultCenter: [number, number] = [52.1326, 5.2913];
   const totalMarkers = (showDeterminations ? sessionsWithLocation.length : 0) + (showLocations ? locations.length : 0);
 
   return (
     <div className="h-full flex flex-col rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border-color)' }}>
-      {/* Kaart */}
       <div className="flex-1 relative min-h-[200px]">
         <MapContainer
-          center={center}
-          zoom={value ? 12 : 7}
+          center={defaultCenter}
+          zoom={7}
           className="h-full w-full"
           zoomControl={false}
           attributionControl={false}
         >
-          {/* Kaartlagen */}
           {useSatellite ? (
-            <TileLayer
-              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              maxZoom={19}
-            />
+            <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" maxZoom={19} />
           ) : (
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           )}
-          <MapClickHandler onLocationSelect={handleLocationSelect} onZoomChange={setZoomLevel} />
+
+          <ZoomTracker onZoomChange={setZoomLevel} />
+          <MapClickHandler onLocationSelect={isPickerMode ? handlePickerClick : handleEditLocationSelect} enabled={isEditing || isPickerMode} />
           <FlyToLocation location={flyTo} />
-
-          {/* Opgeslagen locatie marker */}
-          {value && !isEditing && !pendingLocation && (
-            <Marker position={[value.lat, value.lng]} icon={getIcon('selected', '#d97706', zoomLevel, MapPinSvg)} />
-          )}
-
-          {/* Pending locatie marker (nog niet opgeslagen) */}
-          {pendingLocation && !isEditing && (
-            <Marker position={[pendingLocation.lat, pendingLocation.lng]} icon={getIcon('pending', '#d97706', zoomLevel, MapPinSvg)} />
-          )}
 
           {/* Edit mode marker */}
           {isEditing && (
             <Marker
               position={[editState.newLocation.lat, editState.newLocation.lng]}
-              icon={getIcon('editing', '#7c3aed', zoomLevel, MoveSvg)}
+              icon={getMoveIcon(zoomLevel)}
               draggable={true}
               eventHandlers={{
                 dragend: (e) => {
-                  const marker = e.target;
-                  const pos = marker.getLatLng();
+                  const pos = e.target.getLatLng();
                   if (editState.type === 'session') {
                     setEditState({ ...editState, newLocation: { lat: pos.lat, lng: pos.lng } });
                   } else if (editState.type === 'location') {
@@ -437,57 +366,63 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
             />
           )}
 
-          {/* Bestaande determinaties */}
+          {/* Picker mode marker */}
+          {isPickerMode && value && (
+            <Marker
+              position={[value.lat, value.lng]}
+              icon={getPinIcon('#d97706', zoomLevel)}
+              draggable={true}
+              eventHandlers={{
+                dragend: (e) => {
+                  const pos = e.target.getLatLng();
+                  onChange?.({ lat: pos.lat, lng: pos.lng });
+                },
+              }}
+            />
+          )}
+
+          {/* Session markers (stone icon) */}
           {showDeterminations && sessionsWithLocation.map((session) => {
-            // Verberg de originele marker als deze wordt geëdit
-            if (editState.type === 'session' && editState.session.id === session.id) {
-              return null;
-            }
+            if (editState.type === 'session' && editState.session.id === session.id) return null;
 
             const confidence = session.result?.confidence || 'gemiddeld';
-            const colors: Record<string, string> = {
-              hoog: '#16a34a',
-              gemiddeld: '#d97706',
-              laag: '#ea580c',
-            };
-            const bgColor = colors[confidence] || colors.gemiddeld;
+            const colors: Record<string, string> = { hoog: '#16a34a', gemiddeld: '#d97706', laag: '#ea580c' };
+            const color = colors[confidence] || colors.gemiddeld;
 
             return (
               <Marker
                 key={`session-${session.id}`}
                 position={[session.input.locatie!.lat, session.input.locatie!.lng]}
-                icon={getIcon(`session-${confidence}`, bgColor, zoomLevel, ArrowheadSvg)}
+                icon={getStoneIcon(color, zoomLevel)}
               >
                 <Popup>
-                  <div className="text-center min-w-[140px]">
+                  <div className="min-w-[160px]">
                     {session.input.thumbnail && (
-                      <img
-                        src={session.input.thumbnail}
-                        alt="Vondst"
-                        className="w-16 h-16 object-cover rounded mx-auto mb-2"
-                      />
+                      <img src={session.input.thumbnail} alt="Vondst" className="w-full h-24 object-cover rounded mb-2" />
                     )}
-                    <p className="font-medium text-sm text-stone-900">
-                      {formatTypeName(session.result?.type || '')}
-                    </p>
-                    {session.result?.period && (
-                      <p className="text-xs text-stone-500">{session.result.period}</p>
-                    )}
-                    <div className="flex gap-2 mt-2 justify-center">
-                      <button
-                        onClick={() => handleEditSession(session)}
-                        className="text-xs px-2 py-1 bg-violet-100 text-violet-700 rounded hover:bg-violet-200"
-                      >
-                        Wijzig locatie
-                      </button>
+                    <p className="font-medium text-sm text-stone-900">{formatTypeName(session.result?.type || '')}</p>
+                    {session.result?.period && <p className="text-xs text-stone-500">{session.result.period}</p>}
+                    <div className="flex flex-col gap-1 mt-3">
                       {onSelectSession && (
                         <button
                           onClick={() => onSelectSession(session)}
-                          className="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded hover:bg-amber-200"
+                          className="flex items-center gap-2 px-2 py-1.5 text-xs bg-amber-100 text-amber-700 rounded hover:bg-amber-200"
                         >
-                          Details
+                          <ExternalLink className="w-3 h-3" /> Open determinatie
                         </button>
                       )}
+                      <button
+                        onClick={() => handleStartEditSession(session)}
+                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-violet-100 text-violet-700 rounded hover:bg-violet-200"
+                      >
+                        <Pencil className="w-3 h-3" /> Wijzig locatie
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSession(session)}
+                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200"
+                      >
+                        <Trash2 className="w-3 h-3" /> Verwijder
+                      </button>
                     </div>
                   </div>
                 </Popup>
@@ -495,33 +430,34 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
             );
           })}
 
-          {/* Standalone locaties */}
+          {/* Location markers (pin icon) */}
           {showLocations && locations.map((location) => {
-            // Verberg de originele marker als deze wordt geëdit
-            if (editState.type === 'location' && editState.location.id === location.id) {
-              return null;
-            }
+            if (editState.type === 'location' && editState.location.id === location.id) return null;
 
             return (
               <Marker
                 key={`location-${location.id}`}
                 position={[location.lat, location.lng]}
-                icon={getIcon('location', '#2563eb', zoomLevel, MapPinSvg)}
+                icon={getPinIcon('#2563eb', zoomLevel)}
               >
                 <Popup>
-                  <div className="text-center min-w-[120px]">
-                    <p className="font-medium text-sm text-stone-900">
-                      {location.naam || 'Zoeklocatie'}
-                    </p>
-                    {location.notitie && (
-                      <p className="text-xs text-stone-500 mt-1">{location.notitie}</p>
-                    )}
-                    <button
-                      onClick={() => handleEditLocation(location)}
-                      className="mt-2 text-xs px-2 py-1 bg-violet-100 text-violet-700 rounded hover:bg-violet-200"
-                    >
-                      Wijzig locatie
-                    </button>
+                  <div className="min-w-[140px]">
+                    <p className="font-medium text-sm text-stone-900">{location.naam || 'Zoeklocatie'}</p>
+                    {location.notitie && <p className="text-xs text-stone-500 mt-1">{location.notitie}</p>}
+                    <div className="flex flex-col gap-1 mt-3">
+                      <button
+                        onClick={() => handleStartEditLocation(location)}
+                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-violet-100 text-violet-700 rounded hover:bg-violet-200"
+                      >
+                        <Pencil className="w-3 h-3" /> Wijzig locatie
+                      </button>
+                      <button
+                        onClick={() => handleDeleteLocation(location)}
+                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200"
+                      >
+                        <Trash2 className="w-3 h-3" /> Verwijder
+                      </button>
+                    </div>
                   </div>
                 </Popup>
               </Marker>
@@ -529,189 +465,130 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
           })}
         </MapContainer>
 
-        {/* Controls overlay - top */}
+        {/* Controls - top */}
         <div className="absolute top-2 left-2 right-2 z-[1000] flex items-center justify-between">
-          <SearchControl onSearch={handleSearchResult} />
+          <SearchControl onSearch={(lat, lng) => setFlyTo({ lat, lng })} />
           <div className="flex items-center gap-1">
-            {/* Satelliet toggle */}
             <button
               onClick={() => setUseSatellite(!useSatellite)}
-              className={`p-2 rounded-lg shadow-md transition-colors ${useSatellite ? 'ring-2 ring-blue-500' : ''}`}
+              className={`p-2 rounded-lg shadow-md ${useSatellite ? 'ring-2 ring-blue-500' : ''}`}
               style={{ backgroundColor: 'var(--bg-card)' }}
-              title={useSatellite ? 'Kaart weergave' : 'Satelliet weergave'}
+              title={useSatellite ? 'Kaart' : 'Satelliet'}
             >
               <Satellite className="w-4 h-4" style={{ color: useSatellite ? '#2563eb' : 'var(--text-muted)' }} />
             </button>
-            {/* Filter toggle */}
             {(sessionsWithLocation.length > 0 || locations.length > 0) && !isEditing && (
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`p-2 rounded-lg shadow-md transition-colors ${showFilters ? 'ring-2 ring-amber-500' : ''}`}
+                className={`p-2 rounded-lg shadow-md ${showFilters ? 'ring-2 ring-amber-500' : ''}`}
                 style={{ backgroundColor: 'var(--bg-card)' }}
-                title="Filter lagen"
+                title="Filter"
               >
                 <Layers className="w-4 h-4" style={{ color: showFilters ? 'var(--accent)' : 'var(--text-muted)' }} />
               </button>
             )}
             <button
-              onClick={handleGetCurrentLocation}
-              disabled={isLocating}
-              className="p-2 rounded-lg shadow-md transition-colors"
+              onClick={() => navigator.geolocation?.getCurrentPosition(
+                (pos) => setFlyTo({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                () => alert('Locatie niet beschikbaar')
+              )}
+              className="p-2 rounded-lg shadow-md"
               style={{ backgroundColor: 'var(--bg-card)' }}
               title="Mijn locatie"
             >
-              <Navigation className={`w-4 h-4 ${isLocating ? 'animate-pulse' : ''}`} style={{ color: 'var(--accent)' }} />
+              <Navigation className="w-4 h-4" style={{ color: 'var(--accent)' }} />
             </button>
           </div>
         </div>
 
         {/* Filter panel */}
         {showFilters && !isEditing && (
-          <div
-            className="absolute top-12 right-2 z-[1000] p-2 rounded-lg shadow-lg text-xs"
-            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
-          >
-            <p className="font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>Toon op kaart:</p>
+          <div className="absolute top-12 right-2 z-[1000] p-2 rounded-lg shadow-lg text-xs" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+            <p className="font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>Toon:</p>
             <label className="flex items-center gap-2 cursor-pointer mb-1">
-              <input
-                type="checkbox"
-                checked={showDeterminations}
-                onChange={(e) => setShowDeterminations(e.target.checked)}
-                className="rounded"
-              />
-              <span className="flex items-center gap-1" style={{ color: 'var(--text-primary)' }}>
-                {showDeterminations ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-                Determinaties ({sessionsWithLocation.length})
+              <input type="checkbox" checked={showDeterminations} onChange={(e) => setShowDeterminations(e.target.checked)} className="rounded" />
+              <span style={{ color: 'var(--text-primary)' }}>
+                {showDeterminations ? <Eye className="w-3 h-3 inline" /> : <EyeOff className="w-3 h-3 inline" />} Determinaties ({sessionsWithLocation.length})
               </span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showLocations}
-                onChange={(e) => setShowLocations(e.target.checked)}
-                className="rounded"
-              />
-              <span className="flex items-center gap-1" style={{ color: 'var(--text-primary)' }}>
-                {showLocations ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
-                Zoeklocaties ({locations.length})
+              <input type="checkbox" checked={showLocations} onChange={(e) => setShowLocations(e.target.checked)} className="rounded" />
+              <span style={{ color: 'var(--text-primary)' }}>
+                {showLocations ? <Eye className="w-3 h-3 inline" /> : <EyeOff className="w-3 h-3 inline" />} Zoeklocaties ({locations.length})
               </span>
             </label>
           </div>
         )}
 
-        {/* Edit mode panel */}
+        {/* Edit panel */}
         {isEditing && (
-          <div
-            className="absolute bottom-2 left-2 right-2 z-[1000] p-3 rounded-lg shadow-lg"
-            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
-          >
+          <div className="absolute bottom-2 left-2 right-2 z-[1000] p-3 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
             <p className="text-sm font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
-              <Move className="w-4 h-4 inline mr-1" style={{ color: '#7c3aed' }} />
               {editState.type === 'session' ? 'Determinatie locatie wijzigen' : 'Zoeklocatie wijzigen'}
             </p>
-            <p className="text-xs mb-3" style={{ color: 'var(--text-muted)' }}>
-              Tik op de kaart of sleep de marker naar de nieuwe locatie
-            </p>
+            <p className="text-xs mb-3" style={{ color: 'var(--text-muted)' }}>Tik of sleep de marker</p>
             <div className="flex gap-2">
-              <button
-                onClick={handleCancelEdit}
-                className="flex-1 px-3 py-2 text-sm rounded-lg transition-colors"
-                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-              >
+              <button onClick={handleCancelEdit} className="flex-1 px-3 py-2 text-sm rounded-lg" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
                 Annuleren
               </button>
-              <button
-                onClick={handleSaveEdit}
-                disabled={isSaving}
-                className="flex-1 px-3 py-2 text-sm rounded-lg bg-violet-600 text-white hover:bg-violet-700 transition-colors flex items-center justify-center gap-1"
-              >
-                {isSaving ? (
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <Check className="w-4 h-4" />
-                    Opslaan
-                  </>
-                )}
+              <button onClick={handleSaveEdit} disabled={isSaving} className="flex-1 px-3 py-2 text-sm rounded-lg bg-violet-600 text-white hover:bg-violet-700">
+                {isSaving ? '...' : 'Opslaan'}
               </button>
             </div>
           </div>
         )}
 
-        {/* Pending locatie panel - toon opslaan knop */}
-        {!isEditing && pendingLocation && (
-          <div
-            className="absolute bottom-2 left-2 right-2 z-[1000] p-3 rounded-lg shadow-lg"
-            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                <MapPin className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-                <span className="text-sm">
-                  {pendingLocation.lat.toFixed(5)}, {pendingLocation.lng.toFixed(5)}
-                </span>
-                <button
-                  onClick={handleClearPending}
-                  className="p-1 rounded transition-colors"
-                  style={{ color: 'var(--text-muted)' }}
-                  title="Annuleren"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-              <button
-                onClick={handleConfirmLocation}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-white font-medium transition-colors"
-                style={{ backgroundColor: 'var(--accent)' }}
-              >
-                <Check className="w-4 h-4" />
-                <span>Locatie opslaan</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Normale status badge - alleen als niet in edit mode en geen pending */}
-        {!isEditing && !pendingLocation && (
+        {/* Bottom bar */}
+        {!isEditing && (
           <div className="absolute bottom-2 left-2 right-2 z-[1000] flex items-center justify-between">
-            {value ? (
-              <div
-                className="flex items-center gap-2 px-3 py-1.5 rounded-lg shadow-md"
-                style={{ backgroundColor: '#16a34a', color: 'white' }}
-              >
-                <Check className="w-4 h-4" />
-                <span className="text-xs font-medium">
-                  Locatie opgeslagen: {value.lat.toFixed(4)}, {value.lng.toFixed(4)}
-                </span>
-                <button
-                  onClick={handleClearLocation}
-                  className="p-0.5 rounded hover:bg-white/20 transition-colors"
-                  title="Locatie wissen"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
+            {isPickerMode ? (
+              // Picker mode: show selected location info
+              value ? (
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)' }}>
+                  <Check className="w-4 h-4 text-green-600" />
+                  <span style={{ color: 'var(--text-primary)' }}>
+                    {value.lat.toFixed(4)}, {value.lng.toFixed(4)}
+                  </span>
+                  <button
+                    onClick={() => onChange?.(undefined)}
+                    className="p-1 ml-1 rounded hover:bg-stone-200 dark:hover:bg-stone-700"
+                    title="Wis locatie"
+                  >
+                    <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+                  </button>
+                </div>
+              ) : (
+                <div className="px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
+                  Tik op kaart om locatie te kiezen
+                </div>
+              )
             ) : (
-              <div
-                className="px-3 py-1.5 rounded-lg shadow-md text-xs"
-                style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
+              // Normal mode: add location button
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium"
               >
-                Tik op de kaart om locatie te kiezen
-              </div>
+                <Plus className="w-4 h-4" />
+                Voeg locatie toe
+              </button>
             )}
-
-            {/* Totaal markers indicator */}
-            {totalMarkers > 0 && (
-              <div
-                className="px-2 py-1 rounded-lg shadow-md text-xs"
-                style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
-              >
+            {!isPickerMode && totalMarkers > 0 && (
+              <div className="px-2 py-1 rounded-lg shadow-md text-xs" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
                 {totalMarkers} op kaart
               </div>
             )}
           </div>
         )}
       </div>
+
+      {/* Add Location Modal - only in normal mode */}
+      {showAddModal && !isPickerMode && (
+        <AddLocationModal
+          isOpen={showAddModal}
+          onClose={() => setShowAddModal(false)}
+          onSave={handleLocationAdded}
+        />
+      )}
     </div>
   );
 }
