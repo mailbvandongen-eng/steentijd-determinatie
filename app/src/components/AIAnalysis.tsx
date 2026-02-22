@@ -368,7 +368,7 @@ export function AIAnalysis({ images, singleImage, videoFrames, onComplete, onBac
               </p>
             )}
             <p className="text-xs text-amber-600 mt-2">
-              Max 10 analyses per dag.
+              Max 20 analyses per dag.
             </p>
           </div>
         )}

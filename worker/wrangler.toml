@@ -4,7 +4,7 @@ compatibility_date = "2024-01-01"
 workers_dev = true
 
 [vars]
-DAILY_LIMIT = "10"
+DAILY_LIMIT = "20"
 
 # KV namespace for rate limiting - maak deze aan in Cloudflare dashboard
 [[kv_namespaces]]
