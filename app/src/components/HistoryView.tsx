@@ -1,10 +1,11 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Trash2, Image, TrendingUp, Award, Map } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getAllSessions, deleteSession } from '../lib/db';
-import type { DeterminationSession } from '../types';
+import { getAllSessions, deleteSession, getAllLocations, createLocation, deleteLocation } from '../lib/db';
+import type { DeterminationSession, SavedLocation } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { HistoryMap } from './HistoryMap';
+import { AddLocationModal } from './AddLocationModal';
 
 interface HistoryViewProps {
   onBack: () => void;
@@ -13,12 +14,15 @@ interface HistoryViewProps {
 
 export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
+  const [locations, setLocations] = useState<SavedLocation[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showDashboard, setShowDashboard] = useState(false);
+  const [showAddLocation, setShowAddLocation] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<SavedLocation | null>(null);
 
   useEffect(() => {
-    loadSessions();
+    loadData();
   }, []);
 
   // Filter sessies op basis van zoekterm
@@ -68,10 +72,14 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
     };
   }, [sessions]);
 
-  const loadSessions = async () => {
+  const loadData = async () => {
     setLoading(true);
-    const data = await getAllSessions();
-    setSessions(data);
+    const [sessionsData, locationsData] = await Promise.all([
+      getAllSessions(),
+      getAllLocations(),
+    ]);
+    setSessions(sessionsData);
+    setLocations(locationsData);
     setLoading(false);
   };
 
@@ -80,7 +88,24 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
     if (!id) return;
     if (confirm('Weet je zeker dat je deze determinatie wilt verwijderen?')) {
       await deleteSession(id);
-      loadSessions();
+      loadData();
+    }
+  };
+
+  const handleAddLocation = useCallback(async (data: { lat: number; lng: number; naam?: string; notitie?: string }) => {
+    await createLocation(data);
+    loadData();
+  }, []);
+
+  const handleSelectLocation = useCallback((location: SavedLocation) => {
+    setSelectedLocation(location);
+  }, []);
+
+  const handleDeleteLocation = async (id: number) => {
+    if (confirm('Weet je zeker dat je deze locatie wilt verwijderen?')) {
+      await deleteLocation(id);
+      setSelectedLocation(null);
+      loadData();
     }
   };
 
@@ -164,7 +189,13 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
               </div>
 
               {/* Kaart met vondsten */}
-              <HistoryMap sessions={sessions} onSelectSession={onSelectSession} />
+              <HistoryMap
+                sessions={sessions}
+                locations={locations}
+                onSelectSession={onSelectSession}
+                onSelectLocation={handleSelectLocation}
+                onAddLocation={() => setShowAddLocation(true)}
+              />
             </motion.div>
           )}
         </div>
@@ -300,6 +331,74 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
           Nieuwe determinatie
         </button>
       </div>
+
+      {/* Add Location Modal */}
+      <AddLocationModal
+        isOpen={showAddLocation}
+        onClose={() => setShowAddLocation(false)}
+        onSave={handleAddLocation}
+      />
+
+      {/* Location Detail Panel */}
+      {selectedLocation && (
+        <div className="fixed inset-0 z-50 flex items-end lg:items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setSelectedLocation(null)}
+          />
+          <div
+            className="relative w-full lg:max-w-md rounded-t-2xl lg:rounded-2xl p-4 max-h-[60vh] overflow-y-auto"
+            style={{ backgroundColor: 'var(--bg-card)' }}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {selectedLocation.naam || 'Locatie'}
+                </h3>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  {selectedLocation.lat.toFixed(5)}, {selectedLocation.lng.toFixed(5)}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedLocation(null)}
+                className="p-1 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700"
+              >
+                <ChevronDown className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
+              </button>
+            </div>
+
+            {selectedLocation.notitie && (
+              <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+                {selectedLocation.notitie}
+              </p>
+            )}
+
+            <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
+              {selectedLocation.linkedSessionIds.length > 0
+                ? `${selectedLocation.linkedSessionIds.length} gekoppelde determinatie(s)`
+                : 'Nog geen determinaties gekoppeld'}
+            </p>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleDeleteLocation(selectedLocation.id!)}
+                className="flex-1 py-2 px-4 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                style={{ border: '1px solid var(--border-color)' }}
+              >
+                <Trash2 className="w-4 h-4 inline mr-1" />
+                Verwijderen
+              </button>
+              <button
+                onClick={() => setSelectedLocation(null)}
+                className="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+                style={{ backgroundColor: 'var(--accent)', color: 'white' }}
+              >
+                Sluiten
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download } from 'lucide-react';
-import type { DeterminationSession, LabeledImage } from '../types';
+import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin } from 'lucide-react';
+import type { DeterminationSession, LabeledImage, VondstLocatie } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
 import { updateSession } from '../lib/db';
 import { exportToPdf } from '../lib/pdfExport';
+import { LocationPicker } from './LocationPicker';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -33,6 +34,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxShowDrawing, setLightboxShowDrawing] = useState(false);
   const [showFullAnalysis, setShowFullAnalysis] = useState(false);
+  const [showLocationPicker, setShowLocationPicker] = useState(false);
+  const [sessionLocation, setSessionLocation] = useState<VondstLocatie | undefined>(session.input.locatie);
 
   // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
   const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
@@ -129,6 +132,21 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
       });
     }
   }, [localImages, session]);
+
+  // Handle location save
+  const handleSaveLocation = useCallback(async (location: VondstLocatie | undefined) => {
+    if (!location || !session.id) return;
+
+    await updateSession(session.id, {
+      input: {
+        ...session.input,
+        locatie: location,
+      },
+    });
+
+    setSessionLocation(location);
+    setShowLocationPicker(false);
+  }, [session]);
 
   // State voor delen
   const [isSharing, setIsSharing] = useState(false);
@@ -309,6 +327,23 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
               </div>
             )}
           </div>
+
+          {/* Locatie badge of toevoeg knop */}
+          {sessionLocation ? (
+            <div className="mt-3 flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <MapPin className="w-4 h-4 text-amber-600" />
+              <span>{sessionLocation.lat.toFixed(4)}, {sessionLocation.lng.toFixed(4)}</span>
+              {sessionLocation.naam && <span className="text-xs">({sessionLocation.naam})</span>}
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowLocationPicker(true)}
+              className="mt-3 flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition-colors"
+            >
+              <MapPin className="w-4 h-4" />
+              <span>Voeg locatie toe</span>
+            </button>
+          )}
         </div>
 
         {/* Thumbnail en beeldmateriaal */}
@@ -561,6 +596,51 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           onNavigate={(newIndex) => { setLightboxIndex(newIndex); setLightboxShowDrawing(false); }}
           onToggleDrawing={() => setLightboxShowDrawing(!lightboxShowDrawing)}
         />
+      )}
+
+      {/* Location Picker Modal */}
+      {showLocationPicker && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black">
+          {/* Header */}
+          <div
+            className="p-3 flex items-center justify-between shrink-0"
+            style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}
+          >
+            <div className="flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-amber-500" />
+              <span className="text-white text-sm font-medium">Locatie toevoegen</span>
+            </div>
+            <button
+              onClick={() => setShowLocationPicker(false)}
+              className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
+            >
+              <X className="w-4 h-4 text-white" />
+            </button>
+          </div>
+
+          {/* Location Picker */}
+          <div className="flex-1">
+            <LocationPicker
+              value={sessionLocation}
+              onChange={(loc) => {
+                if (loc) {
+                  handleSaveLocation(loc);
+                }
+              }}
+            />
+          </div>
+
+          {/* Footer */}
+          <div className="p-3 shrink-0" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
+            <button
+              onClick={() => setShowLocationPicker(false)}
+              className="w-full py-3 rounded-lg text-white font-medium transition-colors"
+              style={{ backgroundColor: 'var(--accent)' }}
+            >
+              Sluiten
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

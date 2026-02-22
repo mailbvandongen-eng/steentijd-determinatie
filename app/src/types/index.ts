@@ -80,3 +80,17 @@ export interface ImageMetadata {
   width: number;
   height: number;
 }
+
+// Standalone locatie (zonder determinatie)
+export interface SavedLocation {
+  id?: number;
+  createdAt: string;
+  updatedAt: string;
+  lat: number;
+  lng: number;
+  naam?: string;                  // Optionele plaatsnaam
+  notitie?: string;               // Optionele notitie ("hier ligt veel vuursteen")
+  linkedSessionIds: number[];     // Gekoppelde determinatie IDs
+  cloudId?: string;
+  lastSyncedAt?: string;
+}

@@ -1,10 +1,11 @@
 import Dexie, { type EntityTable } from 'dexie';
-import type { DeterminationSession } from '../types';
+import type { DeterminationSession, SavedLocation } from '../types';
 
 // Database definitie
 const db = new Dexie('SteentijdDB') as Dexie & {
   sessions: EntityTable<DeterminationSession, 'id'>;
   images: EntityTable<{ id?: number; name: string; blob: Blob }, 'id'>;
+  locations: EntityTable<SavedLocation, 'id'>;
 };
 
 db.version(1).stores({
@@ -16,6 +17,13 @@ db.version(1).stores({
 db.version(2).stores({
   sessions: '++id, createdAt, status, synced, cloudId',
   images: '++id, name',
+});
+
+// Version 3: add locations table
+db.version(3).stores({
+  sessions: '++id, createdAt, status, synced, cloudId',
+  images: '++id, name',
+  locations: '++id, createdAt, cloudId',
 });
 
 export { db };
@@ -104,5 +112,103 @@ export async function getSessionByCloudId(cloudId: string): Promise<Determinatio
 
 export async function addSessionFromCloud(session: Omit<DeterminationSession, 'id'>): Promise<number> {
   const id = await db.sessions.add(session as DeterminationSession);
+  return id as number;
+}
+
+// ========== Location helpers ==========
+
+export async function createLocation(data: {
+  lat: number;
+  lng: number;
+  naam?: string;
+  notitie?: string;
+}): Promise<number> {
+  const now = new Date().toISOString();
+  const id = await db.locations.add({
+    createdAt: now,
+    updatedAt: now,
+    lat: data.lat,
+    lng: data.lng,
+    naam: data.naam,
+    notitie: data.notitie,
+    linkedSessionIds: [],
+  });
+  return id as number;
+}
+
+export async function getAllLocations(): Promise<SavedLocation[]> {
+  return await db.locations.orderBy('createdAt').reverse().toArray();
+}
+
+export async function getLocation(id: number): Promise<SavedLocation | undefined> {
+  return await db.locations.get(id);
+}
+
+export async function updateLocation(
+  id: number,
+  updates: Partial<SavedLocation>
+): Promise<void> {
+  await db.locations.update(id, {
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+export async function deleteLocation(id: number): Promise<void> {
+  await db.locations.delete(id);
+}
+
+export async function linkSessionToLocation(
+  sessionId: number,
+  locationId: number
+): Promise<void> {
+  const location = await db.locations.get(locationId);
+  if (!location) throw new Error('Location not found');
+
+  const linkedIds = location.linkedSessionIds || [];
+  if (!linkedIds.includes(sessionId)) {
+    await db.locations.update(locationId, {
+      linkedSessionIds: [...linkedIds, sessionId],
+      updatedAt: new Date().toISOString(),
+    });
+  }
+}
+
+export async function unlinkSessionFromLocation(
+  sessionId: number,
+  locationId: number
+): Promise<void> {
+  const location = await db.locations.get(locationId);
+  if (!location) return;
+
+  await db.locations.update(locationId, {
+    linkedSessionIds: location.linkedSessionIds.filter(id => id !== sessionId),
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+// Location sync helpers
+export async function getUnsyncedLocations(): Promise<SavedLocation[]> {
+  return await db.locations
+    .filter(l => !l.cloudId)
+    .toArray();
+}
+
+export async function markLocationSynced(
+  id: number,
+  cloudId: string
+): Promise<void> {
+  await db.locations.update(id, {
+    cloudId,
+    lastSyncedAt: new Date().toISOString(),
+  });
+}
+
+export async function getLocationByCloudId(cloudId: string): Promise<SavedLocation | undefined> {
+  return await db.locations.where('cloudId').equals(cloudId).first();
+}
+
+export async function addLocationFromCloud(location: Omit<SavedLocation, 'id'>): Promise<number> {
+  const id = await db.locations.add(location as SavedLocation);
   return id as number;
 }
