@@ -9,12 +9,12 @@ import { formatTypeName } from '../lib/decisionTree';
 import { AddLocationModal } from './AddLocationModal';
 
 // Simple SVG icons (no background, just the shape)
-// Lucide Stone icon voor determinaties (faceted stone)
+// Lucide Stone icon voor determinaties (correct faceted stone)
 const StoneIcon = (color: string, size: number) => `
   <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <path d="M11 3a8 8 0 0 0-7.52 5.27 8 8 0 0 0 1.74 8.51 8 8 0 0 0 8.51 1.74A8 8 0 0 0 19 11"/>
-    <path d="M11 3v8h8"/>
-    <path d="m3 11 8 8"/>
+    <path d="M11.264 2.205A4 4 0 0 0 6.42 4.211l-4 8a4 4 0 0 0 1.359 5.117l6 4a4 4 0 0 0 4.438 0l6-4a4 4 0 0 0 1.576-4.592l-2-6a4 4 0 0 0-2.53-2.53z"/>
+    <path d="M11.99 22 14 12l7.822 3.184"/>
+    <path d="M14 12 8.47 2.302"/>
   </svg>
 `;
 
@@ -403,28 +403,30 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                 icon={getStoneIcon(color, zoomLevel)}
               >
                 <Popup>
-                  <div className="min-w-[140px] relative">
-                    {/* Action icons in top-right corner */}
-                    <div className="absolute top-0 right-0 flex gap-1">
-                      <button
-                        onClick={() => handleStartEditSession(session)}
-                        className="p-1 rounded hover:bg-stone-100"
-                        title="Wijzig locatie"
-                      >
-                        <Move className="w-4 h-4 text-stone-500 hover:text-violet-600" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteSession(session)}
-                        className="p-1 rounded hover:bg-stone-100"
-                        title="Verwijder"
-                      >
-                        <Trash2 className="w-4 h-4 text-stone-500 hover:text-red-600" />
-                      </button>
-                    </div>
+                  <div className="min-w-[160px]">
                     {session.input.thumbnail && (
                       <img src={session.input.thumbnail} alt="Vondst" className="w-full h-20 object-cover rounded mb-2" />
                     )}
-                    <p className="font-medium text-sm text-stone-900 pr-12">{formatTypeName(session.result?.type || '')}</p>
+                    {/* Title with action icons inline */}
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-medium text-sm text-stone-900">{formatTypeName(session.result?.type || '')}</p>
+                      <div className="flex items-center gap-0.5 shrink-0">
+                        <button
+                          onClick={() => handleStartEditSession(session)}
+                          className="p-1 rounded hover:bg-stone-100"
+                          title="Wijzig locatie"
+                        >
+                          <Move className="w-4 h-4 text-stone-400 hover:text-violet-600" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteSession(session)}
+                          className="p-1 rounded hover:bg-stone-100"
+                          title="Verwijder"
+                        >
+                          <Trash2 className="w-4 h-4 text-stone-400 hover:text-red-600" />
+                        </button>
+                      </div>
+                    </div>
                     {session.result?.period && <p className="text-xs text-stone-500">{session.result.period}</p>}
                     {onSelectSession && (
                       <button
@@ -451,25 +453,27 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                 icon={getPinIcon('#2563eb', zoomLevel)}
               >
                 <Popup>
-                  <div className="min-w-[140px] relative">
-                    {/* Action icons in top-right corner */}
-                    <div className="absolute top-0 right-0 flex gap-1">
-                      <button
-                        onClick={() => handleStartEditLocation(location)}
-                        className="p-1 rounded hover:bg-stone-100"
-                        title="Wijzig locatie"
-                      >
-                        <Move className="w-4 h-4 text-stone-500 hover:text-violet-600" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteLocation(location)}
-                        className="p-1 rounded hover:bg-stone-100"
-                        title="Verwijder"
-                      >
-                        <Trash2 className="w-4 h-4 text-stone-500 hover:text-red-600" />
-                      </button>
+                  <div className="min-w-[140px]">
+                    {/* Title with action icons inline */}
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="font-medium text-sm text-stone-900">{location.naam || 'Zoeklocatie'}</p>
+                      <div className="flex items-center gap-0.5 shrink-0">
+                        <button
+                          onClick={() => handleStartEditLocation(location)}
+                          className="p-1 rounded hover:bg-stone-100"
+                          title="Wijzig locatie"
+                        >
+                          <Move className="w-4 h-4 text-stone-400 hover:text-violet-600" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteLocation(location)}
+                          className="p-1 rounded hover:bg-stone-100"
+                          title="Verwijder"
+                        >
+                          <Trash2 className="w-4 h-4 text-stone-400 hover:text-red-600" />
+                        </button>
+                      </div>
                     </div>
-                    <p className="font-medium text-sm text-stone-900 pr-12">{location.naam || 'Zoeklocatie'}</p>
                     {location.notitie && <p className="text-xs text-stone-500 mt-1">{location.notitie}</p>}
                   </div>
                 </Popup>
