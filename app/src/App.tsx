@@ -13,7 +13,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.4.12';
+const APP_VERSION = '1.4.22';
 
 // Animation variants
 const pageVariants = {
@@ -177,22 +177,31 @@ function App() {
     return (
       <div className="h-full flex flex-col overflow-hidden">
         {/* Mobile header - hidden on desktop */}
-        <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white shrink-0">
-          <div>
-            <span className="text-lg font-bold tracking-tight block">STEENTIJD</span>
-            <span className="text-xs opacity-80">Determineren van artefacten</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setView('history')}
-              className="flex items-center gap-1 text-xs opacity-80 hover:opacity-100 transition-opacity"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-              </svg>
-              <span>Opgeslagen</span>
-            </button>
-            <SettingsMenu onShowWelcome={welcomeModal.open} version={APP_VERSION} />
+        <header className="lg:hidden shrink-0 bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-lg">
+          <div className="px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.264 2.205A4 4 0 0 0 6.42 4.211l-4 8a4 4 0 0 0 1.359 5.117l6 4a4 4 0 0 0 4.438 0l6-4a4 4 0 0 0 1.576-4.592l-2-6a4 4 0 0 0-2.53-2.53z"/>
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-lg font-bold tracking-wide">STEENTIJD</h1>
+                <p className="text-[10px] text-white/70 -mt-0.5">Determineren van artefacten</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setView('history')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25 transition-colors text-sm"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                </svg>
+                <span className="hidden xs:inline">Opgeslagen</span>
+              </button>
+              <SettingsMenu onShowWelcome={welcomeModal.open} version={APP_VERSION} />
+            </div>
           </div>
         </header>
         <div className="flex-1 overflow-hidden">

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Camera, Archive, Sun, Moon, Info, LogIn, LogOut, Cloud, CloudOff, RefreshCw } from 'lucide-react';
+import { Camera, Archive, Sun, Moon, Info, LogIn, LogOut, Cloud, CloudOff, RefreshCw, AlertTriangle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
-import { syncSessions, type SyncResult } from '../lib/sync';
+import { syncSessions, forceSyncAll, type SyncResult } from '../lib/sync';
 
 interface SidebarProps {
   currentView: string;
@@ -52,6 +52,32 @@ export function Sidebar({ currentView, onNavigate, onShowWelcome }: SidebarProps
     }
   };
 
+  const handleForceSync = async () => {
+    if (!user) return;
+    if (!confirm('Dit reset de sync status en uploadt ALLES opnieuw naar de cloud.\n\nGebruik dit alleen als items niet correct synchroniseren.\n\nDoorgaan?')) return;
+
+    setIsSyncing(true);
+    setSyncResult(null);
+    try {
+      const result = await forceSyncAll(user.uid);
+      setSyncResult({
+        uploaded: result.uploaded,
+        downloaded: result.downloaded,
+        errors: result.errors.length > 0 ? result.errors : [],
+      });
+      setTimeout(() => setSyncResult(null), 8000);
+    } catch (err) {
+      console.error('Force sync failed:', err);
+      setSyncResult({
+        uploaded: 0,
+        downloaded: 0,
+        errors: [err instanceof Error ? err.message : 'Force sync mislukt'],
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   return (
     <aside className="desktop-sidebar">
       {/* Logo */}
@@ -64,13 +90,13 @@ export function Sidebar({ currentView, onNavigate, onShowWelcome }: SidebarProps
       <nav className="flex-1 p-2">
         <NavItem
           icon={<Camera className="w-5 h-5" />}
-          label="Nieuwe determinatie"
+          label="Startscherm"
           active={currentView === 'capture'}
           onClick={() => onNavigate('capture')}
         />
         <NavItem
           icon={<Archive className="w-5 h-5" />}
-          label="Geschiedenis"
+          label="Mijn vondsten"
           active={currentView === 'history'}
           onClick={() => onNavigate('history')}
         />
@@ -115,6 +141,12 @@ export function Sidebar({ currentView, onNavigate, onShowWelcome }: SidebarProps
               onClick={handleSync}
             />
             <NavItem
+              icon={<AlertTriangle className="w-5 h-5" />}
+              label="Forceer volledige sync"
+              onClick={handleForceSync}
+              subtle
+            />
+            <NavItem
               icon={<LogOut className="w-5 h-5" />}
               label="Uitloggen"
               onClick={handleSignOut}
@@ -156,16 +188,19 @@ interface NavItemProps {
   icon: React.ReactNode;
   label: string;
   active?: boolean;
+  subtle?: boolean;
   onClick: () => void;
 }
 
-function NavItem({ icon, label, active, onClick }: NavItemProps) {
+function NavItem({ icon, label, active, subtle, onClick }: NavItemProps) {
   return (
     <button
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
         active
           ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+          : subtle
+          ? 'hover:bg-stone-100 dark:hover:bg-stone-700/50 opacity-60 hover:opacity-100'
           : 'hover:bg-stone-100 dark:hover:bg-stone-700/50'
       }`}
       style={{ color: active ? undefined : 'var(--text-secondary)' }}
