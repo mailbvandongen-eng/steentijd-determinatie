@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { Camera, ImagePlus, X, Plus, Upload } from 'lucide-react';
 import type { LabeledImage, VondstLocatie } from '../types';
-import { LocationPicker } from './LocationPicker';
+import { HomeMap } from './HomeMap';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
 type CaptureSource = 'camera' | 'upload';
@@ -755,9 +755,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </button>
           </div>
 
-          {/* Locatie kaart - neemt rest van de ruimte */}
+          {/* Locatie kaart - neemt rest van de ruimte, toont ook bestaande vondsten */}
           <div className="flex-1 min-h-0">
-            <LocationPicker
+            <HomeMap
               value={locatie}
               onChange={setLocatie}
             />
