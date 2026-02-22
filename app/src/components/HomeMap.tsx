@@ -4,9 +4,8 @@ import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Trash2, Ex
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation, VondstLocatie } from '../types';
-import { getAllSessions, getAllLocations, updateSession, updateLocation, deleteSession, deleteLocation } from '../lib/db';
+import { getAllSessions, getAllLocations, updateSession, updateLocation, deleteSession, deleteLocation, createLocation } from '../lib/db';
 import { formatTypeName } from '../lib/decisionTree';
-import { AddLocationModal } from './AddLocationModal';
 
 // Simple SVG icons (no background, just the shape)
 // Lucide Stone icon voor determinaties - filled with white lines
@@ -219,8 +218,12 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
   const [showLocations, setShowLocations] = useState(true);
   const [editState, setEditState] = useState<EditState>({ type: 'none' });
   const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Add location mode
+  const [isAddingLocation, setIsAddingLocation] = useState(false);
+  const [pendingLocation, setPendingLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [pendingDescription, setPendingDescription] = useState('');
 
   // Check if we're in picker mode (for ImageCapture)
   const isPickerMode = onChange !== undefined;
@@ -326,10 +329,39 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
     }
   }, [loadData]);
 
-  const handleLocationAdded = useCallback(() => {
-    setShowAddModal(false);
-    loadData();
-  }, [loadData]);
+  // Add location handlers
+  const handleAddLocationClick = useCallback((lat: number, lng: number) => {
+    setPendingLocation({ lat, lng });
+    setFlyTo({ lat, lng });
+  }, []);
+
+  const handleSaveNewLocation = useCallback(async () => {
+    if (!pendingLocation) return;
+    setIsSaving(true);
+    try {
+      await createLocation({
+        lat: pendingLocation.lat,
+        lng: pendingLocation.lng,
+        naam: pendingDescription.trim() || undefined,
+      });
+      await loadData();
+      // Reset
+      setIsAddingLocation(false);
+      setPendingLocation(null);
+      setPendingDescription('');
+    } catch (error) {
+      console.error('Save failed:', error);
+      alert('Opslaan mislukt');
+    } finally {
+      setIsSaving(false);
+    }
+  }, [pendingLocation, pendingDescription, loadData]);
+
+  const handleCancelAddLocation = useCallback(() => {
+    setIsAddingLocation(false);
+    setPendingLocation(null);
+    setPendingDescription('');
+  }, []);
 
   const defaultCenter: [number, number] = [52.1326, 5.2913];
   const totalMarkers = (showDeterminations ? sessionsWithLocation.length : 0) + (showLocations ? locations.length : 0);
@@ -351,7 +383,10 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
           )}
 
           <ZoomTracker onZoomChange={setZoomLevel} />
-          <MapClickHandler onLocationSelect={isPickerMode ? handlePickerClick : handleEditLocationSelect} enabled={isEditing || isPickerMode} />
+          <MapClickHandler
+            onLocationSelect={isAddingLocation ? handleAddLocationClick : (isPickerMode ? handlePickerClick : handleEditLocationSelect)}
+            enabled={isEditing || isPickerMode || isAddingLocation}
+          />
           <FlyToLocation location={flyTo} />
 
           {/* Edit mode marker */}
@@ -383,6 +418,21 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                 dragend: (e) => {
                   const pos = e.target.getLatLng();
                   onChange?.({ lat: pos.lat, lng: pos.lng });
+                },
+              }}
+            />
+          )}
+
+          {/* Adding location marker */}
+          {isAddingLocation && pendingLocation && (
+            <Marker
+              position={[pendingLocation.lat, pendingLocation.lng]}
+              icon={getPinIcon('#2563eb', zoomLevel)}
+              draggable={true}
+              eventHandlers={{
+                dragend: (e) => {
+                  const pos = e.target.getLatLng();
+                  setPendingLocation({ lat: pos.lat, lng: pos.lng });
                 },
               }}
             />
@@ -557,9 +607,55 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
 
         {/* Bottom bar */}
         {!isEditing && (
-          <div className="absolute bottom-2 left-2 right-2 z-[1000] flex items-center justify-between">
-            {isPickerMode ? (
-              // Picker mode: show selected location info or pick button
+          <div className="absolute bottom-2 left-2 right-2 z-[1000]">
+            {isAddingLocation ? (
+              // Adding location mode
+              pendingLocation ? (
+                // Location selected - show description input
+                <div className="p-3 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+                  <input
+                    type="text"
+                    value={pendingDescription}
+                    onChange={(e) => setPendingDescription(e.target.value)}
+                    placeholder="Beschrijving (bijv. Loonse duinen)"
+                    className="w-full px-3 py-2 text-sm rounded-lg mb-2"
+                    style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
+                    autoFocus
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleCancelAddLocation}
+                      className="flex-1 px-3 py-2 text-sm rounded-lg"
+                      style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                    >
+                      Annuleren
+                    </button>
+                    <button
+                      onClick={handleSaveNewLocation}
+                      disabled={isSaving}
+                      className="flex-1 px-3 py-2 text-sm rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
+                    >
+                      {isSaving ? '...' : 'Opslaan'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                // No location yet - show instruction
+                <div className="flex items-center justify-between">
+                  <div className="px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)' }}>
+                    Tik op de kaart
+                  </div>
+                  <button
+                    onClick={handleCancelAddLocation}
+                    className="px-3 py-2 rounded-lg shadow-md text-sm"
+                    style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
+                  >
+                    Annuleren
+                  </button>
+                </div>
+              )
+            ) : isPickerMode ? (
+              // Picker mode: show selected location info
               value ? (
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)' }}>
                   <Check className="w-4 h-4 text-green-600" />
@@ -581,31 +677,25 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
               )
             ) : (
               // Normal mode: add location button
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium"
-              >
-                <Plus className="w-4 h-4" />
-                Voeg locatie toe
-              </button>
-            )}
-            {!isPickerMode && totalMarkers > 0 && (
-              <div className="px-2 py-1 rounded-lg shadow-md text-xs" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
-                {totalMarkers} op kaart
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={() => setIsAddingLocation(true)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium"
+                >
+                  <Plus className="w-4 h-4" />
+                  Voeg locatie toe
+                </button>
+                {totalMarkers > 0 && (
+                  <div className="px-2 py-1 rounded-lg shadow-md text-xs" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
+                    {totalMarkers} op kaart
+                  </div>
+                )}
               </div>
             )}
           </div>
         )}
       </div>
 
-      {/* Add Location Modal - only in normal mode */}
-      {showAddModal && !isPickerMode && (
-        <AddLocationModal
-          isOpen={showAddModal}
-          onClose={() => setShowAddModal(false)}
-          onSave={handleLocationAdded}
-        />
-      )}
-    </div>
+          </div>
   );
 }
