@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { LogIn, LogOut, RefreshCw, Cloud, CloudOff, Sun, Moon } from 'lucide-react';
+import { LogIn, LogOut, RefreshCw, Cloud, CloudOff, Sun, Moon, AlertTriangle } from 'lucide-react';
 import { resetWelcomeModal } from './WelcomeModal';
 import { QueryViewer } from './QueryViewer';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { syncSessions, type SyncResult } from '../lib/sync';
+import { syncSessions, forceSyncAll, type SyncResult } from '../lib/sync';
 
 interface SettingsMenuProps {
   onShowWelcome: () => void;
@@ -65,6 +65,33 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
         uploaded: 0,
         downloaded: 0,
         errors: [err instanceof Error ? err.message : 'Sync mislukt'],
+      });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const handleForceSync = async () => {
+    if (!user) return;
+    if (!confirm('Dit reset de sync status en uploadt ALLES opnieuw naar de cloud.\n\nGebruik dit alleen als items niet correct synchroniseren.\n\nDoorgaan?')) return;
+
+    setIsSyncing(true);
+    setSyncResult(null);
+
+    try {
+      const result = await forceSyncAll(user.uid);
+      setSyncResult({
+        uploaded: result.uploaded,
+        downloaded: result.downloaded,
+        errors: result.errors,
+      });
+      setTimeout(() => setSyncResult(null), 8000);
+    } catch (err) {
+      console.error('Force sync failed:', err);
+      setSyncResult({
+        uploaded: 0,
+        downloaded: 0,
+        errors: [err instanceof Error ? err.message : 'Force sync mislukt'],
       });
     } finally {
       setIsSyncing(false);
@@ -140,6 +167,17 @@ export function SettingsMenu({ onShowWelcome, version }: SettingsMenuProps) {
                   >
                     <RefreshCw className={`w-5 h-5 ${isSyncing ? 'animate-spin' : ''}`} style={{ color: 'var(--text-muted)' }} />
                     {isSyncing ? 'Synchroniseren...' : 'Synchroniseren'}
+                  </button>
+
+                  {/* Force Sync button */}
+                  <button
+                    onClick={handleForceSync}
+                    disabled={isSyncing}
+                    className="w-full px-4 py-3 text-left text-sm hover:bg-stone-100 dark:hover:bg-stone-700 flex items-center gap-3 disabled:opacity-50 opacity-60"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    <AlertTriangle className="w-5 h-5 text-amber-500" />
+                    Forceer volledige sync
                   </button>
 
                   {/* Sync result */}
