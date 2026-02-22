@@ -1,42 +1,56 @@
 import { useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Plus, MapPin } from 'lucide-react';
+import { Plus, MapPin, Gem } from 'lucide-react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 
-// Fix voor Leaflet marker icons in Vite
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+// Marker grootte (consistent voor alle markers)
+const MARKER_SIZE = 32;
 
-// Marker kleuren op basis van vertrouwen
-const createColoredIcon = (className: string) => new L.Icon({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-  className,
-});
+// Maak een Lucide icon marker
+const createLucideIcon = (
+  IconComponent: React.ComponentType<{ className?: string; style?: React.CSSProperties }>,
+  bgColor: string,
+  iconColor: string = 'white'
+) => {
+  const iconHtml = renderToStaticMarkup(
+    <div
+      style={{
+        width: MARKER_SIZE,
+        height: MARKER_SIZE,
+        backgroundColor: bgColor,
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+        border: '2px solid white',
+      }}
+    >
+      <IconComponent style={{ width: 18, height: 18, color: iconColor }} />
+    </div>
+  );
 
-const markerIcons = {
-  hoog: createColoredIcon('marker-green'),
-  gemiddeld: createColoredIcon('marker-amber'),
-  laag: createColoredIcon('marker-orange'),
-  location: createColoredIcon('marker-blue'),
-  default: createColoredIcon('marker-amber'),
+  return L.divIcon({
+    html: iconHtml,
+    className: 'lucide-marker',
+    iconSize: [MARKER_SIZE, MARKER_SIZE],
+    iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2],
+    popupAnchor: [0, -MARKER_SIZE / 2],
+  });
 };
 
-// Fix default marker icon
-L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-});
+// Pre-built icons
+const markerIcons = {
+  hoog: createLucideIcon(Gem, '#16a34a'), // green-600
+  gemiddeld: createLucideIcon(Gem, '#d97706'), // amber-600
+  laag: createLucideIcon(Gem, '#ea580c'), // orange-600
+  location: createLucideIcon(MapPin, '#2563eb'), // blue-600
+  default: createLucideIcon(Gem, '#d97706'),
+};
 
 interface HistoryMapProps {
   sessions: DeterminationSession[];
@@ -164,7 +178,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
             );
           })}
 
-          {/* Location markers (blauw) */}
+          {/* Location markers */}
           {locations.map((location) => (
             <Marker
               key={`location-${location.id}`}
@@ -176,9 +190,8 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
             >
               <Popup>
                 <div className="text-center min-w-[120px]">
-                  <MapPin className="w-8 h-8 mx-auto mb-2 text-blue-500" />
                   <p className="font-medium text-sm text-stone-900">
-                    {location.naam || 'Locatie'}
+                    {location.naam || 'Zoeklocatie'}
                   </p>
                   {location.notitie && (
                     <p className="text-xs text-stone-500 mt-1">{location.notitie}</p>

@@ -1,33 +1,49 @@
 import { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { Navigation, Search, X, MapPin, Check } from 'lucide-react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { VondstLocatie } from '../types';
 
-// Fix voor Leaflet marker icons in Vite
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+// Marker grootte (consistent voor alle markers)
+const MARKER_SIZE = 32;
 
-// Custom amber marker
-const amberIcon = new L.Icon({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-  className: 'amber-marker',
-});
+// Maak een Lucide icon marker
+const createLucideIcon = (
+  IconComponent: React.ComponentType<{ className?: string; style?: React.CSSProperties }>,
+  bgColor: string,
+  iconColor: string = 'white'
+) => {
+  const iconHtml = renderToStaticMarkup(
+    <div
+      style={{
+        width: MARKER_SIZE,
+        height: MARKER_SIZE,
+        backgroundColor: bgColor,
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+        border: '2px solid white',
+      }}
+    >
+      <IconComponent style={{ width: 18, height: 18, color: iconColor }} />
+    </div>
+  );
 
-// Fix default marker icon
-L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon,
-  iconRetinaUrl: markerIcon2x,
-  shadowUrl: markerShadow,
-});
+  return L.divIcon({
+    html: iconHtml,
+    className: 'lucide-marker',
+    iconSize: [MARKER_SIZE, MARKER_SIZE],
+    iconAnchor: [MARKER_SIZE / 2, MARKER_SIZE / 2],
+    popupAnchor: [0, -MARKER_SIZE / 2],
+  });
+};
+
+// Selected location marker
+const selectedIcon = createLucideIcon(MapPin, '#d97706'); // amber-600
 
 interface LocationPickerModalProps {
   onClose: () => void;
@@ -234,7 +250,7 @@ export function LocationPickerModal({ onClose, onSave }: LocationPickerModalProp
         <MapClickHandler onLocationSelect={handleLocationSelect} />
         <FlyToLocation location={flyTo} />
         {selectedLocation && (
-          <Marker position={[selectedLocation.lat, selectedLocation.lng]} icon={amberIcon} />
+          <Marker position={[selectedLocation.lat, selectedLocation.lng]} icon={selectedIcon} />
         )}
       </MapContainer>
 
