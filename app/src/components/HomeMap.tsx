@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Pencil, Trash2, ExternalLink, Check } from 'lucide-react';
+import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Trash2, ExternalLink, Check, Move } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation, VondstLocatie } from '../types';
@@ -9,36 +9,43 @@ import { formatTypeName } from '../lib/decisionTree';
 import { AddLocationModal } from './AddLocationModal';
 
 // Simple SVG icons (no background, just the shape)
-// Vuursteen/Stone icon voor determinaties
+// Lucide Stone icon voor determinaties (faceted stone)
 const StoneIcon = (color: string, size: number) => `
-  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L3 9L6 20H18L21 9L12 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 3a8 8 0 0 0-7.52 5.27 8 8 0 0 0 1.74 8.51 8 8 0 0 0 8.51 1.74A8 8 0 0 0 19 11"/>
+    <path d="M11 3v8h8"/>
+    <path d="m3 11 8 8"/>
   </svg>
 `;
 
 // MapPin icon voor locaties
 const PinIcon = (color: string, size: number) => `
-  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="white" stroke-width="1.5"/>
-    <circle cx="12" cy="9" r="2.5" fill="white"/>
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+    <circle cx="12" cy="9" r="2.5" fill="white" stroke="none"/>
   </svg>
 `;
 
-// Move icon voor edit mode
+// Move icon voor edit mode (gekruisde pijlen)
 const MoveIcon = (color: string, size: number) => `
-  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" stroke-linecap="round" stroke-linejoin="round"/>
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 9l-3 3 3 3"/>
+    <path d="M9 5l3-3 3 3"/>
+    <path d="M15 19l-3 3-3-3"/>
+    <path d="M19 9l3 3-3 3"/>
+    <path d="M2 12h20"/>
+    <path d="M12 2v20"/>
   </svg>
 `;
 
-// Marker grootte op basis van zoom
+// Marker grootte op basis van zoom (groter dan voorheen)
 const getMarkerSize = (zoom: number): number => {
-  if (zoom >= 14) return 28;
-  if (zoom >= 12) return 24;
-  if (zoom >= 10) return 20;
-  if (zoom >= 8) return 16;
-  if (zoom >= 6) return 14;
-  return 12;
+  if (zoom >= 14) return 36;
+  if (zoom >= 12) return 32;
+  if (zoom >= 10) return 28;
+  if (zoom >= 8) return 24;
+  if (zoom >= 6) return 20;
+  return 16;
 };
 
 // Icon factory
@@ -396,34 +403,37 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                 icon={getStoneIcon(color, zoomLevel)}
               >
                 <Popup>
-                  <div className="min-w-[160px]">
-                    {session.input.thumbnail && (
-                      <img src={session.input.thumbnail} alt="Vondst" className="w-full h-24 object-cover rounded mb-2" />
-                    )}
-                    <p className="font-medium text-sm text-stone-900">{formatTypeName(session.result?.type || '')}</p>
-                    {session.result?.period && <p className="text-xs text-stone-500">{session.result.period}</p>}
-                    <div className="flex flex-col gap-1 mt-3">
-                      {onSelectSession && (
-                        <button
-                          onClick={() => onSelectSession(session)}
-                          className="flex items-center gap-2 px-2 py-1.5 text-xs bg-amber-100 text-amber-700 rounded hover:bg-amber-200"
-                        >
-                          <ExternalLink className="w-3 h-3" /> Open determinatie
-                        </button>
-                      )}
+                  <div className="min-w-[140px] relative">
+                    {/* Action icons in top-right corner */}
+                    <div className="absolute top-0 right-0 flex gap-1">
                       <button
                         onClick={() => handleStartEditSession(session)}
-                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-violet-100 text-violet-700 rounded hover:bg-violet-200"
+                        className="p-1 rounded hover:bg-stone-100"
+                        title="Wijzig locatie"
                       >
-                        <Pencil className="w-3 h-3" /> Wijzig locatie
+                        <Move className="w-4 h-4 text-stone-500 hover:text-violet-600" />
                       </button>
                       <button
                         onClick={() => handleDeleteSession(session)}
-                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200"
+                        className="p-1 rounded hover:bg-stone-100"
+                        title="Verwijder"
                       >
-                        <Trash2 className="w-3 h-3" /> Verwijder
+                        <Trash2 className="w-4 h-4 text-stone-500 hover:text-red-600" />
                       </button>
                     </div>
+                    {session.input.thumbnail && (
+                      <img src={session.input.thumbnail} alt="Vondst" className="w-full h-20 object-cover rounded mb-2" />
+                    )}
+                    <p className="font-medium text-sm text-stone-900 pr-12">{formatTypeName(session.result?.type || '')}</p>
+                    {session.result?.period && <p className="text-xs text-stone-500">{session.result.period}</p>}
+                    {onSelectSession && (
+                      <button
+                        onClick={() => onSelectSession(session)}
+                        className="mt-2 flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 hover:underline"
+                      >
+                        <ExternalLink className="w-3 h-3" /> Bekijk determinatie
+                      </button>
+                    )}
                   </div>
                 </Popup>
               </Marker>
@@ -441,23 +451,26 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                 icon={getPinIcon('#2563eb', zoomLevel)}
               >
                 <Popup>
-                  <div className="min-w-[140px]">
-                    <p className="font-medium text-sm text-stone-900">{location.naam || 'Zoeklocatie'}</p>
-                    {location.notitie && <p className="text-xs text-stone-500 mt-1">{location.notitie}</p>}
-                    <div className="flex flex-col gap-1 mt-3">
+                  <div className="min-w-[140px] relative">
+                    {/* Action icons in top-right corner */}
+                    <div className="absolute top-0 right-0 flex gap-1">
                       <button
                         onClick={() => handleStartEditLocation(location)}
-                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-violet-100 text-violet-700 rounded hover:bg-violet-200"
+                        className="p-1 rounded hover:bg-stone-100"
+                        title="Wijzig locatie"
                       >
-                        <Pencil className="w-3 h-3" /> Wijzig locatie
+                        <Move className="w-4 h-4 text-stone-500 hover:text-violet-600" />
                       </button>
                       <button
                         onClick={() => handleDeleteLocation(location)}
-                        className="flex items-center gap-2 px-2 py-1.5 text-xs bg-red-100 text-red-700 rounded hover:bg-red-200"
+                        className="p-1 rounded hover:bg-stone-100"
+                        title="Verwijder"
                       >
-                        <Trash2 className="w-3 h-3" /> Verwijder
+                        <Trash2 className="w-4 h-4 text-stone-500 hover:text-red-600" />
                       </button>
                     </div>
+                    <p className="font-medium text-sm text-stone-900 pr-12">{location.naam || 'Zoeklocatie'}</p>
+                    {location.notitie && <p className="text-xs text-stone-500 mt-1">{location.notitie}</p>}
                   </div>
                 </Popup>
               </Marker>
@@ -542,7 +555,7 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
         {!isEditing && (
           <div className="absolute bottom-2 left-2 right-2 z-[1000] flex items-center justify-between">
             {isPickerMode ? (
-              // Picker mode: show selected location info
+              // Picker mode: show selected location info or pick button
               value ? (
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)' }}>
                   <Check className="w-4 h-4 text-green-600" />
@@ -558,8 +571,8 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                   </button>
                 </div>
               ) : (
-                <div className="px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
-                  Tik op kaart om locatie te kiezen
+                <div className="px-3 py-2 rounded-lg shadow-md text-xs" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
+                  Tik op kaart
                 </div>
               )
             ) : (

@@ -13,7 +13,7 @@ import type { AnalysisResult } from './lib/aiAnalysis';
 
 type View = 'capture' | 'analyze' | 'result' | 'history';
 
-const APP_VERSION = '1.4.5';
+const APP_VERSION = '1.4.6';
 
 // Animation variants
 const pageVariants = {

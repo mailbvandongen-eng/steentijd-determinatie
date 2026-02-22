@@ -7,18 +7,20 @@ import type { DeterminationSession, SavedLocation } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 
 // Simple SVG icons (no background, just the shape)
-// Vuursteen/Stone icon voor determinaties
+// Lucide Stone icon voor determinaties (faceted stone)
 const StoneIcon = (color: string, size: number) => `
-  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L3 9L6 20H18L21 9L12 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 3a8 8 0 0 0-7.52 5.27 8 8 0 0 0 1.74 8.51 8 8 0 0 0 8.51 1.74A8 8 0 0 0 19 11"/>
+    <path d="M11 3v8h8"/>
+    <path d="m3 11 8 8"/>
   </svg>
 `;
 
 // MapPin icon voor locaties
 const PinIcon = (color: string, size: number) => `
-  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="white" stroke-width="1.5"/>
-    <circle cx="12" cy="9" r="2.5" fill="white"/>
+  <svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}" stroke="white" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+    <circle cx="12" cy="9" r="2.5" fill="white" stroke="none"/>
   </svg>
 `;
 
@@ -33,14 +35,14 @@ const createIcon = (svgFn: (color: string, size: number) => string, color: strin
   });
 };
 
-// Functie om icons te maken op basis van zoom
+// Marker grootte op basis van zoom (groter voor betere zichtbaarheid)
 const getMarkerSize = (zoom: number): number => {
-  if (zoom >= 14) return 32;
-  if (zoom >= 12) return 28;
-  if (zoom >= 10) return 24;
-  if (zoom >= 8) return 20;
-  if (zoom >= 6) return 16;
-  return 12;
+  if (zoom >= 14) return 36;
+  if (zoom >= 12) return 32;
+  if (zoom >= 10) return 28;
+  if (zoom >= 8) return 24;
+  if (zoom >= 6) return 20;
+  return 16;
 };
 
 // Icon cache
