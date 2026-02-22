@@ -369,7 +369,6 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
   }, []);
 
   const defaultCenter: [number, number] = [52.1326, 5.2913];
-  const totalMarkers = (showDeterminations ? sessionsWithLocation.length : 0) + (showLocations ? locations.length : 0);
 
   return (
     <div className="h-full flex flex-col rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border-color)' }}>
@@ -570,6 +569,16 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
             >
               <Navigation className="w-4 h-4" style={{ color: 'var(--accent)' }} />
             </button>
+            {!isPickerMode && !isEditing && (
+              <button
+                onClick={() => setIsAddingLocation(!isAddingLocation)}
+                className={`p-2 rounded-lg shadow-md ${isAddingLocation ? 'bg-blue-500 ring-2 ring-blue-300' : ''}`}
+                style={isAddingLocation ? {} : { backgroundColor: 'var(--bg-card)' }}
+                title={isAddingLocation ? 'Annuleer toevoegen' : 'Voeg locatie toe'}
+              >
+                <Plus className={`w-4 h-4 ${isAddingLocation ? 'text-white' : ''}`} style={isAddingLocation ? {} : { color: '#2563eb' }} />
+              </button>
+            )}
           </div>
         </div>
 
@@ -610,69 +619,36 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
           </div>
         )}
 
-        {/* Bottom bar */}
-        {!isEditing && !isPickerMode && (
+        {/* Bottom bar - only show when adding location AND location is selected */}
+        {!isEditing && !isPickerMode && isAddingLocation && pendingLocation && (
           <div className="absolute bottom-2 left-2 right-2 z-[1000]">
-            {isAddingLocation ? (
-              // Adding location mode
-              pendingLocation ? (
-                // Location selected - show description input
-                <div className="p-3 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-                  <input
-                    type="text"
-                    value={pendingDescription}
-                    onChange={(e) => setPendingDescription(e.target.value)}
-                    placeholder="Beschrijving (bijv. Loonse duinen)"
-                    className="w-full px-3 py-2 text-sm rounded-lg mb-2"
-                    style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
-                    autoFocus
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleCancelAddLocation}
-                      className="flex-1 px-3 py-2 text-sm rounded-lg"
-                      style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-                    >
-                      Annuleren
-                    </button>
-                    <button
-                      onClick={handleSaveNewLocation}
-                      disabled={isSaving}
-                      className="flex-1 px-3 py-2 text-sm rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
-                    >
-                      {isSaving ? '...' : 'Opslaan'}
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                // No location yet - just show cancel button
-                <div className="flex items-center justify-end">
-                  <button
-                    onClick={handleCancelAddLocation}
-                    className="px-3 py-2 rounded-lg shadow-md text-sm"
-                    style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
-                  >
-                    Annuleren
-                  </button>
-                </div>
-              )
-            ) : (
-              // Normal mode: add location button
-              <div className="flex items-center justify-between">
+            <div className="p-3 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+              <input
+                type="text"
+                value={pendingDescription}
+                onChange={(e) => setPendingDescription(e.target.value)}
+                placeholder="Beschrijving (bijv. Loonse duinen)"
+                className="w-full px-3 py-2 text-sm rounded-lg mb-2"
+                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
+                autoFocus
+              />
+              <div className="flex gap-2">
                 <button
-                  onClick={() => setIsAddingLocation(true)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium"
+                  onClick={handleCancelAddLocation}
+                  className="flex-1 px-3 py-2 text-sm rounded-lg"
+                  style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                 >
-                  <Plus className="w-4 h-4" />
-                  Voeg locatie toe
+                  Annuleren
                 </button>
-                {totalMarkers > 0 && (
-                  <div className="px-2 py-1 rounded-lg shadow-md text-xs" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
-                    {totalMarkers} op kaart
-                  </div>
-                )}
+                <button
+                  onClick={handleSaveNewLocation}
+                  disabled={isSaving}
+                  className="flex-1 px-3 py-2 text-sm rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  {isSaving ? '...' : 'Opslaan'}
+                </button>
               </div>
-            )}
+            </div>
           </div>
         )}
       </div>
