@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Trash2, ExternalLink, Check, Move } from 'lucide-react';
+import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Trash2, ExternalLink, Move } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation, VondstLocatie } from '../types';
@@ -110,7 +110,7 @@ function ZoomTracker({ onZoomChange }: { onZoomChange: (zoom: number) => void })
   return null;
 }
 
-// Map click handler (for editing and picker mode)
+// Map click handler - only when explicitly in an interactive mode
 function MapClickHandler({
   onLocationSelect,
   enabled
@@ -120,9 +120,14 @@ function MapClickHandler({
 }) {
   useMapEvents({
     click: (e) => {
-      if (enabled) {
-        onLocationSelect(e.latlng.lat, e.latlng.lng);
-      }
+      // Don't handle if disabled
+      if (!enabled) return;
+
+      // Don't handle if click originated from a popup (user closing popup)
+      const target = e.originalEvent?.target as HTMLElement;
+      if (target?.closest('.leaflet-popup')) return;
+
+      onLocationSelect(e.latlng.lat, e.latlng.lng);
     },
   });
   return null;
@@ -606,7 +611,7 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
         )}
 
         {/* Bottom bar */}
-        {!isEditing && (
+        {!isEditing && !isPickerMode && (
           <div className="absolute bottom-2 left-2 right-2 z-[1000]">
             {isAddingLocation ? (
               // Adding location mode
@@ -640,11 +645,8 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                   </div>
                 </div>
               ) : (
-                // No location yet - show instruction
-                <div className="flex items-center justify-between">
-                  <div className="px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)' }}>
-                    Tik op de kaart
-                  </div>
+                // No location yet - just show cancel button
+                <div className="flex items-center justify-end">
                   <button
                     onClick={handleCancelAddLocation}
                     className="px-3 py-2 rounded-lg shadow-md text-sm"
@@ -652,27 +654,6 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
                   >
                     Annuleren
                   </button>
-                </div>
-              )
-            ) : isPickerMode ? (
-              // Picker mode: show selected location info
-              value ? (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg shadow-md text-sm" style={{ backgroundColor: 'var(--bg-card)' }}>
-                  <Check className="w-4 h-4 text-green-600" />
-                  <span style={{ color: 'var(--text-primary)' }}>
-                    {value.lat.toFixed(4)}, {value.lng.toFixed(4)}
-                  </span>
-                  <button
-                    onClick={() => onChange?.(undefined)}
-                    className="p-1 ml-1 rounded hover:bg-stone-200 dark:hover:bg-stone-700"
-                    title="Wis locatie"
-                  >
-                    <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
-                  </button>
-                </div>
-              ) : (
-                <div className="px-3 py-2 rounded-lg shadow-md text-xs" style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}>
-                  Tik op kaart
                 </div>
               )
             ) : (
