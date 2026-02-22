@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Plus, MapPin, Gem } from 'lucide-react';
+import { Plus, MapPin, Gem, Satellite } from 'lucide-react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -61,6 +61,8 @@ interface HistoryMapProps {
 }
 
 export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocation, onAddLocation }: HistoryMapProps) {
+  const [useSatellite, setUseSatellite] = useState(false);
+
   // Filter sessies met locatie
   const sessionsWithLocation = useMemo(() => {
     return sessions.filter(
@@ -136,7 +138,14 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
           zoomControl={false}
           attributionControl={false}
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {useSatellite ? (
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              maxZoom={19}
+            />
+          ) : (
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          )}
 
           {/* Session markers */}
           {sessionsWithLocation.map((session) => {
@@ -213,14 +222,23 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
           ))}
         </MapContainer>
 
-        {/* Add location button overlay */}
-        <button
-          onClick={onAddLocation}
-          className="absolute top-2 right-2 z-[500] p-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-600 text-white transition-colors"
-          title="Locatie toevoegen"
-        >
-          <Plus className="w-5 h-5" />
-        </button>
+        {/* Control buttons overlay */}
+        <div className="absolute top-2 right-2 z-[500] flex gap-1">
+          <button
+            onClick={() => setUseSatellite(!useSatellite)}
+            className={`p-2 rounded-lg shadow-md transition-colors ${useSatellite ? 'bg-blue-600' : 'bg-white hover:bg-stone-100'}`}
+            title={useSatellite ? 'Kaart weergave' : 'Satelliet weergave'}
+          >
+            <Satellite className={`w-5 h-5 ${useSatellite ? 'text-white' : 'text-stone-600'}`} />
+          </button>
+          <button
+            onClick={onAddLocation}
+            className="p-2 rounded-lg shadow-md bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+            title="Locatie toevoegen"
+          >
+            <Plus className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       <div

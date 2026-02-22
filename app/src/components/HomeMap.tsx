@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, MapPin, Layers, Eye, EyeOff, Gem, Check, Move } from 'lucide-react';
+import { Navigation, Search, X, MapPin, Layers, Eye, EyeOff, Gem, Check, Move, Satellite } from 'lucide-react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -187,6 +187,9 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
   const [showLocations, setShowLocations] = useState(true);
   const [editState, setEditState] = useState<EditState>({ type: 'none' });
   const [isSaving, setIsSaving] = useState(false);
+  const [useSatellite, setUseSatellite] = useState(false);
+  // Pending location: geselecteerd maar nog niet bevestigd
+  const [pendingLocation, setPendingLocation] = useState<VondstLocatie | null>(null);
 
   // Laad bestaande sessies en locaties
   const loadData = useCallback(async () => {
@@ -225,14 +228,26 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
         setEditState({ ...editState, newLocation: { lat, lng } });
       }
     } else {
-      // Normale modus: selecteer locatie voor nieuwe capture
-      onChange({ lat, lng });
+      // Normale modus: zet als pending (nog niet opgeslagen)
+      setPendingLocation({ lat, lng });
     }
     setFlyTo({ lat, lng });
-  }, [editState, onChange]);
+  }, [editState]);
+
+  const handleConfirmLocation = useCallback(() => {
+    if (pendingLocation) {
+      onChange(pendingLocation);
+      setPendingLocation(null);
+    }
+  }, [pendingLocation, onChange]);
+
+  const handleClearPending = useCallback(() => {
+    setPendingLocation(null);
+  }, []);
 
   const handleClearLocation = useCallback(() => {
     onChange(undefined);
+    setPendingLocation(null);
     setFlyTo(null);
   }, [onChange]);
 
@@ -253,7 +268,8 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
             setEditState({ ...editState, newLocation: { lat: latitude, lng: longitude } });
           }
         } else {
-          onChange({ lat: latitude, lng: longitude });
+          // Zet als pending, niet direct opslaan
+          setPendingLocation({ lat: latitude, lng: longitude });
         }
         setFlyTo({ lat: latitude, lng: longitude });
         setIsLocating(false);
@@ -265,11 +281,16 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
-  }, [editState, onChange]);
+  }, [editState]);
 
   const handleSearchResult = useCallback((lat: number, lng: number, _name: string) => {
-    handleLocationSelect(lat, lng);
-  }, [handleLocationSelect]);
+    if (editState.type !== 'none') {
+      handleLocationSelect(lat, lng);
+    } else {
+      setPendingLocation({ lat, lng });
+      setFlyTo({ lat, lng });
+    }
+  }, [editState, handleLocationSelect]);
 
   // Start editing a session
   const handleEditSession = useCallback((session: DeterminationSession) => {
@@ -339,13 +360,26 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
           zoomControl={false}
           attributionControl={false}
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {/* Kaartlagen */}
+          {useSatellite ? (
+            <TileLayer
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              maxZoom={19}
+            />
+          ) : (
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          )}
           <MapClickHandler onLocationSelect={handleLocationSelect} />
           <FlyToLocation location={flyTo} />
 
-          {/* Nieuwe locatie marker (voor capture, alleen als niet in edit mode) */}
-          {value && !isEditing && (
+          {/* Opgeslagen locatie marker (groen vinkje) */}
+          {value && !isEditing && !pendingLocation && (
             <Marker position={[value.lat, value.lng]} icon={markerIcons.selected} />
+          )}
+
+          {/* Pending locatie marker (nog niet opgeslagen) */}
+          {pendingLocation && !isEditing && (
+            <Marker position={[pendingLocation.lat, pendingLocation.lng]} icon={markerIcons.selected} />
           )}
 
           {/* Edit mode marker */}
@@ -458,6 +492,15 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
         <div className="absolute top-2 left-2 right-2 z-[1000] flex items-center justify-between">
           <SearchControl onSearch={handleSearchResult} />
           <div className="flex items-center gap-1">
+            {/* Satelliet toggle */}
+            <button
+              onClick={() => setUseSatellite(!useSatellite)}
+              className={`p-2 rounded-lg shadow-md transition-colors ${useSatellite ? 'ring-2 ring-blue-500' : ''}`}
+              style={{ backgroundColor: 'var(--bg-card)' }}
+              title={useSatellite ? 'Kaart weergave' : 'Satelliet weergave'}
+            >
+              <Satellite className="w-4 h-4" style={{ color: useSatellite ? '#2563eb' : 'var(--text-muted)' }} />
+            </button>
             {/* Filter toggle */}
             {(sessionsWithLocation.length > 0 || locations.length > 0) && !isEditing && (
               <button
@@ -554,17 +597,50 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
           </div>
         )}
 
-        {/* Normale status badge - alleen als niet in edit mode */}
-        {!isEditing && (
+        {/* Pending locatie panel - toon opslaan knop */}
+        {!isEditing && pendingLocation && (
+          <div
+            className="absolute bottom-2 left-2 right-2 z-[1000] p-3 rounded-lg shadow-lg"
+            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <MapPin className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+                <span className="text-sm">
+                  {pendingLocation.lat.toFixed(5)}, {pendingLocation.lng.toFixed(5)}
+                </span>
+                <button
+                  onClick={handleClearPending}
+                  className="p-1 rounded transition-colors"
+                  style={{ color: 'var(--text-muted)' }}
+                  title="Annuleren"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <button
+                onClick={handleConfirmLocation}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-white font-medium transition-colors"
+                style={{ backgroundColor: 'var(--accent)' }}
+              >
+                <Check className="w-4 h-4" />
+                <span>Locatie opslaan</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Normale status badge - alleen als niet in edit mode en geen pending */}
+        {!isEditing && !pendingLocation && (
           <div className="absolute bottom-2 left-2 right-2 z-[1000] flex items-center justify-between">
             {value ? (
               <div
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg shadow-md"
-                style={{ backgroundColor: 'var(--accent)', color: 'white' }}
+                style={{ backgroundColor: '#16a34a', color: 'white' }}
               >
-                <MapPin className="w-4 h-4" />
+                <Check className="w-4 h-4" />
                 <span className="text-xs font-medium">
-                  {value.lat.toFixed(4)}, {value.lng.toFixed(4)}
+                  Locatie opgeslagen: {value.lat.toFixed(4)}, {value.lng.toFixed(4)}
                 </span>
                 <button
                   onClick={handleClearLocation}
@@ -579,7 +655,7 @@ export function HomeMap({ value, onChange, onSelectSession }: HomeMapProps) {
                 className="px-3 py-1.5 rounded-lg shadow-md text-xs"
                 style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)' }}
               >
-                Tik om locatie te kiezen
+                Tik op de kaart om locatie te kiezen
               </div>
             )}
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, MapPin, Check } from 'lucide-react';
+import { Navigation, Search, X, MapPin, Check, Satellite } from 'lucide-react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -148,6 +148,7 @@ export function LocationPickerModal({ onClose, onSave }: LocationPickerModalProp
   const [selectedLocation, setSelectedLocation] = useState<VondstLocatie | null>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null);
+  const [useSatellite, setUseSatellite] = useState(false);
 
   // Nederland centrum als default
   const defaultCenter: [number, number] = [52.1326, 5.2913];
@@ -221,6 +222,13 @@ export function LocationPickerModal({ onClose, onSave }: LocationPickerModalProp
         <div className="flex items-center gap-2">
           <SearchControl onSearch={handleSearchResult} />
           <button
+            onClick={() => setUseSatellite(!useSatellite)}
+            className={`p-2 rounded-lg transition-colors ${useSatellite ? 'bg-blue-500' : 'bg-white/20 hover:bg-white/30'}`}
+            title={useSatellite ? 'Kaart weergave' : 'Satelliet weergave'}
+          >
+            <Satellite className="w-4 h-4 text-white" />
+          </button>
+          <button
             onClick={handleGetCurrentLocation}
             disabled={isLocating}
             className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
@@ -246,7 +254,14 @@ export function LocationPickerModal({ onClose, onSave }: LocationPickerModalProp
         zoomControl={true}
         attributionControl={false}
       >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {useSatellite ? (
+          <TileLayer
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            maxZoom={19}
+          />
+        ) : (
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        )}
         <MapClickHandler onLocationSelect={handleLocationSelect} />
         <FlyToLocation location={flyTo} />
         {selectedLocation && (
