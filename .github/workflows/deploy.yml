@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - v2
 
 jobs:
   deploy:
@@ -39,4 +40,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy app/dist --project-name=steentijd-app --branch=production
+          command: pages deploy app/dist --project-name=steentijd-app --branch=${{ github.ref_name }}
