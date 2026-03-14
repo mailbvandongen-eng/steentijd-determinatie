@@ -27,6 +27,7 @@ export default {
     const url = new URL(request.url);
     const isSketchRequest = url.pathname === '/sketch';
     const isTestOpenAI = url.pathname === '/test-openai';
+    const isHintRequest = url.pathname === '/hint';
 
     // Get client IP for rate limiting
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
@@ -57,6 +58,8 @@ export default {
         return await handleTestOpenAI(env);
       } else if (isSketchRequest) {
         return await handleSketchRequest(request, env, rateLimitKey, currentCount);
+      } else if (isHintRequest) {
+        return await handleHintRequest(request, env, rateLimitKey, currentCount);
       } else {
         return await handleAnalysisRequest(request, env, rateLimitKey, currentCount);
       }
@@ -391,6 +394,142 @@ CRITICAL REMINDER:
       success: true,
       sketch: `data:image/png;base64,${sketchBase64}`,
       description: description,
+    }),
+    {
+      status: 200,
+      headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
+    }
+  );
+}
+
+// Handle AI hint requests for decision tree questions
+async function handleHintRequest(
+  request: Request,
+  env: Env,
+  rateLimitKey: string,
+  currentCount: number
+): Promise<Response> {
+  if (!env.ANTHROPIC_API_KEY) {
+    return new Response(
+      JSON.stringify({ error: { message: 'API key niet geconfigureerd.' } }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  interface HintRequestBody {
+    imageBase64: string;
+    question: string;
+    questionId: string;
+    toelichting?: string;
+  }
+
+  let body: HintRequestBody;
+  try {
+    body = await request.json() as HintRequestBody;
+  } catch {
+    return new Response(
+      JSON.stringify({ error: { message: 'Ongeldige JSON in request.' } }),
+      { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  const { imageBase64, question, toelichting } = body;
+
+  if (!imageBase64 || !question) {
+    return new Response(
+      JSON.stringify({ error: { message: 'Afbeelding en vraag zijn verplicht.' } }),
+      { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // Extract media type from base64 string
+  const mimeMatch = imageBase64.match(/^data:(image\/\w+);base64,/);
+  const mediaType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+  const pureBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+
+  const hintPrompt = `Je bent een ervaren archeoloog die een student helpt bij het determineren van een stenen artefact.
+
+De student bekijkt een foto van een object en twijfelt bij de volgende vraag:
+
+VRAAG: "${question}"
+${toelichting ? `\nTOELICHTING BIJ VRAAG: ${toelichting}` : ''}
+
+JOUW TAAK:
+Geef een HINT die de student helpt om zelf het antwoord te vinden. Je mag NIET direct "ja" of "nee" zeggen.
+
+HINTS MOETEN:
+- De student wijzen op specifieke kenmerken om naar te kijken
+- Uitleggen HOE je dit kunt herkennen in de foto
+- Kort en praktisch zijn (max 2-3 zinnen)
+
+HINTS MOGEN NIET:
+- Het antwoord direct geven ("ja, dit is..." of "nee, dit heeft...")
+- Te vaag zijn ("kijk goed" of "let op de vorm")
+
+VOORBEELD GOEDE HINTS:
+- "Zoek naar een duidelijke hoek of punt aan één kant. Schrabbers hebben vaak een rechte of licht gebogen werkrand."
+- "Let op de dikte: kern werktuigen zijn meestal dikker dan afslagen omdat de kern het oorspronkelijke blok is."
+- "Kijk naar de oppervlaktestructuur: cortex (de buitenste laag) heeft vaak een ruwer, mat uiterlijk."
+
+Geef nu een praktische hint voor deze foto en vraag.`;
+
+  const anthropicBody = {
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 300,
+    messages: [{
+      role: 'user',
+      content: [
+        {
+          type: 'image',
+          source: {
+            type: 'base64',
+            media_type: mediaType,
+            data: pureBase64,
+          },
+        },
+        {
+          type: 'text',
+          text: hintPrompt,
+        },
+      ],
+    }],
+  };
+
+  const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify(anthropicBody),
+  });
+
+  if (!anthropicResponse.ok) {
+    const errorText = await anthropicResponse.text();
+    console.error('Anthropic hint error:', errorText);
+    return new Response(
+      JSON.stringify({ error: { message: 'AI hint kon niet worden gegenereerd.' } }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  interface AnthropicResponse {
+    content: Array<{ type: string; text?: string }>;
+  }
+
+  const result = await anthropicResponse.json() as AnthropicResponse;
+  const hintText = result.content?.find(c => c.type === 'text')?.text || 'Geen hint beschikbaar.';
+
+  // Count this request (hints cost API calls too)
+  await env.RATE_LIMIT.put(rateLimitKey, String(currentCount + 1), {
+    expirationTtl: 86400,
+  });
+
+  return new Response(
+    JSON.stringify({
+      success: true,
+      hint: hintText,
     }),
     {
       status: 200,

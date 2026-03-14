@@ -216,3 +216,61 @@ export function blobToBase64(blob: Blob): Promise<string> {
     reader.readAsDataURL(blob);
   });
 }
+
+// Hint response interface
+export interface HintResult {
+  success: boolean;
+  hint?: string;
+  error?: string;
+}
+
+// Get a hint for a decision tree question
+export async function getHintForQuestion(
+  imageBase64: string,
+  question: string,
+  questionId: string,
+  toelichting?: string
+): Promise<HintResult> {
+  try {
+    const response = await fetch(`${WORKER_URL}/hint`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        imageBase64,
+        question,
+        questionId,
+        toelichting,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+
+      if (response.status === 429) {
+        return { success: false, error: 'Daglimiet bereikt. Probeer morgen opnieuw.' };
+      }
+
+      return { success: false, error: `Fout: ${errorMessage}` };
+    }
+
+    const data = await response.json();
+
+    if (data.success && data.hint) {
+      return {
+        success: true,
+        hint: data.hint,
+      };
+    }
+
+    return { success: false, error: 'Geen hint ontvangen.' };
+  } catch (err) {
+    console.error('Hint error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Onbekende fout bij ophalen hint',
+    };
+  }
+}
