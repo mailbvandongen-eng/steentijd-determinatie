@@ -325,7 +325,7 @@ function App() {
             </div>
           </div>
         </header>
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden relative">
           <ImageCapture onCapture={handleCapture} />
         </div>
       </div>
@@ -333,7 +333,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-stone-100">
+    <div className="h-full w-full overflow-hidden bg-stone-100">
       <AnimatePresence mode="wait">
         <motion.div
           key={view}

@@ -164,14 +164,14 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-stone-100 dark:bg-stone-900 flex items-center justify-center">
+      <div className="h-full bg-stone-100 dark:bg-stone-900 overflow-hidden flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-amber-600 border-t-transparent" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-stone-100 dark:bg-stone-900">
+    <div className="h-full bg-stone-100 dark:bg-stone-900 overflow-hidden">
       {/* Header */}
       <header className="bg-gradient-to-r from-amber-700 to-amber-600 text-white p-4 shadow-lg">
         <div className="flex items-center gap-4">

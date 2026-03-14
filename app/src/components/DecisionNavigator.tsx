@@ -112,7 +112,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
   const canUseHint = hintsUsed < MAX_HINTS && !isLoadingHint;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-stone-50">
+    <div className="h-full flex flex-col overflow-hidden bg-stone-50">
       {/* Header */}
       <div className="bg-stone-800 p-3 flex items-center gap-3 shrink-0">
         <button onClick={handleGoBack} className="text-white p-1">

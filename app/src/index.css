@@ -58,6 +58,22 @@
       height: -webkit-fill-available;
     }
   }
+
+  /* Safe full height - werkt op alle mobiele browsers */
+  .h-safe-screen {
+    height: 100%;
+    height: 100dvh;
+    height: -webkit-fill-available;
+  }
+
+  /* Fixed bottom container - altijd zichtbaar */
+  .fixed-bottom-safe {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }
 
 @layer components {

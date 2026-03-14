@@ -29,7 +29,7 @@ export function StartScreen({ onStartPractice, onStartTraining, onOpenTrainerDas
 
   if (mode === 'join-training') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-stone-100 to-amber-50 flex flex-col">
+      <div className="h-full bg-gradient-to-br from-stone-100 to-amber-50 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white p-6 shadow-lg">
           <button
