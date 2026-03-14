@@ -67,13 +67,18 @@ export async function addStep(
 
 export async function completeSession(
   sessionId: number,
-  result: DeterminationSession['result']
+  result: DeterminationSession['result'],
+  steps?: DeterminationSession['steps']
 ): Promise<void> {
-  await db.sessions.update(sessionId, {
+  const updates: Partial<DeterminationSession> = {
     status: 'completed',
     result,
     updatedAt: new Date().toISOString(),
-  });
+  };
+  if (steps) {
+    updates.steps = steps;
+  }
+  await db.sessions.update(sessionId, updates);
 }
 
 export async function getAllSessions(): Promise<DeterminationSession[]> {
