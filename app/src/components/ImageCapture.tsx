@@ -222,7 +222,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     return { label, blob: imageBlob, thumbnail };
   }, []);
 
-  // Handler voor enkele foto in grid (upload) - gaat naar crop scherm
+  // Handler voor enkele foto in grid (upload) - toont preview zonder automatisch croppen
   const handleSingleFileForGrid = useCallback(async (e: React.ChangeEvent<HTMLInputElement>, targetLabel: LabeledImage['label']) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -238,46 +238,19 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     }
     setIsCompressing(false);
 
-    // Laad afbeelding om vierkant canvas te maken
+    // Laad afbeelding
     const url = URL.createObjectURL(imageBlob);
-    const img = new Image();
-    img.onload = () => {
-      // Maak vierkant canvas met witruimte
-      const { canvas } = makeSquareWithPadding(img);
-      const squareUrl = canvas.toDataURL('image/jpeg', 0.95);
 
-      setCurrentLabel(targetLabel);
-      setCapturedBlob(imageBlob);
-      setPreviewUrl(url);
-      setSquareCanvasUrl(squareUrl);
-      setMode('preview-photo');
-
-      // Wacht tot vierkante afbeelding gerenderd is, dan cropbox initialiseren
-      setTimeout(() => {
-        if (previewImgRef.current && cropContainerRef.current) {
-          const container = cropContainerRef.current;
-          const displayedImg = previewImgRef.current;
-          const imgRect = displayedImg.getBoundingClientRect();
-          const containerRect = container.getBoundingClientRect();
-          const offsetX = imgRect.left - containerRect.left;
-          const offsetY = imgRect.top - containerRect.top;
-
-          // Cropbox is vierkant (afbeelding is al vierkant)
-          const size = Math.min(imgRect.width, imgRect.height);
-          setCropBox({
-            x: offsetX + (imgRect.width - size) / 2,
-            y: offsetY + (imgRect.height - size) / 2,
-            width: size,
-            height: size,
-          });
-        }
-        setIsCropping(true);
-      }, 150);
-    };
-    img.src = url;
+    setCurrentLabel(targetLabel);
+    setCapturedBlob(imageBlob);
+    setPreviewUrl(url);
+    setSquareCanvasUrl(null);
+    setMode('preview-photo');
+    // Niet automatisch croppen - gebruiker kan kiezen via "Bijsnijden" knop
+    setIsCropping(false);
   }, []);
 
-  // Handler voor camera foto capture (met preview) - gaat direct naar crop scherm
+  // Handler voor camera foto capture (met preview) - toont preview zonder automatisch croppen
   const handleCameraCapture = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -293,42 +266,15 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     }
     setIsCompressing(false);
 
-    // Laad afbeelding om vierkant canvas te maken
+    // Laad afbeelding
     const url = URL.createObjectURL(imageBlob);
-    const img = new Image();
-    img.onload = () => {
-      // Maak vierkant canvas met witruimte
-      const { canvas } = makeSquareWithPadding(img);
-      const squareUrl = canvas.toDataURL('image/jpeg', 0.95);
 
-      setCapturedBlob(imageBlob);
-      setPreviewUrl(url);
-      setSquareCanvasUrl(squareUrl);
-      setMode('preview-photo');
-
-      // Wacht tot vierkante afbeelding gerenderd is, dan cropbox initialiseren
-      setTimeout(() => {
-        if (previewImgRef.current && cropContainerRef.current) {
-          const container = cropContainerRef.current;
-          const displayedImg = previewImgRef.current;
-          const imgRect = displayedImg.getBoundingClientRect();
-          const containerRect = container.getBoundingClientRect();
-          const offsetX = imgRect.left - containerRect.left;
-          const offsetY = imgRect.top - containerRect.top;
-
-          // Cropbox is vierkant (afbeelding is al vierkant)
-          const size = Math.min(imgRect.width, imgRect.height);
-          setCropBox({
-            x: offsetX + (imgRect.width - size) / 2,
-            y: offsetY + (imgRect.height - size) / 2,
-            width: size,
-            height: size,
-          });
-        }
-        setIsCropping(true);
-      }, 150);
-    };
-    img.src = url;
+    setCapturedBlob(imageBlob);
+    setPreviewUrl(url);
+    setSquareCanvasUrl(null);
+    setMode('preview-photo');
+    // Niet automatisch croppen - gebruiker kan kiezen via "Bijsnijden" knop
+    setIsCropping(false);
   }, []);
 
   // Drag & drop handlers
@@ -1021,28 +967,28 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
             </div>
           ) : isInMultiPhotoMode ? (
             // Bezig met multi-photo - toevoegen aan collectie
-            <div className="flex gap-1">
-              <button onClick={handleRetake} className="btn-secondary flex-1 px-2 py-2 text-sm">
+            <div className="flex gap-2">
+              <button onClick={handleRetake} className="btn-secondary px-4 py-3 text-sm">
                 Opnieuw
               </button>
-              <button onClick={initCrop} className="btn-secondary flex-1 px-2 py-2 text-sm">
-                Vierkant
+              <button onClick={initCrop} className="btn-secondary px-4 py-3 text-sm">
+                Bijsnijden
               </button>
-              <button onClick={handleAddToMulti} className="btn-success flex-1 px-2 py-2 text-sm">
-                Toevoegen
+              <button onClick={handleAddToMulti} className="btn-success flex-1 px-4 py-3 text-base font-semibold">
+                OK
               </button>
             </div>
           ) : (
             // Enkele foto - kan gebruiken
-            <div className="flex gap-1">
-              <button onClick={handleRetake} className="btn-secondary flex-1 px-2 py-2 text-sm">
+            <div className="flex gap-2">
+              <button onClick={handleRetake} className="btn-secondary px-4 py-3 text-sm">
                 Opnieuw
               </button>
-              <button onClick={initCrop} className="btn-secondary flex-1 px-2 py-2 text-sm">
-                Vierkant
+              <button onClick={initCrop} className="btn-secondary px-4 py-3 text-sm">
+                Bijsnijden
               </button>
-              <button onClick={handleConfirmSingle} className="btn-success flex-1 px-2 py-2 text-sm">
-                Gebruiken
+              <button onClick={handleConfirmSingle} className="btn-success flex-1 px-4 py-3 text-base font-semibold">
+                OK
               </button>
             </div>
           )}
