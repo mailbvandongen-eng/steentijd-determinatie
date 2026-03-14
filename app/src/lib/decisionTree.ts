@@ -34,8 +34,8 @@ export const beslisboom: Record<string, QuestionNode> = {
   },
   "3": {
     id: "3",
-    vraag: "Is het gemaakt van vuursteen, kwartsiet of lydiet?",
-    toelichting: "Vuursteen is meestal grijs/bruin met gladde breukvlakken. Kwartsiet is hard en korrelig. Lydiet is zwarte leisteen.",
+    vraag: "Is het materiaal vuursteen, kwartsiet of lydiet?",
+    toelichting: "Kies JA als het een van deze drie is: Vuursteen (grijs/bruin, gladde breukvlakken), Kwartsiet (hard, korrelig), of Lydiet (zwarte leisteen). Kies NEE als het een andere steensoort is (bijv. graniet, zandsteen).",
     jaVolgende: "5",
     neeVolgende: "4"
   },
