@@ -18,7 +18,7 @@ import type { DeterminationSession, LabeledImage, DeterminationStep } from './ty
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.0.0';
+const APP_VERSION = '2.1.0';
 
 // Animation variants
 const pageVariants = {
@@ -240,6 +240,7 @@ function App() {
           onStartPractice={handleStartPractice}
           onStartTraining={handleStartTraining}
           onOpenTrainerDashboard={handleOpenTrainerDashboard}
+          onViewHistory={() => setView('history')}
           isLoggedIn={!!user}
           version={APP_VERSION}
         />
@@ -275,7 +276,7 @@ function App() {
     if (view === 'history') {
       return (
         <HistoryView
-          onBack={() => setView('capture')}
+          onBack={() => setView('start')}
           onSelectSession={handleSelectSession}
         />
       );

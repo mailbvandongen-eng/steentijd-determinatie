@@ -1,9 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { Camera, ImagePlus, X, Plus, Upload, TrendingUp, Award, MapPin } from 'lucide-react';
-import type { LabeledImage, VondstLocatie, DeterminationSession } from '../types';
-import { HomeMap } from './HomeMap';
-import { getAllSessions, createLocation } from '../lib/db';
-import { AddLocationModal } from './AddLocationModal';
+import { Camera, ImagePlus, X, Plus, Upload } from 'lucide-react';
+import type { LabeledImage, VondstLocatie } from '../types';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
 type CaptureSource = 'camera' | 'upload';
@@ -153,22 +150,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
   const [isDragging, setIsDragging] = useState(false);
 
-  // Dashboard data
-  const [sessions, setSessions] = useState<DeterminationSession[]>([]);
-  const [showAddLocation, setShowAddLocation] = useState(false);
-
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
-
-  // Load dashboard data
-  const loadDashboardData = useCallback(async () => {
-    const sessionsData = await getAllSessions();
-    setSessions(sessionsData);
-  }, []);
-
-  useEffect(() => {
-    loadDashboardData();
-  }, [loadDashboardData]);
 
   // Cleanup bij unmount
   useEffect(() => {
@@ -176,19 +159,6 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, []);
-
-  // Calculate stats
-  const stats = {
-    total: sessions.filter(s => s.status === 'completed' && s.result).length,
-    uniqueTypes: new Set(sessions.filter(s => s.result?.type).map(s => s.result?.type)).size,
-    withLocation: sessions.filter(s => s.status === 'completed' && s.input.locatie).length,
-  };
-
-  // Handle add location
-  const handleAddLocation = useCallback(async (data: { lat: number; lng: number; naam?: string; notitie?: string }) => {
-    await createLocation(data);
-    loadDashboardData();
-  }, [loadDashboardData]);
 
   // Helper: verwerk een file naar LabeledImage (altijd comprimeren)
   const processFileToImage = useCallback(async (file: File, label: LabeledImage['label']): Promise<LabeledImage> => {
@@ -688,11 +658,11 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     );
   }
 
-  // Selectiescherm
+  // Selectiescherm - vereenvoudigd
   if (mode === 'select') {
     return (
       <div
-        className="h-full flex flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
+        className="h-full flex flex-col items-center justify-center p-6"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -708,75 +678,52 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </div>
         )}
 
-        <div className="flex flex-col gap-3 h-full">
-          {/* Foto knoppen naast elkaar */}
-          <div className="grid grid-cols-2 gap-2 shrink-0">
-            {/* Foto('s) maken */}
-            <button
-              onClick={() => {
-                setCaptureSource('camera');
-                setIsInMultiPhotoMode(true);
-                setMode('multi-photo');
-              }}
-              className="p-3 rounded-xl shadow-sm border transition-all flex flex-col items-center gap-2 hover:shadow-md"
-              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
-            >
-              <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/50 rounded-lg flex items-center justify-center">
-                <Camera className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+        <div className="w-full max-w-sm space-y-4">
+          {/* Foto maken - grote knop */}
+          <button
+            onClick={() => {
+              setCaptureSource('camera');
+              setIsInMultiPhotoMode(true);
+              setMode('multi-photo');
+            }}
+            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
+                <Camera className="w-8 h-8" />
               </div>
-              <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Foto's maken</span>
-            </button>
-
-            {/* Foto('s) uploaden */}
-            <button
-              onClick={() => {
-                setCaptureSource('upload');
-                setIsInMultiPhotoMode(true);
-                setMode('multi-photo');
-              }}
-              className="p-3 rounded-xl shadow-sm border transition-all flex flex-col items-center gap-2 hover:shadow-md"
-              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
-            >
-              <div className="w-10 h-10 bg-stone-100 dark:bg-stone-600 rounded-lg flex items-center justify-center">
-                <ImagePlus className="w-5 h-5 text-stone-600 dark:text-stone-200" />
-              </div>
-              <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Uploaden</span>
-            </button>
-          </div>
-
-          {/* Dashboard statistieken */}
-          {stats.total > 0 && (
-            <div className="grid grid-cols-3 gap-2 shrink-0">
-              <div className="p-2 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-                <TrendingUp className="w-4 h-4 mx-auto mb-1 text-amber-500" />
-                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
-                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Determinaties</p>
-              </div>
-              <div className="p-2 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-                <Award className="w-4 h-4 mx-auto mb-1 text-green-500" />
-                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{stats.uniqueTypes}</p>
-                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
-              </div>
-              <div className="p-2 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-                <MapPin className="w-4 h-4 mx-auto mb-1 text-blue-500" />
-                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{stats.withLocation}</p>
-                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Met locatie</p>
+              <div className="text-left">
+                <h2 className="text-xl font-bold">Foto maken</h2>
+                <p className="text-white/80 text-sm">Gebruik je camera</p>
               </div>
             </div>
-          )}
+          </button>
 
-          {/* Kaart - view-only, vult resterende ruimte */}
-          <div className="flex-1 min-h-[200px]">
-            <HomeMap onAddLocation={() => setShowAddLocation(true)} />
-          </div>
+          {/* Uploaden - grote knop */}
+          <button
+            onClick={() => {
+              setCaptureSource('upload');
+              setIsInMultiPhotoMode(true);
+              setMode('multi-photo');
+            }}
+            className="w-full bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all border-2 border-stone-200 hover:border-amber-400 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center">
+                <ImagePlus className="w-8 h-8 text-stone-600" />
+              </div>
+              <div className="text-left">
+                <h2 className="text-xl font-bold text-stone-900">Uploaden</h2>
+                <p className="text-stone-600 text-sm">Kies uit galerij</p>
+              </div>
+            </div>
+          </button>
+
+          {/* Instructie */}
+          <p className="text-center text-stone-500 text-sm pt-4">
+            Je kunt tot 4 foto's toevoegen voor een nauwkeurigere determinatie
+          </p>
         </div>
-
-        {/* Add Location Modal */}
-        <AddLocationModal
-          isOpen={showAddLocation}
-          onClose={() => setShowAddLocation(false)}
-          onSave={handleAddLocation}
-        />
       </div>
     );
   }

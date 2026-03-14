@@ -1,9 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, Trash2, Image } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Trash2, Image, List, Map } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getAllSessions, deleteSession } from '../lib/db';
 import type { DeterminationSession } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
+import { HistoryMap } from './HistoryMap';
+
+type ViewMode = 'list' | 'map';
 
 interface HistoryViewProps {
   onBack: () => void;
@@ -14,6 +17,7 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
   useEffect(() => {
     loadData();
@@ -81,35 +85,68 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Bekijk en beheer je opgeslagen determinaties</p>
       </div>
 
-      {/* Zoekbalk */}
+      {/* Toggle en zoekbalk */}
       {sessions.length > 0 && (
-        <div className="px-4 pt-3 shrink-0">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-muted)' }} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Zoek op type, periode..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-              style={{
-                backgroundColor: 'var(--bg-card)',
-                borderColor: 'var(--border-color)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-color)',
-              }}
-            />
+        <div className="px-4 pt-3 shrink-0 space-y-3">
+          {/* View toggle */}
+          <div className="flex rounded-lg p-1" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-sm font-medium transition-all ${
+                viewMode === 'list'
+                  ? 'bg-white dark:bg-stone-700 shadow-sm'
+                  : 'hover:bg-white/50 dark:hover:bg-stone-600/50'
+              }`}
+              style={{ color: viewMode === 'list' ? 'var(--text-primary)' : 'var(--text-secondary)' }}
+            >
+              <List className="w-4 h-4" />
+              Lijst
+            </button>
+            <button
+              onClick={() => setViewMode('map')}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-sm font-medium transition-all ${
+                viewMode === 'map'
+                  ? 'bg-white dark:bg-stone-700 shadow-sm'
+                  : 'hover:bg-white/50 dark:hover:bg-stone-600/50'
+              }`}
+              style={{ color: viewMode === 'map' ? 'var(--text-primary)' : 'var(--text-secondary)' }}
+            >
+              <Map className="w-4 h-4" />
+              Kaart
+            </button>
           </div>
-          {searchQuery && (
-            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-              {filteredSessions.length} van {sessions.length} determinaties
-            </p>
+
+          {/* Zoekbalk - alleen in lijst view */}
+          {viewMode === 'list' && (
+            <>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--text-muted)' }} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Zoek op type, periode..."
+                  className="w-full pl-10 pr-4 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  style={{
+                    backgroundColor: 'var(--bg-card)',
+                    borderColor: 'var(--border-color)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--border-color)',
+                  }}
+                />
+              </div>
+              {searchQuery && (
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  {filteredSessions.length} van {sessions.length} determinaties
+                </p>
+              )}
+            </>
           )}
         </div>
       )}
 
       {/* Content */}
-      <div className="flex-1 p-4 lg:px-6 overflow-y-auto">
+      <div className="flex-1 overflow-hidden">
         {loading ? (
           <div className="text-center py-8">
             <p style={{ color: 'var(--text-secondary)' }}>Laden...</p>
@@ -121,6 +158,17 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
             <button onClick={onBack} className="btn-primary mt-4">
               Start eerste determinatie
             </button>
+          </div>
+        ) : viewMode === 'map' ? (
+          /* Kaart view */
+          <div className="h-full p-4">
+            <HistoryMap
+              sessions={sessions.filter(s => s.status === 'completed' && s.input.locatie)}
+              locations={[]}
+              onSelectSession={onSelectSession}
+              onSelectLocation={() => {}}
+              onAddLocation={() => {}}
+            />
           </div>
         ) : filteredSessions.length === 0 ? (
           <div className="text-center py-8">
@@ -134,7 +182,8 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
             </button>
           </div>
         ) : (
-          <div className="space-y-3">
+          /* Lijst view */
+          <div className="h-full overflow-y-auto p-4 lg:px-6 space-y-3">
             {filteredSessions.map((session, index) => {
               const isCompleted = session.status === 'completed' && session.result;
               const resultType = session.result?.type;
@@ -205,10 +254,10 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
         )}
       </div>
 
-      {/* Footer met terug naar start - alleen op mobiel */}
+      {/* Footer met terug knop - alleen op mobiel */}
       <div className="lg:hidden p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shrink-0" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <button onClick={onBack} className="btn-primary w-full py-3">
-          Startscherm
+          Terug
         </button>
       </div>
 
