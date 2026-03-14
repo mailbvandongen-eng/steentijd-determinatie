@@ -887,87 +887,80 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
     );
   }
 
-  // Preview foto
+  // Preview foto - volledig scherm met fixed buttons
   if (mode === 'preview-photo' && previewUrl) {
     return (
-      <div className="flex flex-col h-full overflow-hidden">
+      <div className="absolute inset-0 bg-stone-900 flex flex-col">
+        {/* Header met instructie */}
+        <div className="shrink-0 bg-stone-800 px-4 py-3 text-center">
+          <p className="text-white text-sm font-medium">
+            {isCropping ? 'Sleep om bij te snijden' : 'Foto controleren'}
+          </p>
+        </div>
+
+        {/* Foto container - neemt beschikbare ruimte, max 60vh */}
         <div
           ref={cropContainerRef}
-          className="flex-1 min-h-0 bg-black flex items-center justify-center p-4 relative overflow-hidden"
+          className="flex-1 flex items-center justify-center p-3 relative overflow-hidden"
+          style={{ maxHeight: '60vh' }}
         >
           <img
             ref={previewImgRef}
             src={isCropping && squareCanvasUrl ? squareCanvasUrl : previewUrl}
             alt="Preview"
-            className="max-h-full max-w-full object-contain"
+            className="max-h-full max-w-full object-contain rounded-lg"
           />
           {/* Crop overlay */}
           {isCropping && (
             <>
-              {/* Donkere overlay */}
               <div className="absolute inset-0 bg-black/50 pointer-events-none" />
-              {/* Crop box */}
               <div
-                className="absolute border-2 border-white bg-transparent cursor-move touch-none"
+                className="absolute border-2 border-amber-400 bg-transparent cursor-move touch-none rounded"
                 style={{
                   left: cropBox.x,
                   top: cropBox.y,
                   width: cropBox.width,
                   height: cropBox.height,
-                  boxShadow: '0 0 0 9999px rgba(0,0,0,0.5)',
+                  boxShadow: '0 0 0 9999px rgba(0,0,0,0.6)',
                 }}
                 onMouseDown={handleCropDrag}
                 onTouchStart={handleCropDrag}
               >
-                {/* Hoek resize handles - grotere touch targets */}
-                <div
-                  className="absolute -top-2 -left-2 w-6 h-6 cursor-nw-resize touch-none flex items-center justify-center"
-                  onMouseDown={(e) => handleCropResize('tl', e)}
-                  onTouchStart={(e) => handleCropResize('tl', e)}
-                >
-                  <div className="w-3 h-3 border-t-2 border-l-2 border-white bg-amber-500/50" />
-                </div>
-                <div
-                  className="absolute -top-2 -right-2 w-6 h-6 cursor-ne-resize touch-none flex items-center justify-center"
-                  onMouseDown={(e) => handleCropResize('tr', e)}
-                  onTouchStart={(e) => handleCropResize('tr', e)}
-                >
-                  <div className="w-3 h-3 border-t-2 border-r-2 border-white bg-amber-500/50" />
-                </div>
-                <div
-                  className="absolute -bottom-2 -left-2 w-6 h-6 cursor-sw-resize touch-none flex items-center justify-center"
-                  onMouseDown={(e) => handleCropResize('bl', e)}
-                  onTouchStart={(e) => handleCropResize('bl', e)}
-                >
-                  <div className="w-3 h-3 border-b-2 border-l-2 border-white bg-amber-500/50" />
-                </div>
-                <div
-                  className="absolute -bottom-2 -right-2 w-6 h-6 cursor-se-resize touch-none flex items-center justify-center"
-                  onMouseDown={(e) => handleCropResize('br', e)}
-                  onTouchStart={(e) => handleCropResize('br', e)}
-                >
-                  <div className="w-3 h-3 border-b-2 border-r-2 border-white bg-amber-500/50" />
-                </div>
-                {/* Hulplijnen - regel van derden */}
-                <div className="absolute inset-0 pointer-events-none">
-                  {/* Verticale lijnen */}
-                  <div className="absolute top-0 bottom-0 left-1/3 w-px bg-white/40" />
-                  <div className="absolute top-0 bottom-0 left-2/3 w-px bg-white/40" />
-                  {/* Horizontale lijnen */}
-                  <div className="absolute left-0 right-0 top-1/3 h-px bg-white/40" />
-                  <div className="absolute left-0 right-0 top-2/3 h-px bg-white/40" />
-                  {/* Center kruisje */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-px bg-white/70" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-4 w-px bg-white/70" />
+                {/* Hoek handles */}
+                {(['tl', 'tr', 'bl', 'br'] as const).map((corner) => (
+                  <div
+                    key={corner}
+                    className={`absolute w-8 h-8 touch-none flex items-center justify-center ${
+                      corner === 'tl' ? '-top-3 -left-3' :
+                      corner === 'tr' ? '-top-3 -right-3' :
+                      corner === 'bl' ? '-bottom-3 -left-3' : '-bottom-3 -right-3'
+                    }`}
+                    onMouseDown={(e) => handleCropResize(corner, e)}
+                    onTouchStart={(e) => handleCropResize(corner, e)}
+                  >
+                    <div className="w-4 h-4 bg-amber-400 rounded-full shadow-lg" />
+                  </div>
+                ))}
+                {/* Grid lijnen */}
+                <div className="absolute inset-0 pointer-events-none grid grid-cols-3 grid-rows-3">
+                  <div className="border-r border-b border-white/30" />
+                  <div className="border-r border-b border-white/30" />
+                  <div className="border-b border-white/30" />
+                  <div className="border-r border-b border-white/30" />
+                  <div className="border-r border-b border-white/30" />
+                  <div className="border-b border-white/30" />
+                  <div className="border-r border-white/30" />
+                  <div className="border-r border-white/30" />
+                  <div />
                 </div>
               </div>
             </>
           )}
         </div>
-        {/* Button container - fixed at bottom, always visible */}
-        <div className="shrink-0 p-3 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200">
+
+        {/* Buttons - altijd zichtbaar onderaan */}
+        <div className="shrink-0 bg-stone-800 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           {isCropping ? (
-            // Crop modus (altijd vierkant)
             <div className="flex gap-3">
               <button
                 onClick={() => {
@@ -975,31 +968,44 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
                   if (squareCanvasUrl) URL.revokeObjectURL(squareCanvasUrl);
                   setSquareCanvasUrl(null);
                 }}
-                className="btn-secondary flex-1 py-4 text-base"
+                className="flex-1 bg-stone-600 hover:bg-stone-500 text-white font-medium py-4 px-6 rounded-xl transition-colors active:scale-95"
               >
                 Annuleren
               </button>
-              <button onClick={applyCrop} className="btn-success flex-1 py-4 text-base font-semibold">
+              <button
+                onClick={applyCrop}
+                className="flex-1 bg-amber-500 hover:bg-amber-400 text-white font-semibold py-4 px-6 rounded-xl transition-colors active:scale-95"
+              >
                 Vierkant maken
               </button>
             </div>
           ) : isInMultiPhotoMode ? (
-            // Bezig met multi-photo - toevoegen aan collectie
             <div className="flex gap-3">
-              <button onClick={handleRetake} className="btn-secondary flex-1 py-4 text-base">
+              <button
+                onClick={handleRetake}
+                className="flex-1 bg-stone-600 hover:bg-stone-500 text-white font-medium py-4 px-6 rounded-xl transition-colors active:scale-95"
+              >
                 Opnieuw
               </button>
-              <button onClick={handleAddToMulti} className="btn-success flex-1 py-4 text-base font-semibold">
+              <button
+                onClick={handleAddToMulti}
+                className="flex-1 bg-amber-500 hover:bg-amber-400 text-white font-semibold py-4 px-6 rounded-xl transition-colors active:scale-95"
+              >
                 Toevoegen
               </button>
             </div>
           ) : (
-            // Enkele foto - kan gebruiken
             <div className="flex gap-3">
-              <button onClick={handleRetake} className="btn-secondary flex-1 py-4 text-base">
+              <button
+                onClick={handleRetake}
+                className="flex-1 bg-stone-600 hover:bg-stone-500 text-white font-medium py-4 px-6 rounded-xl transition-colors active:scale-95"
+              >
                 Opnieuw
               </button>
-              <button onClick={handleConfirmSingle} className="btn-success flex-1 py-4 text-base font-semibold">
+              <button
+                onClick={handleConfirmSingle}
+                className="flex-1 bg-amber-500 hover:bg-amber-400 text-white font-semibold py-4 px-6 rounded-xl transition-colors active:scale-95"
+              >
                 Gebruiken
               </button>
             </div>
