@@ -57,6 +57,9 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   // Verzamel alle beschikbare afbeeldingen
   const allImages = localImages;
   const hasMultipleImages = allImages.length > 1;
+  const hasDrawing = allImages.some(img => img.drawing);
+  // Toon "alle foto's" knop ook bij 1 foto + tekening (zodat je ze naast elkaar ziet)
+  const showAllImagesButton = hasMultipleImages || hasDrawing;
 
   // Genereer archeologische tekening voor een foto
   const handleGenerateSketch = useCallback(async (imageIndex: number) => {
@@ -352,19 +355,19 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
             <div className="card">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm text-stone-500">Jouw artefact</h3>
-                {hasMultipleImages && (
+                {showAllImagesButton && (
                   <button
                     onClick={() => setShowAllImages(!showAllImages)}
                     className="text-xs text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
                   >
-                    {showAllImages ? 'Verberg' : 'Toon alle foto\'s'}
+                    {showAllImages ? 'Verberg' : (hasDrawing && !hasMultipleImages ? 'Toon naast elkaar' : 'Toon alle foto\'s')}
                     <ChevronDown className={`w-4 h-4 transition-transform ${showAllImages ? 'rotate-180' : ''}`} />
                   </button>
                 )}
               </div>
 
               {/* Hoofdafbeelding of grid van alle afbeeldingen */}
-              {showAllImages && hasMultipleImages ? (
+              {showAllImages ? (
                 <div className="space-y-3">
                   {allImages.map((img, idx) => {
                     const labelText = img.label === 'dorsaal' ? 'Foto 1' :
@@ -462,10 +465,11 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                           <img
                             src={allImages[0].drawing}
                             alt="Tekening"
-                            className="w-full max-w-xs mx-auto rounded-lg border border-stone-300"
+                            className="w-full max-w-xs mx-auto rounded-lg border border-stone-300 cursor-pointer hover:opacity-90 transition-opacity"
+                            onClick={() => { setLightboxIndex(0); setLightboxShowDrawing(true); }}
                           />
                           <div className="flex gap-2 justify-center">
-                            <span className="text-xs text-amber-600 font-medium">Archeologische tekening</span>
+                            <span className="text-xs text-amber-600 font-medium">Archeologische tekening (klik om te zoomen)</span>
                             <button
                               onClick={() => handleRemoveSketch(0)}
                               className="text-xs text-red-500 hover:text-red-600"
@@ -515,9 +519,11 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                 </div>
               )}
 
-              {hasMultipleImages && !showAllImages && (
+              {showAllImagesButton && !showAllImages && (
                 <p className="text-xs text-stone-400 text-center mt-2">
-                  {allImages.length} foto's beschikbaar - toon alle voor tekeningen
+                  {hasMultipleImages
+                    ? `${allImages.length} foto's beschikbaar - toon alle voor tekeningen`
+                    : 'Klik op "Toon naast elkaar" om foto en tekening te vergelijken'}
                 </p>
               )}
             </div>
@@ -541,7 +547,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
             Geschiedenis
           </button>
           <button onClick={onNewDetermination} className="btn-primary flex-1">
-            Nieuwe determinatie
+            Startscherm
           </button>
         </div>
 

@@ -1,7 +1,9 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { Camera, ImagePlus, X, Plus, Upload } from 'lucide-react';
-import type { LabeledImage, VondstLocatie } from '../types';
+import { Camera, ImagePlus, X, Plus, Upload, TrendingUp, Award, MapPin } from 'lucide-react';
+import type { LabeledImage, VondstLocatie, DeterminationSession } from '../types';
 import { HomeMap } from './HomeMap';
+import { getAllSessions, createLocation } from '../lib/db';
+import { AddLocationModal } from './AddLocationModal';
 
 type CaptureMode = 'select' | 'preview-photo' | 'multi-photo';
 type CaptureSource = 'camera' | 'upload';
@@ -150,10 +152,23 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   const [squareCanvasUrl, setSquareCanvasUrl] = useState<string | null>(null); // Vierkant canvas met witruimte
   const [captureSource, setCaptureSource] = useState<CaptureSource>('camera');
   const [isDragging, setIsDragging] = useState(false);
-  const [locatie, setLocatie] = useState<VondstLocatie | undefined>(undefined);
+
+  // Dashboard data
+  const [sessions, setSessions] = useState<DeterminationSession[]>([]);
+  const [showAddLocation, setShowAddLocation] = useState(false);
 
   const previewImgRef = useRef<HTMLImageElement>(null);
   const cropContainerRef = useRef<HTMLDivElement>(null);
+
+  // Load dashboard data
+  const loadDashboardData = useCallback(async () => {
+    const sessionsData = await getAllSessions();
+    setSessions(sessionsData);
+  }, []);
+
+  useEffect(() => {
+    loadDashboardData();
+  }, [loadDashboardData]);
 
   // Cleanup bij unmount
   useEffect(() => {
@@ -161,6 +176,19 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, []);
+
+  // Calculate stats
+  const stats = {
+    total: sessions.filter(s => s.status === 'completed' && s.result).length,
+    uniqueTypes: new Set(sessions.filter(s => s.result?.type).map(s => s.result?.type)).size,
+    withLocation: sessions.filter(s => s.status === 'completed' && s.input.locatie).length,
+  };
+
+  // Handle add location
+  const handleAddLocation = useCallback(async (data: { lat: number; lng: number; naam?: string; notitie?: string }) => {
+    await createLocation(data);
+    loadDashboardData();
+  }, [loadDashboardData]);
 
   // Helper: verwerk een file naar LabeledImage (altijd comprimeren)
   const processFileToImage = useCallback(async (file: File, label: LabeledImage['label']): Promise<LabeledImage> => {
@@ -397,9 +425,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       type: 'photo',
       blob: capturedBlob,
       thumbnail,
-      locatie,
     });
-  }, [capturedBlob, previewUrl, onCapture, locatie]);
+  }, [capturedBlob, previewUrl, onCapture]);
 
   const handleAddToMulti = useCallback(async () => {
     if (!capturedBlob || !previewUrl) return;
@@ -442,9 +469,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
       type: 'multi-photo',
       images: multiImages,
       thumbnail,
-      locatie,
     });
-  }, [multiImages, onCapture, locatie]);
+  }, [multiImages, onCapture]);
 
   const handleRetake = useCallback(() => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -703,7 +729,7 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
   if (mode === 'select') {
     return (
       <div
-        className="h-full flex flex-col overflow-y-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
+        className="h-full flex flex-col overflow-hidden p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -719,9 +745,9 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
           </div>
         )}
 
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col gap-3 h-full">
           {/* Foto knoppen naast elkaar */}
-          <div className="grid grid-cols-2 gap-2 mb-3 shrink-0">
+          <div className="grid grid-cols-2 gap-2 shrink-0">
             {/* Foto('s) maken */}
             <button
               onClick={() => {
@@ -732,8 +758,8 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               className="p-3 rounded-xl shadow-sm border transition-all flex flex-col items-center gap-2 hover:shadow-md"
               style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
             >
-              <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
-                <Camera className="w-5 h-5 text-amber-600" />
+              <div className="w-10 h-10 bg-amber-50 dark:bg-amber-900/50 rounded-lg flex items-center justify-center">
+                <Camera className="w-5 h-5 text-amber-600 dark:text-amber-400" />
               </div>
               <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Foto's maken</span>
             </button>
@@ -748,21 +774,46 @@ export function ImageCapture({ onCapture }: ImageCaptureProps) {
               className="p-3 rounded-xl shadow-sm border transition-all flex flex-col items-center gap-2 hover:shadow-md"
               style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
             >
-              <div className="w-10 h-10 bg-stone-100 dark:bg-stone-700 rounded-lg flex items-center justify-center">
-                <ImagePlus className="w-5 h-5" style={{ color: 'var(--text-secondary)' }} />
+              <div className="w-10 h-10 bg-stone-100 dark:bg-stone-600 rounded-lg flex items-center justify-center">
+                <ImagePlus className="w-5 h-5 text-stone-600 dark:text-stone-200" />
               </div>
               <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Uploaden</span>
             </button>
           </div>
 
-          {/* Locatie kaart - neemt rest van de ruimte, toont ook bestaande vondsten */}
-          <div className="flex-1 min-h-0">
-            <HomeMap
-              value={locatie}
-              onChange={setLocatie}
-            />
+          {/* Dashboard statistieken */}
+          {stats.total > 0 && (
+            <div className="grid grid-cols-3 gap-2 shrink-0">
+              <div className="p-2 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+                <TrendingUp className="w-4 h-4 mx-auto mb-1 text-amber-500" />
+                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
+                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Determinaties</p>
+              </div>
+              <div className="p-2 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+                <Award className="w-4 h-4 mx-auto mb-1 text-green-500" />
+                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{stats.uniqueTypes}</p>
+                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
+              </div>
+              <div className="p-2 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+                <MapPin className="w-4 h-4 mx-auto mb-1 text-blue-500" />
+                <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{stats.withLocation}</p>
+                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Met locatie</p>
+              </div>
+            </div>
+          )}
+
+          {/* Kaart - view-only, vult resterende ruimte */}
+          <div className="flex-1 min-h-[200px]">
+            <HomeMap onAddLocation={() => setShowAddLocation(true)} />
           </div>
         </div>
+
+        {/* Add Location Modal */}
+        <AddLocationModal
+          isOpen={showAddLocation}
+          onClose={() => setShowAddLocation(false)}
+          onSave={handleAddLocation}
+        />
       </div>
     );
   }

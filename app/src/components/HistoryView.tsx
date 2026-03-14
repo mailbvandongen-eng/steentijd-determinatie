@@ -1,11 +1,9 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
-import { Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Trash2, Image, TrendingUp, Award, Map } from 'lucide-react';
+import { useEffect, useState, useMemo } from 'react';
+import { Search, ChevronLeft, ChevronRight, Trash2, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getAllSessions, deleteSession, getAllLocations, createLocation, deleteLocation } from '../lib/db';
-import type { DeterminationSession, SavedLocation } from '../types';
+import { getAllSessions, deleteSession } from '../lib/db';
+import type { DeterminationSession } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
-import { HistoryMap } from './HistoryMap';
-import { AddLocationModal } from './AddLocationModal';
 
 interface HistoryViewProps {
   onBack: () => void;
@@ -14,12 +12,8 @@ interface HistoryViewProps {
 
 export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
-  const [locations, setLocations] = useState<SavedLocation[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showDashboard, setShowDashboard] = useState(false);
-  const [showAddLocation, setShowAddLocation] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<SavedLocation | null>(null);
 
   useEffect(() => {
     loadData();
@@ -44,42 +38,10 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
     });
   }, [sessions, searchQuery]);
 
-  // Bereken statistieken
-  const stats = useMemo(() => {
-    const completedSessions = sessions.filter(s => s.status === 'completed' && s.result);
-
-    // Tel unieke types
-    const typeCounts: Record<string, number> = {};
-    completedSessions.forEach(s => {
-      const type = s.result?.type || 'Onbekend';
-      typeCounts[type] = (typeCounts[type] || 0) + 1;
-    });
-
-    // Meest voorkomende type
-    let mostCommonType = '-';
-    let maxCount = 0;
-    Object.entries(typeCounts).forEach(([type, count]) => {
-      if (count > maxCount) {
-        maxCount = count;
-        mostCommonType = formatTypeName(type);
-      }
-    });
-
-    return {
-      total: completedSessions.length,
-      uniqueTypes: Object.keys(typeCounts).length,
-      mostCommonType,
-    };
-  }, [sessions]);
-
   const loadData = async () => {
     setLoading(true);
-    const [sessionsData, locationsData] = await Promise.all([
-      getAllSessions(),
-      getAllLocations(),
-    ]);
+    const sessionsData = await getAllSessions();
     setSessions(sessionsData);
-    setLocations(locationsData);
     setLoading(false);
   };
 
@@ -88,23 +50,6 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
     if (!id) return;
     if (confirm('Weet je zeker dat je deze determinatie wilt verwijderen?')) {
       await deleteSession(id);
-      loadData();
-    }
-  };
-
-  const handleAddLocation = useCallback(async (data: { lat: number; lng: number; naam?: string; notitie?: string }) => {
-    await createLocation(data);
-    loadData();
-  }, []);
-
-  const handleSelectLocation = useCallback((location: SavedLocation) => {
-    setSelectedLocation(location);
-  }, []);
-
-  const handleDeleteLocation = async (id: number) => {
-    if (confirm('Weet je zeker dat je deze locatie wilt verwijderen?')) {
-      await deleteLocation(id);
-      setSelectedLocation(null);
       loadData();
     }
   };
@@ -127,79 +72,14 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
         <button onClick={onBack} className="text-white p-2">
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <h1 className="text-white text-lg font-semibold">Geschiedenis</h1>
+        <h1 className="text-white text-lg font-semibold">Mijn vondsten</h1>
       </div>
 
       {/* Desktop header */}
       <div className="hidden lg:block p-6 pb-0 shrink-0">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Geschiedenis</h1>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Mijn vondsten</h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Bekijk en beheer je opgeslagen determinaties</p>
       </div>
-
-      {/* Dashboard toggle + inhoud */}
-      {sessions.length > 0 && (
-        <div className="px-4 pt-3 shrink-0">
-          {/* Toggle knop */}
-          <button
-            onClick={() => setShowDashboard(!showDashboard)}
-            className="w-full flex items-center justify-between p-2 rounded-lg mb-2 transition-colors"
-            style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
-          >
-            <div className="flex items-center gap-2">
-              <Map className="w-4 h-4" style={{ color: 'var(--accent)' }} />
-              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-                Dashboard & Kaart
-              </span>
-              <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--accent)', color: 'white' }}>
-                {stats.total}
-              </span>
-            </div>
-            {showDashboard ? (
-              <ChevronUp className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-            ) : (
-              <ChevronDown className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-            )}
-          </button>
-
-          {/* Dashboard inhoud (uitklapbaar) */}
-          {showDashboard && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
-              {/* Statistieken */}
-              <div className="grid grid-cols-3 gap-2 mb-3">
-                <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-                  <TrendingUp className="w-5 h-5 mx-auto mb-1 text-amber-500" />
-                  <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.total}</p>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Determinaties</p>
-                </div>
-                <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-                  <Award className="w-5 h-5 mx-auto mb-1 text-green-500" />
-                  <p className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{stats.uniqueTypes}</p>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Unieke types</p>
-                </div>
-                <div className="card p-3 text-center" style={{ backgroundColor: 'var(--bg-card)' }}>
-                  <Image className="w-5 h-5 mx-auto mb-1 text-purple-500" />
-                  <p className="text-sm font-bold truncate" style={{ color: 'var(--text-primary)' }}>{stats.mostCommonType}</p>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Meest gevonden</p>
-                </div>
-              </div>
-
-              {/* Kaart met vondsten */}
-              <HistoryMap
-                sessions={sessions}
-                locations={locations}
-                onSelectSession={onSelectSession}
-                onSelectLocation={handleSelectLocation}
-                onAddLocation={() => setShowAddLocation(true)}
-              />
-            </motion.div>
-          )}
-        </div>
-      )}
 
       {/* Zoekbalk */}
       {sessions.length > 0 && (
@@ -328,77 +208,10 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
       {/* Footer met terug naar start - alleen op mobiel */}
       <div className="lg:hidden p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shrink-0" style={{ backgroundColor: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
         <button onClick={onBack} className="btn-primary w-full py-3">
-          Nieuwe determinatie
+          Startscherm
         </button>
       </div>
 
-      {/* Add Location Modal */}
-      <AddLocationModal
-        isOpen={showAddLocation}
-        onClose={() => setShowAddLocation(false)}
-        onSave={handleAddLocation}
-      />
-
-      {/* Location Detail Panel */}
-      {selectedLocation && (
-        <div className="fixed inset-0 z-50 flex items-end lg:items-center justify-center">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setSelectedLocation(null)}
-          />
-          <div
-            className="relative w-full lg:max-w-md rounded-t-2xl lg:rounded-2xl p-4 max-h-[60vh] overflow-y-auto"
-            style={{ backgroundColor: 'var(--bg-card)' }}
-          >
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                  {selectedLocation.naam || 'Locatie'}
-                </h3>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  {selectedLocation.lat.toFixed(5)}, {selectedLocation.lng.toFixed(5)}
-                </p>
-              </div>
-              <button
-                onClick={() => setSelectedLocation(null)}
-                className="p-1 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700"
-              >
-                <ChevronDown className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
-              </button>
-            </div>
-
-            {selectedLocation.notitie && (
-              <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-                {selectedLocation.notitie}
-              </p>
-            )}
-
-            <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
-              {selectedLocation.linkedSessionIds.length > 0
-                ? `${selectedLocation.linkedSessionIds.length} gekoppelde determinatie(s)`
-                : 'Nog geen determinaties gekoppeld'}
-            </p>
-
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleDeleteLocation(selectedLocation.id!)}
-                className="flex-1 py-2 px-4 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                style={{ border: '1px solid var(--border-color)' }}
-              >
-                <Trash2 className="w-4 h-4 inline mr-1" />
-                Verwijderen
-              </button>
-              <button
-                onClick={() => setSelectedLocation(null)}
-                className="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                style={{ backgroundColor: 'var(--accent)', color: 'white' }}
-              >
-                Sluiten
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

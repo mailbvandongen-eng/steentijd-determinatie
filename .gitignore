@@ -23,9 +23,13 @@ npm-debug.log*
 .env
 .env.local
 
-# Large files (keep in repo but consider LFS for production)
-# images_algoritme/
-# images_handleiding/
+# Large files - extracted from PDFs, not needed in git
+images_algoritme/
+images_handleiding/
+*.pdf
+
+# Wrangler
+.wrangler/
 
 # Temporary
 *.tmp

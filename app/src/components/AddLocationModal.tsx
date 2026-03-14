@@ -198,7 +198,7 @@ export function AddLocationModal({ isOpen, onClose, onSave }: AddLocationModalPr
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <div className="fixed inset-0 z-[2000] bg-black">
       {/* Header */}
       <div
         className="absolute top-0 left-0 right-0 z-[1000] p-3 flex items-center justify-between"
@@ -237,7 +237,7 @@ export function AddLocationModal({ isOpen, onClose, onSave }: AddLocationModalPr
         center={defaultCenter}
         zoom={8}
         className="h-full w-full"
-        zoomControl={true}
+        zoomControl={false}
         attributionControl={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

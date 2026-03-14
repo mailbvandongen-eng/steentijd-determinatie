@@ -17,10 +17,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
       if (stored) return stored;
-      // Default to dark mode
-      return 'dark';
+      // Default to light mode
+      return 'light';
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

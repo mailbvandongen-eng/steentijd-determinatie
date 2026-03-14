@@ -243,37 +243,40 @@ async function handleSketchRequest(
   const imageBlob = new Blob([bytes], { type: mimeType });
   console.log('Image blob created, size:', imageBlob.size, 'type:', imageBlob.type);
 
-  const prompt = `Create a scientific archaeological pencil drawing based strictly on this photograph.
+  const prompt = `Create a scientific archaeological ink drawing of this stone artifact in the classic French/Dutch lithic illustration style.
 
 CRITICAL - SCALE AND POSITION:
 - KEEP THE EXACT SAME SCALE: If the object fills 30% of the image, the drawing must also fill exactly 30%.
 - KEEP THE EXACT SAME POSITION: Draw the object in the same location within the frame.
 - DO NOT enlarge, zoom in, or "improve" the composition.
-- DO NOT center or reposition the object.
 - The white space around the object must remain proportionally the same.
 
 OBJECT:
-- Single flint/stone fragment only.
+- Single flint/stone artifact only.
 - Maintain the exact outline shape from the photo.
 - Same orientation as the reference image.
-- DO NOT include hands, fingers, or any human body parts - remove them but keep the stone at original scale.
+- DO NOT include hands, fingers, or any human body parts.
 
-STYLE:
-- Black and white pencil illustration.
-- Scientific archaeological drawing style (publication standard).
-- Orthographic view (no perspective).
+STYLE - THIS IS CRITICAL:
+- Black ink on white paper - HIGH CONTRAST, no gray tones.
+- Bold, confident pen strokes - NOT soft pencil shading.
+- Clean, sharp contour lines around the entire object.
+- Style reference: classic archaeological publication illustrations (like Inizan et al., Bordes).
+- Hand-drawn quality with slight organic variation in line weight.
 
-SURFACE TREATMENT:
-- Cortex: fine stippling (dots).
-- Flake scars: light directional hatching.
-- Follow actual flake scar directions from photo.
+SURFACE TREATMENT - USE HATCHING:
+- Flake scars: parallel hatching lines following the direction of each flake removal.
+- Use denser/closer lines for shadows, sparser lines for highlights.
+- Cortex areas: stippling (small dots) or cross-hatching.
+- Retouched edges: short parallel lines perpendicular to the edge.
+- Each facet should have its own hatching direction based on flake scar orientation.
 
 BACKGROUND:
-- Plain white background.
-- No shadows.
+- Pure white background.
+- No shadows, no gradients.
 
 CRITICAL REMINDER:
-- DO NOT RESIZE THE OBJECT. Keep it at the exact same scale as in the photograph.`;
+- This must look like a professional archaeological LITHIC ILLUSTRATION with bold ink lines and hatching - NOT a soft pencil sketch.`;
 
   console.log('=== IMAGE EDIT DEBUG ===');
   console.log('Blob size:', imageBlob.size);

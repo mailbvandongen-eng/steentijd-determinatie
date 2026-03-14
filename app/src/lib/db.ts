@@ -212,3 +212,35 @@ export async function addLocationFromCloud(location: Omit<SavedLocation, 'id'>):
   const id = await db.locations.add(location as SavedLocation);
   return id as number;
 }
+
+// Force sync: reset all cloudId fields so everything gets re-uploaded
+export async function resetAllSyncStatus(): Promise<{ sessions: number; locations: number }> {
+  // Reset sessions
+  const allSessions = await db.sessions.toArray();
+  let sessionsReset = 0;
+  for (const session of allSessions) {
+    if (session.cloudId && session.id) {
+      await db.sessions.update(session.id, {
+        cloudId: undefined,
+        synced: false,
+        lastSyncedAt: undefined,
+      });
+      sessionsReset++;
+    }
+  }
+
+  // Reset locations
+  const allLocations = await db.locations.toArray();
+  let locationsReset = 0;
+  for (const location of allLocations) {
+    if (location.cloudId && location.id) {
+      await db.locations.update(location.id, {
+        cloudId: undefined,
+        lastSyncedAt: undefined,
+      });
+      locationsReset++;
+    }
+  }
+
+  return { sessions: sessionsReset, locations: locationsReset };
+}

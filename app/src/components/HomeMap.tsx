@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-import { Navigation, Search, X, Layers, Eye, EyeOff, Satellite, Plus, Trash2, ExternalLink, Move } from 'lucide-react';
+import { Navigation, Search, Layers, Eye, EyeOff, Satellite, Trash2, ExternalLink, Move, Plus } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import type { DeterminationSession, SavedLocation, VondstLocatie } from '../types';
-import { getAllSessions, getAllLocations, updateSession, updateLocation, deleteSession, deleteLocation, createLocation } from '../lib/db';
+import type { DeterminationSession, SavedLocation } from '../types';
+import { getAllSessions, getAllLocations, updateSession, updateLocation, deleteSession, deleteLocation } from '../lib/db';
 import { formatTypeName } from '../lib/decisionTree';
 
 // Simple SVG icons (no background, just the shape)
@@ -90,9 +90,7 @@ const getMoveIcon = (zoom: number): L.DivIcon => {
 
 interface HomeMapProps {
   onSelectSession?: (session: DeterminationSession) => void;
-  // Optional: For use as location picker in ImageCapture
-  value?: VondstLocatie;
-  onChange?: (location: VondstLocatie | undefined) => void;
+  onAddLocation?: () => void;
 }
 
 // Zoom tracker
@@ -145,7 +143,7 @@ function FlyToLocation({ location }: { location: { lat: number; lng: number } | 
 }
 
 // Search component
-function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number) => void }) {
+function SearchControl({ onSearch, onClose }: { onSearch: (lat: number, lng: number) => void; onClose?: () => void }) {
   const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -172,37 +170,43 @@ function SearchControl({ onSearch }: { onSearch: (lat: number, lng: number) => v
     }
   };
 
-  if (!showInput) {
-    return (
-      <button
-        onClick={() => setShowInput(true)}
-        className="p-2 rounded-lg shadow-md"
-        style={{ backgroundColor: 'var(--bg-card)' }}
-        title="Zoek"
-      >
-        <Search className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-      </button>
-    );
-  }
+  const handleClose = () => {
+    setShowInput(false);
+    setQuery('');
+    onClose?.();
+  };
 
   return (
     <div className="flex items-center gap-1">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-        placeholder="Zoek..."
-        className="w-28 px-2 py-1.5 text-xs rounded-lg"
-        style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
-        autoFocus
-      />
-      <button onClick={handleSearch} disabled={isSearching} className="p-1.5 rounded-lg bg-amber-500 text-white">
-        <Search className={`w-3 h-3 ${isSearching ? 'animate-pulse' : ''}`} />
+      <button
+        onClick={() => showInput ? handleSearch() : setShowInput(true)}
+        disabled={isSearching}
+        className={`p-2 rounded-lg shadow-md shrink-0 ${showInput ? 'bg-amber-500 hover:bg-amber-600 text-white' : ''}`}
+        style={showInput ? {} : { backgroundColor: 'var(--bg-card)' }}
+        title="Zoek"
+      >
+        <Search className={`w-4 h-4 ${isSearching ? 'animate-pulse' : ''}`} style={showInput ? {} : { color: 'var(--text-muted)' }} />
       </button>
-      <button onClick={() => { setShowInput(false); setQuery(''); }} className="p-1.5" style={{ color: 'var(--text-muted)' }}>
-        <X className="w-3 h-3" />
-      </button>
+      {showInput && (
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
+            if (e.key === 'Escape') handleClose();
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              if (!query.trim()) handleClose();
+            }, 200);
+          }}
+          placeholder="Zoek plaats of adres..."
+          className="w-40 px-3 py-2 text-sm rounded-lg shadow-md"
+          style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
+          autoFocus
+        />
+      )}
     </div>
   );
 }
@@ -213,7 +217,7 @@ type EditState =
   | { type: 'session'; session: DeterminationSession; newLocation: { lat: number; lng: number } }
   | { type: 'location'; location: SavedLocation; newLocation: { lat: number; lng: number } };
 
-export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
+export function HomeMap({ onSelectSession, onAddLocation }: HomeMapProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
   const [locations, setLocations] = useState<SavedLocation[]>([]);
   const [zoomLevel, setZoomLevel] = useState(7);
@@ -224,14 +228,9 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
   const [editState, setEditState] = useState<EditState>({ type: 'none' });
   const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
 
-  // Add location mode
-  const [isAddingLocation, setIsAddingLocation] = useState(false);
-  const [pendingLocation, setPendingLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [pendingDescription, setPendingDescription] = useState('');
 
-  // Check if we're in picker mode (for ImageCapture)
-  const isPickerMode = onChange !== undefined;
 
   // Load data
   const loadData = useCallback(async () => {
@@ -254,13 +253,6 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
 
   const isEditing = editState.type !== 'none';
 
-  // Picker mode handler
-  const handlePickerClick = useCallback((lat: number, lng: number) => {
-    if (isPickerMode && onChange) {
-      onChange({ lat, lng });
-      setFlyTo({ lat, lng });
-    }
-  }, [isPickerMode, onChange]);
 
   // Handlers
   const handleEditLocationSelect = useCallback((lat: number, lng: number) => {
@@ -334,39 +326,6 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
     }
   }, [loadData]);
 
-  // Add location handlers
-  const handleAddLocationClick = useCallback((lat: number, lng: number) => {
-    setPendingLocation({ lat, lng });
-    setFlyTo({ lat, lng });
-  }, []);
-
-  const handleSaveNewLocation = useCallback(async () => {
-    if (!pendingLocation) return;
-    setIsSaving(true);
-    try {
-      await createLocation({
-        lat: pendingLocation.lat,
-        lng: pendingLocation.lng,
-        naam: pendingDescription.trim() || undefined,
-      });
-      await loadData();
-      // Reset
-      setIsAddingLocation(false);
-      setPendingLocation(null);
-      setPendingDescription('');
-    } catch (error) {
-      console.error('Save failed:', error);
-      alert('Opslaan mislukt');
-    } finally {
-      setIsSaving(false);
-    }
-  }, [pendingLocation, pendingDescription, loadData]);
-
-  const handleCancelAddLocation = useCallback(() => {
-    setIsAddingLocation(false);
-    setPendingLocation(null);
-    setPendingDescription('');
-  }, []);
 
   const defaultCenter: [number, number] = [52.1326, 5.2913];
 
@@ -388,8 +347,8 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
 
           <ZoomTracker onZoomChange={setZoomLevel} />
           <MapClickHandler
-            onLocationSelect={isAddingLocation ? handleAddLocationClick : (isPickerMode ? handlePickerClick : handleEditLocationSelect)}
-            enabled={isEditing || isPickerMode || isAddingLocation}
+            onLocationSelect={handleEditLocationSelect}
+            enabled={isEditing}
           />
           <FlyToLocation location={flyTo} />
 
@@ -412,35 +371,7 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
             />
           )}
 
-          {/* Picker mode marker */}
-          {isPickerMode && value && (
-            <Marker
-              position={[value.lat, value.lng]}
-              icon={getPinIcon('#d97706', zoomLevel)}
-              draggable={true}
-              eventHandlers={{
-                dragend: (e) => {
-                  const pos = e.target.getLatLng();
-                  onChange?.({ lat: pos.lat, lng: pos.lng });
-                },
-              }}
-            />
-          )}
 
-          {/* Adding location marker */}
-          {isAddingLocation && pendingLocation && (
-            <Marker
-              position={[pendingLocation.lat, pendingLocation.lng]}
-              icon={getPinIcon('#2563eb', zoomLevel)}
-              draggable={true}
-              eventHandlers={{
-                dragend: (e) => {
-                  const pos = e.target.getLatLng();
-                  setPendingLocation({ lat: pos.lat, lng: pos.lng });
-                },
-              }}
-            />
-          )}
 
           {/* Session markers (stone icon) */}
           {showDeterminations && sessionsWithLocation.map((session) => {
@@ -538,67 +469,88 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
 
         {/* Controls - top */}
         <div className="absolute top-2 left-2 right-2 z-[1000] flex items-center justify-between">
-          <SearchControl onSearch={(lat, lng) => setFlyTo({ lat, lng })} />
+          <SearchControl onSearch={(lat, lng) => { setFlyTo({ lat, lng }); setShowFilters(false); }} />
           <div className="flex items-center gap-1">
-            <button
-              onClick={() => setUseSatellite(!useSatellite)}
-              className={`p-2 rounded-lg shadow-md ${useSatellite ? 'ring-2 ring-blue-500' : ''}`}
-              style={{ backgroundColor: 'var(--bg-card)' }}
-              title={useSatellite ? 'Kaart' : 'Satelliet'}
-            >
-              <Satellite className="w-4 h-4" style={{ color: useSatellite ? '#2563eb' : 'var(--text-muted)' }} />
-            </button>
-            {(sessionsWithLocation.length > 0 || locations.length > 0) && !isEditing && (
+            {!isEditing && (
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`p-2 rounded-lg shadow-md ${showFilters ? 'ring-2 ring-amber-500' : ''}`}
                 style={{ backgroundColor: 'var(--bg-card)' }}
-                title="Filter"
+                title="Kaartopties"
               >
                 <Layers className="w-4 h-4" style={{ color: showFilters ? 'var(--accent)' : 'var(--text-muted)' }} />
               </button>
             )}
             <button
-              onClick={() => navigator.geolocation?.getCurrentPosition(
-                (pos) => setFlyTo({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                () => alert('Locatie niet beschikbaar')
-              )}
+              onClick={() => {
+                if (isLocating) return;
+                setIsLocating(true);
+                navigator.geolocation?.getCurrentPosition(
+                  (pos) => {
+                    setFlyTo({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+                    setIsLocating(false);
+                  },
+                  () => {
+                    alert('Locatie niet beschikbaar');
+                    setIsLocating(false);
+                  },
+                  { enableHighAccuracy: true, timeout: 10000 }
+                );
+              }}
               className="p-2 rounded-lg shadow-md"
               style={{ backgroundColor: 'var(--bg-card)' }}
               title="Mijn locatie"
             >
-              <Navigation className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+              <Navigation className={`w-4 h-4 ${isLocating ? 'animate-pulse' : ''}`} style={{ color: isLocating ? 'var(--accent)' : 'var(--text-muted)' }} />
             </button>
-            {!isPickerMode && !isEditing && (
-              <button
-                onClick={() => setIsAddingLocation(!isAddingLocation)}
-                className={`p-2 rounded-lg shadow-md ${isAddingLocation ? 'bg-blue-500 ring-2 ring-blue-300' : ''}`}
-                style={isAddingLocation ? {} : { backgroundColor: 'var(--bg-card)' }}
-                title={isAddingLocation ? 'Annuleer toevoegen' : 'Voeg locatie toe'}
-              >
-                <Plus className={`w-4 h-4 ${isAddingLocation ? 'text-white' : ''}`} style={isAddingLocation ? {} : { color: '#2563eb' }} />
-              </button>
-            )}
           </div>
         </div>
 
-        {/* Filter panel */}
+        {/* Filter panel with click-outside */}
         {showFilters && !isEditing && (
-          <div className="absolute top-12 right-2 z-[1000] p-2 rounded-lg shadow-lg text-xs" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-            <p className="font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>Toon:</p>
-            <label className="flex items-center gap-2 cursor-pointer mb-1">
-              <input type="checkbox" checked={showDeterminations} onChange={(e) => setShowDeterminations(e.target.checked)} className="rounded" />
-              <span style={{ color: 'var(--text-primary)' }}>
-                {showDeterminations ? <Eye className="w-3 h-3 inline" /> : <EyeOff className="w-3 h-3 inline" />} Determinaties ({sessionsWithLocation.length})
-              </span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked={showLocations} onChange={(e) => setShowLocations(e.target.checked)} className="rounded" />
-              <span style={{ color: 'var(--text-primary)' }}>
-                {showLocations ? <Eye className="w-3 h-3 inline" /> : <EyeOff className="w-3 h-3 inline" />} Zoeklocaties ({locations.length})
-              </span>
-            </label>
-          </div>
+          <>
+            {/* Invisible overlay to catch outside clicks */}
+            <div
+              className="absolute inset-0 z-[999]"
+              onClick={() => setShowFilters(false)}
+            />
+            <div className="absolute top-12 right-2 z-[1000] p-2 rounded-lg shadow-lg text-xs" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
+              <p className="font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>Kaartweergave:</p>
+              <label className="flex items-center gap-2 cursor-pointer mb-2">
+                <input type="checkbox" checked={useSatellite} onChange={(e) => setUseSatellite(e.target.checked)} className="rounded" />
+                <span style={{ color: 'var(--text-primary)' }}>
+                  <Satellite className="w-3 h-3 inline" /> Satelliet
+                </span>
+              </label>
+              <div className="border-t pt-2 mt-2" style={{ borderColor: 'var(--border-color)' }}>
+                <p className="font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>Toon:</p>
+                <label className="flex items-center gap-2 cursor-pointer mb-1">
+                  <input type="checkbox" checked={showDeterminations} onChange={(e) => setShowDeterminations(e.target.checked)} className="rounded" />
+                  <span style={{ color: 'var(--text-primary)' }}>
+                    {showDeterminations ? <Eye className="w-3 h-3 inline" /> : <EyeOff className="w-3 h-3 inline" />} Determinaties ({sessionsWithLocation.length})
+                  </span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" checked={showLocations} onChange={(e) => setShowLocations(e.target.checked)} className="rounded" />
+                  <span style={{ color: 'var(--text-primary)' }}>
+                    {showLocations ? <Eye className="w-3 h-3 inline" /> : <EyeOff className="w-3 h-3 inline" />} Zoeklocaties ({locations.length})
+                  </span>
+                </label>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Add location button - bottom left */}
+        {!isEditing && onAddLocation && (
+          <button
+            onClick={onAddLocation}
+            className="absolute bottom-2 left-2 z-[1000] p-2 rounded-lg shadow-md flex items-center gap-1.5 text-xs font-medium bg-blue-500 hover:bg-blue-600 text-white"
+            title="Voeg zoeklocatie toe"
+          >
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Locatie</span>
+          </button>
         )}
 
         {/* Edit panel */}
@@ -619,38 +571,7 @@ export function HomeMap({ onSelectSession, value, onChange }: HomeMapProps) {
           </div>
         )}
 
-        {/* Bottom bar - only show when adding location AND location is selected */}
-        {!isEditing && !isPickerMode && isAddingLocation && pendingLocation && (
-          <div className="absolute bottom-2 left-2 right-2 z-[1000]">
-            <div className="p-3 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-              <input
-                type="text"
-                value={pendingDescription}
-                onChange={(e) => setPendingDescription(e.target.value)}
-                placeholder="Beschrijving (bijv. Loonse duinen)"
-                className="w-full px-3 py-2 text-sm rounded-lg mb-2"
-                style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
-                autoFocus
-              />
-              <div className="flex gap-2">
-                <button
-                  onClick={handleCancelAddLocation}
-                  className="flex-1 px-3 py-2 text-sm rounded-lg"
-                  style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-                >
-                  Annuleren
-                </button>
-                <button
-                  onClick={handleSaveNewLocation}
-                  disabled={isSaving}
-                  className="flex-1 px-3 py-2 text-sm rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
-                >
-                  {isSaving ? '...' : 'Opslaan'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+
       </div>
 
           </div>
