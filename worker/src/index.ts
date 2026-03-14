@@ -28,6 +28,7 @@ export default {
     const isSketchRequest = url.pathname === '/sketch';
     const isTestOpenAI = url.pathname === '/test-openai';
     const isHintRequest = url.pathname === '/hint';
+    const isValidateRequest = url.pathname === '/validate';
 
     // Get client IP for rate limiting
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
@@ -60,6 +61,8 @@ export default {
         return await handleSketchRequest(request, env, rateLimitKey, currentCount);
       } else if (isHintRequest) {
         return await handleHintRequest(request, env, rateLimitKey, currentCount);
+      } else if (isValidateRequest) {
+        return await handleValidateRequest(request, env, rateLimitKey, currentCount);
       } else {
         return await handleAnalysisRequest(request, env, rateLimitKey, currentCount);
       }
@@ -530,6 +533,166 @@ Geef nu een praktische hint voor deze foto en vraag.`;
     JSON.stringify({
       success: true,
       hint: hintText,
+    }),
+    {
+      status: 200,
+      headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' },
+    }
+  );
+}
+
+// Handle AI validation requests after decision tree completion
+async function handleValidateRequest(
+  request: Request,
+  env: Env,
+  rateLimitKey: string,
+  currentCount: number
+): Promise<Response> {
+  if (!env.ANTHROPIC_API_KEY) {
+    return new Response(
+      JSON.stringify({ error: { message: 'API key niet geconfigureerd.' } }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  interface DeterminationStep {
+    questionId: string;
+    questionText: string;
+    answer: 'ja' | 'nee';
+  }
+
+  interface ValidateRequestBody {
+    imageBase64: string;
+    resultType: string;
+    resultDescription?: string;
+    steps: DeterminationStep[];
+  }
+
+  let body: ValidateRequestBody;
+  try {
+    body = await request.json() as ValidateRequestBody;
+  } catch {
+    return new Response(
+      JSON.stringify({ error: { message: 'Ongeldige JSON in request.' } }),
+      { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  const { imageBase64, resultType, resultDescription, steps } = body;
+
+  if (!imageBase64 || !resultType || !steps) {
+    return new Response(
+      JSON.stringify({ error: { message: 'Afbeelding, resultaat en stappen zijn verplicht.' } }),
+      { status: 400, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // Extract media type from base64 string
+  const mimeMatch = imageBase64.match(/^data:(image\/\w+);base64,/);
+  const mediaType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+  const pureBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+
+  // Format the determination path
+  const pathDescription = steps.map((step, i) =>
+    `${i + 1}. "${step.questionText}" → ${step.answer.toUpperCase()}`
+  ).join('\n');
+
+  const validatePrompt = `Je bent een ervaren archeoloog die de determinatie van een student valideert.
+
+De student heeft een stenen object gefotografeerd en de beslisboom doorlopen.
+
+GEVOLGDE PAD:
+${pathDescription}
+
+UITKOMST: ${resultType}${resultDescription ? ` (${resultDescription})` : ''}
+
+JOUW TAAK:
+Bekijk de foto en beoordeel of de determinatie correct is.
+
+GEEF JE ANTWOORD IN DIT FORMAT:
+
+**Oordeel:** [CORRECT / TWIJFELACHTIG / ONJUIST]
+
+**Uitleg:**
+[Korte uitleg (2-3 zinnen) waarom je dit vindt]
+
+**Tip:**
+[Eén praktische tip voor de student, bijv. waar ze op kunnen letten]
+
+BELANGRIJK:
+- Wees eerlijk maar constructief
+- Focus op educatie, niet op afkraken
+- Als je twijfelt, zeg dat eerlijk
+- Houd het beknopt`;
+
+  const anthropicBody = {
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 500,
+    messages: [{
+      role: 'user',
+      content: [
+        {
+          type: 'image',
+          source: {
+            type: 'base64',
+            media_type: mediaType,
+            data: pureBase64,
+          },
+        },
+        {
+          type: 'text',
+          text: validatePrompt,
+        },
+      ],
+    }],
+  };
+
+  const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': env.ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify(anthropicBody),
+  });
+
+  if (!anthropicResponse.ok) {
+    const errorText = await anthropicResponse.text();
+    console.error('Anthropic validate error:', errorText);
+    return new Response(
+      JSON.stringify({ error: { message: 'AI validatie kon niet worden uitgevoerd.' } }),
+      { status: 500, headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  interface AnthropicResponse {
+    content: Array<{ type: string; text?: string }>;
+  }
+
+  const result = await anthropicResponse.json() as AnthropicResponse;
+  const validationText = result.content?.find(c => c.type === 'text')?.text || '';
+
+  // Parse the response to extract verdict
+  let verdict: 'correct' | 'twijfelachtig' | 'onjuist' = 'twijfelachtig';
+  const verdictMatch = validationText.match(/\*\*Oordeel:\*\*\s*(CORRECT|TWIJFELACHTIG|ONJUIST)/i);
+  if (verdictMatch) {
+    const v = verdictMatch[1].toLowerCase();
+    if (v === 'correct') verdict = 'correct';
+    else if (v === 'onjuist') verdict = 'onjuist';
+    else verdict = 'twijfelachtig';
+  }
+
+  // Count this request
+  await env.RATE_LIMIT.put(rateLimitKey, String(currentCount + 1), {
+    expirationTtl: 86400,
+  });
+
+  return new Response(
+    JSON.stringify({
+      success: true,
+      verdict,
+      feedback: validationText,
     }),
     {
       status: 200,

@@ -224,6 +224,66 @@ export interface HintResult {
   error?: string;
 }
 
+// Validation response interface
+export interface ValidationResult {
+  success: boolean;
+  verdict?: 'correct' | 'twijfelachtig' | 'onjuist';
+  feedback?: string;
+  error?: string;
+}
+
+// Validate a completed determination
+export async function validateDetermination(
+  imageBase64: string,
+  resultType: string,
+  resultDescription: string | undefined,
+  steps: Array<{ questionId: string; questionText: string; answer: 'ja' | 'nee' }>
+): Promise<ValidationResult> {
+  try {
+    const response = await fetch(`${WORKER_URL}/validate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        imageBase64,
+        resultType,
+        resultDescription,
+        steps,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+
+      if (response.status === 429) {
+        return { success: false, error: 'Daglimiet bereikt. Probeer morgen opnieuw.' };
+      }
+
+      return { success: false, error: `Fout: ${errorMessage}` };
+    }
+
+    const data = await response.json();
+
+    if (data.success) {
+      return {
+        success: true,
+        verdict: data.verdict,
+        feedback: data.feedback,
+      };
+    }
+
+    return { success: false, error: 'Geen validatie ontvangen.' };
+  } catch (err) {
+    console.error('Validation error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Onbekende fout bij validatie',
+    };
+  }
+}
+
 // Get a hint for a decision tree question
 export async function getHintForQuestion(
   imageBase64: string,

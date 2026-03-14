@@ -1,8 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin } from 'lucide-react';
+import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin, AlertCircle, CheckCircle, HelpCircle } from 'lucide-react';
 import type { DeterminationSession, LabeledImage, VondstLocatie } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
+import { validateDetermination, type ValidationResult } from '../lib/aiAnalysis';
 import { updateSession } from '../lib/db';
 import { exportToPdf } from '../lib/pdfExport';
 import { LocationPickerModal } from './LocationPickerModal';
@@ -37,6 +38,11 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [sessionLocation, setSessionLocation] = useState<VondstLocatie | undefined>(session.input.locatie);
 
+  // AI Validation state
+  const [validation, setValidation] = useState<ValidationResult | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
+  const [showValidation, setShowValidation] = useState(true);
+
   // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
   const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
     if (session.input.images && session.input.images.length > 0) {
@@ -53,6 +59,41 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     }
     return [];
   });
+
+  // Trigger AI validation when component mounts (only if steps are available)
+  useEffect(() => {
+    const runValidation = async () => {
+      // Only validate if we have steps (decision tree was used)
+      if (!session.steps || session.steps.length === 0) return;
+      if (!session.result?.type) return;
+      if (!session.input.thumbnail && !session.input.images?.[0]?.thumbnail) return;
+
+      setIsValidating(true);
+      try {
+        const imageBase64 = session.input.thumbnail || session.input.images?.[0]?.thumbnail || '';
+        const steps = session.steps.map(s => ({
+          questionId: s.questionId,
+          questionText: s.questionText,
+          answer: s.answer as 'ja' | 'nee',
+        }));
+
+        const result = await validateDetermination(
+          imageBase64,
+          session.result.type,
+          session.result.description,
+          steps
+        );
+        setValidation(result);
+      } catch (err) {
+        console.error('Validation failed:', err);
+        setValidation({ success: false, error: 'Validatie mislukt.' });
+      } finally {
+        setIsValidating(false);
+      }
+    };
+
+    runValidation();
+  }, [session]);
 
   // Verzamel alle beschikbare afbeeldingen
   const allImages = localImages;
@@ -261,6 +302,78 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto">
+        {/* AI Validation Section - only show if steps were used */}
+        {session.steps && session.steps.length > 0 && (
+          <div className="px-4 pt-4">
+            {isValidating ? (
+              <div className="card bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                  <div>
+                    <p className="text-sm font-medium text-blue-700">AI valideert je determinatie...</p>
+                    <p className="text-xs text-blue-600">Even geduld</p>
+                  </div>
+                </div>
+              </div>
+            ) : validation && validation.success && validation.verdict ? (
+              <div className={`card border ${
+                validation.verdict === 'correct' ? 'bg-green-50 border-green-200' :
+                validation.verdict === 'onjuist' ? 'bg-red-50 border-red-200' :
+                'bg-amber-50 border-amber-200'
+              }`}>
+                <div className="flex items-start gap-3">
+                  {/* Icon */}
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
+                    validation.verdict === 'correct' ? 'bg-green-500' :
+                    validation.verdict === 'onjuist' ? 'bg-red-500' :
+                    'bg-amber-500'
+                  }`}>
+                    {validation.verdict === 'correct' && <CheckCircle className="w-6 h-6 text-white" />}
+                    {validation.verdict === 'onjuist' && <AlertCircle className="w-6 h-6 text-white" />}
+                    {validation.verdict === 'twijfelachtig' && <HelpCircle className="w-6 h-6 text-white" />}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className={`text-sm font-bold ${
+                        validation.verdict === 'correct' ? 'text-green-700' :
+                        validation.verdict === 'onjuist' ? 'text-red-700' :
+                        'text-amber-700'
+                      }`}>
+                        AI Validatie: {
+                          validation.verdict === 'correct' ? 'Correct!' :
+                          validation.verdict === 'onjuist' ? 'Niet helemaal' :
+                          'Twijfelachtig'
+                        }
+                      </p>
+                      <button
+                        onClick={() => setShowValidation(!showValidation)}
+                        className="text-xs text-stone-500 hover:text-stone-700"
+                      >
+                        {showValidation ? 'Verberg' : 'Toon'}
+                      </button>
+                    </div>
+
+                    {showValidation && validation.feedback && (
+                      <div className={`mt-2 text-sm whitespace-pre-wrap ${
+                        validation.verdict === 'correct' ? 'text-green-800' :
+                        validation.verdict === 'onjuist' ? 'text-red-800' :
+                        'text-amber-800'
+                      }`}>
+                        {validation.feedback}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : !validation?.success && validation?.error ? (
+              <div className="card bg-stone-50 border border-stone-200">
+                <p className="text-sm text-stone-500">{validation.error}</p>
+              </div>
+            ) : null}
+          </div>
+        )}
         {/* Resultaat - compact met uitklapbare details */}
         <div className="p-4">
           <div className="card">
