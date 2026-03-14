@@ -7,6 +7,8 @@ interface StartScreenProps {
   onViewHistory: () => void;
   isLoggedIn: boolean;
   version: string;
+  initialJoinCode?: string | null;
+  onJoinCodeUsed?: () => void;
 }
 
 export function StartScreen({
@@ -15,13 +17,17 @@ export function StartScreen({
   onOpenTrainerDashboard,
   onViewHistory,
   isLoggedIn,
-  version
+  version,
+  initialJoinCode,
+  onJoinCodeUsed
 }: StartScreenProps) {
-  const [mode, setMode] = useState<'main' | 'join-training'>('main');
-  const [sessionCode, setSessionCode] = useState('');
+  // If we have an initial join code from URL, start in join-training mode
+  const [mode, setMode] = useState<'main' | 'join-training'>(initialJoinCode ? 'join-training' : 'main');
+  const [sessionCode, setSessionCode] = useState(initialJoinCode || '');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
 
+  // Clear the initial join code after it's been used
   const handleJoinTraining = () => {
     if (!sessionCode.trim()) {
       setError('Vul een sessiecode in');
@@ -32,6 +38,7 @@ export function StartScreen({
       return;
     }
     setError('');
+    if (onJoinCodeUsed) onJoinCodeUsed();
     onStartTraining(sessionCode.trim().toUpperCase(), name.trim());
   };
 

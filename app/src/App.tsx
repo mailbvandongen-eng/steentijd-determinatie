@@ -59,7 +59,19 @@ function App() {
   const [determinationSteps, setDeterminationSteps] = useState<DeterminationStep[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [currentTrainingDeterminationId, setCurrentTrainingDeterminationId] = useState<string | null>(null);
+  const [joinCodeFromUrl, setJoinCodeFromUrl] = useState<string | null>(null);
   const welcomeModal = useWelcomeModal();
+
+  // Check for join code in URL (from QR code scan)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const joinCode = params.get('join');
+    if (joinCode) {
+      setJoinCodeFromUrl(joinCode.toUpperCase());
+      // Clean up URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
 
   // Auth listener
   useEffect(() => {
@@ -247,6 +259,8 @@ function App() {
           onViewHistory={() => setView('history')}
           isLoggedIn={!!user}
           version={APP_VERSION}
+          initialJoinCode={joinCodeFromUrl}
+          onJoinCodeUsed={() => setJoinCodeFromUrl(null)}
         />
       );
     }
