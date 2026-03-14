@@ -164,13 +164,13 @@ export async function joinTrainingSession(
   }
 }
 
-// Submit a determination (student)
+// Submit a determination (student) - returns determinationId for later AI validation update
 export async function submitDetermination(
   sessionCode: string,
   participantId: string,
   determination: Omit<ParticipantDetermination, 'id' | 'completedAt'>
-): Promise<boolean> {
-  if (!firestore) return false;
+): Promise<string | null> {
+  if (!firestore) return null;
 
   const sessionId = sessionCode.toLowerCase();
   const determinationId = `${Date.now()}`;
@@ -185,7 +185,7 @@ export async function submitDetermination(
     );
 
     const participantDoc = await getDoc(participantRef);
-    if (!participantDoc.exists()) return false;
+    if (!participantDoc.exists()) return null;
 
     const currentData = participantDoc.data();
     const determinations = currentData.determinations || [];
@@ -201,10 +201,10 @@ export async function submitDetermination(
       lastActive: serverTimestamp(),
     });
 
-    return true;
+    return determinationId;
   } catch (error) {
     console.error('Error submitting determination:', error);
-    return false;
+    return null;
   }
 }
 
@@ -333,6 +333,51 @@ export async function validateDeterminationAsDocent(
     return true;
   } catch (error) {
     console.error('Error validating determination:', error);
+    return false;
+  }
+}
+
+// Update determination with AI validation (called from ResultView)
+export async function updateDeterminationWithAIValidation(
+  sessionCode: string,
+  participantId: string,
+  determinationId: string,
+  aiValidation: {
+    verdict: 'correct' | 'twijfelachtig' | 'onjuist';
+    feedback: string;
+  }
+): Promise<boolean> {
+  if (!firestore) return false;
+
+  const sessionId = sessionCode.toLowerCase();
+
+  try {
+    const participantRef = doc(
+      firestore,
+      'trainingSessions',
+      sessionId,
+      'participants',
+      participantId
+    );
+
+    const participantDoc = await getDoc(participantRef);
+    if (!participantDoc.exists()) return false;
+
+    const data = participantDoc.data();
+    const determinations = data.determinations.map((d: ParticipantDetermination) => {
+      if (d.id === determinationId) {
+        return {
+          ...d,
+          aiValidation,
+        };
+      }
+      return d;
+    });
+
+    await updateDoc(participantRef, { determinations });
+    return true;
+  } catch (error) {
+    console.error('Error updating determination with AI validation:', error);
     return false;
   }
 }

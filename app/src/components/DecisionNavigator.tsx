@@ -8,7 +8,7 @@ const MAX_HINTS = 3;
 interface DecisionNavigatorProps {
   imageUrl: string;
   onStep: (step: DeterminationStep) => void;
-  onComplete: (result: { type: string; description?: string }) => void;
+  onComplete: (result: { type: string; description?: string; hintsUsed: number }) => void;
   onBack: () => void;
 }
 
@@ -51,6 +51,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
       onComplete({
         type: result.result,
         description: formatTypeName(result.result),
+        hintsUsed,
       });
     } else if (result.nextQuestion) {
       setHistory((prev) => [...prev, currentQuestionId]);

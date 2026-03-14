@@ -7,6 +7,7 @@ import { validateDetermination, type ValidationResult } from '../lib/aiAnalysis'
 import { updateSession } from '../lib/db';
 import { exportToPdf } from '../lib/pdfExport';
 import { LocationPickerModal } from './LocationPickerModal';
+import { updateDeterminationWithAIValidation } from '../lib/trainingSession';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -20,14 +21,21 @@ function blobToFile(blob: Blob, filename: string): File {
   return new File([blob], filename, { type: blob.type || 'image/jpeg' });
 }
 
+interface TrainingInfo {
+  sessionCode: string;
+  participantId: string;
+  determinationId: string;
+}
+
 interface ResultViewProps {
   session: DeterminationSession;
   onNewDetermination: () => void;
   onViewHistory: () => void;
   onRedeterminate?: (session: DeterminationSession) => void;
+  trainingInfo?: TrainingInfo;
 }
 
-export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate }: ResultViewProps) {
+export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo }: ResultViewProps) {
   const [showAllImages, setShowAllImages] = useState(false);
   const [generatingSketch, setGeneratingSketch] = useState<string | null>(null);
   const [sketchError, setSketchError] = useState<string | null>(null);
@@ -84,6 +92,19 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           steps
         );
         setValidation(result);
+
+        // Sync AI validation to training session if in training mode
+        if (trainingInfo && result.success && result.verdict) {
+          await updateDeterminationWithAIValidation(
+            trainingInfo.sessionCode,
+            trainingInfo.participantId,
+            trainingInfo.determinationId,
+            {
+              verdict: result.verdict,
+              feedback: result.feedback || '',
+            }
+          );
+        }
       } catch (err) {
         console.error('Validation failed:', err);
         setValidation({ success: false, error: 'Validatie mislukt.' });
@@ -93,7 +114,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     };
 
     runValidation();
-  }, [session]);
+  }, [session, trainingInfo]);
 
   // Verzamel alle beschikbare afbeeldingen
   const allImages = localImages;

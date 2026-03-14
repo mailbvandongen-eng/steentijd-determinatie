@@ -58,6 +58,7 @@ function App() {
   const [capturedData, setCapturedData] = useState<CapturedData | null>(null);
   const [determinationSteps, setDeterminationSteps] = useState<DeterminationStep[]>([]);
   const [user, setUser] = useState<User | null>(null);
+  const [currentTrainingDeterminationId, setCurrentTrainingDeterminationId] = useState<string | null>(null);
   const welcomeModal = useWelcomeModal();
 
   // Auth listener
@@ -134,7 +135,7 @@ function App() {
   }, []);
 
   const handleDecisionComplete = useCallback(
-    async (result: { type: string; description?: string }) => {
+    async (result: { type: string; description?: string; hintsUsed: number }) => {
       if (currentSessionId) {
         await completeSession(
           currentSessionId,
@@ -150,7 +151,7 @@ function App() {
 
           // Submit to training session if in training mode
           if (appMode === 'training' && trainingSession) {
-            await submitDetermination(trainingSession.code, trainingSession.participantId, {
+            const detId = await submitDetermination(trainingSession.code, trainingSession.participantId, {
               resultType: result.type,
               resultDescription: result.description,
               steps: determinationSteps
@@ -160,8 +161,11 @@ function App() {
                   questionText: s.questionText,
                   answer: s.answer as 'ja' | 'nee',
                 })),
-              hintsUsed: 0, // TODO: Track hints used
+              hintsUsed: result.hintsUsed,
             });
+            setCurrentTrainingDeterminationId(detId);
+          } else {
+            setCurrentTrainingDeterminationId(null);
           }
 
           setView('result');
@@ -269,6 +273,11 @@ function App() {
           onNewDetermination={handleNewDetermination}
           onViewHistory={() => setView('history')}
           onRedeterminate={handleRedeterminate}
+          trainingInfo={appMode === 'training' && trainingSession && currentTrainingDeterminationId ? {
+            sessionCode: trainingSession.code,
+            participantId: trainingSession.participantId,
+            determinationId: currentTrainingDeterminationId,
+          } : undefined}
         />
       );
     }
