@@ -1,5 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import { StartScreen } from './components/StartScreen';
 import { ImageCapture } from './components/ImageCapture';
 import { DecisionNavigator } from './components/DecisionNavigator';
@@ -7,10 +9,13 @@ import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
 import { WelcomeModal, useWelcomeModal } from './components/WelcomeModal';
 import { SettingsMenu } from './components/SettingsMenu';
+import TrainerDashboard from './components/TrainerDashboard';
+import { auth, googleProvider } from './lib/firebase';
 import { createSession, completeSession, getSession } from './lib/db';
+import { joinTrainingSession, submitDetermination } from './lib/trainingSession';
 import type { DeterminationSession, LabeledImage, DeterminationStep } from './types';
 
-type View = 'start' | 'capture' | 'decision' | 'result' | 'history';
+type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
 const APP_VERSION = '2.0.0';
@@ -41,6 +46,7 @@ interface CapturedData {
 interface TrainingSession {
   code: string;
   participantName: string;
+  participantId: string;
 }
 
 function App() {
@@ -51,7 +57,17 @@ function App() {
   const [currentSession, setCurrentSession] = useState<DeterminationSession | null>(null);
   const [capturedData, setCapturedData] = useState<CapturedData | null>(null);
   const [determinationSteps, setDeterminationSteps] = useState<DeterminationStep[]>([]);
+  const [user, setUser] = useState<User | null>(null);
   const welcomeModal = useWelcomeModal();
+
+  // Auth listener
+  useEffect(() => {
+    if (!auth) return;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Start handlers
   const handleStartPractice = useCallback(() => {
@@ -60,12 +76,40 @@ function App() {
     setView('capture');
   }, []);
 
-  const handleStartTraining = useCallback((sessionCode: string, name: string) => {
-    setAppMode('training');
-    setTrainingSession({ code: sessionCode, participantName: name });
-    setView('capture');
-    // TODO: Connect to Firestore training session
+  const handleStartTraining = useCallback(async (sessionCode: string, name: string) => {
+    // Join the training session in Firestore
+    const result = await joinTrainingSession(sessionCode, name);
+    if (result) {
+      setAppMode('training');
+      setTrainingSession({
+        code: result.session.code,
+        participantName: name,
+        participantId: result.participantId,
+      });
+      setView('capture');
+    } else {
+      alert('Kon niet deelnemen aan de sessie. Controleer de sessiecode.');
+    }
   }, []);
+
+  const handleOpenTrainerDashboard = useCallback(async () => {
+    if (!user) {
+      // Login first
+      if (auth && googleProvider) {
+        try {
+          await signInWithPopup(auth, googleProvider);
+          setView('trainer');
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('Kon niet inloggen. Probeer het opnieuw.');
+        }
+      } else {
+        alert('Firebase is niet geconfigureerd. Login is niet beschikbaar.');
+      }
+    } else {
+      setView('trainer');
+    }
+  }, [user]);
 
   // Capture handler
   const handleCapture = useCallback(async (data: CapturedData) => {
@@ -103,11 +147,28 @@ function App() {
         const session = await getSession(currentSessionId);
         if (session) {
           setCurrentSession(session);
+
+          // Submit to training session if in training mode
+          if (appMode === 'training' && trainingSession) {
+            await submitDetermination(trainingSession.code, trainingSession.participantId, {
+              resultType: result.type,
+              resultDescription: result.description,
+              steps: determinationSteps
+                .filter((s) => s.answer === 'ja' || s.answer === 'nee')
+                .map((s) => ({
+                  questionId: s.questionId,
+                  questionText: s.questionText,
+                  answer: s.answer as 'ja' | 'nee',
+                })),
+              hintsUsed: 0, // TODO: Track hints used
+            });
+          }
+
           setView('result');
         }
       }
     },
-    [currentSessionId, determinationSteps]
+    [currentSessionId, determinationSteps, appMode, trainingSession]
   );
 
   // Navigation handlers
@@ -178,9 +239,15 @@ function App() {
         <StartScreen
           onStartPractice={handleStartPractice}
           onStartTraining={handleStartTraining}
+          onOpenTrainerDashboard={handleOpenTrainerDashboard}
+          isLoggedIn={!!user}
           version={APP_VERSION}
         />
       );
+    }
+
+    if (view === 'trainer') {
+      return <TrainerDashboard onBack={() => setView('start')} />;
     }
 
     if (view === 'decision' && capturedData) {
