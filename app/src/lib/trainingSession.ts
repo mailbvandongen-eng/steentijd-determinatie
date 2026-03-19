@@ -14,7 +14,6 @@ import {
   serverTimestamp,
   query,
   where,
-  orderBy,
 } from 'firebase/firestore';
 import type { Unsubscribe } from 'firebase/firestore';
 
@@ -244,27 +243,55 @@ export async function getDocentSessions(): Promise<TrainingSession[]> {
 
   try {
     const sessionsRef = collection(firestore, 'trainingSessions');
-    const q = query(
-      sessionsRef,
-      where('createdBy', '==', auth.currentUser.uid),
-      orderBy('createdAt', 'desc')
-    );
+    const q = query(sessionsRef, where('createdBy', '==', auth.currentUser.uid));
 
     const snapshot = await getDocs(q);
+    return snapshot.docs
+      .map((doc) => {
+        const data = doc.data();
+        return {
+          id: data.id,
+          code: data.code,
+          createdBy: data.createdBy,
+          createdByEmail: data.createdByEmail,
+          createdAt: data.createdAt?.toDate() || new Date(),
+          status: data.status,
+          title: data.title,
+        };
+      })
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  } catch (error) {
+    console.error('Error getting sessions:', error);
+    return [];
+  }
+}
+
+// Get participants for a session (one-time fetch, for closed sessions)
+export async function getSessionParticipants(sessionCode: string): Promise<Participant[]> {
+  if (!firestore) return [];
+
+  const sessionId = sessionCode.toLowerCase();
+  const participantsRef = collection(
+    firestore,
+    'trainingSessions',
+    sessionId,
+    'participants'
+  );
+
+  try {
+    const snapshot = await getDocs(participantsRef);
     return snapshot.docs.map((doc) => {
       const data = doc.data();
       return {
         id: data.id,
-        code: data.code,
-        createdBy: data.createdBy,
-        createdByEmail: data.createdByEmail,
-        createdAt: data.createdAt?.toDate() || new Date(),
-        status: data.status,
-        title: data.title,
+        name: data.name,
+        joinedAt: data.joinedAt?.toDate() || new Date(),
+        lastActive: data.lastActive?.toDate() || new Date(),
+        determinations: data.determinations || [],
       };
     });
   } catch (error) {
-    console.error('Error getting sessions:', error);
+    console.error('Error getting participants:', error);
     return [];
   }
 }

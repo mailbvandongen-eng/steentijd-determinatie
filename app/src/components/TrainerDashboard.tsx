@@ -12,12 +12,16 @@ import {
   X,
   ChevronDown,
   ChevronUp,
-  AlertCircle
+  AlertCircle,
+  LogOut,
+  Eye,
 } from 'lucide-react';
 import { auth } from '../lib/firebase';
+import { useAuth } from '../contexts/AuthContext';
 import {
   createTrainingSession,
   getDocentSessions,
+  getSessionParticipants,
   subscribeToParticipants,
   closeTrainingSession,
   deleteTrainingSession,
@@ -35,11 +39,14 @@ interface TrainerDashboardProps {
 }
 
 export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
+  const { signOut } = useAuth();
   const [sessions, setSessions] = useState<TrainingSession[]>([]);
+  const [selectedSession, setSelectedSession] = useState<TrainingSession | null>(null);
   const [activeSession, setActiveSession] = useState<TrainingSession | null>(null);
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
   const [newSessionTitle, setNewSessionTitle] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [expandedParticipant, setExpandedParticipant] = useState<string | null>(null);
@@ -50,21 +57,24 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
     loadSessions();
   }, []);
 
-  // Subscribe to participants when active session changes
+  // Subscribe to participants for active sessions, one-time fetch for closed sessions
   useEffect(() => {
-    if (!activeSession) {
+    if (!selectedSession) {
       setParticipants([]);
       return;
     }
 
-    const unsubscribe = subscribeToParticipants(activeSession.code, (newParticipants) => {
-      setParticipants(newParticipants);
-    });
-
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
-  }, [activeSession]);
+    if (selectedSession.status === 'active') {
+      const unsubscribe = subscribeToParticipants(selectedSession.code, (newParticipants) => {
+        setParticipants(newParticipants);
+      });
+      return () => {
+        if (unsubscribe) unsubscribe();
+      };
+    } else {
+      getSessionParticipants(selectedSession.code).then(setParticipants);
+    }
+  }, [selectedSession]);
 
   const loadSessions = async () => {
     setIsLoading(true);
@@ -75,6 +85,7 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
     const active = loadedSessions.find(s => s.status === 'active');
     if (active) {
       setActiveSession(active);
+      setSelectedSession(active);
     }
 
     setIsLoading(false);
@@ -82,19 +93,33 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
 
   const handleCreateSession = async () => {
     if (!auth?.currentUser) {
-      alert('Je moet ingelogd zijn om een sessie te maken');
+      setCreateError('Je moet ingelogd zijn om een sessie te maken');
       return;
     }
 
     setIsCreating(true);
+    setCreateError(null);
     const session = await createTrainingSession(newSessionTitle || undefined);
     if (session) {
       setSessions([session, ...sessions]);
       setActiveSession(session);
+      setSelectedSession(session);
       setShowCreateModal(false);
       setNewSessionTitle('');
+    } else {
+      setCreateError('Sessie aanmaken mislukt. Controleer je internetverbinding of Firestore-rechten.');
     }
     setIsCreating(false);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    onBack();
+  };
+
+  const handleViewClosedSession = async (session: TrainingSession) => {
+    setSelectedSession(session);
+    setExpandedParticipant(null);
   };
 
   const handleCloseSession = async (session: TrainingSession) => {
@@ -102,11 +127,13 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
 
     const success = await closeTrainingSession(session.code);
     if (success) {
-      setSessions(sessions.map(s =>
-        s.id === session.id ? { ...s, status: 'closed' } : s
-      ));
+      const closed = { ...session, status: 'closed' as const };
+      setSessions(sessions.map(s => s.id === session.id ? closed : s));
       if (activeSession?.id === session.id) {
-        setActiveSession({ ...session, status: 'closed' });
+        setActiveSession(null);
+      }
+      if (selectedSession?.id === session.id) {
+        setSelectedSession(closed);
       }
     }
   };
@@ -120,6 +147,9 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
       if (activeSession?.id === session.id) {
         setActiveSession(null);
       }
+      if (selectedSession?.id === session.id) {
+        setSelectedSession(null);
+      }
     }
   };
 
@@ -128,14 +158,28 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
     determinationId: string,
     approved: boolean
   ) => {
-    if (!activeSession) return;
+    if (!selectedSession) return;
 
-    await validateDeterminationAsDocent(
-      activeSession.code,
+    const success = await validateDeterminationAsDocent(
+      selectedSession.code,
       participantId,
       determinationId,
       approved
     );
+
+    // For closed sessions, refresh participants locally after validation
+    if (success && selectedSession.status === 'closed') {
+      setParticipants(prev => prev.map(p => {
+        if (p.id !== participantId) return p;
+        return {
+          ...p,
+          determinations: p.determinations.map(d => {
+            if (d.id !== determinationId) return d;
+            return { ...d, docentValidation: { approved, validatedAt: new Date() } };
+          }),
+        };
+      }));
+    }
   };
 
   const copySessionCode = () => {
@@ -181,26 +225,31 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
-          <div>
+          <div className="flex-1">
             <h1 className="text-xl font-bold">Docent Dashboard</h1>
             <p className="text-amber-100 text-sm">
               {auth?.currentUser?.email}
             </p>
           </div>
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-xl font-medium transition-colors text-sm"
+          >
+            <Plus className="w-4 h-4" />
+            Nieuwe sessie
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-xl font-medium transition-colors text-sm"
+            title="Uitloggen"
+          >
+            <LogOut className="w-4 h-4" />
+            <span className="hidden sm:inline">Uitloggen</span>
+          </button>
         </div>
       </header>
 
       <div className="p-4 max-w-4xl mx-auto">
-        {/* Session Controls */}
-        <div className="mb-6">
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-xl font-medium transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            Nieuwe Training Sessie
-          </button>
-        </div>
 
         {/* Active Session QR Code */}
         {activeSession && activeSession.status === 'active' && (
@@ -264,12 +313,28 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
         )}
 
         {/* Participants List */}
-        {activeSession && (
+        {selectedSession && (
           <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-4 border-b border-stone-200 dark:border-stone-700">
-              <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-100">
-                Deelnemers & Determinaties
-              </h3>
+            <div className="p-4 border-b border-stone-200 dark:border-stone-700 flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-stone-800 dark:text-stone-100">
+                  Deelnemers & Determinaties
+                </h3>
+                <p className="text-sm text-stone-500">
+                  {selectedSession.title || selectedSession.code} •{' '}
+                  <span className={selectedSession.status === 'active' ? 'text-green-600' : 'text-stone-400'}>
+                    {selectedSession.status === 'active' ? 'Actief' : 'Gesloten'}
+                  </span>
+                </p>
+              </div>
+              {selectedSession.status === 'closed' && (
+                <button
+                  onClick={() => setSelectedSession(null)}
+                  className="p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg transition-colors"
+                >
+                  <X className="w-4 h-4 text-stone-400" />
+                </button>
+              )}
             </div>
 
             {participants.length === 0 ? (
@@ -367,10 +432,19 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
                     <div className="flex items-center gap-2">
                       {session.status === 'active' && (
                         <button
-                          onClick={() => setActiveSession(session)}
+                          onClick={() => { setActiveSession(session); setSelectedSession(session); }}
                           className="px-3 py-1 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-colors"
                         >
                           Openen
+                        </button>
+                      )}
+                      {session.status === 'closed' && (
+                        <button
+                          onClick={() => handleViewClosedSession(session)}
+                          className="p-2 text-stone-500 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg transition-colors"
+                          title="Bekijken"
+                        >
+                          <Eye className="w-4 h-4" />
                         </button>
                       )}
                       <button
@@ -414,9 +488,15 @@ export default function TrainerDashboard({ onBack }: TrainerDashboardProps) {
                 className="w-full px-4 py-3 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               />
             </div>
+            {createError && (
+              <div className="mb-4 flex items-start gap-2 p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-xl text-sm">
+                <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                {createError}
+              </div>
+            )}
             <div className="flex gap-3">
               <button
-                onClick={() => setShowCreateModal(false)}
+                onClick={() => { setShowCreateModal(false); setCreateError(null); }}
                 className="flex-1 px-4 py-3 border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 rounded-xl font-medium hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
               >
                 Annuleren
