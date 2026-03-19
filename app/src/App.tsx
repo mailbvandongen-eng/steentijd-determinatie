@@ -7,7 +7,7 @@ import { ImageCapture } from './components/ImageCapture';
 import { DecisionNavigator } from './components/DecisionNavigator';
 import { ResultView } from './components/ResultView';
 import { HistoryView } from './components/HistoryView';
-import { WelcomeModal, useWelcomeModal } from './components/WelcomeModal';
+
 import { SettingsMenu } from './components/SettingsMenu';
 import TrainerDashboard from './components/TrainerDashboard';
 import { auth, googleProvider } from './lib/firebase';
@@ -64,8 +64,6 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
   const [currentTrainingDeterminationId, setCurrentTrainingDeterminationId] = useState<string | null>(null);
   const [joinCodeFromUrl, setJoinCodeFromUrl] = useState<string | null>(null);
-  const welcomeModal = useWelcomeModal();
-
   // Check for join code in URL (from QR code scan)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -363,7 +361,7 @@ function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                 </svg>
               </button>
-              <SettingsMenu onShowWelcome={welcomeModal.open} version={APP_VERSION} />
+              <SettingsMenu onShowWelcome={() => {}} version={APP_VERSION} />
             </div>
           </div>
         </header>
@@ -390,8 +388,6 @@ function App() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Welcome Modal */}
-      {welcomeModal.isOpen && <WelcomeModal onClose={welcomeModal.close} />}
     </div>
   );
 }

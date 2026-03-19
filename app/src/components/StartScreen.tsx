@@ -306,71 +306,116 @@ export function StartScreen({
         <p className="text-stone-400 text-xs">v{version} - AWN Steentijdwerkgroep</p>
       </footer>
 
-      {/* Info bottom sheet */}
+      {/* Info modal — zelfde stijl als v1 welkomstscherm */}
       {showInfo && (
-        <div
-          className="fixed inset-0 z-50 flex flex-col justify-end bg-black/40"
-          onClick={() => setShowInfo(false)}
-        >
-          <div
-            className="bg-white rounded-t-3xl max-h-[80vh] flex flex-col shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Sheet header */}
-            <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-stone-100">
-              <h2 className="text-lg font-bold text-stone-800">Over Steentijd</h2>
-              <button
-                onClick={() => setShowInfo(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-stone-100 hover:bg-stone-200 transition-colors"
-              >
-                <X size={16} className="text-stone-600" />
-              </button>
-            </div>
-
-            {/* Scrollbaar content */}
-            <div className="overflow-y-auto flex-1 px-6 py-4 space-y-5">
-
-              {/* App uitleg */}
-              <div>
-                <p className="text-stone-600 text-sm leading-relaxed">
-                  Steentijd helpt je bij het determineren van stenen artefacten uit de prehistorie.
-                  Werk je op door de niveaus: begin als <strong>Beginner</strong> met hints en hulp,
-                  en groei door naar <strong>Gevorderd</strong> door oefening en docentvalidaties.
-                </p>
-                <p className="text-stone-500 text-xs mt-2">
-                  Ontwikkeld door de AWN Landelijke Werkgroep Steentijd.
-                </p>
+        <>
+          <div className="fixed inset-0 bg-black/50 z-[2000]" onClick={() => setShowInfo(false)} />
+          <div className="fixed inset-4 z-[2000] flex items-center justify-center pointer-events-none">
+            <div
+              className="rounded-2xl shadow-2xl overflow-hidden flex flex-col w-full max-w-md max-h-full pointer-events-auto bg-white dark:bg-stone-800"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center">
+                <h2 className="text-xl font-bold">Over Steentijd</h2>
+                <p className="text-amber-200 text-sm">AI-begeleide determinatie van stenen artefacten</p>
               </div>
 
-              {/* Changelog */}
-              <div>
-                <h3 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
-                  Versiegeschiedenis
-                </h3>
-                <div className="space-y-4">
-                  {CHANGELOG.map((entry) => (
-                    <div key={entry.version}>
-                      <div className="flex items-baseline gap-2 mb-1">
-                        <span className="text-xs font-mono bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
-                          v{entry.version}
-                        </span>
-                        <span className="text-sm font-medium text-stone-700">{entry.title}</span>
+              {/* Scrollbare content */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+
+                {/* Hoe werkt het */}
+                <section>
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Hoe werkt het?</h3>
+                  <div className="space-y-3">
+                    {[
+                      { n: 1, title: "Foto maken", desc: "Maak meerdere foto's van je artefact (voor, achter, zijkanten)" },
+                      { n: 2, title: "Beslisboom doorlopen", desc: "Beantwoord stap voor stap vragen over het artefact" },
+                      { n: 3, title: "AI-validatie", desc: "De AI beoordeelt je determinatie en geeft feedback" },
+                      { n: 4, title: "Niveau opbouwen", desc: "Werk van Beginner naar Gevorderd door oefening en docentvalidaties" },
+                    ].map(({ n, title, desc }) => (
+                      <div key={n} className="flex gap-3">
+                        <div className="w-7 h-7 flex items-center justify-center bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-400 rounded-full text-sm font-bold shrink-0">
+                          {n}
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-medium text-stone-800 dark:text-stone-100">{title}</h4>
+                          <p className="text-xs text-stone-500 dark:text-stone-400">{desc}</p>
+                        </div>
                       </div>
-                      <ul className="space-y-0.5 pl-2">
-                        {entry.items.map((item, i) => (
-                          <li key={i} className="text-xs text-stone-500 flex gap-1.5">
-                            <span className="text-amber-400 mt-0.5">•</span>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Niveaus */}
+                <section className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-3 border border-amber-200 dark:border-amber-800">
+                  <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-400 mb-1">Niveaus</h3>
+                  <ul className="text-xs text-amber-700 dark:text-amber-300 space-y-1">
+                    <li>• <strong>Beginner</strong> — AI-hints, referentiefoto's en uitleg bij elke vraag</li>
+                    <li>• <strong>Gevorderd</strong> — Zelfstandig determineren, geen hints</li>
+                    <li>• Ontgrendel Gevorderd met 20 correcte determinaties of 5 docentvalidaties</li>
+                  </ul>
+                </section>
+
+                {/* AWN */}
+                <section className="rounded-xl p-3 border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-700/50">
+                  <h3 className="text-sm font-semibold mb-2 text-stone-800 dark:text-stone-100">AWN Werkgroep Steentijd</h3>
+                  <p className="text-xs text-stone-600 dark:text-stone-400 mb-2">
+                    Deze app is gebaseerd op het determinatie-algoritme van de AWN Landelijke Werkgroep Steentijd.
+                  </p>
+                  <div className="space-y-1">
+                    {[
+                      { href: "https://awn-archeologie.nl/werkgroep/steentijd/", label: "Over de werkgroep" },
+                      { href: "https://awn-archeologie.nl/werkgroep/steentijd/determinatie/", label: "Determinatie-algoritme" },
+                      { href: "https://awn-archeologie.nl/werkgroep/steentijd/vondstkaart/", label: "Vondstkaart Nederland" },
+                    ].map(({ href, label }) => (
+                      <a key={href} href={href} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400 hover:text-amber-600 transition-colors"
+                      >
+                        <span className="text-stone-400">→</span>{label}
+                      </a>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Disclaimer */}
+                <section className="rounded-xl p-3 border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/20">
+                  <p className="text-xs text-amber-800 dark:text-amber-400">
+                    <strong>Let op:</strong> Dit is een hulpmiddel. Raadpleeg bij twijfel altijd een expert van de AWN Werkgroep Steentijd.
+                  </p>
+                </section>
+
+                {/* Changelog */}
+                <section>
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Wat is nieuw?</h3>
+                  <div className="space-y-2 max-h-40 overflow-y-auto">
+                    {CHANGELOG.map((entry) => (
+                      <div key={entry.version} className="text-xs border-l-2 border-amber-400 dark:border-amber-600 pl-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-stone-800 dark:text-stone-100">v{entry.version}</span>
+                          <span className="text-stone-400">{entry.title}</span>
+                        </div>
+                        <ul className="mt-0.5 text-stone-500 dark:text-stone-400">
+                          {entry.items.map((item, i) => <li key={i}>• {item}</li>)}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-end px-4 py-3 border-t border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-900/50">
+                <button
+                  onClick={() => setShowInfo(false)}
+                  className="px-6 py-2 text-sm font-semibold text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition-colors"
+                >
+                  OK
+                </button>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
