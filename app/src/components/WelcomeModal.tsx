@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.0', date: '17 mrt 2026', changes: ['Progressiesysteem: Beginner → Gevorderd → Expert', 'Niveau selector op startscherm', 'Voortgangsbalk naar gevorderd niveau', 'Vrij spelen modus', 'Uitleg progressie in welkomstscherm'] },
   { version: '1.4.20', date: '22 feb 2026', changes: ['Verbeterde AI tekeningen (inkt stijl)', 'Zoeklocaties op kaart markeren', 'Kaart zoekfunctie', 'Kaartlagen panel (satelliet, filters)', 'Light mode standaard', 'Nieuwe professionele header'] },
   { version: '1.3.0', date: '21 feb 2026', changes: ['Vindplaats kaart toegevoegd', 'Vondsten zichtbaar op kaart', 'Verbeterd light mode contrast'] },
   { version: '1.2.1', date: '21 feb 2026', changes: ['Dark mode (standaard aan)', 'Sidebar navigatie op desktop', 'Statistieken in geschiedenis', 'Hover animaties op cards'] },
@@ -169,6 +170,33 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                 </p>
                 <p className="pt-1" style={{ color: 'var(--text-muted)' }}>
                   <strong>Toekomst:</strong> trainbaar model, referentiedatabase, video-analyse met zelflerende AI.
+                </p>
+              </div>
+            </section>
+
+            {/* Progressiesysteem */}
+            <section className="rounded-xl p-3 border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
+              <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Doorgroeien van Beginner naar Gevorderd</h3>
+              <div className="text-xs space-y-2" style={{ color: 'var(--text-secondary)' }}>
+                <p>
+                  De app heeft drie niveaus: <strong>Beginner</strong>, <strong>Gevorderd</strong>, en <strong>Expert</strong> (binnenkort).
+                </p>
+                <p>
+                  <strong>Als Beginner</strong> krijg je volledige hulp: AI-hints (max 3 per sessie), referentiefoto's bij elke vraag, en uitleg bij de beslisboom.
+                </p>
+                <p>
+                  <strong>Hoe ontgrendel je Gevorderd?</strong>
+                </p>
+                <ul className="pl-3 space-y-1" style={{ color: 'var(--text-secondary)' }}>
+                  <li>• <strong>20 correcte determinaties</strong> — Na elke determinatie geeft de AI een beoordeling (correct/twijfelachtig/onjuist). Alleen "correct" telt mee.</li>
+                  <li>• <strong>5 docent-validaties</strong> — Neem deel aan een training en krijg bevestiging van een docent.</li>
+                  <li>• Of: een docent kan je direct naar Gevorderd promoveren.</li>
+                </ul>
+                <p>
+                  <strong>Op Gevorderd niveau</strong> werk je zelfstandiger: geen hints meer, en feedback alleen bij fouten.
+                </p>
+                <p style={{ color: 'var(--text-muted)' }}>
+                  Je kunt ook "vrij spelen" om niveaus te proberen zonder dat het meetelt voor je voortgang.
                 </p>
               </div>
             </section>

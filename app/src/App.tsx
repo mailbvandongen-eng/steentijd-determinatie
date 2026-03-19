@@ -13,12 +13,12 @@ import TrainerDashboard from './components/TrainerDashboard';
 import { auth, googleProvider } from './lib/firebase';
 import { createSession, completeSession, getSession } from './lib/db';
 import { joinTrainingSession, submitDetermination } from './lib/trainingSession';
-import type { DeterminationSession, LabeledImage, DeterminationStep } from './types';
+import type { DeterminationSession, LabeledImage, DeterminationStep, UserLevel } from './types';
 
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.1.0';
+const APP_VERSION = '2.2.0';
 
 // Animation variants
 const pageVariants = {
@@ -57,6 +57,10 @@ function App() {
   const [currentSession, setCurrentSession] = useState<DeterminationSession | null>(null);
   const [capturedData, setCapturedData] = useState<CapturedData | null>(null);
   const [determinationSteps, setDeterminationSteps] = useState<DeterminationStep[]>([]);
+  const [sessionLevel, setSessionLevel] = useState<UserLevel>('beginner');
+  const [sessionIsSandbox, setSessionIsSandbox] = useState(false);
+  const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
+  const [sessionHintsUsed, setSessionHintsUsed] = useState(0);
   const [user, setUser] = useState<User | null>(null);
   const [currentTrainingDeterminationId, setCurrentTrainingDeterminationId] = useState<string | null>(null);
   const [joinCodeFromUrl, setJoinCodeFromUrl] = useState<string | null>(null);
@@ -83,9 +87,11 @@ function App() {
   }, []);
 
   // Start handlers
-  const handleStartPractice = useCallback(() => {
+  const handleStartPractice = useCallback((level: UserLevel, isSandbox: boolean) => {
     setAppMode('practice');
     setTrainingSession(null);
+    setSessionLevel(level);
+    setSessionIsSandbox(isSandbox);
     setView('capture');
   }, []);
 
@@ -137,6 +143,8 @@ function App() {
     setCurrentSessionId(sessionId);
     setCapturedData(data);
     setDeterminationSteps([]);
+    setSessionStartTime(Date.now());
+    setSessionHintsUsed(0);
     setView('decision');
   }, []);
 
@@ -148,6 +156,9 @@ function App() {
 
   const handleDecisionComplete = useCallback(
     async (result: { type: string; description?: string; hintsUsed: number }) => {
+      // Store hints used for result view
+      setSessionHintsUsed(result.hintsUsed);
+
       if (currentSessionId) {
         await completeSession(
           currentSessionId,
@@ -276,6 +287,8 @@ function App() {
           onStep={handleDecisionStep}
           onComplete={handleDecisionComplete}
           onBack={handleBackFromDecision}
+          level={sessionLevel}
+          isSandbox={sessionIsSandbox}
         />
       );
     }
@@ -292,6 +305,10 @@ function App() {
             participantId: trainingSession.participantId,
             determinationId: currentTrainingDeterminationId,
           } : undefined}
+          level={sessionLevel}
+          isSandbox={sessionIsSandbox}
+          hintsUsed={sessionHintsUsed}
+          startTime={sessionStartTime ?? undefined}
         />
       );
     }

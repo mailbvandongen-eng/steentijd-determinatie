@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getQuestion, processAnswer, getImagesForQuestion, formatTypeName } from '../lib/decisionTree';
 import { getHintForQuestion } from '../lib/aiAnalysis';
-import type { DeterminationStep } from '../types';
+import type { DeterminationStep, UserLevel } from '../types';
 
 const MAX_HINTS = 3;
 
@@ -10,9 +10,11 @@ interface DecisionNavigatorProps {
   onStep: (step: DeterminationStep) => void;
   onComplete: (result: { type: string; description?: string; hintsUsed: number }) => void;
   onBack: () => void;
+  level?: UserLevel;
+  isSandbox?: boolean;
 }
 
-export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: DecisionNavigatorProps) {
+export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level = 'beginner', isSandbox = false }: DecisionNavigatorProps) {
   const [currentQuestionId, setCurrentQuestionId] = useState('1');
   const [history, setHistory] = useState<string[]>([]);
   const [stepCount, setStepCount] = useState(1);
@@ -20,15 +22,25 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
   const [currentHint, setCurrentHint] = useState<string | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
+  // Gevorderd mode: toon toelichting pas na antwoord
+  const [showToelichtingAfterAnswer, setShowToelichtingAfterAnswer] = useState(false);
+  const [lastAnswer, setLastAnswer] = useState<'ja' | 'nee' | null>(null);
 
   const question = getQuestion(currentQuestionId);
   const images = getImagesForQuestion(currentQuestionId);
+
+  // In gevorderd mode zijn hints niet beschikbaar
+  const hintsEnabled = level === 'beginner';
+  // In gevorderd mode: toelichting pas na antwoord
+  const showToelichtingDirectly = level === 'beginner';
 
   useEffect(() => {
     window.scrollTo(0, 0);
     // Clear hint when question changes
     setCurrentHint(null);
     setHintError(null);
+    setShowToelichtingAfterAnswer(false);
+    setLastAnswer(null);
   }, [currentQuestionId]);
 
   const handleAnswer = (answer: 'ja' | 'nee') => {
@@ -46,6 +58,34 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
 
     // Verwerk het antwoord
     const result = processAnswer(currentQuestionId, answer);
+
+    const proceedToNext = () => {
+      if (result.isEnd && result.result) {
+        onComplete({
+          type: result.result,
+          description: formatTypeName(result.result),
+          hintsUsed,
+        });
+      } else if (result.nextQuestion) {
+        setHistory((prev) => [...prev, currentQuestionId]);
+        setCurrentQuestionId(result.nextQuestion);
+        setStepCount((c) => c + 1);
+      }
+    };
+
+    // In gevorderd mode: toon toelichting na antwoord (als er toelichting is)
+    if (level === 'gevorderd' && question.toelichting) {
+      setLastAnswer(answer);
+      setShowToelichtingAfterAnswer(true);
+      // Auto-proceed after 2 seconds, or user can click "Verder"
+    } else {
+      proceedToNext();
+    }
+  };
+
+  const handleContinueAfterFeedback = () => {
+    if (!question) return;
+    const result = processAnswer(currentQuestionId, lastAnswer!);
 
     if (result.isEnd && result.result) {
       onComplete({
@@ -110,7 +150,15 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
     );
   }
 
-  const canUseHint = hintsUsed < MAX_HINTS && !isLoadingHint;
+  const canUseHint = hintsEnabled && hintsUsed < MAX_HINTS && !isLoadingHint;
+
+  // Level indicator config
+  const levelConfig = {
+    beginner: { icon: '🌱', label: 'Beginner', color: 'bg-green-500/20 text-green-400' },
+    gevorderd: { icon: '🌿', label: 'Gevorderd', color: 'bg-amber-500/20 text-amber-400' },
+    expert: { icon: '🌳', label: 'Expert', color: 'bg-purple-500/20 text-purple-400' },
+  };
+  const currentLevelConfig = levelConfig[level];
 
   return (
     <div className="h-full flex flex-col overflow-hidden bg-stone-50">
@@ -126,14 +174,61 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
           <p className="text-white text-sm font-medium">Stap {stepCount}</p>
           <p className="text-stone-400 text-xs">{history.length > 0 ? 'Terug = vorige vraag' : 'Terug = annuleren'}</p>
         </div>
-        {/* Hint counter */}
-        <div className="flex items-center gap-1 text-amber-400">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-          <span className="text-xs font-medium">{MAX_HINTS - hintsUsed}</span>
+        {/* Level badge */}
+        <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${currentLevelConfig.color}`}>
+          <span>{currentLevelConfig.icon}</span>
+          {isSandbox && <span className="opacity-70">Vrij</span>}
         </div>
+        {/* Hint counter - only show in beginner mode */}
+        {hintsEnabled && (
+          <div className="flex items-center gap-1 text-amber-400">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            <span className="text-xs font-medium">{MAX_HINTS - hintsUsed}</span>
+          </div>
+        )}
       </div>
+
+      {/* Gevorderd mode: Feedback modal after answer */}
+      {showToelichtingAfterAnswer && question.toelichting && (
+        <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-5 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                lastAnswer === 'ja' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
+              }`}>
+                {lastAnswer === 'ja' ? (
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
+              </div>
+              <div>
+                <p className="font-semibold text-stone-900">
+                  Je antwoord: {lastAnswer === 'ja' ? 'Ja' : 'Nee'}
+                </p>
+                <p className="text-sm text-stone-500">Bekijk de toelichting</p>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 p-3 rounded-lg border-l-4 border-amber-400">
+              <p className="text-sm text-stone-700">{question.toelichting}</p>
+            </div>
+
+            <button
+              onClick={handleContinueAfterFeedback}
+              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-lg transition-colors"
+            >
+              Verder
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Content - scrollable */}
       <div className="flex-1 overflow-y-auto p-3">
@@ -142,9 +237,16 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
           <h2 className="text-lg font-semibold text-stone-900 mb-2">
             {question.vraag}
           </h2>
-          {question.toelichting && (
+          {/* Toelichting: in beginner direct, in gevorderd pas na antwoord */}
+          {question.toelichting && showToelichtingDirectly && (
             <p className="text-sm text-stone-600 bg-amber-50 p-2 rounded border-l-4 border-amber-400">
               {question.toelichting}
+            </p>
+          )}
+          {/* In gevorderd mode: hint dat er toelichting komt na antwoord */}
+          {question.toelichting && !showToelichtingDirectly && !showToelichtingAfterAnswer && (
+            <p className="text-xs text-stone-400 italic mt-2">
+              Toelichting beschikbaar na je antwoord
             </p>
           )}
         </div>
@@ -213,28 +315,32 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack }: Deci
 
       {/* Antwoord knoppen - fixed */}
       <div className="p-3 bg-white border-t border-stone-200 shrink-0">
-        {/* Hint button */}
-        <div className="flex justify-center mb-2">
-          <button
-            onClick={handleRequestHint}
-            disabled={!canUseHint}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              canUseHint
-                ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                : 'bg-stone-100 text-stone-400 cursor-not-allowed'
-            }`}
-          >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-            {hintsUsed >= MAX_HINTS
-              ? 'Geen hints meer'
-              : `Vraag AI hint (${MAX_HINTS - hintsUsed} over)`}
-          </button>
-        </div>
+        {/* Hint button - only in beginner mode */}
+        {hintsEnabled && (
+          <div className="flex justify-center mb-2">
+            <button
+              onClick={handleRequestHint}
+              disabled={!canUseHint}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                canUseHint
+                  ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                  : 'bg-stone-100 text-stone-400 cursor-not-allowed'
+              }`}
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              {hintsUsed >= MAX_HINTS
+                ? 'Geen hints meer'
+                : `Vraag AI hint (${MAX_HINTS - hintsUsed} over)`}
+            </button>
+          </div>
+        )}
 
         <p className="text-xs text-stone-500 text-center mb-2">
-          Bekijk je artefact en beantwoord de vraag
+          {level === 'gevorderd'
+            ? 'Zelfstandig determineren - geen hints beschikbaar'
+            : 'Bekijk je artefact en beantwoord de vraag'}
         </p>
         <div className="flex gap-3">
           <button

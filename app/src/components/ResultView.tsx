@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin, AlertCircle, CheckCircle, HelpCircle } from 'lucide-react';
-import type { DeterminationSession, LabeledImage, VondstLocatie } from '../types';
+import type { DeterminationSession, LabeledImage, VondstLocatie, UserLevel } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
 import { validateDetermination, type ValidationResult } from '../lib/aiAnalysis';
@@ -8,6 +8,7 @@ import { updateSession } from '../lib/db';
 import { exportToPdf } from '../lib/pdfExport';
 import { LocationPickerModal } from './LocationPickerModal';
 import { updateDeterminationWithAIValidation } from '../lib/trainingSession';
+import { useUser } from '../contexts/UserContext';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -33,9 +34,15 @@ interface ResultViewProps {
   onViewHistory: () => void;
   onRedeterminate?: (session: DeterminationSession) => void;
   trainingInfo?: TrainingInfo;
+  level?: UserLevel;
+  isSandbox?: boolean;
+  hintsUsed?: number;
+  startTime?: number;
 }
 
-export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo }: ResultViewProps) {
+export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo, level = 'beginner', isSandbox = false, hintsUsed = 0, startTime }: ResultViewProps) {
+  const { profile, progress, recordResult, isLevelUnlocked } = useUser();
+  const [hasRecordedResult, setHasRecordedResult] = useState(false);
   const [showAllImages, setShowAllImages] = useState(false);
   const [generatingSketch, setGeneratingSketch] = useState<string | null>(null);
   const [sketchError, setSketchError] = useState<string | null>(null);
@@ -105,6 +112,14 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
             }
           );
         }
+
+        // Record result in user profile (unless sandbox mode)
+        if (result.success && result.verdict && !hasRecordedResult) {
+          const wasCorrect = result.verdict === 'correct';
+          const durationMs = startTime ? Date.now() - startTime : 0;
+          recordResult(wasCorrect, hintsUsed, durationMs, session.result?.category, isSandbox);
+          setHasRecordedResult(true);
+        }
       } catch (err) {
         console.error('Validation failed:', err);
         setValidation({ success: false, error: 'Validatie mislukt.' });
@@ -114,7 +129,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     };
 
     runValidation();
-  }, [session, trainingInfo]);
+  }, [session, trainingInfo, hasRecordedResult, recordResult, hintsUsed, isSandbox, startTime]);
 
   // Verzamel alle beschikbare afbeeldingen
   const allImages = localImages;
@@ -665,6 +680,53 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
         )}
 
       </div>
+
+      {/* Progressie Sectie - alleen tonen als niet in sandbox en er validatie is */}
+      {!isSandbox && validation?.success && validation?.verdict && (
+        <div className="px-4 pb-2">
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-3 border border-amber-200">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span className={`text-xs px-2 py-0.5 rounded-full ${
+                  level === 'beginner' ? 'bg-green-100 text-green-700' :
+                  level === 'gevorderd' ? 'bg-amber-100 text-amber-700' :
+                  'bg-purple-100 text-purple-700'
+                }`}>
+                  {level === 'beginner' ? '🌱' : level === 'gevorderd' ? '🌿' : '🌳'} {level}
+                </span>
+                <span className="text-sm font-medium text-amber-800">
+                  {validation.verdict === 'correct' ? '+1 correct!' : 'Blijf oefenen!'}
+                </span>
+              </div>
+              {!isLevelUnlocked('gevorderd') && (
+                <span className="text-xs text-amber-600 font-medium">
+                  {progress.percentage}% naar Gevorderd
+                </span>
+              )}
+            </div>
+            {!isLevelUnlocked('gevorderd') && (
+              <>
+                <div className="h-2 bg-amber-100 rounded-full overflow-hidden mb-2">
+                  <div
+                    className="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all duration-500"
+                    style={{ width: `${progress.percentage}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-amber-700">
+                  <span>{profile.totalCorrect}/20 correct</span>
+                  <span>{profile.docentValidations}/5 validaties</span>
+                </div>
+              </>
+            )}
+            {isLevelUnlocked('gevorderd') && (
+              <div className="flex items-center gap-2 text-sm text-green-700">
+                <CheckCircle className="w-4 h-4" />
+                <span>Gevorderd niveau ontgrendeld!</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Acties */}
       <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white border-t border-stone-200 shrink-0 space-y-3">

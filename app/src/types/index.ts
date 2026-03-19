@@ -40,6 +40,11 @@ export interface DeterminationSession {
   updatedAt: string;
   status: 'in_progress' | 'completed' | 'abandoned';
 
+  // Progressie velden
+  level?: UserLevel;          // Op welk niveau gespeeld
+  isSandbox?: boolean;        // Vrij spelen (telt niet mee)
+  hintsUsed?: number;         // Aantal hints gebruikt
+
   input: {
     type: 'photo' | 'video' | 'multi-photo';
     // Enkelvoudige foto/video (backwards compatible)
@@ -64,6 +69,12 @@ export interface DeterminationSession {
     confidence?: 'laag' | 'gemiddeld' | 'hoog';
     characteristics?: string[];
     fullAnalysis?: string; // Volledige AI response
+  };
+
+  // AI validatie resultaat
+  aiValidation?: {
+    verdict: 'correct' | 'twijfelachtig' | 'onjuist';
+    feedback: string;
   };
 
   synced: boolean;
@@ -93,4 +104,45 @@ export interface SavedLocation {
   linkedSessionIds: number[];     // Gekoppelde determinatie IDs
   cloudId?: string;
   lastSyncedAt?: string;
+}
+
+// Progressie systeem types
+export type UserLevel = 'beginner' | 'gevorderd' | 'expert';
+
+export interface LevelStats {
+  attempts: number;
+  correct: number;
+  hintsUsed: number;
+  averageTime: number; // milliseconds per sessie
+  lastPlayed: string | null;
+}
+
+export interface UserProfile {
+  id: string;
+  createdAt: string;
+  currentLevel: UserLevel;
+  unlockedLevels: UserLevel[];
+
+  // Progressie tracking
+  totalCorrect: number;          // AI-correct verdicts
+  totalAttempts: number;         // Totaal aantal determinaties
+  docentValidations: number;     // Aantal docent goedkeuringen
+
+  // Stats per niveau
+  stats: {
+    beginner: LevelStats;
+    gevorderd: LevelStats;
+    expert: LevelStats;
+  };
+
+  // Category mastery (optioneel voor later)
+  categoryScores: Record<string, { correct: number; total: number }>;
+}
+
+// Feedback per stap (voor gevorderd modus)
+export interface StepFeedback {
+  questionId: string;
+  wasCorrect: boolean;
+  correctAnswer?: 'ja' | 'nee';
+  explanation?: string;
 }
