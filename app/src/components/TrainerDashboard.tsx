@@ -524,6 +524,7 @@ function DeterminationCard({
   determination: ParticipantDetermination;
   onValidate: (approved: boolean) => void;
 }) {
+  const [showSteps, setShowSteps] = useState(false);
   const hasDocentValidation = !!determination.docentValidation;
   const aiVerdict = determination.aiValidation?.verdict;
 
@@ -534,9 +535,29 @@ function DeterminationCard({
           <p className="font-medium text-stone-800 dark:text-stone-100">
             {formatTypeName(determination.resultType)}
           </p>
-          <p className="text-sm text-stone-500 mt-1">
-            {determination.steps.length} stappen • {determination.hintsUsed} hints gebruikt
-          </p>
+          <button
+            onClick={() => setShowSteps(s => !s)}
+            className="text-sm text-stone-500 mt-1 hover:text-amber-600 transition-colors flex items-center gap-1"
+          >
+            {determination.steps.length} stappen • {determination.hintsUsed} hints
+            {determination.steps.length > 0 && (
+              showSteps ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />
+            )}
+          </button>
+
+          {/* Steps list */}
+          {showSteps && determination.steps.length > 0 && (
+            <ol className="mt-2 space-y-1 text-xs text-stone-600 dark:text-stone-400">
+              {determination.steps.map((step, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold ${step.answer === 'ja' ? 'bg-green-500' : 'bg-red-500'}`}>
+                    {step.answer === 'ja' ? 'J' : 'N'}
+                  </span>
+                  <span className="pt-0.5">{step.questionText}</span>
+                </li>
+              ))}
+            </ol>
+          )}
 
           {/* AI Validation Badge */}
           {aiVerdict && (

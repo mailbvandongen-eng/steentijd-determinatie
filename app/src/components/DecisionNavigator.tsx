@@ -17,6 +17,7 @@ interface DecisionNavigatorProps {
 export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level = 'beginner', isSandbox = false }: DecisionNavigatorProps) {
   const [currentQuestionId, setCurrentQuestionId] = useState('1');
   const [history, setHistory] = useState<string[]>([]);
+  const [forwardHistory, setForwardHistory] = useState<string[]>([]);
   const [stepCount, setStepCount] = useState(1);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [currentHint, setCurrentHint] = useState<string | null>(null);
@@ -58,6 +59,9 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
 
     // Verwerk het antwoord
     const result = processAnswer(currentQuestionId, answer);
+
+    // Clear forward history when user makes a new answer choice
+    setForwardHistory([]);
 
     const proceedToNext = () => {
       if (result.isEnd && result.result) {
@@ -103,11 +107,22 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
   const handleGoBack = () => {
     if (history.length > 0) {
       const prev = history[history.length - 1];
+      setForwardHistory((f) => [currentQuestionId, ...f]);
       setHistory((h) => h.slice(0, -1));
       setCurrentQuestionId(prev);
       setStepCount((c) => c - 1);
     } else {
       onBack();
+    }
+  };
+
+  const handleGoForward = () => {
+    if (forwardHistory.length > 0) {
+      const next = forwardHistory[0];
+      setHistory((h) => [...h, currentQuestionId]);
+      setForwardHistory((f) => f.slice(1));
+      setCurrentQuestionId(next);
+      setStepCount((c) => c + 1);
     }
   };
 
@@ -355,6 +370,29 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
           >
             Nee
           </button>
+        </div>
+        {/* Back / Forward navigation */}
+        <div className="flex gap-2 mt-2">
+          <button
+            onClick={handleGoBack}
+            className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            {history.length > 0 ? 'Vorige stap' : 'Annuleren'}
+          </button>
+          {forwardHistory.length > 0 && (
+            <button
+              onClick={handleGoForward}
+              className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors"
+            >
+              Volgende stap
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </div>

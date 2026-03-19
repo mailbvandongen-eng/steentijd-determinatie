@@ -1,23 +1,26 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, Trash2, Image, List, Map } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Trash2, Image, List, Map, MapPin, RotateCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { getAllSessions, deleteSession } from '../lib/db';
-import type { DeterminationSession } from '../types';
+import { getAllSessions, deleteSession, updateSession } from '../lib/db';
+import type { DeterminationSession, VondstLocatie } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { HistoryMap } from './HistoryMap';
+import { LocationPickerModal } from './LocationPickerModal';
 
 type ViewMode = 'list' | 'map';
 
 interface HistoryViewProps {
   onBack: () => void;
   onSelectSession: (session: DeterminationSession) => void;
+  onResume?: (session: DeterminationSession) => void;
 }
 
-export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
+export function HistoryView({ onBack, onSelectSession, onResume }: HistoryViewProps) {
   const [sessions, setSessions] = useState<DeterminationSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [locationPickerSession, setLocationPickerSession] = useState<DeterminationSession | null>(null);
 
   useEffect(() => {
     loadData();
@@ -56,6 +59,15 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
       await deleteSession(id);
       loadData();
     }
+  };
+
+  const handleSaveLocation = async (location: VondstLocatie | undefined) => {
+    if (!location || !locationPickerSession?.id) return;
+    await updateSession(locationPickerSession.id, {
+      input: { ...locationPickerSession.input, locatie: location },
+    });
+    setLocationPickerSession(null);
+    loadData();
   };
 
   const formatDate = (dateStr: string) => {
@@ -194,9 +206,12 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.2 }}
-                  onClick={() => isCompleted ? onSelectSession(session) : undefined}
+                  onClick={() => {
+                    if (isCompleted) onSelectSession(session);
+                    else if (onResume) onResume(session);
+                  }}
                   className={`card flex items-center gap-3 transition-all duration-200 ${
-                    isCompleted
+                    isCompleted || onResume
                       ? 'cursor-pointer hover:shadow-lg hover:-translate-y-0.5'
                       : 'opacity-60'
                   }`}
@@ -235,6 +250,26 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
                   </div>
 
                   <div className="flex items-center gap-1">
+                    {!isCompleted && onResume && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onResume(session); }}
+                        className="p-2 hover:text-amber-600 transition-colors"
+                        style={{ color: 'var(--text-muted)' }}
+                        title="Hervatten"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                      </button>
+                    )}
+                    {isCompleted && !session.input.locatie && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setLocationPickerSession(session); }}
+                        className="p-2 hover:text-amber-600 transition-colors"
+                        style={{ color: 'var(--text-muted)' }}
+                        title="Voeg toe aan kaart"
+                      >
+                        <MapPin className="w-4 h-4" />
+                      </button>
+                    )}
                     <button
                       onClick={(e) => handleDelete(session.id, e)}
                       className="p-2 hover:text-red-500 transition-colors"
@@ -261,6 +296,13 @@ export function HistoryView({ onBack, onSelectSession }: HistoryViewProps) {
         </button>
       </div>
 
+      {/* Location Picker Modal */}
+      {locationPickerSession && (
+        <LocationPickerModal
+          onClose={() => setLocationPickerSession(null)}
+          onSave={handleSaveLocation}
+        />
+      )}
     </div>
   );
 }

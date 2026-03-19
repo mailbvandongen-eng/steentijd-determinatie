@@ -318,6 +318,7 @@ function App() {
         <HistoryView
           onBack={() => setView('start')}
           onSelectSession={handleSelectSession}
+          onResume={handleRedeterminate}
         />
       );
     }

@@ -53,8 +53,13 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [sessionLocation, setSessionLocation] = useState<VondstLocatie | undefined>(session.input.locatie);
 
-  // AI Validation state
-  const [validation, setValidation] = useState<ValidationResult | null>(null);
+  // AI Validation state — initialize from existing session data to avoid re-running
+  const [validation, setValidation] = useState<ValidationResult | null>(() => {
+    if (session.aiValidation) {
+      return { success: true, verdict: session.aiValidation.verdict, feedback: session.aiValidation.feedback };
+    }
+    return null;
+  });
   const [isValidating, setIsValidating] = useState(false);
   const [showValidation, setShowValidation] = useState(true);
 
@@ -75,9 +80,11 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     return [];
   });
 
-  // Trigger AI validation when component mounts (only if steps are available)
+  // Trigger AI validation when component mounts (only if steps are available and not already validated)
   useEffect(() => {
     const runValidation = async () => {
+      // Skip if already validated (from history or previous run)
+      if (session.aiValidation) return;
       // Only validate if we have steps (decision tree was used)
       if (!session.steps || session.steps.length === 0) return;
       if (!session.result?.type) return;
@@ -490,10 +497,10 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           ) : (
             <button
               onClick={() => setShowLocationPicker(true)}
-              className="mt-3 flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 transition-colors"
+              className="mt-3 flex items-center gap-2 text-sm text-amber-600 hover:text-amber-700 transition-colors font-medium"
             >
               <MapPin className="w-4 h-4" />
-              <span>Voeg locatie toe</span>
+              <span>Voeg toe aan kaart</span>
             </button>
           )}
         </div>
