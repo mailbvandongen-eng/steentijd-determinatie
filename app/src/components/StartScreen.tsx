@@ -10,6 +10,8 @@ import {
   ChevronDown,
   Sprout,
   Leaf,
+  Info,
+  X,
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -28,6 +30,48 @@ interface StartScreenProps {
   onJoinCodeUsed?: () => void;
 }
 
+const CHANGELOG = [
+  {
+    version: '2.3.0',
+    title: 'Niveau dropdown & Lucide iconen',
+    items: [
+      'Niveaukeuze als dropdown (alleen ontgrendelde niveaus)',
+      'Alle iconen vervangen door Lucide',
+      'Pijlpunt foto als app-icoon',
+      'Docent whitelist met e-mailbeveiliging',
+    ],
+  },
+  {
+    version: '2.2.0',
+    title: 'Gebruikersprofiel & Progressiesysteem',
+    items: [
+      'Voortgangsbalk naar Gevorderd niveau',
+      'Correct/validaties teller',
+      'Lokaal opgeslagen profiel',
+    ],
+  },
+  {
+    version: '2.1.2',
+    title: 'QR code direct join',
+    items: ['Scan QR-code om direct een trainingsessie te joinen'],
+  },
+  {
+    version: '2.1.1',
+    title: 'Training sessie verbeteringen',
+    items: ['Stabiliteit en bugfixes in de trainingsessie'],
+  },
+  {
+    version: '2.1.0',
+    title: 'UI Redesign',
+    items: ['Educatieve focus', 'Verbeterde mobiele ervaring'],
+  },
+  {
+    version: '2.0.0',
+    title: 'Mobiele versie',
+    items: ['Volledige herschrijving voor mobiel gebruik'],
+  },
+];
+
 export function StartScreen({
   onStartPractice,
   onStartTraining,
@@ -41,23 +85,16 @@ export function StartScreen({
   const { profile, currentLevel, setCurrentLevel, isLevelUnlocked, progress } = useUser();
   const { isAdmin } = useAuth();
 
-  // If we have an initial join code from URL, start in join-training mode
   const [mode, setMode] = useState<'main' | 'join-training'>(initialJoinCode ? 'join-training' : 'main');
   const [sessionCode, setSessionCode] = useState(initialJoinCode || '');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [showSandboxOption, setShowSandboxOption] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
-  // Clear the initial join code after it's been used
   const handleJoinTraining = () => {
-    if (!sessionCode.trim()) {
-      setError('Vul een sessiecode in');
-      return;
-    }
-    if (!name.trim()) {
-      setError('Vul je naam in');
-      return;
-    }
+    if (!sessionCode.trim()) { setError('Vul een sessiecode in'); return; }
+    if (!name.trim()) { setError('Vul je naam in'); return; }
     setError('');
     if (onJoinCodeUsed) onJoinCodeUsed();
     onStartTraining(sessionCode.trim().toUpperCase(), name.trim());
@@ -67,7 +104,6 @@ export function StartScreen({
   if (mode === 'join-training') {
     return (
       <div className="h-full bg-gradient-to-br from-stone-100 to-amber-50 flex flex-col overflow-hidden">
-        {/* Header */}
         <header className="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white p-6 shadow-lg">
           <button
             onClick={() => setMode('main')}
@@ -87,13 +123,10 @@ export function StartScreen({
           </div>
         </header>
 
-        {/* Content */}
         <div className="flex-1 p-4 flex flex-col justify-center max-w-md mx-auto w-full">
           <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
-                Sessiecode
-              </label>
+              <label className="block text-sm font-medium text-stone-700 mb-2">Sessiecode</label>
               <input
                 type="text"
                 value={sessionCode}
@@ -102,11 +135,8 @@ export function StartScreen({
                 className="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-amber-500 focus:outline-none text-lg font-mono tracking-wider"
               />
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-stone-700 mb-2">
-                Je naam
-              </label>
+              <label className="block text-sm font-medium text-stone-700 mb-2">Je naam</label>
               <input
                 type="text"
                 value={name}
@@ -115,13 +145,7 @@ export function StartScreen({
                 className="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-amber-500 focus:outline-none text-lg"
               />
             </div>
-
-            {error && (
-              <p className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
-                {error}
-              </p>
-            )}
-
+            {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">{error}</p>}
             <button
               onClick={handleJoinTraining}
               className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all"
@@ -129,7 +153,6 @@ export function StartScreen({
               Deelnemen
             </button>
           </div>
-
           <p className="text-center text-stone-500 text-sm mt-6">
             Vraag je docent om de sessiecode of scan de QR-code
           </p>
@@ -141,15 +164,34 @@ export function StartScreen({
   // Hoofd startscherm
   return (
     <div className="h-full bg-gradient-to-br from-stone-100 to-amber-50 flex flex-col overflow-auto">
+
       {/* Header */}
-      <header className="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white p-6 shadow-lg">
+      <header className="relative bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white p-6 shadow-lg">
+
+        {/* Top-right knoppen */}
+        <div className="absolute top-4 right-4 flex gap-1">
+          <button
+            onClick={() => setShowInfo(true)}
+            className="w-9 h-9 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+            title="Info"
+          >
+            <Info size={18} />
+          </button>
+          {(!isLoggedIn || isAdmin) && (
+            <button
+              onClick={onOpenTrainerDashboard}
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+              title={isAdmin ? 'Docent Dashboard' : 'Docent inloggen'}
+            >
+              {isAdmin ? <Settings size={18} /> : <LogIn size={18} />}
+            </button>
+          )}
+        </div>
+
+        {/* Gecentreerde titel */}
         <div className="flex items-center justify-center gap-4 mb-3">
           <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm overflow-hidden">
-            <img
-              src="/steentijd.jpg"
-              alt="Vuursteen pijlpunt"
-              className="w-full h-full object-contain"
-            />
+            <img src="/steentijd.jpg" alt="Vuursteen pijlpunt" className="w-full h-full object-contain" />
           </div>
         </div>
         <h1 className="text-2xl font-bold text-center tracking-wide">STEENTIJD</h1>
@@ -167,7 +209,7 @@ export function StartScreen({
             onSelectLevel={setCurrentLevel}
           />
 
-          {/* Voortgangsbalk naar Gevorderd (alleen tonen als nog niet ontgrendeld) */}
+          {/* Voortgangsbalk */}
           <ProgressBar
             correctProgress={progress.correctProgress}
             validationProgress={progress.validationProgress}
@@ -178,7 +220,7 @@ export function StartScreen({
             isUnlocked={isLevelUnlocked('gevorderd')}
           />
 
-          {/* Hoofdactie: Start Determinatie */}
+          {/* Hoofdactie */}
           <div className="space-y-2">
             <button
               onClick={() => onStartPractice(currentLevel, false)}
@@ -197,7 +239,6 @@ export function StartScreen({
               </div>
             </button>
 
-            {/* Vrij Spelen optie */}
             <button
               onClick={() => setShowSandboxOption(!showSandboxOption)}
               className="w-full flex items-center justify-center gap-1 text-sm text-stone-500 hover:text-amber-600 transition-colors py-1"
@@ -233,7 +274,6 @@ export function StartScreen({
 
           {/* Secundaire acties */}
           <div className="flex gap-3">
-            {/* Geschiedenis */}
             <button
               onClick={onViewHistory}
               className="flex-1 bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all border-2 border-transparent hover:border-amber-400"
@@ -246,7 +286,6 @@ export function StartScreen({
               </div>
             </button>
 
-            {/* Training */}
             <button
               onClick={() => setMode('join-training')}
               className="flex-1 bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all border-2 border-transparent hover:border-amber-400"
@@ -262,34 +301,77 @@ export function StartScreen({
         </div>
       </div>
 
-      {/* Docent Link — toon alleen als niet ingelogd, of als admin */}
-      {(!isLoggedIn || isAdmin) && (
-        <div className="px-4 mb-2">
-          <button
-            onClick={onOpenTrainerDashboard}
-            className="w-full max-w-md mx-auto block text-center py-3 text-stone-500 hover:text-amber-700 transition-colors text-sm"
-          >
-            {isLoggedIn && isAdmin ? (
-              <span className="flex items-center justify-center gap-2">
-                <Settings size={16} />
-                Docent Dashboard
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-2">
-                <LogIn size={16} />
-                Docent inloggen
-              </span>
-            )}
-          </button>
-        </div>
-      )}
-
       {/* Footer */}
       <footer className="p-4 text-center">
-        <p className="text-stone-400 text-xs">
-          v{version} - AWN Steentijdwerkgroep
-        </p>
+        <p className="text-stone-400 text-xs">v{version} - AWN Steentijdwerkgroep</p>
       </footer>
+
+      {/* Info bottom sheet */}
+      {showInfo && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col justify-end bg-black/40"
+          onClick={() => setShowInfo(false)}
+        >
+          <div
+            className="bg-white rounded-t-3xl max-h-[80vh] flex flex-col shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Sheet header */}
+            <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-stone-100">
+              <h2 className="text-lg font-bold text-stone-800">Over Steentijd</h2>
+              <button
+                onClick={() => setShowInfo(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-stone-100 hover:bg-stone-200 transition-colors"
+              >
+                <X size={16} className="text-stone-600" />
+              </button>
+            </div>
+
+            {/* Scrollbaar content */}
+            <div className="overflow-y-auto flex-1 px-6 py-4 space-y-5">
+
+              {/* App uitleg */}
+              <div>
+                <p className="text-stone-600 text-sm leading-relaxed">
+                  Steentijd helpt je bij het determineren van stenen artefacten uit de prehistorie.
+                  Werk je op door de niveaus: begin als <strong>Beginner</strong> met hints en hulp,
+                  en groei door naar <strong>Gevorderd</strong> door oefening en docentvalidaties.
+                </p>
+                <p className="text-stone-500 text-xs mt-2">
+                  Ontwikkeld door de AWN Landelijke Werkgroep Steentijd.
+                </p>
+              </div>
+
+              {/* Changelog */}
+              <div>
+                <h3 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
+                  Versiegeschiedenis
+                </h3>
+                <div className="space-y-4">
+                  {CHANGELOG.map((entry) => (
+                    <div key={entry.version}>
+                      <div className="flex items-baseline gap-2 mb-1">
+                        <span className="text-xs font-mono bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                          v{entry.version}
+                        </span>
+                        <span className="text-sm font-medium text-stone-700">{entry.title}</span>
+                      </div>
+                      <ul className="space-y-0.5 pl-2">
+                        {entry.items.map((item, i) => (
+                          <li key={i} className="text-xs text-stone-500 flex gap-1.5">
+                            <span className="text-amber-400 mt-0.5">•</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

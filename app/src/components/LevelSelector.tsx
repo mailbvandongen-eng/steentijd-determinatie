@@ -67,16 +67,12 @@ export function LevelSelector({
 
   return (
     <div className="relative">
-      <h3 className="text-sm font-medium text-stone-600 uppercase tracking-wide mb-2">
-        Niveau
-      </h3>
-
       {/* Badge / trigger button */}
       <button
         onClick={() => canSwitch && setOpen((o) => !o)}
         disabled={!canSwitch}
         className={`
-          flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 transition-all
+          w-full flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 transition-all
           ${config.bgColor} ${config.textColor} ${config.borderColor}
           ${canSwitch ? 'hover:shadow-md cursor-pointer' : 'cursor-default'}
         `}
