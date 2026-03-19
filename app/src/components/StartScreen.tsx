@@ -1,5 +1,18 @@
 import { useState } from 'react';
+import {
+  Camera,
+  ArrowLeft,
+  Archive,
+  GraduationCap,
+  Settings,
+  LogIn,
+  ChevronUp,
+  ChevronDown,
+  Sprout,
+  Leaf,
+} from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
+import { useAuth } from '../contexts/AuthContext';
 import { LevelSelector } from './LevelSelector';
 import { ProgressBar } from './ProgressBar';
 import type { UserLevel } from '../types';
@@ -26,6 +39,7 @@ export function StartScreen({
   onJoinCodeUsed
 }: StartScreenProps) {
   const { profile, currentLevel, setCurrentLevel, isLevelUnlocked, progress } = useUser();
+  const { isAdmin } = useAuth();
 
   // If we have an initial join code from URL, start in join-training mode
   const [mode, setMode] = useState<'main' | 'join-training'>(initialJoinCode ? 'join-training' : 'main');
@@ -59,17 +73,12 @@ export function StartScreen({
             onClick={() => setMode('main')}
             className="flex items-center gap-2 text-white/80 hover:text-white mb-4"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ArrowLeft size={20} />
             Terug
           </button>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-              <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-              </svg>
+              <GraduationCap size={28} />
             </div>
             <div>
               <h1 className="text-xl font-bold">Training Deelnemen</h1>
@@ -135,10 +144,12 @@ export function StartScreen({
       {/* Header */}
       <header className="bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white p-6 shadow-lg">
         <div className="flex items-center justify-center gap-4 mb-3">
-          <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.264 2.205A4 4 0 0 0 6.42 4.211l-4 8a4 4 0 0 0 1.359 5.117l6 4a4 4 0 0 0 4.438 0l6-4a4 4 0 0 0 1.576-4.592l-2-6a4 4 0 0 0-2.53-2.53z"/>
-            </svg>
+          <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm overflow-hidden">
+            <img
+              src="/steentijd.jpg"
+              alt="Vuursteen pijlpunt"
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
         <h1 className="text-2xl font-bold text-center tracking-wide">STEENTIJD</h1>
@@ -175,10 +186,7 @@ export function StartScreen({
             >
               <div className="flex items-center justify-center gap-4">
                 <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+                  <Camera size={28} />
                 </div>
                 <div className="text-left">
                   <h2 className="text-lg font-bold">Start Determinatie</h2>
@@ -192,9 +200,12 @@ export function StartScreen({
             {/* Vrij Spelen optie */}
             <button
               onClick={() => setShowSandboxOption(!showSandboxOption)}
-              className="w-full text-center text-sm text-stone-500 hover:text-amber-600 transition-colors py-1"
+              className="w-full flex items-center justify-center gap-1 text-sm text-stone-500 hover:text-amber-600 transition-colors py-1"
             >
-              {showSandboxOption ? '▲ Verberg opties' : '▼ Vrij spelen (zonder voortgang)'}
+              {showSandboxOption
+                ? <><ChevronUp size={14} /> Verberg opties</>
+                : <><ChevronDown size={14} /> Vrij spelen (zonder voortgang)</>
+              }
             </button>
 
             {showSandboxOption && (
@@ -205,15 +216,15 @@ export function StartScreen({
                 <div className="flex gap-2">
                   <button
                     onClick={() => onStartPractice('beginner', true)}
-                    className="flex-1 py-2 px-3 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
                   >
-                    🌱 Beginner
+                    <Sprout size={14} /> Beginner
                   </button>
                   <button
                     onClick={() => onStartPractice('gevorderd', true)}
-                    className="flex-1 py-2 px-3 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-colors"
                   >
-                    🌿 Gevorderd
+                    <Leaf size={14} /> Gevorderd
                   </button>
                 </div>
               </div>
@@ -229,9 +240,7 @@ export function StartScreen({
             >
               <div className="flex flex-col items-center gap-2">
                 <div className="w-10 h-10 bg-stone-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-                  </svg>
+                  <Archive size={24} className="text-stone-600" />
                 </div>
                 <span className="text-sm font-medium text-stone-700">Geschiedenis</span>
               </div>
@@ -244,10 +253,7 @@ export function StartScreen({
             >
               <div className="flex flex-col items-center gap-2">
                 <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-amber-600" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                  </svg>
+                  <GraduationCap size={24} className="text-amber-600" />
                 </div>
                 <span className="text-sm font-medium text-stone-700">Training</span>
               </div>
@@ -256,31 +262,27 @@ export function StartScreen({
         </div>
       </div>
 
-      {/* Docent Link */}
-      <div className="px-4 mb-2">
-        <button
-          onClick={onOpenTrainerDashboard}
-          className="w-full max-w-md mx-auto block text-center py-3 text-stone-500 hover:text-amber-700 transition-colors text-sm"
-        >
-          {isLoggedIn ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Docent Dashboard
-            </span>
-          ) : (
-            <span className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-              </svg>
-              Docent? Login hier
-            </span>
-          )}
-        </button>
-      </div>
+      {/* Docent Link — toon alleen als niet ingelogd, of als admin */}
+      {(!isLoggedIn || isAdmin) && (
+        <div className="px-4 mb-2">
+          <button
+            onClick={onOpenTrainerDashboard}
+            className="w-full max-w-md mx-auto block text-center py-3 text-stone-500 hover:text-amber-700 transition-colors text-sm"
+          >
+            {isLoggedIn && isAdmin ? (
+              <span className="flex items-center justify-center gap-2">
+                <Settings size={16} />
+                Docent Dashboard
+              </span>
+            ) : (
+              <span className="flex items-center justify-center gap-2">
+                <LogIn size={16} />
+                Docent inloggen
+              </span>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="p-4 text-center">

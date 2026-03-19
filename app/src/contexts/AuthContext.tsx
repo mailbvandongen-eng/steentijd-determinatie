@@ -8,10 +8,12 @@ import {
   type User
 } from 'firebase/auth';
 import { auth, googleProvider } from '../lib/firebase';
+import { ADMIN_EMAILS } from '../lib/adminConfig';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isAdmin: boolean;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -21,6 +23,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [adminError, setAdminError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!auth) {
@@ -36,11 +39,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setAdminError(null);
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  const isAdmin = user !== null && ADMIN_EMAILS.includes(user.email ?? '');
 
   const signInWithGoogle = useCallback(async () => {
     if (!auth) {
@@ -50,7 +56,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       // Try popup first
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      const email = result.user.email ?? '';
+      if (!ADMIN_EMAILS.includes(email)) {
+        setAdminError('Je hebt geen docenttoegang');
+        await firebaseSignOut(auth);
+      }
     } catch (error: unknown) {
       const firebaseError = error as { code?: string };
       // If popup blocked, fallback to redirect
@@ -77,7 +88,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin, signInWithGoogle, signOut }}>
+      {adminError && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-2xl p-6 mx-4 max-w-sm w-full shadow-2xl">
+            <p className="text-red-600 font-medium text-center mb-4">{adminError}</p>
+            <button
+              onClick={() => setAdminError(null)}
+              className="w-full py-2 bg-amber-500 text-white rounded-xl font-medium"
+            >
+              Sluiten
+            </button>
+          </div>
+        </div>
+      )}
       {children}
     </AuthContext.Provider>
   );
