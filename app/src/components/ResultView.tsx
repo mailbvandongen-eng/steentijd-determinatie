@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin, AlertCircle, CheckCircle, HelpCircle } from 'lucide-react';
+import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin, AlertCircle, CheckCircle, HelpCircle, Sprout, Leaf, Star } from 'lucide-react';
 import type { DeterminationSession, LabeledImage, VondstLocatie, UserLevel } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
@@ -42,7 +42,8 @@ interface ResultViewProps {
 
 export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo, level = 'beginner', isSandbox = false, hintsUsed = 0, startTime }: ResultViewProps) {
   const { profile, progress, recordResult, isLevelUnlocked } = useUser();
-  const [hasRecordedResult, setHasRecordedResult] = useState(false);
+  const hasRecordedResult = useRef(false);
+  const validationStarted = useRef(false);
   const [showAllImages, setShowAllImages] = useState(false);
   const [generatingSketch, setGeneratingSketch] = useState<string | null>(null);
   const [sketchError, setSketchError] = useState<string | null>(null);
@@ -80,15 +81,18 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     return [];
   });
 
-  // Trigger AI validation when component mounts (only if steps are available and not already validated)
+  // Trigger AI validation once on mount (only if steps are available and not already validated)
   useEffect(() => {
     const runValidation = async () => {
       // Skip if already validated (from history or previous run)
       if (session.aiValidation) return;
+      // Skip if already started (prevent double-fire)
+      if (validationStarted.current) return;
       // Only validate if we have steps (decision tree was used)
       if (!session.steps || session.steps.length === 0) return;
       if (!session.result?.type) return;
       if (!session.input.thumbnail && !session.input.images?.[0]?.thumbnail) return;
+      validationStarted.current = true;
 
       setIsValidating(true);
       try {
@@ -120,12 +124,12 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           );
         }
 
-        // Record result in user profile (unless sandbox mode)
-        if (result.success && result.verdict && !hasRecordedResult) {
+        // Record result in user profile (unless sandbox mode, only once)
+        if (result.success && result.verdict && !hasRecordedResult.current) {
+          hasRecordedResult.current = true;
           const wasCorrect = result.verdict === 'correct';
           const durationMs = startTime ? Date.now() - startTime : 0;
           recordResult(wasCorrect, hintsUsed, durationMs, session.result?.category, isSandbox);
-          setHasRecordedResult(true);
         }
       } catch (err) {
         console.error('Validation failed:', err);
@@ -136,7 +140,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     };
 
     runValidation();
-  }, [session, trainingInfo, hasRecordedResult, recordResult, hintsUsed, isSandbox, startTime]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Verzamel alle beschikbare afbeeldingen
   const allImages = localImages;
@@ -337,12 +342,6 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
-      {/* Header - subtiele amber badge */}
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 flex items-center justify-center gap-2 shrink-0">
-        <Check className="w-5 h-5 text-amber-600" />
-        <span className="text-sm font-medium text-amber-700">Determinatie voltooid</span>
-      </div>
-
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto">
         {/* AI Validation Section - only show if steps were used */}
@@ -353,8 +352,8 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                   <div>
-                    <p className="text-sm font-medium text-blue-700">AI valideert je determinatie...</p>
-                    <p className="text-xs text-blue-600">Even geduld</p>
+                    <p className="text-sm font-medium text-blue-700">AI controleert je antwoord...</p>
+                    <p className="text-xs text-blue-600">Vergelijkt met het algoritme</p>
                   </div>
                 </div>
               </div>
@@ -694,12 +693,13 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-3 border border-amber-200">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <span className={`text-xs px-2 py-0.5 rounded-full ${
+                <span className={`flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${
                   level === 'beginner' ? 'bg-green-100 text-green-700' :
                   level === 'gevorderd' ? 'bg-amber-100 text-amber-700' :
                   'bg-purple-100 text-purple-700'
                 }`}>
-                  {level === 'beginner' ? '🌱' : level === 'gevorderd' ? '🌿' : '🌳'} {level}
+                  {level === 'beginner' ? <Sprout className="w-3 h-3" /> : level === 'gevorderd' ? <Leaf className="w-3 h-3" /> : <Star className="w-3 h-3" />}
+                  {level}
                 </span>
                 <span className="text-sm font-medium text-amber-800">
                   {validation.verdict === 'correct' ? '+1 correct!' : 'Blijf oefenen!'}

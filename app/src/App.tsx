@@ -202,7 +202,7 @@ function App() {
     setCurrentSession(null);
     setCapturedData(null);
     setDeterminationSteps([]);
-    setView('capture');
+    setView('start');
   }, []);
 
   const handleSelectSession = useCallback((session: DeterminationSession) => {
@@ -343,7 +343,7 @@ function App() {
               </div>
               <div>
                 <h1 className="text-lg font-bold tracking-wide">
-                  {appMode === 'training' ? 'TRAINING' : 'OEFENEN'}
+                  {appMode === 'training' ? 'TRAINING' : 'DETERMINEREN'}
                 </h1>
                 <p className="text-[10px] text-white/70 -mt-0.5">
                   {appMode === 'training' && trainingSession

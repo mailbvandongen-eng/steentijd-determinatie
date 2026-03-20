@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Sprout, Leaf, Star } from 'lucide-react';
 import { getQuestion, processAnswer, getImagesForQuestion, formatTypeName } from '../lib/decisionTree';
 import { getHintForQuestion } from '../lib/aiAnalysis';
 import type { DeterminationStep, UserLevel } from '../types';
@@ -167,11 +168,10 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
 
   const canUseHint = hintsEnabled && hintsUsed < MAX_HINTS && !isLoadingHint;
 
-  // Level indicator config
   const levelConfig = {
-    beginner: { icon: '🌱', label: 'Beginner', color: 'bg-green-500/20 text-green-400' },
-    gevorderd: { icon: '🌿', label: 'Gevorderd', color: 'bg-amber-500/20 text-amber-400' },
-    expert: { icon: '🌳', label: 'Expert', color: 'bg-purple-500/20 text-purple-400' },
+    beginner: { icon: <Sprout className="w-4 h-4" />, label: 'Beginner', color: 'bg-green-500/20 text-green-400' },
+    gevorderd: { icon: <Leaf className="w-4 h-4" />, label: 'Gevorderd', color: 'bg-amber-500/20 text-amber-400' },
+    expert: { icon: <Star className="w-4 h-4" />, label: 'Expert', color: 'bg-purple-500/20 text-purple-400' },
   };
   const currentLevelConfig = levelConfig[level];
 
@@ -191,7 +191,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
         </div>
         {/* Level badge */}
         <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${currentLevelConfig.color}`}>
-          <span>{currentLevelConfig.icon}</span>
+          {currentLevelConfig.icon}
           {isSandbox && <span className="opacity-70">Vrij</span>}
         </div>
         {/* Hint counter - only show in beginner mode */}
@@ -307,8 +307,8 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
           />
         </div>
 
-        {/* Referentie afbeeldingen */}
-        {images.length > 0 && (
+        {/* Referentie afbeeldingen — alleen in beginner mode */}
+        {images.length > 0 && level === 'beginner' && (
           <div className="card">
             <p className="text-xs text-stone-500 mb-2 font-medium">REFERENTIE VOORBEELDEN</p>
             <div className="flex gap-2 overflow-x-auto pb-1">
