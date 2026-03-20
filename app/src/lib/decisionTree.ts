@@ -1,4 +1,4 @@
-import type { ImageMetadata } from '../types';
+import type { ImageMetadata, UserLevel } from '../types';
 
 // Import image metadata
 import imageMetadata from '../data/images_metadata.json';
@@ -15,7 +15,32 @@ export interface QuestionNode {
   jaVolgende?: string;       // Volgende vraag als "Ja"
   neeResultaat?: string;     // Eindresultaat als "Nee"
   neeVolgende?: string;      // Volgende vraag als "Nee"
+  minLevel?: UserLevel;      // Minimaal niveau voor dit knooppunt (toekomstig gebruik)
 }
+
+// Minimale niveaus voor eindresultaten
+// Resultaten zonder vermelding zijn beschikbaar op 'beginner'
+export const resultMinLevels: Record<string, UserLevel> = {
+  // Gevorderd: specifieke kern-typen
+  'kern-levallois': 'gevorderd',
+  'kern-diskusvormig': 'gevorderd',
+  'kern-kling': 'gevorderd',
+  'kern-afslag': 'gevorderd',
+  // Gevorderd: specifieke kernwerktuigen
+  'vuistbijl': 'gevorderd',
+  'chopper-of-chopping-tool': 'gevorderd',
+  'kernwerktuig-grof': 'gevorderd',
+  'boor-of-priem': 'gevorderd',
+  'kernwerktuig-klein': 'gevorderd',
+  // Gevorderd: specifieke kling-typen
+  'rugmes': 'gevorderd',
+  'klingschrabber': 'gevorderd',
+  'geretoucheerde-kling': 'gevorderd',
+  // Gevorderd: specifieke afslag-typen
+  'schrabber': 'gevorderd',
+  'spits': 'gevorderd',
+  'geretoucheerde-afslag': 'gevorderd',
+};
 
 export const beslisboom: Record<string, QuestionNode> = {
   "1": {
@@ -289,7 +314,8 @@ export function formatTypeName(typeName: string): string {
     'geslepen-bijl-andere-steensoort': 'Geslepen bijl (andere steensoort)',
     'geslepen-stenen-artefact': 'Geslepen stenen artefact',
     'hamerbijl': 'Hamerbijl of strijdhamer',
-    'doorboord-artefact': 'Doorboord artefact'
+    'doorboord-artefact': 'Doorboord artefact',
+    'onbepaald-beginnersniveau': 'Onbepaald (beginnersniveau bereikt)',
   };
   return namen[typeName] || typeName.replace(/-/g, ' ');
 }

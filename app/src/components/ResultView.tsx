@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Check, ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin, AlertCircle, CheckCircle, HelpCircle, Sprout, Leaf, Star } from 'lucide-react';
+import { ChevronDown, Pencil, Share2, RefreshCw, X, Download, MapPin, AlertCircle, CheckCircle, HelpCircle, Sprout, Leaf, Star } from 'lucide-react';
 import type { DeterminationSession, LabeledImage, VondstLocatie, UserLevel } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { createArchaeologicalSketch } from '../lib/sketch';
@@ -41,7 +41,7 @@ interface ResultViewProps {
 }
 
 export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo, level = 'beginner', isSandbox = false, hintsUsed = 0, startTime }: ResultViewProps) {
-  const { profile, progress, recordResult, isLevelUnlocked } = useUser();
+  const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
   const hasRecordedResult = useRef(false);
   const validationStarted = useRef(false);
   const [showAllImages, setShowAllImages] = useState(false);
@@ -710,6 +710,11 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                   {progress.percentage}% naar Gevorderd
                 </span>
               )}
+              {isLevelUnlocked('gevorderd') && !isLevelUnlocked('expert') && (
+                <span className="text-xs text-purple-600 font-medium">
+                  {progressToExpert.percentage}% naar Expert
+                </span>
+              )}
             </div>
             {!isLevelUnlocked('gevorderd') && (
               <>
@@ -725,10 +730,24 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
                 </div>
               </>
             )}
-            {isLevelUnlocked('gevorderd') && (
-              <div className="flex items-center gap-2 text-sm text-green-700">
+            {isLevelUnlocked('gevorderd') && !isLevelUnlocked('expert') && (
+              <>
+                <div className="h-2 bg-purple-100 rounded-full overflow-hidden mb-2">
+                  <div
+                    className="h-full bg-gradient-to-r from-purple-400 to-violet-500 rounded-full transition-all duration-500"
+                    style={{ width: `${progressToExpert.percentage}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-purple-700">
+                  <span>{profile.totalCorrect}/30 correct</span>
+                  <span>{profile.docentValidations}/10 validaties</span>
+                </div>
+              </>
+            )}
+            {isLevelUnlocked('expert') && (
+              <div className="flex items-center gap-2 text-sm text-purple-700">
                 <CheckCircle className="w-4 h-4" />
-                <span>Gevorderd niveau ontgrendeld!</span>
+                <span>Expert niveau ontgrendeld!</span>
               </div>
             )}
           </div>

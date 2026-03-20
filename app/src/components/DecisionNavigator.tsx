@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Sprout, Leaf, Star } from 'lucide-react';
-import { getQuestion, processAnswer, getImagesForQuestion, formatTypeName } from '../lib/decisionTree';
+import { getQuestion, processAnswer, getImagesForQuestion, formatTypeName, resultMinLevels } from '../lib/decisionTree';
 import { getHintForQuestion } from '../lib/aiAnalysis';
 import type { DeterminationStep, UserLevel } from '../types';
 
@@ -64,13 +64,27 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
     // Clear forward history when user makes a new answer choice
     setForwardHistory([]);
 
+    const levelOrder: Record<string, number> = { beginner: 0, gevorderd: 1, expert: 2 };
+
     const proceedToNext = () => {
       if (result.isEnd && result.result) {
-        onComplete({
-          type: result.result,
-          description: formatTypeName(result.result),
-          hintsUsed,
-        });
+        // Dieptebegrenzing: check of dit resultaat bereikbaar is op het huidige niveau
+        const resultLevel = resultMinLevels[result.result];
+        if (resultLevel && levelOrder[resultLevel] > levelOrder[level]) {
+          // Resultaat vereist hoger niveau
+          const vereistNiveau = resultLevel === 'expert' ? 'Expert' : 'Gevorderd';
+          onComplete({
+            type: 'onbepaald-beginnersniveau',
+            description: `Dit artefact is verder te determineren op niveau ${vereistNiveau}`,
+            hintsUsed,
+          });
+        } else {
+          onComplete({
+            type: result.result,
+            description: formatTypeName(result.result),
+            hintsUsed,
+          });
+        }
       } else if (result.nextQuestion) {
         setHistory((prev) => [...prev, currentQuestionId]);
         setCurrentQuestionId(result.nextQuestion);
@@ -78,7 +92,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
       }
     };
 
-    // In gevorderd mode: toon toelichting na antwoord (als er toelichting is)
+    // In gevorderd mode (niet expert): toon toelichting na antwoord (als er toelichting is)
     if (level === 'gevorderd' && question.toelichting) {
       setLastAnswer(answer);
       setShowToelichtingAfterAnswer(true);
@@ -353,9 +367,11 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
         )}
 
         <p className="text-xs text-stone-500 text-center mb-2">
-          {level === 'gevorderd'
+          {level === 'beginner'
+            ? 'Bekijk je artefact en beantwoord de vraag'
+            : level === 'gevorderd'
             ? 'Zelfstandig determineren - geen hints beschikbaar'
-            : 'Bekijk je artefact en beantwoord de vraag'}
+            : 'Expert modus - volledig zelfstandig determineren'}
         </p>
         <div className="flex gap-3">
           <button

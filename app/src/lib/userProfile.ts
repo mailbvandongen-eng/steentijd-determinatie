@@ -109,6 +109,51 @@ export function tryUnlockGevorderd(profile: UserProfile): UserProfile {
   return profile;
 }
 
+// Check of expert niveau bereikt kan worden
+export function canUnlockExpert(profile: UserProfile): boolean {
+  if (!profile.unlockedLevels.includes('gevorderd')) return false;
+  const criteria = UNLOCK_CRITERIA.expert;
+  return (
+    profile.totalCorrect >= criteria.correctDeterminations &&
+    profile.docentValidations >= criteria.docentValidations
+  );
+}
+
+// Unlock expert niveau (als criteria bereikt)
+export function tryUnlockExpert(profile: UserProfile): UserProfile {
+  if (!profile.unlockedLevels.includes('expert') && canUnlockExpert(profile)) {
+    return {
+      ...profile,
+      unlockedLevels: [...profile.unlockedLevels, 'expert'],
+    };
+  }
+  return profile;
+}
+
+// Bereken voortgang naar expert (0-100%)
+export function getProgressToExpert(profile: UserProfile): {
+  percentage: number;
+  correctProgress: number;
+  validationProgress: number;
+  correctNeeded: number;
+  validationsNeeded: number;
+} {
+  const criteria = UNLOCK_CRITERIA.expert;
+
+  const correctProgress = Math.min(profile.totalCorrect / criteria.correctDeterminations, 1);
+  const validationProgress = Math.min(profile.docentValidations / criteria.docentValidations, 1);
+
+  const percentage = Math.round(((correctProgress + validationProgress) / 2) * 100);
+
+  return {
+    percentage,
+    correctProgress: Math.round(correctProgress * 100),
+    validationProgress: Math.round(validationProgress * 100),
+    correctNeeded: Math.max(0, criteria.correctDeterminations - profile.totalCorrect),
+    validationsNeeded: Math.max(0, criteria.docentValidations - profile.docentValidations),
+  };
+}
+
 // Handmatig promoveren (door docent)
 export function promoteToLevel(profile: UserProfile, level: UserLevel): UserProfile {
   if (profile.unlockedLevels.includes(level)) {
@@ -203,8 +248,9 @@ export function recordDetermination(
     };
   }
 
-  // Check unlock gevorderd
-  const finalProfile = tryUnlockGevorderd(updatedProfile);
+  // Check unlock gevorderd + expert
+  const withGevorderd = tryUnlockGevorderd(updatedProfile);
+  const finalProfile = tryUnlockExpert(withGevorderd);
 
   return finalProfile;
 }
@@ -220,8 +266,9 @@ export function recordDocentValidation(profile: UserProfile, approved: boolean):
     docentValidations: profile.docentValidations + 1,
   };
 
-  // Check unlock
-  return tryUnlockGevorderd(updatedProfile);
+  // Check unlock gevorderd + expert
+  const withGevorderd = tryUnlockGevorderd(updatedProfile);
+  return tryUnlockExpert(withGevorderd);
 }
 
 // Bereken voortgang naar gevorderd (0-100%)

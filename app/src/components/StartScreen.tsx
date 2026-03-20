@@ -11,7 +11,6 @@ import {
   Sprout,
   Leaf,
   Info,
-  X,
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -82,7 +81,7 @@ export function StartScreen({
   initialJoinCode,
   onJoinCodeUsed
 }: StartScreenProps) {
-  const { profile, currentLevel, setCurrentLevel, isLevelUnlocked, progress } = useUser();
+  const { profile, currentLevel, setCurrentLevel, isLevelUnlocked, progress, progressToExpert } = useUser();
   const { isAdmin } = useAuth();
 
   const [mode, setMode] = useState<'main' | 'join-training'>(initialJoinCode ? 'join-training' : 'main');
@@ -210,15 +209,33 @@ export function StartScreen({
           />
 
           {/* Voortgangsbalk */}
-          <ProgressBar
-            correctProgress={progress.correctProgress}
-            validationProgress={progress.validationProgress}
-            totalCorrect={profile.totalCorrect}
-            totalValidations={profile.docentValidations}
-            correctNeeded={progress.correctNeeded}
-            validationsNeeded={progress.validationsNeeded}
-            isUnlocked={isLevelUnlocked('gevorderd')}
-          />
+          {isLevelUnlocked('gevorderd') ? (
+            <ProgressBar
+              correctProgress={progressToExpert.correctProgress}
+              validationProgress={progressToExpert.validationProgress}
+              totalCorrect={profile.totalCorrect}
+              totalValidations={profile.docentValidations}
+              correctNeeded={progressToExpert.correctNeeded}
+              validationsNeeded={progressToExpert.validationsNeeded}
+              isUnlocked={isLevelUnlocked('expert')}
+              targetLevel="expert"
+              correctTarget={30}
+              validationTarget={10}
+            />
+          ) : (
+            <ProgressBar
+              correctProgress={progress.correctProgress}
+              validationProgress={progress.validationProgress}
+              totalCorrect={profile.totalCorrect}
+              totalValidations={profile.docentValidations}
+              correctNeeded={progress.correctNeeded}
+              validationsNeeded={progress.validationsNeeded}
+              isUnlocked={false}
+              targetLevel="gevorderd"
+              correctTarget={20}
+              validationTarget={5}
+            />
+          )}
 
           {/* Hoofdactie */}
           <div className="space-y-2">

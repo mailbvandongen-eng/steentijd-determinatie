@@ -8,6 +8,7 @@ import {
   recordDocentValidation,
   promoteToLevel,
   getProgressToGevorderd,
+  getProgressToExpert,
   isLevelUnlocked,
   UNLOCK_CRITERIA,
 } from '../lib/userProfile';
@@ -22,6 +23,7 @@ interface UserContextType {
 
   // Progressie
   progress: ReturnType<typeof getProgressToGevorderd>;
+  progressToExpert: ReturnType<typeof getProgressToExpert>;
 
   // Acties
   recordResult: (
@@ -60,6 +62,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   // Bereken progressie
   const progress = getProgressToGevorderd(profile);
+  const progressToExpert = getProgressToExpert(profile);
 
   // Registreer determinatie resultaat
   const recordResult = useCallback(
@@ -113,6 +116,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setCurrentLevel,
         isLevelUnlocked: checkLevelUnlocked,
         progress,
+        progressToExpert,
         recordResult,
         addDocentValidation,
         promoteUser,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sprout, Leaf, TreePine, ChevronDown, Check } from 'lucide-react';
+import { Sprout, Leaf, Star, ChevronDown, Check } from 'lucide-react';
 import type { UserLevel } from '../types';
 
 interface LevelSelectorProps {
@@ -29,9 +29,9 @@ const LEVEL_CONFIG = {
     iconColor: 'text-amber-600',
   },
   expert: {
-    Icon: TreePine,
+    Icon: Star,
     label: 'Expert',
-    description: 'Binnenkort beschikbaar',
+    description: 'Volledige determinatie',
     bgColor: 'bg-purple-50',
     borderColor: 'border-purple-400',
     textColor: 'text-purple-700',
@@ -50,8 +50,8 @@ export function LevelSelector({
   const config = LEVEL_CONFIG[currentLevel];
   const CurrentIcon = config.Icon;
 
-  // Only show selectable (unlocked, non-expert) levels in the dropdown
-  const selectableLevels = (['beginner', 'gevorderd'] as UserLevel[]).filter(
+  // Show all unlocked levels in the dropdown
+  const selectableLevels = (['beginner', 'gevorderd', 'expert'] as UserLevel[]).filter(
     (l) => unlockedLevels.includes(l)
   );
   const canSwitch = selectableLevels.length > 1;
