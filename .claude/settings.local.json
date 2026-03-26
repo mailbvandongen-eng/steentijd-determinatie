@@ -57,7 +57,11 @@
       "Bash(git tag:*)",
       "Bash(git checkout:*)",
       "Bash(npx tsc:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(timeout 5 npm run dev:*)",
+      "Bash(xargs grep:*)",
+      "Bash(find /c/vscode/steentijd/app/src -type f -name *.json -o -name *tree* -o -name *algorithm* -o -name *awn* -o -name *decision* -o -name *questions* -o -name *beslisboom*)",
+      "Bash(wc:*)"
     ]
   }
 }
