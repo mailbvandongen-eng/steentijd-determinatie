@@ -20,7 +20,7 @@ import type { DeterminationSession, LabeledImage, DeterminationStep, UserLevel }
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.0';
+const APP_VERSION = '2.2.1';
 
 // Animation variants
 const pageVariants = {
