@@ -20,6 +20,14 @@ https://awn-archeologie.nl/werkgroep/steentijd/determinatie/
 
 ## Technische Uitdagingen
 
+## Werkafspraak Versies
+
+- Elke productwijziging vereist een versiebump.
+- De leidende app-versie moet gelijk staan in `app/src/App.tsx` en `app/package.json`.
+- Alleen documentatie, scripts, git hooks en GitHub workflows zijn uitgezonderd van deze bump-regel.
+- Lokale commits worden gecontroleerd via `.githooks/pre-commit`.
+- GitHub controleert pushes en pull requests via `.github/workflows/version-check.yml`.
+
 ### Probleem: PDF's te groot voor directe Read
 - PDF's zijn 6MB+ - de Read tool crasht hierop
 - De offset/limit parameters werken op **regels**, niet op PDF-pagina's
