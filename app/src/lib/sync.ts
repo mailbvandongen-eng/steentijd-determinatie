@@ -101,6 +101,8 @@ async function uploadSessions(userId: string): Promise<{ uploaded: number; error
         resultCharacteristics: session.result?.characteristics || [],
         resultFullAnalysis: session.result?.fullAnalysis || null,
         resultDescription: session.result?.description || null,
+        aiValidationVerdict: session.aiValidation?.verdict || null,
+        aiValidationFeedback: session.aiValidation?.feedback || null,
         syncedAt: new Date().toISOString(),
       };
 
@@ -219,6 +221,10 @@ async function downloadSessions(userId: string): Promise<{ downloaded: number; e
             fullAnalysis: data.resultFullAnalysis,
             description: data.resultDescription,
           } : undefined,
+          aiValidation: data.aiValidationVerdict ? {
+            verdict: data.aiValidationVerdict,
+            feedback: data.aiValidationFeedback || '',
+          } : undefined,
           synced: true,
           cloudId: cloudId,
           lastSyncedAt: new Date().toISOString(),
@@ -244,6 +250,12 @@ async function uploadLocations(userId: string): Promise<{ uploaded: number; erro
   if (!firestore) throw new Error('Firebase not configured');
 
   const unsynced = await getUnsyncedLocations();
+  const localSessions = await getAllSessions();
+  const sessionCloudIdByLocalId = new Map(
+    localSessions
+      .filter((session) => session.id && session.cloudId)
+      .map((session) => [session.id as number, session.cloudId as string])
+  );
   let uploaded = 0;
   const errors: string[] = [];
 
@@ -260,7 +272,9 @@ async function uploadLocations(userId: string): Promise<{ uploaded: number; erro
         lng: location.lng,
         naam: location.naam || null,
         notitie: location.notitie || null,
-        linkedSessionIds: location.linkedSessionIds || [],
+        linkedSessionCloudIds: (location.linkedSessionIds || [])
+          .map((sessionId) => sessionCloudIdByLocalId.get(sessionId))
+          .filter((cloudId): cloudId is string => Boolean(cloudId)),
         syncedAt: new Date().toISOString(),
       };
 
@@ -288,7 +302,13 @@ async function downloadLocations(userId: string): Promise<{ downloaded: number; 
     const querySnapshot = await getDocs(q);
 
     const localLocations = await getAllLocations();
+    const localSessions = await getAllSessions();
     const localCloudIds = new Set(localLocations.filter(l => l.cloudId).map(l => l.cloudId));
+    const sessionLocalIdByCloudId = new Map(
+      localSessions
+        .filter((session) => session.id && session.cloudId)
+        .map((session) => [session.cloudId as string, session.id as number])
+    );
 
     for (const docSnap of querySnapshot.docs) {
       const cloudId = docSnap.id;
@@ -317,7 +337,9 @@ async function downloadLocations(userId: string): Promise<{ downloaded: number; 
           lng: data.lng,
           naam: data.naam,
           notitie: data.notitie,
-          linkedSessionIds: data.linkedSessionIds || [],
+          linkedSessionIds: (data.linkedSessionCloudIds || [])
+            .map((cloudId: string) => sessionLocalIdByCloudId.get(cloudId))
+            .filter((sessionId: number | undefined): sessionId is number => sessionId !== undefined),
           cloudId: cloudId,
           lastSyncedAt: new Date().toISOString(),
         };

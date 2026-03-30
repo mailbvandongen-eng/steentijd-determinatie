@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { StartScreen } from './components/StartScreen';
 import { ImageCapture } from './components/ImageCapture';
@@ -11,8 +11,10 @@ import { HistoryView } from './components/HistoryView';
 import { SettingsMenu } from './components/SettingsMenu';
 import TrainerDashboard from './components/TrainerDashboard';
 import { auth, googleProvider } from './lib/firebase';
+import { ADMIN_EMAILS } from './lib/adminConfig';
 import { createSession, completeSession, getSession } from './lib/db';
 import { joinTrainingSession, submitDetermination } from './lib/trainingSession';
+import { useAuth } from './contexts/AuthContext';
 import type { DeterminationSession, LabeledImage, DeterminationStep, UserLevel } from './types';
 
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
@@ -50,6 +52,7 @@ interface TrainingSession {
 }
 
 function App() {
+  const { isAdmin, signInWithGoogle } = useAuth();
   const [view, setView] = useState<View>('start');
   const [appMode, setAppMode] = useState<AppMode>('practice');
   const [trainingSession, setTrainingSession] = useState<TrainingSession | null>(null);
@@ -61,6 +64,7 @@ function App() {
   const [sessionIsSandbox, setSessionIsSandbox] = useState(false);
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
   const [sessionHintsUsed, setSessionHintsUsed] = useState(0);
+  const [shouldAutoValidateResult, setShouldAutoValidateResult] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [currentTrainingDeterminationId, setCurrentTrainingDeterminationId] = useState<string | null>(null);
   const [joinCodeFromUrl, setJoinCodeFromUrl] = useState<string | null>(null);
@@ -110,23 +114,31 @@ function App() {
   }, []);
 
   const handleOpenTrainerDashboard = useCallback(async () => {
-    if (!user) {
-      // Login first
-      if (auth && googleProvider) {
-        try {
-          await signInWithPopup(auth, googleProvider);
-          setView('trainer');
-        } catch (error) {
-          console.error('Login error:', error);
-          alert('Kon niet inloggen. Probeer het opnieuw.');
-        }
+    if (user) {
+      if (isAdmin) {
+        setView('trainer');
       } else {
-        alert('Firebase is niet geconfigureerd. Login is niet beschikbaar.');
+        alert('Je hebt geen docenttoegang.');
       }
-    } else {
-      setView('trainer');
+      return;
     }
-  }, [user]);
+
+    if (!auth || !googleProvider) {
+      alert('Firebase is niet geconfigureerd. Login is niet beschikbaar.');
+      return;
+    }
+
+    try {
+      await signInWithGoogle();
+      const signedInEmail = auth.currentUser?.email ?? '';
+      if (signedInEmail && ADMIN_EMAILS.includes(signedInEmail)) {
+        setView('trainer');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Kon niet inloggen. Probeer het opnieuw.');
+    }
+  }, [user, isAdmin, signInWithGoogle]);
 
   // Capture handler
   const handleCapture = useCallback(async (data: CapturedData) => {
@@ -168,6 +180,7 @@ function App() {
         );
         const session = await getSession(currentSessionId);
         if (session) {
+          setShouldAutoValidateResult(true);
           setCurrentSession(session);
 
           // Submit to training session if in training mode
@@ -202,10 +215,12 @@ function App() {
     setCurrentSession(null);
     setCapturedData(null);
     setDeterminationSteps([]);
+    setShouldAutoValidateResult(false);
     setView('start');
   }, []);
 
   const handleSelectSession = useCallback((session: DeterminationSession) => {
+    setShouldAutoValidateResult(false);
     setCurrentSession(session);
     setView('result');
   }, []);
@@ -307,6 +322,7 @@ function App() {
           isSandbox={sessionIsSandbox}
           hintsUsed={sessionHintsUsed}
           startTime={sessionStartTime ?? undefined}
+          shouldAutoValidate={shouldAutoValidateResult}
         />
       );
     }

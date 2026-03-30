@@ -38,9 +38,10 @@ interface ResultViewProps {
   isSandbox?: boolean;
   hintsUsed?: number;
   startTime?: number;
+  shouldAutoValidate?: boolean;
 }
 
-export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo, level = 'beginner', isSandbox = false, hintsUsed = 0, startTime }: ResultViewProps) {
+export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo, level = 'beginner', isSandbox = false, hintsUsed = 0, startTime, shouldAutoValidate = false }: ResultViewProps) {
   const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
   const hasRecordedResult = useRef(false);
   const validationStarted = useRef(false);
@@ -84,6 +85,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
   // Trigger AI validation once on mount (only if steps are available and not already validated)
   useEffect(() => {
     const runValidation = async () => {
+      if (!shouldAutoValidate) return;
       // Skip if already validated (from history or previous run)
       if (session.aiValidation) return;
       // Skip if already started (prevent double-fire)
@@ -110,6 +112,15 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
           steps
         );
         setValidation(result);
+
+        if (session.id && result.success && result.verdict) {
+          await updateSession(session.id, {
+            aiValidation: {
+              verdict: result.verdict,
+              feedback: result.feedback || '',
+            },
+          });
+        }
 
         // Sync AI validation to training session if in training mode
         if (trainingInfo && result.success && result.verdict) {
@@ -140,8 +151,7 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
     };
 
     runValidation();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [session, trainingInfo, recordResult, hintsUsed, isSandbox, startTime, shouldAutoValidate]);
 
   // Verzamel alle beschikbare afbeeldingen
   const allImages = localImages;

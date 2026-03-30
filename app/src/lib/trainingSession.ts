@@ -12,6 +12,7 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
+  runTransaction,
   query,
   where,
 } from 'firebase/firestore';
@@ -183,21 +184,26 @@ export async function submitDetermination(
       participantId
     );
 
-    const participantDoc = await getDoc(participantRef);
-    if (!participantDoc.exists()) return null;
+    await runTransaction(firestore, async (transaction) => {
+      const participantDoc = await transaction.get(participantRef);
+      if (!participantDoc.exists()) {
+        throw new Error('Participant not found');
+      }
 
-    const currentData = participantDoc.data();
-    const determinations = currentData.determinations || [];
+      const currentData = participantDoc.data();
+      const determinations = currentData.determinations || [];
 
-    determinations.push({
-      ...determination,
-      id: determinationId,
-      completedAt: new Date().toISOString(),
-    });
-
-    await updateDoc(participantRef, {
-      determinations,
-      lastActive: serverTimestamp(),
+      transaction.update(participantRef, {
+        determinations: [
+          ...determinations,
+          {
+            ...determination,
+            id: determinationId,
+            completedAt: new Date().toISOString(),
+          },
+        ],
+        lastActive: serverTimestamp(),
+      });
     });
 
     return determinationId;
@@ -338,25 +344,29 @@ export async function validateDeterminationAsDocent(
       participantId
     );
 
-    const participantDoc = await getDoc(participantRef);
-    if (!participantDoc.exists()) return false;
-
-    const data = participantDoc.data();
-    const determinations = data.determinations.map((d: ParticipantDetermination) => {
-      if (d.id === determinationId) {
-        return {
-          ...d,
-          docentValidation: {
-            approved,
-            feedback,
-            validatedAt: new Date().toISOString(),
-          },
-        };
+    await runTransaction(firestore, async (transaction) => {
+      const participantDoc = await transaction.get(participantRef);
+      if (!participantDoc.exists()) {
+        throw new Error('Participant not found');
       }
-      return d;
-    });
 
-    await updateDoc(participantRef, { determinations });
+      const data = participantDoc.data();
+      const determinations = (data.determinations || []).map((d: ParticipantDetermination) => {
+        if (d.id === determinationId) {
+          return {
+            ...d,
+            docentValidation: {
+              approved,
+              feedback,
+              validatedAt: new Date().toISOString(),
+            },
+          };
+        }
+        return d;
+      });
+
+      transaction.update(participantRef, { determinations });
+    });
     return true;
   } catch (error) {
     console.error('Error validating determination:', error);
@@ -387,21 +397,25 @@ export async function updateDeterminationWithAIValidation(
       participantId
     );
 
-    const participantDoc = await getDoc(participantRef);
-    if (!participantDoc.exists()) return false;
-
-    const data = participantDoc.data();
-    const determinations = data.determinations.map((d: ParticipantDetermination) => {
-      if (d.id === determinationId) {
-        return {
-          ...d,
-          aiValidation,
-        };
+    await runTransaction(firestore, async (transaction) => {
+      const participantDoc = await transaction.get(participantRef);
+      if (!participantDoc.exists()) {
+        throw new Error('Participant not found');
       }
-      return d;
-    });
 
-    await updateDoc(participantRef, { determinations });
+      const data = participantDoc.data();
+      const determinations = (data.determinations || []).map((d: ParticipantDetermination) => {
+        if (d.id === determinationId) {
+          return {
+            ...d,
+            aiValidation,
+          };
+        }
+        return d;
+      });
+
+      transaction.update(participantRef, { determinations });
+    });
     return true;
   } catch (error) {
     console.error('Error updating determination with AI validation:', error);
