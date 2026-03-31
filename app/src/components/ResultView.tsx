@@ -9,6 +9,7 @@ import { exportToPdf } from '../lib/pdfExport';
 import { LocationPickerModal } from './LocationPickerModal';
 import { updateDeterminationWithAIValidation } from '../lib/trainingSession';
 import { useUser } from '../contexts/UserContext';
+import type { ContinuationOption } from '../lib/awnProgression';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -33,6 +34,8 @@ interface ResultViewProps {
   onNewDetermination: () => void;
   onViewHistory: () => void;
   onRedeterminate?: (session: DeterminationSession) => void;
+  onContinueAtLevel?: (option: ContinuationOption) => void;
+  continuationOption?: ContinuationOption | null;
   trainingInfo?: TrainingInfo;
   level?: UserLevel;
   isSandbox?: boolean;
@@ -41,7 +44,20 @@ interface ResultViewProps {
   shouldAutoValidate?: boolean;
 }
 
-export function ResultView({ session, onNewDetermination, onViewHistory, onRedeterminate, trainingInfo, level = 'beginner', isSandbox = false, hintsUsed = 0, startTime, shouldAutoValidate = false }: ResultViewProps) {
+export function ResultView({
+  session,
+  onNewDetermination,
+  onViewHistory,
+  onRedeterminate,
+  onContinueAtLevel,
+  continuationOption = null,
+  trainingInfo,
+  level = 'beginner',
+  isSandbox = false,
+  hintsUsed = 0,
+  startTime,
+  shouldAutoValidate = false,
+}: ResultViewProps) {
   const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
   const hasRecordedResult = useRef(false);
   const validationStarted = useRef(false);
@@ -495,6 +511,33 @@ export function ResultView({ session, onNewDetermination, onViewHistory, onRedet
               </div>
             )}
           </div>
+
+          {continuationOption && onContinueAtLevel && (
+            <div className="card mt-3 border border-amber-200 bg-amber-50">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-amber-700">
+                    {continuationOption.testLabel}
+                  </p>
+                  <p className="text-sm font-semibold text-stone-900 mt-1">
+                    {continuationOption.title}
+                  </p>
+                  <p className="text-sm text-stone-600 mt-1">
+                    {continuationOption.summary}
+                  </p>
+                </div>
+                <button
+                  onClick={() => onContinueAtLevel(continuationOption)}
+                  className="shrink-0 rounded-lg bg-amber-600 px-3 py-2 text-sm font-semibold text-white hover:bg-amber-700 transition-colors"
+                >
+                  Verder op Gevorderd
+                </button>
+              </div>
+              <p className="text-xs text-stone-500 mt-3">
+                Dit is een testfase van de AWN-uitbreiding. Je start een nieuwe sessie met hetzelfde artefact.
+              </p>
+            </div>
+          )}
 
           {/* Locatie badge of toevoeg knop */}
           {sessionLocation ? (

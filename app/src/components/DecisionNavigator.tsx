@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Sprout, Leaf, Star } from 'lucide-react';
-import { getQuestion, processAnswer, getImagesForQuestion, formatTypeName, resultMinLevels } from '../lib/decisionTree';
+import {
+  getQuestion,
+  processAnswer,
+  getImagesForQuestion,
+  formatTypeName,
+  resultMinLevels,
+  getTreeLabel,
+  getTreeStartQuestionId,
+  type DecisionTreeMode,
+} from '../lib/decisionTree';
 import { getHintForQuestion } from '../lib/aiAnalysis';
 import type { DeterminationStep, UserLevel } from '../types';
 
@@ -13,10 +22,19 @@ interface DecisionNavigatorProps {
   onBack: () => void;
   level?: UserLevel;
   isSandbox?: boolean;
+  treeMode?: DecisionTreeMode;
 }
 
-export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level = 'beginner', isSandbox = false }: DecisionNavigatorProps) {
-  const [currentQuestionId, setCurrentQuestionId] = useState('1');
+export function DecisionNavigator({
+  imageUrl,
+  onStep,
+  onComplete,
+  onBack,
+  level = 'beginner',
+  isSandbox = false,
+  treeMode = 'beginner',
+}: DecisionNavigatorProps) {
+  const [currentQuestionId, setCurrentQuestionId] = useState(() => getTreeStartQuestionId(treeMode));
   const [history, setHistory] = useState<string[]>([]);
   const [forwardHistory, setForwardHistory] = useState<string[]>([]);
   const [stepCount, setStepCount] = useState(1);
@@ -28,13 +46,23 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
   const [showToelichtingAfterAnswer, setShowToelichtingAfterAnswer] = useState(false);
   const [lastAnswer, setLastAnswer] = useState<'ja' | 'nee' | null>(null);
 
-  const question = getQuestion(currentQuestionId);
+  const question = getQuestion(currentQuestionId, treeMode);
   const images = getImagesForQuestion(currentQuestionId);
+  const treeLabel = getTreeLabel(treeMode);
+  const isBeginnerTree = treeMode === 'beginner';
 
   // In gevorderd mode zijn hints niet beschikbaar
-  const hintsEnabled = level === 'beginner';
+  const hintsEnabled = level === 'beginner' && isBeginnerTree;
   // In gevorderd mode: toelichting pas na antwoord
-  const showToelichtingDirectly = level === 'beginner';
+  const showToelichtingDirectly = level === 'beginner' || !isBeginnerTree;
+
+  useEffect(() => {
+    setCurrentQuestionId(getTreeStartQuestionId(treeMode));
+    setHistory([]);
+    setForwardHistory([]);
+    setStepCount(1);
+    setHintsUsed(0);
+  }, [treeMode]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -59,7 +87,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
     onStep(step);
 
     // Verwerk het antwoord
-    const result = processAnswer(currentQuestionId, answer);
+    const result = processAnswer(currentQuestionId, answer, treeMode);
 
     // Clear forward history when user makes a new answer choice
     setForwardHistory([]);
@@ -69,7 +97,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
     const proceedToNext = () => {
       if (result.isEnd && result.result) {
         // Dieptebegrenzing: check of dit resultaat bereikbaar is op het huidige niveau
-        const resultLevel = resultMinLevels[result.result];
+        const resultLevel = isBeginnerTree ? resultMinLevels[result.result] : undefined;
         if (resultLevel && levelOrder[resultLevel] > levelOrder[level]) {
           // Resultaat vereist hoger niveau
           const vereistNiveau = resultLevel === 'expert' ? 'Expert' : 'Gevorderd';
@@ -104,7 +132,7 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
 
   const handleContinueAfterFeedback = () => {
     if (!question) return;
-    const result = processAnswer(currentQuestionId, lastAnswer!);
+    const result = processAnswer(currentQuestionId, lastAnswer!, treeMode);
 
     if (result.isEnd && result.result) {
       onComplete({
@@ -202,6 +230,9 @@ export function DecisionNavigator({ imageUrl, onStep, onComplete, onBack, level 
         <div className="flex-1">
           <p className="text-white text-sm font-medium">Stap {stepCount}</p>
           <p className="text-stone-400 text-xs">{history.length > 0 ? 'Terug = vorige vraag' : 'Terug = annuleren'}</p>
+          {!isBeginnerTree && (
+            <p className="text-stone-400 text-xs">{treeLabel}</p>
+          )}
         </div>
         {/* Level badge */}
         <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${currentLevelConfig.color}`}>

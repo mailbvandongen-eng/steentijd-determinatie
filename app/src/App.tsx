@@ -16,11 +16,18 @@ import { createSession, completeSession, getSession } from './lib/db';
 import { joinTrainingSession, submitDetermination } from './lib/trainingSession';
 import { useAuth } from './contexts/AuthContext';
 import type { DeterminationSession, LabeledImage, DeterminationStep, UserLevel } from './types';
+import { getContinuationOption, isContinuationActive, type ContinuationOption } from './lib/awnProgression';
+import type { DecisionTreeMode } from './lib/decisionTree';
 
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.1';
+const APP_VERSION = '2.2.3';
+
+interface ContinuationState {
+  treeMode: DecisionTreeMode;
+  sourceResultType: string;
+}
 
 // Animation variants
 const pageVariants = {
@@ -65,6 +72,7 @@ function App() {
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
   const [sessionHintsUsed, setSessionHintsUsed] = useState(0);
   const [shouldAutoValidateResult, setShouldAutoValidateResult] = useState(false);
+  const [continuationState, setContinuationState] = useState<ContinuationState | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [currentTrainingDeterminationId, setCurrentTrainingDeterminationId] = useState<string | null>(null);
   const [joinCodeFromUrl, setJoinCodeFromUrl] = useState<string | null>(null);
@@ -94,6 +102,7 @@ function App() {
     setTrainingSession(null);
     setSessionLevel(level);
     setSessionIsSandbox(isSandbox);
+    setContinuationState(null);
     setView('capture');
   }, []);
 
@@ -155,6 +164,7 @@ function App() {
     setDeterminationSteps([]);
     setSessionStartTime(Date.now());
     setSessionHintsUsed(0);
+    setContinuationState(null);
     setView('decision');
   }, []);
 
@@ -216,16 +226,19 @@ function App() {
     setCapturedData(null);
     setDeterminationSteps([]);
     setShouldAutoValidateResult(false);
+    setContinuationState(null);
     setView('start');
   }, []);
 
   const handleSelectSession = useCallback((session: DeterminationSession) => {
     setShouldAutoValidateResult(false);
+    setContinuationState(null);
     setCurrentSession(session);
     setView('result');
   }, []);
 
   const handleBackFromCapture = useCallback(() => {
+    setContinuationState(null);
     setView('start');
   }, []);
 
@@ -233,6 +246,7 @@ function App() {
     setCurrentSessionId(null);
     setCapturedData(null);
     setDeterminationSteps([]);
+    setContinuationState(null);
     setView('capture');
   }, []);
 
@@ -258,8 +272,45 @@ function App() {
     setCurrentSessionId(sessionId);
     setCapturedData(data);
     setDeterminationSteps([]);
+    setContinuationState(null);
     setView('decision');
   }, []);
+
+  const handleContinueAtLevel = useCallback(async (option: ContinuationOption) => {
+    if (!currentSession) return;
+
+    const data: CapturedData = {
+      type: currentSession.input.type,
+      images: currentSession.input.images,
+      blob: currentSession.input.blob,
+      thumbnail: currentSession.input.thumbnail,
+      videoBlob: currentSession.input.videoBlob,
+      locatie: currentSession.input.locatie,
+    };
+
+    const sessionId = await createSession({
+      type: data.type,
+      blob: data.blob,
+      thumbnail: data.thumbnail,
+      images: data.images,
+      videoBlob: data.videoBlob,
+      locatie: data.locatie,
+    });
+
+    setCurrentSessionId(sessionId);
+    setCapturedData(data);
+    setCurrentSession(null);
+    setDeterminationSteps([]);
+    setSessionStartTime(Date.now());
+    setSessionHintsUsed(0);
+    setShouldAutoValidateResult(true);
+    setSessionLevel(option.targetLevel);
+    setContinuationState({
+      treeMode: option.treeMode,
+      sourceResultType: option.sourceResultType,
+    });
+    setView('decision');
+  }, [currentSession]);
 
   // Get image URL for decision navigator
   const getImageUrl = (): string => {
@@ -302,17 +353,25 @@ function App() {
           onBack={handleBackFromDecision}
           level={sessionLevel}
           isSandbox={sessionIsSandbox}
+          treeMode={continuationState?.treeMode ?? 'beginner'}
         />
       );
     }
 
     if (view === 'result' && currentSession) {
+      const continuationOption = currentSession.result
+        ? getContinuationOption(currentSession.result.type, sessionLevel)
+        : null;
+      const activeContinuation = isContinuationActive(continuationOption) ? continuationOption : null;
+
       return (
         <ResultView
           session={currentSession}
           onNewDetermination={handleNewDetermination}
           onViewHistory={() => setView('history')}
           onRedeterminate={handleRedeterminate}
+          onContinueAtLevel={handleContinueAtLevel}
+          continuationOption={activeContinuation}
           trainingInfo={appMode === 'training' && trainingSession && currentTrainingDeterminationId ? {
             sessionCode: trainingSession.code,
             participantId: trainingSession.participantId,

@@ -31,6 +31,24 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.3',
+    title: 'AWN testfase 2',
+    items: [
+      'Spitsen krijgen een eerste subtypeboom op gevorderd',
+      'Schrabbers krijgen bredere subtypevertakkingen',
+      'Fase 2 van het AWN-progressieplan is geactiveerd',
+    ],
+  },
+  {
+    version: '2.2.2',
+    title: 'AWN testfase 1',
+    items: [
+      'Eerste vervolgknoppen op beginner-resultaten',
+      'Testfase voor klingen en afslagen',
+      'AWN-progressieplan vastgelegd voor verdere uitrol',
+    ],
+  },
+  {
     version: '2.3.0',
     title: 'Niveau dropdown & Lucide iconen',
     items: [
