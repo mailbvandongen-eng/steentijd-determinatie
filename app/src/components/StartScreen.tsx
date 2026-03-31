@@ -12,6 +12,7 @@ import {
   Leaf,
   Star,
   Info,
+  BookOpen,
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
 import { useAuth } from '../contexts/AuthContext';
@@ -31,6 +32,15 @@ interface StartScreenProps {
 }
 
 const CHANGELOG = [
+  {
+    version: '2.2.7',
+    title: 'Testinformatie voor AWN',
+    items: [
+      'Nieuwe uitleg- en testinformatie op het startscherm',
+      'Heldere beschrijving van niveaus, training, vrij spelen en potentie',
+      'Expertboom en AWN-fases beter uitlegbaar voor testers',
+    ],
+  },
   {
     version: '2.2.6',
     title: 'AWN expertboom',
@@ -358,6 +368,23 @@ export function StartScreen({
               </div>
             </button>
           </div>
+
+          <button
+            onClick={() => setShowInfo(true)}
+            className="w-full bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all border-2 border-transparent hover:border-amber-400"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                <BookOpen size={22} className="text-amber-700" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-sm font-semibold text-stone-800">Uitleg & testinformatie</h3>
+                <p className="text-xs text-stone-500">
+                  Voor AWN-testers, trainers, liefhebbers en geinteresseerden
+                </p>
+              </div>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -377,47 +404,115 @@ export function StartScreen({
             >
               {/* Header */}
               <div className="bg-gradient-to-br from-amber-600 to-amber-800 text-white p-4 text-center">
-                <h2 className="text-xl font-bold">Over Steentijd</h2>
-                <p className="text-amber-200 text-sm">AI-begeleide determinatie van stenen artefacten</p>
+                <h2 className="text-xl font-bold">Steentijd v2</h2>
+                <p className="text-amber-200 text-sm">Uitleg, testinformatie en ontwikkelrichting</p>
               </div>
 
               {/* Scrollbare content */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
 
-                {/* Hoe werkt het */}
                 <section>
-                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Hoe werkt het?</h3>
-                  <div className="space-y-3">
-                    {[
-                      { n: 1, title: "Foto maken", desc: "Maak meerdere foto's van je artefact (voor, achter, zijkanten)" },
-                      { n: 2, title: "Beslisboom doorlopen", desc: "Beantwoord stap voor stap vragen over het artefact" },
-                      { n: 3, title: "AI-validatie", desc: "De AI beoordeelt je determinatie en geeft feedback" },
-                      { n: 4, title: "Niveau opbouwen", desc: "Werk van Beginner naar Gevorderd door oefening en docentvalidaties" },
-                    ].map(({ n, title, desc }) => (
-                      <div key={n} className="flex gap-3">
-                        <div className="w-7 h-7 flex items-center justify-center bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-400 rounded-full text-sm font-bold shrink-0">
-                          {n}
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-medium text-stone-800 dark:text-stone-100">{title}</h4>
-                          <p className="text-xs text-stone-500 dark:text-stone-400">{desc}</p>
-                        </div>
-                      </div>
-                    ))}
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Wat deze app doet</h3>
+                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
+                    <p>
+                      Steentijd is een mobiele determinatie-app voor stenen artefacten op basis van het AWN-determinatie-algoritme.
+                    </p>
+                    <p>
+                      De app is bruikbaar als leeromgeving, als trainingsinstrument en als praktische hulp voor liefhebbers en geinteresseerden die stap voor stap een artefact willen bekijken.
+                    </p>
+                    <p>
+                      V2 combineert een toegankelijke beginnerinstap met verdiepingen op gevorderd niveau en een expertmodus die nu op de volledige AWN-bronboom is gebaseerd.
+                    </p>
                   </div>
                 </section>
 
-                {/* Niveaus */}
                 <section className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-3 border border-amber-200 dark:border-amber-800">
-                  <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-400 mb-1">Niveaus</h3>
-                  <ul className="text-xs text-amber-700 dark:text-amber-300 space-y-1">
-                    <li>• <strong>Beginner</strong> — AI-hints, referentiefoto's en uitleg bij elke vraag</li>
-                    <li>• <strong>Gevorderd</strong> — Zelfstandig determineren, geen hints</li>
-                    <li>• Ontgrendel Gevorderd met 20 correcte determinaties of 5 docentvalidaties</li>
-                  </ul>
+                  <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-400 mb-2">Niveaus in deze versie</h3>
+                  <div className="space-y-2 text-xs text-amber-700 dark:text-amber-300">
+                    <p><strong>Beginner</strong> — verkorte, begrijpelijke instapboom met hulp, context en referentiebeelden.</p>
+                    <p><strong>Gevorderd</strong> — verdieping op artefactgroepen waar de AWN-bron echt verder uitsplitst, zoals spitsen, schrabbers, vuistbijlen, geslepen en doorboorde werktuigen.</p>
+                    <p><strong>Expert</strong> — werkt zonder verkorte beginnerboom en gebruikt de volledige AWN-bronstructuur als basis voor determinatie.</p>
+                  </div>
                 </section>
 
-                {/* AWN */}
+                <section>
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Hoe dit tot stand is gekomen</h3>
+                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
+                    <p>
+                      De inhoudelijke basis komt uit het AWN-determinatie-algoritme en de handleiding van de Landelijke Werkgroep Steentijd.
+                    </p>
+                    <p>
+                      De app is eerst opgebouwd als werkbare beginnerboom en daarna gefaseerd uitgebreid met AWN-verdiepingen voor klingen, afslagen, spitsen, schrabbers, bifaciale werktuigen, geslepen werktuigen en doorboorde werktuigen.
+                    </p>
+                    <p>
+                      In deze versie is ook een expertmodus toegevoegd die de volledige AWN-bronboom als uitgangspunt gebruikt.
+                    </p>
+                  </div>
+                </section>
+
+                <section>
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Doorgroeien en vrij spelen</h3>
+                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
+                    <p>
+                      Van <strong>Beginner</strong> naar <strong>Gevorderd</strong> groei je door met correcte determinaties en docentvalidaties.
+                    </p>
+                    <p>
+                      Van <strong>Gevorderd</strong> naar <strong>Expert</strong> groeit de gebruiker verder via extra correcte determinaties en extra docentvalidaties.
+                    </p>
+                    <p>
+                      Via <strong>Vrij spelen</strong> kun je beginner, gevorderd en expert direct testen zonder dat dit invloed heeft op de opgeslagen voortgang.
+                    </p>
+                    <p>
+                      Daardoor is de app niet alleen bruikbaar voor trainingen, maar ook voor mensen die willen oefenen, verkennen of gewoon interesse hebben in steentijdartefacten.
+                    </p>
+                  </div>
+                </section>
+
+                <section>
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Training, docent en validatie</h3>
+                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
+                    <p>
+                      Trainers of docenten kunnen sessies aanmaken, deelnemers laten instromen via code of QR, en determinaties beoordelen in het docentdashboard.
+                    </p>
+                    <p>
+                      Een docent kan determinaties goed- of afkeuren en gebruikers handmatig naar een hoger niveau promoveren.
+                    </p>
+                    <p>
+                      <strong>Belangrijk:</strong> in de huidige V2 is er nog geen aparte <strong>validatorrol</strong>. Die validatie ligt nu bij de docent/trainer. Een losse validatorrol is een logische volgende stap, maar is nog niet apart ingericht in de interface.
+                    </p>
+                  </div>
+                </section>
+
+                <section>
+                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Waar testers op kunnen letten</h3>
+                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
+                    <p>
+                      Testers kunnen nu zowel de praktische bruikbaarheid als de AWN-logica beoordelen:
+                    </p>
+                    <ul className="space-y-1 text-xs text-stone-600 dark:text-stone-400">
+                      <li>• klopt de beginnerinstap voor nieuwe gebruikers?</li>
+                      <li>• verschijnen verdiepingen op logische momenten?</li>
+                      <li>• voelt de expertmodus inhoudelijk als de AWN-bronstructuur?</li>
+                      <li>• zijn trainer en validatie bruikbaar voor oefen- en lessituaties?</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section className="rounded-xl p-3 border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-700/50">
+                  <h3 className="text-sm font-semibold mb-2 text-stone-800 dark:text-stone-100">Potentie van deze app</h3>
+                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
+                    <p>
+                      Deze app kan uitgroeien tot een gedeeld hulpmiddel voor zelfstudie, training, veldgebruik en kwaliteitscontrole rond determinatie.
+                    </p>
+                    <p>
+                      De combinatie van beginnerinstap, expertverdieping, trainingssessies, validatie, kaartfuncties en opgeslagen determinaties maakt het mogelijk om zowel onderwijs als praktijk te ondersteunen.
+                    </p>
+                    <p>
+                      Voor liefhebbers en geinteresseerden is de app al bruikbaar als begeleide kennismaking met het determineren van steentijdartefacten, ook zonder directe toegang tot trainingssessies.
+                    </p>
+                  </div>
+                </section>
+
                 <section className="rounded-xl p-3 border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-700/50">
                   <h3 className="text-sm font-semibold mb-2 text-stone-800 dark:text-stone-100">AWN Werkgroep Steentijd</h3>
                   <p className="text-xs text-stone-600 dark:text-stone-400 mb-2">
@@ -438,14 +533,12 @@ export function StartScreen({
                   </div>
                 </section>
 
-                {/* Disclaimer */}
                 <section className="rounded-xl p-3 border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-900/20">
                   <p className="text-xs text-amber-800 dark:text-amber-400">
-                    <strong>Let op:</strong> Dit is een hulpmiddel. Raadpleeg bij twijfel altijd een expert van de AWN Werkgroep Steentijd.
+                    <strong>Let op:</strong> Dit blijft een hulpmiddel. Bij twijfel of bij inhoudelijke discussie hoort de beoordeling uiteindelijk bij de AWN-expertise en niet alleen bij de app.
                   </p>
                 </section>
 
-                {/* Changelog */}
                 <section>
                   <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Wat is nieuw?</h3>
                   <div className="space-y-2 max-h-40 overflow-y-auto">
