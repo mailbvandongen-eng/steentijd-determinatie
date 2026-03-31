@@ -1,5 +1,6 @@
 import type { ImageMetadata, UserLevel } from '../types';
 import imageMetadata from '../data/images_metadata.json';
+import fullDecisionTreeData from '../data/beslisboom.json';
 
 export const imagesMeta: ImageMetadata[] = imageMetadata as ImageMetadata[];
 
@@ -16,6 +17,7 @@ export interface QuestionNode {
 
 export type DecisionTreeMode =
   | 'beginner'
+  | 'expert'
   | 'phase1-afslag'
   | 'phase1-kling'
   | 'phase1-geretoucheerde-kling'
@@ -23,12 +25,23 @@ export type DecisionTreeMode =
   | 'phase1-klingschrabber'
   | 'phase1-schrabber'
   | 'phase2-schrabber'
-  | 'phase2-spits';
+  | 'phase2-spits'
+  | 'phase3-vuistbijl'
+  | 'phase4-geslepen-bijl'
+  | 'phase4-geslepen-artefact'
+  | 'phase5-doorboord-artefact'
+  | 'phase5-hamerbijl';
 
 interface TreeDefinition {
   label: string;
   startQuestionId: string;
   questions: Record<string, QuestionNode>;
+}
+
+interface RawDecisionNode {
+  vraag: string;
+  ja: string | null;
+  nee: string | null;
 }
 
 // Minimale niveaus voor beginner-eindresultaten.
@@ -50,6 +63,98 @@ export const resultMinLevels: Record<string, UserLevel> = {
   'spits': 'gevorderd',
   'geretoucheerde-afslag': 'gevorderd',
 };
+
+const fullDecisionTree = fullDecisionTreeData as Record<string, RawDecisionNode>;
+const expertQuestionOrder = Object.keys(fullDecisionTree);
+
+const EXPERT_QUESTION_OVERRIDES: Partial<Record<string, string>> = {
+  '8': 'Heeft het meer dan 2 afslagnegatieven?',
+  '10': 'Is de brok of vorstsplijting mogelijk gemodificeerd?',
+  '12': 'Heeft de kern naar het midden gerichte afslagnegatieven aan één sterk bolle zijde?',
+  '35': 'Heeft het kernwerktuig een duidelijke boorpunt?',
+  '132': 'Houdt het werktuig het midden tussen een chopping tool en een vuistbijl met beperkte bifaciale bewerking?',
+  '141': 'Is de vuistbijl gedeeltelijk bewerkt, aan één zijde bewerkt of gemaakt van een dikke afslag?',
+  '230': 'Heeft het artefact een smalle, puntige werkkant zoals een boor, bec of ruimer?',
+  '560': 'Heeft het artefact een schachtdoorn zonder duidelijke weerhaken?',
+  '622': 'Heeft de rechthoekige vuurstenen bijl een extra brede snede?',
+};
+
+const EXPERT_LABEL_JUMPS: Record<string, string> = {
+  'doorboord--artefact': '700',
+  'artefact-van-vuursteen--kwartsiet-of-lydiet': '5',
+  'van-een-andere-steensoort': '4',
+  'geslepen--bijl': '660',
+  'geslepen--vuurstenen--artefact': '601',
+  'het-artefact-heeft-resten-van-een-ventrale-zijde': '40',
+  'het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt': '125',
+  'één-of-meer-afslagnegatieven': '8',
+  'het-artefact-is-een-knol--brok-of-vorstsplijting': '9a',
+  'het-is-een-artefact': '9',
+  '1-of-2-het-is-een-brok-of-vorstsplijting': '10',
+  'een-kern--werktuig': '33',
+  'een-kern': '11',
+  'nee-een-klein-of-onherkenbaar-slagvlak': '18',
+  'een-klein-of-onherkenbaar-slagvlak': '13',
+  'nee-één-slagvlak': '29',
+  'één-slagvlak': '25',
+  'lange-afslagnegatieven': '26',
+  'relatief-klein': '28',
+  twee: '30',
+  'afslagkling--werktuig': '201',
+  'de-afslag-of-kling-is-niet-bewerkt': '41',
+  afslag: '42',
+  kling: '71',
+};
+
+function getExpertQuestionIndex(questionId: string): number {
+  return expertQuestionOrder.indexOf(questionId);
+}
+
+function getExpertQuestionIdAt(questionId: string, offset: number): string | undefined {
+  const index = getExpertQuestionIndex(questionId);
+  if (index < 0) return undefined;
+  return expertQuestionOrder[index + offset];
+}
+
+function normalizeExpertText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function slugTokens(value: string): string[] {
+  return normalizeExpertText(value)
+    .split(' ')
+    .filter((token) => token.length > 2)
+    .slice(0, 6);
+}
+
+function isExpertQuestionRelatedToLabel(questionId: string | undefined, label: string | null): boolean {
+  if (!questionId || !label) return false;
+  const question = fullDecisionTree[questionId];
+  if (!question) return false;
+
+  const normalizedQuestion = normalizeExpertText(EXPERT_QUESTION_OVERRIDES[questionId] ?? question.vraag);
+  if (!normalizedQuestion) return false;
+
+  return slugTokens(label).some((token) => normalizedQuestion.includes(token));
+}
+
+function buildExpertQuestionNode(id: string): QuestionNode {
+  const raw = fullDecisionTree[id];
+  return {
+    id,
+    vraag: (EXPERT_QUESTION_OVERRIDES[id] ?? raw.vraag).trim(),
+    toelichting: `AWN bronvraag ..${id}`,
+  };
+}
+
+const expertTree: Record<string, QuestionNode> = Object.fromEntries(
+  expertQuestionOrder.map((id) => [id, buildExpertQuestionNode(id)])
+);
 
 const beginnerTree: Record<string, QuestionNode> = {
   '1': {
@@ -1044,11 +1149,563 @@ const phase2SpitsTree: Record<string, QuestionNode> = {
   },
 };
 
+const phase3VuistbijlTree: Record<string, QuestionNode> = {
+  '610': {
+    id: '610',
+    vraag: 'Is de vuistbijl kleiner dan 6 cm?',
+    toelichting: 'Kleine vuistbijlen vallen in de AWN-bron onder de groep fäustel.',
+    jaResultaat: 'vuistbijl--fäustel',
+    neeVolgende: '611',
+  },
+  '611': {
+    id: '611',
+    vraag: 'Is het werktuig opvallend dun en zonder duidelijke dikke rug?',
+    toelichting: 'Dat past beter bij een faustkeilblatt dan bij een klassieke vuistbijl.',
+    jaResultaat: 'vuistbijl--faustkeilblatt',
+    neeVolgende: '612',
+  },
+  '612': {
+    id: '612',
+    vraag: 'Is het artefact maar gedeeltelijk bifaciaal bewerkt of vooral aan één zijde uitgewerkt?',
+    toelichting: 'Eenvoudige of op afslag gemaakte vuistbijlen worden in de AWN-bron als uniface onderscheiden.',
+    jaResultaat: 'uniface',
+    neeVolgende: '613',
+  },
+  '613': {
+    id: '613',
+    vraag: 'Heeft de vuistbijl een korte snede, soms als tranchet-snede?',
+    toelichting: 'Asymmetrische vuistbijlen met korte snede vormen een aparte subtypegroep.',
+    jaResultaat: 'vuistbijl--met-korte--snede',
+    neeVolgende: '614',
+  },
+  '614': {
+    id: '614',
+    vraag: 'Is de vuistbijl relatief dik: breedte kleiner dan 2,35 x dikte?',
+    toelichting: 'De AWN-bron splitst eerst dikke en dunnere vuistbijlen.',
+    jaVolgende: '620',
+    neeVolgende: '640',
+  },
+  '620': {
+    id: '620',
+    vraag: 'Heeft de vuistbijl een asymmetrische, dikke bolle basis met slanke punt en vaak licht concave zijden?',
+    toelichting: 'Dat zijn kenmerkende eigenschappen van een Micoque-vuistbijl.',
+    jaResultaat: 'vuistbijl--micoque',
+    neeVolgende: '621',
+  },
+  '621': {
+    id: '621',
+    vraag: 'Is de vuistbijl langwerpig met rechte zijden en een dikke bolle basis?',
+    toelichting: 'Dan past de lancetvormige vuistbijl.',
+    jaResultaat: 'vuistbijl--lancetvormig',
+    neeVolgende: '622',
+  },
+  '622': {
+    id: '622',
+    vraag: 'Is de vuistbijl relatief groot en langwerpig met dikke bolle basis, concave zijden en een goed ontwikkelde punt?',
+    toelichting: 'Dat past bij een ficron, een grover bewerkte langwerpige vuistbijl.',
+    jaResultaat: 'vuistbijl--ficron',
+    neeVolgende: '623',
+  },
+  '623': {
+    id: '623',
+    vraag: 'Is de vorm amandelvormig en fijner bewerkt dan de ficron?',
+    toelichting: 'Dikkere maar regelmatige amandelvormige stukken horen in deze subtypegroep.',
+    jaResultaat: 'vuistbijl--amandelvormig',
+    neeResultaat: 'vuistbijl--flesvormig',
+  },
+  '640': {
+    id: '640',
+    vraag: 'Heeft de vuistbijl een duidelijk hartvormig silhouet?',
+    toelichting: 'Dunne vuistbijlen met spitse punt worden in de bron eerst naar hart- en driehoeksvormen gesplitst.',
+    jaVolgende: '641',
+    neeVolgende: '645',
+  },
+  '641': {
+    id: '641',
+    vraag: 'Is de vuistbijl langwerpig, dus duidelijk langer dan 1,5 x de breedte?',
+    toelichting: 'Dan past de langwerpig hartvormige subtypegroep beter dan de compacte hartvorm.',
+    jaResultaat: 'vuistbijl--langwerpig--hartvormig',
+    neeVolgende: '642',
+  },
+  '642': {
+    id: '642',
+    vraag: 'Is de vorm hartvormig maar asymmetrisch of onregelmatig?',
+    toelichting: 'Dan gaat het om een sub-hartvormige vuistbijl.',
+    jaResultaat: 'vuistbijl--sub-hartvormig',
+    neeResultaat: 'vuistbijl--hartvormig',
+  },
+  '645': {
+    id: '645',
+    vraag: 'Heeft de vuistbijl een duidelijke driehoekige vorm met rechte tot licht convexe of concave zijden?',
+    toelichting: 'Driehoekige varianten worden in de AWN-bron apart uitgewerkt.',
+    jaVolgende: '646',
+    neeVolgende: '650',
+  },
+  '646': {
+    id: '646',
+    vraag: 'Is de vuistbijl langwerpig, dus duidelijk langer dan 1,5 x de breedte?',
+    toelichting: 'Dan past de langwerpig driehoekige subtypegroep.',
+    jaResultaat: 'vuistbijl--langwerpig--driehoekig',
+    neeVolgende: '647',
+  },
+  '647': {
+    id: '647',
+    vraag: 'Is de vorm driehoekig maar asymmetrisch of onregelmatig?',
+    toelichting: 'Dan gaat het om een sub-driehoekige vuistbijl.',
+    jaResultaat: 'vuistbijl--sub-driehoekig',
+    neeResultaat: 'vuistbijl--driehoekig',
+  },
+  '650': {
+    id: '650',
+    vraag: 'Heeft de vuistbijl een afgeronde driehoekige top boven een min of meer rechthoekige basis?',
+    toelichting: 'Dat zijn de klassieke kenmerken van een bout-coupe.',
+    jaResultaat: 'vuistbijl--bout--coupé',
+    neeVolgende: '651',
+  },
+  '651': {
+    id: '651',
+    vraag: 'Is de vorm langgerekt ovaal en langer dan 1,5 x de breedte?',
+    toelichting: 'Dan past limande beter dan een gewone ovale vuistbijl.',
+    jaResultaat: 'vuistbijl--limande',
+    neeVolgende: '652',
+  },
+  '652': {
+    id: '652',
+    vraag: 'Is de vorm overwegend ovaal en korter dan 1,5 x de breedte?',
+    toelichting: 'Dat hoort bij de ovale vuistbijlen.',
+    jaResultaat: 'vuistbijl--ovaal',
+    neeVolgende: '653',
+  },
+  '653': {
+    id: '653',
+    vraag: 'Is de vuistbijl rond met een fijner bewerkte werkkant?',
+    toelichting: 'Ronde/disque-vormen zijn een eigen subtype.',
+    jaResultaat: 'vuistbijl--rond-og-vuistbijl--disque',
+    neeVolgende: '654',
+  },
+  '654': {
+    id: '654',
+    vraag: 'Is de vuistbijl ovaal tot vierhoekig en bootvormig?',
+    toelichting: 'Dat past bij de bootvormige vuistbijl.',
+    jaResultaat: 'vuistbijl--bootvormig',
+    neeResultaat: 'vuistbijl',
+  },
+};
+
+const phase4GeslepenBijlTree: Record<string, QuestionNode> = {
+  '801': {
+    id: '801',
+    vraag: 'Is de vuurstenen bijl relatief breed en dun, ongeveer breder dan de helft van de lengte?',
+    toelichting: 'Dat is de vlakbijl-groep binnen AWN 7.1.1.',
+    jaVolgende: '802',
+    neeVolgende: '805',
+  },
+  '802': {
+    id: '802',
+    vraag: 'Heeft de vlakbijl een klokvormige omtrek met gebogen zijden en grootste breedte op circa een derde van de snede?',
+    toelichting: 'Dat past bij de klokvormige vuurstenen vlakbijl.',
+    jaResultaat: 'bijl-vlakbijl--klokvormig',
+    neeVolgende: '803',
+  },
+  '803': {
+    id: '803',
+    vraag: 'Heeft de vlakbijl een trapeziumvormige omtrek met rechte zijden?',
+    toelichting: 'Dan past de trapeziumvormige vuurstenen vlakbijl.',
+    jaResultaat: 'bijl-vlakbijl--trapeziumvormig',
+    neeVolgende: '804',
+  },
+  '804': {
+    id: '804',
+    vraag: 'Is de omtrek rechthoekig tot zwak trapeziumvormig?',
+    toelichting: 'Dan blijft de rechthoekige vuurstenen vlakbijl over.',
+    jaResultaat: 'bijl-vlakbijl--rechthoekig',
+    neeResultaat: 'bijl-vlakbijl',
+  },
+  '805': {
+    id: '805',
+    vraag: 'Heeft de vuurstenen bijl een ovale dwarsdoorsnede?',
+    toelichting: 'AWN splitst daarna naar ovale of rechthoekige dwarsdoorsnede.',
+    jaVolgende: '806',
+    neeVolgende: '814',
+  },
+  '806': {
+    id: '806',
+    vraag: 'Heeft de bijl een smalle top in bovenaanzicht?',
+    toelichting: 'Smaltoppige en breedtoppige bijlen vormen aparte subtypegroepen.',
+    jaVolgende: '807',
+    neeVolgende: '810',
+  },
+  '807': {
+    id: '807',
+    vraag: 'Heeft de smaltoppige bijl geslepen zijden?',
+    toelichting: 'Dan gaat het om de smaltoppige variant met ovale dwarsdoorsnede en geslepen zijden.',
+    jaResultaat: 'bijl-smaltoppig--met-ovale--dwarsdoorsnede--en-geslepen--zijden',
+    neeVolgende: '808',
+  },
+  '808': {
+    id: '808',
+    vraag: 'Heeft de smaltoppige bijl een afgerond rombische dwarsdoorsnede?',
+    toelichting: 'Dit is een aparte subtypegroep binnen de smaltoppige bijlen.',
+    jaResultaat: 'bijl-smaltoppig--met-afgerond--rombische--dwarsdoorsnede',
+    neeVolgende: '809',
+  },
+  '809': {
+    id: '809',
+    vraag: 'Heeft de smaltoppige bijl een ovale tot vlakovale dwarsdoorsnede?',
+    toelichting: 'Dan past de smaltoppige vuurstenen bijl met ovale tot vlakovale dwarsdoorsnede.',
+    jaResultaat: 'bijl-smaltoppig--met-ovale--tot-vlakovale--dwarsdoorsnede',
+    neeResultaat: 'bijl-smaltoppig--met-ovale--dwarsdoorsnede',
+  },
+  '810': {
+    id: '810',
+    vraag: 'Heeft de bijl een brede, dunne top in zijaanzicht?',
+    toelichting: 'Dan kom je in de breedtoppige subtypegroep.',
+    jaVolgende: '811',
+    neeVolgende: '813',
+  },
+  '811': {
+    id: '811',
+    vraag: 'Is de bijl langer dan 15 cm?',
+    toelichting: 'Lange breedtoppige vuurstenen bijlen vallen in de Buren-groep.',
+    jaResultaat: 'bijl-buren',
+    neeVolgende: '812',
+  },
+  '812': {
+    id: '812',
+    vraag: 'Heeft de breedtoppige bijl duidelijk geslepen zijden?',
+    toelichting: 'Daarmee onderscheid je de variant met geslepen zijden van de rondovale doorsnede.',
+    jaResultaat: 'bijl-breedtoppig--met-ovale--dwarsdoorsnede--en-geslepen--zijden',
+    neeResultaat: 'bijl-breedtoppig--met-rondovale--dwarsdoorsnede',
+  },
+  '813': {
+    id: '813',
+    vraag: 'Is de bijl dun in lengtedoorsnede en ovaal in dwarsdoorsnede?',
+    toelichting: 'Dan gaat het om de dunbladige vuurstenen bijl met ovale dwarsdoorsnede.',
+    jaResultaat: 'bijl-dunbladig--met-ovale--dwarsdoorsnede',
+    neeResultaat: 'bijl-met-ovale--dwarsdoorsnede',
+  },
+  '814': {
+    id: '814',
+    vraag: 'Heeft de vuurstenen bijl een rechthoekige dwarsdoorsnede?',
+    toelichting: 'Binnen deze groep worden afwijkende snede, top en bladdikte verder uitgesplitst.',
+    jaVolgende: '815',
+    neeResultaat: 'geslepen-vuurstenen-bijl',
+  },
+  '815': {
+    id: '815',
+    vraag: 'Heeft de bijl een afwijkende snede, zoals een brede snede, disselsnede of holle snede?',
+    toelichting: 'AWN behandelt afwijkende sneden eerst, voor de top- en bladtypen.',
+    jaVolgende: '816',
+    neeVolgende: '820',
+  },
+  '816': {
+    id: '816',
+    vraag: 'Heeft de bijl een duidelijke disselsnede en is die niet symmetrisch in lengtedoorsnede?',
+    toelichting: 'Dan gaat het om een vuurstenen dissel.',
+    jaVolgende: '817',
+    neeVolgende: '818',
+  },
+  '817': {
+    id: '817',
+    vraag: 'Heeft de dissel gebogen onder- en bovenzijde?',
+    toelichting: 'Dit onderscheidt de twee AWN-subtypen binnen de vuurstenen dissels.',
+    jaResultaat: 'bijl-dissel--met-gebogen--onder--en-bovenzijde',
+    neeResultaat: 'bijl-dissel--met-parallelle--onder--en-bovenzijde',
+  },
+  '818': {
+    id: '818',
+    vraag: 'Heeft de bijl een holle snede?',
+    toelichting: 'Vuurstenen bijlen met holle snede worden verder naar profiel gesplitst.',
+    jaVolgende: '819',
+    neeResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--en-brede--snede',
+  },
+  '819': {
+    id: '819',
+    vraag: 'Zijn onder- en bovenzijde gebogen?',
+    toelichting: 'Dit onderscheidt de twee typen met holle snede.',
+    jaResultaat: 'bijl-met-holle--snede--en-gebogen--onder--en-bovenzijde',
+    neeResultaat: 'bijl-met-holle--snede--en-parallelle--onder--en-bovenzijde',
+  },
+  '820': {
+    id: '820',
+    vraag: 'Heeft de bijl een dunne top in dwarsdoorsnede?',
+    toelichting: 'Duntoppige, dikbladige en dunbladige rechthoekige bijlen vormen de hoofdgroepen.',
+    jaVolgende: '821',
+    neeVolgende: '824',
+  },
+  '821': {
+    id: '821',
+    vraag: 'Is de dunne top scherp?',
+    toelichting: 'Dat is de eerste subtypegroep binnen de duntoppige bijlen.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--scherpe--top',
+    neeVolgende: '822',
+  },
+  '822': {
+    id: '822',
+    vraag: 'Is de dunne top vlak?',
+    toelichting: 'Dan gaat het om de variant met dunne vlakke top.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--vlakke--top',
+    neeVolgende: '823',
+  },
+  '823': {
+    id: '823',
+    vraag: 'Is de top dun maar onregelmatig?',
+    toelichting: 'Dan blijft de variant met dunne onregelmatige top over.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--onregelmatige--top',
+    neeResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--duntoppig',
+  },
+  '824': {
+    id: '824',
+    vraag: 'Is de grootste dikte meer dan de helft van de grootste breedte?',
+    toelichting: 'Dan hoort de bijl in de dikbladige groep, anders in de dunbladige.',
+    jaVolgende: '825',
+    neeVolgende: '828',
+  },
+  '825': {
+    id: '825',
+    vraag: 'Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde?',
+    toelichting: 'Dat is de sterk gebogen dikbladige variant.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--sterk-gebogen',
+    neeVolgende: '826',
+  },
+  '826': {
+    id: '826',
+    vraag: 'Zijn boven- en onderzijde weinig gekromd?',
+    toelichting: 'Dan gaat het om de weinig gekromde dikbladige variant.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--weinig-gekromd',
+    neeVolgende: '827',
+  },
+  '827': {
+    id: '827',
+    vraag: 'Zijn boven- en onderzijde nagenoeg parallel?',
+    toelichting: 'Dan past de parallelle dikbladige variant, anders blijft het generieke type over.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--parallel',
+    neeResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig',
+  },
+  '828': {
+    id: '828',
+    vraag: 'Zijn boven- en onderzijde sterk gekromd?',
+    toelichting: 'Dit onderscheidt de twee dunbladige subtypen.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--sterk-gekromd',
+    neeVolgende: '829',
+  },
+  '829': {
+    id: '829',
+    vraag: 'Zijn boven- en onderzijde nagenoeg parallel?',
+    toelichting: 'Dan gaat het om de parallelle dunbladige variant.',
+    jaResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--parallel',
+    neeResultaat: 'bijl-met-rechthoekige--dwarsdoorsnede--dunbladig',
+  },
+};
+
+const phase4GeslepenArtefactTree: Record<string, QuestionNode> = {
+  '840': {
+    id: '840',
+    vraag: 'Is het geslepen vuurstenen artefact smal, ongeveer smaller dan 2,9 cm en ongeveer even dik als breed?',
+    toelichting: 'Dan zit je in de beitelgroep van AWN 7.2.',
+    jaVolgende: '841',
+    neeVolgende: '845',
+  },
+  '841': {
+    id: '841',
+    vraag: 'Heeft het artefact een holle snede?',
+    toelichting: 'Dat past bij een gutsbeitel.',
+    jaResultaat: 'beitel--guts',
+    neeVolgende: '842',
+  },
+  '842': {
+    id: '842',
+    vraag: 'Ligt de snede niet in het midden?',
+    toelichting: 'Dan past de disselbeitel beter dan de standaardbeitel.',
+    jaResultaat: 'beitel--dissel',
+    neeVolgende: '843',
+  },
+  '843': {
+    id: '843',
+    vraag: 'Heeft het artefact een rechte snede in het midden?',
+    toelichting: 'Dat is de standaardbeitel.',
+    jaResultaat: 'beitel--standaard',
+    neeVolgende: '844',
+  },
+  '844': {
+    id: '844',
+    vraag: 'Heeft het artefact geen snede maar een puntig uiteinde?',
+    toelichting: 'Dan gaat het om een puntbeitel.',
+    jaResultaat: 'beitel--punt',
+    neeResultaat: 'beitel',
+  },
+  '845': {
+    id: '845',
+    vraag: 'Heeft het artefact een smal lang lemmet met bewuste top of handgreepvorm, dus min of meer dolkvormig?',
+    toelichting: 'Binnen de geslepen vuurstenen artefacten vormen dolken een eigen hoofdgroep.',
+    jaResultaat: 'dolk',
+    neeVolgende: '846',
+  },
+  '846': {
+    id: '846',
+    vraag: 'Is het artefact gemaakt van een geslepen bijlfragment of toont het duidelijk hergebruik van een bijlafslag?',
+    toelichting: 'AWN noemt bijlfragmenten expliciet als aparte categorie geslepen werktuigen.',
+    jaResultaat: 'artefact--gemaakt-van-bijlafslag',
+    neeResultaat: 'geslepen-vuurstenen-artefact',
+  },
+};
+
+const phase5DoorboordArtefactTree: Record<string, QuestionNode> = {
+  '900': {
+    id: '900',
+    vraag: 'Is het artefact onvolledig doorboord?',
+    toelichting: 'Een onvolledig doorboord artefact valt in de AWN-bron onder dellensteen.',
+    jaResultaat: 'dellensteen',
+    neeVolgende: '901',
+  },
+  '901': {
+    id: '901',
+    vraag: 'Is het volledig doorboorde artefact zonder snede en duidelijk dik of rolsteenachtig?',
+    toelichting: 'Dan gaat het om een doorboorde rolsteen.',
+    jaResultaat: 'doorboorde--rolsteen',
+    neeVolgende: '902',
+  },
+  '902': {
+    id: '902',
+    vraag: 'Is het volledig doorboorde artefact zonder snede schijfvormig of plat?',
+    toelichting: 'Dan past de schijfvormige doorboorde steen.',
+    jaResultaat: 'doorboorde--schijfvormige--steen',
+    neeVolgende: '903',
+  },
+  '903': {
+    id: '903',
+    vraag: 'Heeft het artefact een snede haaks op het gat?',
+    toelichting: 'Dat is de schoenleest-bijl met gat haaks op de snede.',
+    jaResultaat: 'bijl-dissel--met-gat-haaks--op-de-snede',
+    neeVolgende: '904',
+  },
+  '904': {
+    id: '904',
+    vraag: 'Heeft het artefact een snede evenwijdig aan het gat, maar niet in het midden?',
+    toelichting: 'Dan gaat het om een doorboorde schoenleestwig.',
+    jaResultaat: 'bijl-dissel--doorboord',
+    neeVolgende: '905',
+  },
+  '905': {
+    id: '905',
+    vraag: 'Heeft het artefact een centrale snede en een wigvorm?',
+    toelichting: 'Dan past de doorboorde breedwig.',
+    jaResultaat: 'doorboorde--breedwig',
+    neeVolgende: '906',
+  },
+  '906': {
+    id: '906',
+    vraag: 'Heeft het doorboorde artefact een stompe punt in plaats van een brede snede?',
+    toelichting: 'Dat past bij de puntige hak.',
+    jaResultaat: 'hak-puntig',
+    neeVolgende: '907',
+  },
+  '907': {
+    id: '907',
+    vraag: 'Heeft het artefact twee echte snedes of een dubbelbijl-vorm?',
+    toelichting: 'Dubbelbijlen worden in de AWN-bron in type A, B en C onderverdeeld.',
+    jaVolgende: '908',
+    neeVolgende: '911',
+  },
+  '908': {
+    id: '908',
+    vraag: 'Is de vorm symmetrisch, maar heeft het artefact feitelijk maar één echte snede en ligt het gat iets meer naar de stompe kant?',
+    toelichting: 'Dan past dubbelbijl type A.',
+    jaResultaat: 'bijl-dubbel--type-a',
+    neeVolgende: '909',
+  },
+  '909': {
+    id: '909',
+    vraag: 'Heeft het artefact twee echte snedes en ligt het gat iets excentrisch?',
+    toelichting: 'Dan past dubbelbijl type B.',
+    jaResultaat: 'bijl-dubbel--type-b',
+    neeVolgende: '910',
+  },
+  '910': {
+    id: '910',
+    vraag: 'Heeft de dubbelbijl een beitelvorm en een ovaal gat?',
+    toelichting: 'Dan gaat het om dubbelbijl type C.',
+    jaResultaat: 'bijl-dubbel--type-c',
+    neeResultaat: 'bijl-dubbel',
+  },
+  '911': {
+    id: '911',
+    vraag: 'Heeft het doorboorde artefact een duidelijke hamervorm?',
+    toelichting: 'Dan kom je uit bij de hamerbijlgroep.',
+    jaResultaat: 'hamerbijl',
+    neeResultaat: 'doorboord-artefact',
+  },
+};
+
+const phase5HamerbijlTree: Record<string, QuestionNode> = {
+  '930': {
+    id: '930',
+    vraag: 'Heeft de hamerbijl een gefacetteerd oppervlak?',
+    toelichting: 'Gefacetteerde hamerbijlen worden in de AWN-bron in type 1, 2a en 2b verdeeld.',
+    jaVolgende: '931',
+    neeVolgende: '934',
+  },
+  '931': {
+    id: '931',
+    vraag: 'Heeft de hamerbijl een convexe bovenzijde, concave onderzijde, ronde dwarsdoorsnede en een duidelijke rand op de versterking bij het gat?',
+    toelichting: 'Dat past bij gefacetteerde hamerbijl type 1.',
+    jaResultaat: 'bijl-hamer--gefacetteerd--type-1',
+    neeVolgende: '932',
+  },
+  '932': {
+    id: '932',
+    vraag: 'Heeft de hamerbijl vrijwel vlakke boven- en onderzijde, ronde dwarsdoorsnede en een versmalling van gat naar snede?',
+    toelichting: 'Dat past bij gefacetteerde hamerbijl type 2a.',
+    jaResultaat: 'bijl-hamer--gefacetteerd--type-2a',
+    neeVolgende: '933',
+  },
+  '933': {
+    id: '933',
+    vraag: 'Heeft de hamerbijl convexe boven- en onderzijde, een afgerond vierzijdige dwarsdoorsnede en een taps toelopend deel vanaf het gat naar een smalle snede?',
+    toelichting: 'Dat past bij gefacetteerde hamerbijl type 2b.',
+    jaResultaat: 'bijl-hamer--gefacetteerd--type-2b',
+    neeResultaat: 'bijl-hamer--gefacetteerd',
+  },
+  '934': {
+    id: '934',
+    vraag: 'Heeft de hamerbijl een knopvormig uiteinde aan de nek?',
+    toelichting: 'Dan gaat het om de knop-hamerbijl.',
+    jaResultaat: 'bijl-hamer--knop',
+    neeVolgende: '935',
+  },
+  '935': {
+    id: '935',
+    vraag: 'Heeft het artefact feitelijk twee echte snedes?',
+    toelichting: 'Sommige beginner-uitkomsten als hamerbijl blijken bij verdieping een dubbelbijl te zijn.',
+    jaResultaat: 'bijl-dubbel--type-b',
+    neeVolgende: '936',
+  },
+  '936': {
+    id: '936',
+    vraag: 'Lijkt het symmetrisch, maar heeft het eigenlijk één echte snede en ligt het gat iets naar de stompe kant?',
+    toelichting: 'Dan past dubbelbijl type A beter.',
+    jaResultaat: 'bijl-dubbel--type-a',
+    neeVolgende: '937',
+  },
+  '937': {
+    id: '937',
+    vraag: 'Heeft het artefact een beitelvorm en een ovaal gat?',
+    toelichting: 'Dan gaat het om dubbelbijl type C.',
+    jaResultaat: 'bijl-dubbel--type-c',
+    neeResultaat: 'hamerbijl',
+  },
+};
+
 const TREE_DEFINITIONS: Record<DecisionTreeMode, TreeDefinition> = {
   beginner: {
     label: 'Beginner',
     startQuestionId: '1',
     questions: beginnerTree,
+  },
+  expert: {
+    label: 'Expert: volledige AWN-boom',
+    startQuestionId: '1',
+    questions: expertTree,
   },
   'phase1-afslag': {
     label: 'Fase 1: Afslagverdieping',
@@ -1089,6 +1746,31 @@ const TREE_DEFINITIONS: Record<DecisionTreeMode, TreeDefinition> = {
     label: 'Fase 2: Spitsverdieping',
     startQuestionId: '540',
     questions: phase2SpitsTree,
+  },
+  'phase3-vuistbijl': {
+    label: 'Fase 3: Vuistbijlverdieping',
+    startQuestionId: '610',
+    questions: phase3VuistbijlTree,
+  },
+  'phase4-geslepen-bijl': {
+    label: 'Fase 4: Geslepen vuurstenen bijl',
+    startQuestionId: '801',
+    questions: phase4GeslepenBijlTree,
+  },
+  'phase4-geslepen-artefact': {
+    label: 'Fase 4: Geslepen vuurstenen artefact',
+    startQuestionId: '840',
+    questions: phase4GeslepenArtefactTree,
+  },
+  'phase5-doorboord-artefact': {
+    label: 'Fase 5: Doorboord artefact',
+    startQuestionId: '900',
+    questions: phase5DoorboordArtefactTree,
+  },
+  'phase5-hamerbijl': {
+    label: 'Fase 5: Hamerbijl',
+    startQuestionId: '930',
+    questions: phase5HamerbijlTree,
   },
 };
 
@@ -1224,7 +1906,140 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--naaldvormig': 'Naaldvormige spits',
   'spits--sauveterre': 'Sauveterre-spits',
   'spits--tweezijdig-steil-geretoucheerd': 'Tweezijdig steil geretoucheerde spits',
+  uniface: 'Uniface',
+  'vuistbijl--lancetvormig': 'Lancetvormige vuistbijl',
+  'vuistbijl--ficron': 'Ficron',
+  'vuistbijl--micoque': 'Micoque-vuistbijl',
+  'vuistbijl--amandelvormig': 'Amandelvormige vuistbijl',
+  'vuistbijl--flesvormig': 'Flesvormige vuistbijl',
+  'vuistbijl--hartvormig': 'Hartvormige vuistbijl',
+  'vuistbijl--langwerpig--hartvormig': 'Langwerpig hartvormige vuistbijl',
+  'vuistbijl--sub-hartvormig': 'Sub-hartvormige vuistbijl',
+  'vuistbijl--driehoekig': 'Driehoekige vuistbijl',
+  'vuistbijl--langwerpig--driehoekig': 'Langwerpig driehoekige vuistbijl',
+  'vuistbijl--sub-driehoekig': 'Sub-driehoekige vuistbijl',
+  'vuistbijl--bout--coupé': 'Bout-coupe',
+  'vuistbijl--met-korte--snede': 'Vuistbijl met korte snede',
+  'vuistbijl--limande': 'Limande',
+  'vuistbijl--ovaal': 'Ovale vuistbijl',
+  'vuistbijl--rond-og-vuistbijl--disque': 'Ronde vuistbijl / disque',
+  'vuistbijl--bootvormig': 'Bootvormige vuistbijl',
+  'vuistbijl--fäustel': 'Fäustel',
+  'vuistbijl--faustkeilblatt': 'Faustkeilblatt',
+  'bijl-vlakbijl': 'Vlakbijl',
+  'bijl-vlakbijl--klokvormig': 'Klokvormige vuurstenen vlakbijl',
+  'bijl-vlakbijl--trapeziumvormig': 'Trapeziumvormige vuurstenen vlakbijl',
+  'bijl-vlakbijl--rechthoekig': 'Rechthoekige vuurstenen vlakbijl',
+  'bijl-smaltoppig--met-ovale--dwarsdoorsnede': 'Smaltoppige vuurstenen bijl met ovale dwarsdoorsnede',
+  'bijl-smaltoppig--met-ovale--dwarsdoorsnede--en-geslepen--zijden': 'Smaltoppige vuurstenen bijl met geslepen zijden',
+  'bijl-smaltoppig--met-afgerond--rombische--dwarsdoorsnede': 'Smaltoppige vuurstenen bijl met afgerond rombische dwarsdoorsnede',
+  'bijl-smaltoppig--met-ovale--tot-vlakovale--dwarsdoorsnede': 'Smaltoppige vuurstenen bijl met ovale tot vlakovale dwarsdoorsnede',
+  'bijl-breedtoppig--met-rondovale--dwarsdoorsnede': 'Breedtoppige vuurstenen bijl met rondovale dwarsdoorsnede',
+  'bijl-breedtoppig--met-ovale--dwarsdoorsnede--en-geslepen--zijden': 'Breedtoppige vuurstenen bijl met geslepen zijden',
+  'bijl-buren': 'Buren-bijl',
+  'bijl-dunbladig--met-ovale--dwarsdoorsnede': 'Dunbladige vuurstenen bijl met ovale dwarsdoorsnede',
+  'bijl-met-ovale--dwarsdoorsnede': 'Vuurstenen bijl met ovale dwarsdoorsnede',
+  'bijl-met-rechthoekige--dwarsdoorsnede': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede',
+  'bijl-met-rechthoekige--dwarsdoorsnede--en-brede--snede': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede en brede snede',
+  'bijl-dissel': 'Vuurstenen dissel',
+  'bijl-dissel--met-gebogen--onder--en-bovenzijde': 'Vuurstenen dissel met gebogen onder- en bovenzijde',
+  'bijl-dissel--met-parallelle--onder--en-bovenzijde': 'Vuurstenen dissel met parallelle onder- en bovenzijde',
+  'bijl-met-holle--snede': 'Vuurstenen bijl met holle snede',
+  'bijl-met-holle--snede--en-gebogen--onder--en-bovenzijde': 'Vuurstenen bijl met holle snede en gebogen onder- en bovenzijde',
+  'bijl-met-holle--snede--en-parallelle--onder--en-bovenzijde': 'Vuurstenen bijl met holle snede en parallelle onder- en bovenzijde',
+  'bijl-met-rechthoekige--dwarsdoorsnede--duntoppig': 'Duntoppige vuurstenen bijl met rechthoekige dwarsdoorsnede',
+  'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--scherpe--top': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top',
+  'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--vlakke--top': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top',
+  'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--onregelmatige--top': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne onregelmatige top',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig': 'Dikbladige vuurstenen bijl met rechthoekige dwarsdoorsnede',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--sterk-gebogen': 'Dikbladige vuurstenen bijl met sterk gebogen boven- en onderzijde',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--weinig-gekromd': 'Dikbladige vuurstenen bijl met weinig gekromde boven- en onderzijde',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--parallel': 'Dikbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dunbladig': 'Dunbladige vuurstenen bijl met rechthoekige dwarsdoorsnede',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--sterk-gekromd': 'Dunbladige vuurstenen bijl met sterk gekromde boven- en onderzijde',
+  'bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--parallel': 'Dunbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde',
+  beitel: 'Beitel',
+  'beitel--guts': 'Gutsbeitel',
+  'beitel--dissel': 'Disselbeitel',
+  'beitel--standaard': 'Standaardbeitel',
+  'beitel--punt': 'Puntbeitel',
+  dolk: 'Dolk',
+  'artefact--gemaakt-van-bijlafslag': 'Artefact gemaakt van bijlafslag',
+  dellensteen: 'Dellensteen',
+  'doorboorde--rolsteen': 'Doorboorde rolsteen',
+  'doorboorde--schijfvormige--steen': 'Doorboorde schijfvormige steen',
+  'bijl-dissel--met-gat-haaks--op-de-snede': 'Schoenleest-bijl met gat haaks op de snede',
+  'bijl-dissel--doorboord': 'Doorboorde schoenleestwig',
+  'doorboorde--breedwig': 'Doorboorde breedwig',
+  'hak-puntig': 'Puntige hak',
+  'bijl-dubbel': 'Dubbelbijl',
+  'bijl-dubbel--type-a': 'Dubbelbijl type A',
+  'bijl-dubbel--type-b': 'Dubbelbijl type B',
+  'bijl-dubbel--type-c': 'Dubbelbijl type C',
+  'bijl-hamer--gefacetteerd': 'Gefacetteerde hamerbijl',
+  'bijl-hamer--gefacetteerd--type-1': 'Gefacetteerde hamerbijl type 1',
+  'bijl-hamer--gefacetteerd--type-2a': 'Gefacetteerde hamerbijl type 2a',
+  'bijl-hamer--gefacetteerd--type-2b': 'Gefacetteerde hamerbijl type 2b',
+  'bijl-hamer--knop': 'Knop-hamerbijl',
 };
+
+function processExpertAnswer(
+  questionId: string,
+  answer: 'ja' | 'nee'
+): {
+  isEnd: boolean;
+  nextQuestion?: string;
+  result?: string;
+} {
+  const question = fullDecisionTree[questionId];
+  if (!question) {
+    return { isEnd: true, result: 'onbekend' };
+  }
+
+  const target = answer === 'ja' ? question.ja : question.nee;
+  const nextQuestionId = getExpertQuestionIdAt(questionId, 1);
+  const nextNextQuestionId = getExpertQuestionIdAt(questionId, 2);
+
+  if (!target) {
+    return nextQuestionId
+      ? { isEnd: false, nextQuestion: nextQuestionId }
+      : { isEnd: true, result: 'onbepaald' };
+  }
+
+  const explicitJump = EXPERT_LABEL_JUMPS[target];
+  if (explicitJump) {
+    return { isEnd: false, nextQuestion: explicitJump };
+  }
+
+  if (target === 'terug-artefactgroepen-start') {
+    return nextQuestionId
+      ? { isEnd: false, nextQuestion: nextQuestionId }
+      : { isEnd: true, result: formatTypeName(target) };
+  }
+
+  if (answer === 'ja' && isExpertQuestionRelatedToLabel(nextQuestionId, target)) {
+    return { isEnd: false, nextQuestion: nextQuestionId! };
+  }
+
+  const yesTarget = question.ja;
+  if (
+    answer === 'nee' &&
+    yesTarget &&
+    isExpertQuestionRelatedToLabel(nextQuestionId, yesTarget) &&
+    nextNextQuestionId
+  ) {
+    return { isEnd: false, nextQuestion: nextNextQuestionId };
+  }
+
+  const genericLabel = slugTokens(target).some((token) =>
+    ['artefact', 'kern', 'werktuig', 'afslag', 'kling', 'bijl', 'spits', 'schrabber', 'dolk'].includes(token)
+  );
+  if (genericLabel && nextQuestionId) {
+    return { isEnd: false, nextQuestion: nextQuestionId };
+  }
+
+  return { isEnd: true, result: target };
+}
 
 export function getTreeDefinition(mode: DecisionTreeMode = 'beginner'): TreeDefinition {
   return TREE_DEFINITIONS[mode];
@@ -1255,6 +2070,10 @@ export function processAnswer(
   nextQuestion?: string;
   result?: string;
 } {
+  if (mode === 'expert') {
+    return processExpertAnswer(questionId, answer);
+  }
+
   const question = getQuestion(questionId, mode);
   if (!question) {
     return { isEnd: true, result: 'onbekend' };

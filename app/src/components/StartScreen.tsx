@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Sprout,
   Leaf,
+  Star,
   Info,
 } from 'lucide-react';
 import { useUser } from '../contexts/UserContext';
@@ -30,6 +31,24 @@ interface StartScreenProps {
 }
 
 const CHANGELOG = [
+  {
+    version: '2.2.6',
+    title: 'AWN expertboom',
+    items: [
+      'Expert start nu in een volledige AWN-bronboommodus',
+      'Branchlabels springen door naar grotere AWN-secties',
+      'Bronvragen uit de 511-knooppuntenboom zijn nu runtime beschikbaar',
+    ],
+  },
+  {
+    version: '2.2.5',
+    title: 'AWN testfase 4-5',
+    items: [
+      'Geslepen werktuigen krijgen vervolgknoppen',
+      'Doorboorde werktuigen en hamerbijlen zijn verdiept',
+      'Fase 4 en 5 van het AWN-progressieplan zijn geactiveerd',
+    ],
+  },
   {
     version: '2.2.3',
     title: 'AWN testfase 2',
@@ -301,6 +320,12 @@ export function StartScreen({
                     className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-colors"
                   >
                     <Leaf size={14} /> Gevorderd
+                  </button>
+                  <button
+                    onClick={() => onStartPractice('expert', true)}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-violet-100 text-violet-700 rounded-lg text-sm font-medium hover:bg-violet-200 transition-colors"
+                  >
+                    <Star size={14} /> Expert
                   </button>
                 </div>
               </div>

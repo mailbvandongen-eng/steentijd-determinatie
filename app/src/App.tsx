@@ -22,7 +22,7 @@ import type { DecisionTreeMode } from './lib/decisionTree';
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.3';
+const APP_VERSION = '2.2.6';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -325,6 +325,9 @@ function App() {
 
   // Render current view content
   const renderContent = () => {
+    const activeTreeMode: DecisionTreeMode =
+      continuationState?.treeMode ?? (sessionLevel === 'expert' ? 'expert' : 'beginner');
+
     if (view === 'start') {
       return (
         <StartScreen
@@ -353,7 +356,7 @@ function App() {
           onBack={handleBackFromDecision}
           level={sessionLevel}
           isSandbox={sessionIsSandbox}
-          treeMode={continuationState?.treeMode ?? 'beginner'}
+          treeMode={activeTreeMode}
         />
       );
     }
