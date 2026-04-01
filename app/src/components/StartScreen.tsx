@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.20',
+    title: 'Expert eindronde afgerond',
+    items: [
+      'Laatste routelekken in vuistbijl-, boor- en oppervlakteretoucheroutes springen nu door naar de juiste expertvragen',
+      'Kernlabels en dolksubtypen tonen nu vaker leesbare AWN-namen in plaats van parsertekst',
+      'De expertboom eindigt daardoor minder vaak op technische tussencategorieen',
+    ],
+  },
+  {
     version: '2.2.19',
     title: 'Expert voor bifaciaal en doorboord aangescherpt',
     items: [

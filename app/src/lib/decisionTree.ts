@@ -64,6 +64,7 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'géén-gat-of-een-natuurlijk-gat': '3',
   'artefact-van-vuursteen--kwartsiet-of-lydiet': '5',
   'van-een-andere-steensoort': '4',
+  'het-is-een-geslepen--stenen--artefact': '5',
   'geslepen--bijl': '660',
   'geslepen--vuurstenen--artefact': '601',
   'nee-het-artefact-is-een-artefact--geslepen': '602',
@@ -95,6 +96,17 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'geen-cortex': '73',
   kling: '71',
   'zie-ook': '265',
+  'boor-bec-of-ruimer': '231',
+  'steile-retouche': '391',
+  'vlakke-rand---of-oppervlakte-retouche': '540',
+  'nee-het-is-bekapt': '541',
+  'het-is-bekapt': '541',
+  'nee-nee-de-vorm-van-een-spits': '542',
+  'nee-de-vorm-van-een-spits': '542',
+  'nee-bladvormig': '544',
+  bladvormig: '544',
+  'nee-gelijkbenig-of-gelijkzijdig': '545',
+  'gelijkbenig-of-gelijkzijdig': '545',
 };
 
 function getExpertQuestionIndex(questionId: string): number {
@@ -222,6 +234,22 @@ function getExpertContextualJump(
 
   if (target === 'het-is-een-vuistbijl-of-bladvorm' && questionId === '130') {
     return '131';
+  }
+
+  if (target === 'zorgvuldiger-bewerkt' && questionId === '132b') {
+    return '132a';
+  }
+
+  if (target === 'dikke-vuistbijlen' && questionId === '132a') {
+    return '133';
+  }
+
+  if (target === 'dun' && questionId === '132a') {
+    return '136';
+  }
+
+  if (target === 'fijner-bewerkt' && questionId === '134') {
+    return '135';
   }
 
   if (target === 'het-artefact-heeft-een-blad-vorm' && questionId === '131') {
@@ -1942,6 +1970,41 @@ const TREE_DEFINITIONS: Record<DecisionTreeMode, TreeDefinition> = {
 };
 
 const DISPLAY_NAMES: Record<string, string> = {
+  'een-splinter': 'Splinter',
+  'een-brokvorstsplijting--getest': 'Geteste brok of vorstsplijting',
+  'niet-gemodificeerd-brok-of-vorstsplijting': 'Niet-gemodificeerde brok of vorstsplijting',
+  'kern--kombewa': 'Kombewa-kern',
+  'kern--quina': 'Quina-kern',
+  'kern--veelvlaks': 'Veelvlakkige kern',
+  'kern--bipolair': 'Bipolaire kern',
+  'onbepaalde-kern': 'Onbepaalde kern',
+  'kern--levallois--ongebruikt': 'Ongebruikte Levallois-kern',
+  'beide-zijden-licht-bol-een-kern--diskusvormig': 'Diskusvormige kern',
+  'kern--levallois--afslag': 'Levallois-afslagkern',
+  'kern--levallois--kling': 'Levallois-klingkern',
+  'kern--levallois--spits': 'Levallois-spitskern',
+  'aan-beide-zijden-kern--diskusvormig': 'Diskusvormige kern',
+  'kern--afslag--piramida-al': 'Piramidale afslagkern',
+  'kern--lamelle': 'Lamellenkern',
+  'een-kern--kielvormig': 'Kielvormige kern',
+  'een-kern--kling': 'Klingkern',
+  'kern--kielvormig-ook-wel-aangeduid-als-kielvormige': 'Kielvormige kern',
+  'kern--kling--coincy': 'Coincy-klingkern',
+  'kern--met-meer--dan-2-slagvlakken': 'Kern met meer dan twee slagvlakken',
+  'kern--bidirectioneel': 'Bidirectionele kern',
+  'kern--orthogon-aal': 'Orthogonale kern',
+  'kern--bidirectioneel--kling': 'Bidirectionele klingkern',
+  'kern--bidirectioneel--afslag': 'Bidirectionele afslagkern',
+  'een-rugmes': 'Rugmes',
+  'een-afslag--decorticatie': 'Decorticatie-afslag',
+  'een-vuistwig': 'Vuistwig',
+  'met-een-evt-afgeronde-punt': 'Vuistwig met afgeronde punt',
+  'een-vuistbijl--kernvormig': 'Kernvormige vuistbijl',
+  'een-flesvorm-vuistbijl--flesvormig': 'Flesvormige vuistbijl',
+  'langwerpig-driehoekig-vuistbijl--langwerpig--driehoekig': 'Langwerpig driehoekige vuistbijl',
+  'onregelmatig-driehoekig-vuistbijl--sub-driehoekig': 'Sub-driehoekige vuistbijl',
+  'langwerpig-driehoekig-vuistbijl--langwerpig--hartvormig': 'Langwerpig hartvormige vuistbijl',
+  'onregelmatig-driehoekig-vuistbijl--sub-hartvorm-ig': 'Sub-hartvormige vuistbijl',
   splinter: 'Splinter (afval)',
   'natuursteen-of-knol': 'Natuursteen of knol (geen artefact)',
   'brok-of-vorstsplijting': 'Brok of vorstsplijting',
@@ -2141,7 +2204,48 @@ const DISPLAY_NAMES: Record<string, string> = {
   'relatief-grof-aan-beide-zijden': 'Relatief grof aan beide zijden bewerkte dolk',
   'dolk-engels': 'Engelse dolk',
   'dichter-bij-de-basis-dolk--oost-europ-ees': 'Oost-Europese dolk',
+  'dolk--grand--pressigny': 'Grand-Pressigny-dolk',
+  'dolk--scandinavisch--type-i': 'Scandinavische dolk type I',
+  'dolk--scandinavisch--type-ia': 'Scandinavische dolk type Ia',
+  'dolk--scandinavisch--type-ib': 'Scandinavische dolk type Ib',
+  'dolk--scandinavisch--type-ic': 'Scandinavische dolk type Ic',
+  'dolk--scandinavisch--type-id': 'Scandinavische dolk type Id',
+  'dolk--scandinavisch--type-ii': 'Scandinavische dolk type II',
+  'dolk--scandinavisch--type-iib': 'Scandinavische dolk type IIb',
+  'dolk--scandinavisch--type-iii': 'Scandinavische dolk type III',
+  'dolk--scandinavisch--type-iiia': 'Scandinavische dolk type IIIa',
+  'dolk--scandinavisch--type-iiib': 'Scandinavische dolk type IIIb',
+  'dolk--scandinavisch--type-iiic': 'Scandinavische dolk type IIIc',
+  'dolk--scandinavisch--type-iiid': 'Scandinavische dolk type IIId',
+  'dolk--scandinavisch--type-iiie': 'Scandinavische dolk type IIIe',
+  'dolk--scandinavisch--type-iiif': 'Scandinavische dolk type IIIf',
+  'dolk--scandinavisch--type-iv': 'Scandinavische dolk type IV',
+  'dolk--scandinavisch--type-iva': 'Scandinavische dolk type IVa',
+  'dolk--scandinavisch--type-ivb': 'Scandinavische dolk type IVb',
+  'dolk--scandinavisch--type-ivc': 'Scandinavische dolk type IVc',
+  'dolk--scandinavisch--type-ivd': 'Scandinavische dolk type IVd',
+  'dolk--scandinavisch--type-ive': 'Scandinavische dolk type IVe',
+  'dolk--scandinavisch--type-ivf': 'Scandinavische dolk type IVf',
+  'dolk-scandinavisch--type-v': 'Scandinavische dolk type V',
+  'dolk--scandinavisch--type-va': 'Scandinavische dolk type Va',
+  'dolk-scandinavisch--type-vb': 'Scandinavische dolk type Vb',
+  'dolk--scandinavisch--type-vi': 'Scandinavische dolk type VI',
+  'dolk--scandinavisch---type-via': 'Scandinavische dolk type VIa',
+  'dolk--scandinavisch--type-vib': 'Scandinavische dolk type VIb',
+  'dolk--scandinavisch--type-vic': 'Scandinavische dolk type VIc',
+  'dolk--engels--met-kort--handvat': 'Engelse dolk met kort handvat',
+  'dolk--engels--met-lang-handvat--class--1': 'Engelse dolk met lang handvat class 1',
+  'dolk--engels--met-lang-handvat--class--2': 'Engelse dolk met lang handvat class 2',
+  'met-een-knik-dolk--engels--met-lang-handvat--class--3': 'Engelse dolk met knik en lang handvat class 3',
+  'zonder-knik-dolk--engels--met-lang-handvat--class--4': 'Engelse dolk zonder knik en lang handvat class 4',
+  'dolk--oost-europees--type-1': 'Oost-Europese dolk type 1',
+  'dolk--oost-europees--type-2': 'Oost-Europese dolk type 2',
+  'dolk--oost-europees--type-5': 'Oost-Europese dolk type 5',
+  'een-breed-lemmet-dolk--oost-europees--type-3': 'Oost-Europese dolk type 3 met breed lemmet',
+  'een-smal-lemmet-dolk--oost-europees--type-4': 'Oost-Europese dolk type 4 met smal lemmet',
   'een-sikkel': 'Sikkel',
+  'sikkel--type-a': 'Sikkel type A',
+  'sikkel--type-b': 'Sikkel type B',
   'kernwerktuig--fijn-bewerkt': 'Fijn bewerkt kernwerktuig',
   uniface: 'Uniface',
   'vuistbijl--lancetvormig': 'Lancetvormige vuistbijl',
