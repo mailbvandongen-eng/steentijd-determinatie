@@ -3,7 +3,7 @@
 Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
-- parser_error: 429
+- parser_error: 423
 - route_label: 95
 - likely_valid_type: 7
 

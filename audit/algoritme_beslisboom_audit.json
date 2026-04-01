@@ -2,9 +2,9 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 531,
+    "issue_count": 525,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 312,
+    "question_text_mismatch": 306,
     "suspicious_label_count": 219,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
@@ -293,28 +293,10 @@
       "json_question": "Heeft de kling naar het midden gerichte afslagnegatieven op de dorsale zijde?"
     },
     {
-      "question_id": "75",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kling distale delen van afslagnegatieven op de dorsale zijde haaks op de slagrichting van de afslag?",
-      "json_question": "dorsale zijde haaks op de slagrichting van de afslag?"
-    },
-    {
       "question_id": "77",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de k ling met regelmatige en parallelle zijden en afslagnegatieven?",
-      "json_question": "afslagnegatieven?"
-    },
-    {
-      "question_id": "83",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kling geen regelmatige en parallelle zijden en afslagnegatieven?",
-      "json_question": "afslagnegatieven?"
-    },
-    {
-      "question_id": "86",
-      "issue": "question_text_mismatch",
-      "text_question": "Bent u zeker dat het artefact bewerkt is door de prehistorische mens?",
-      "json_question": "mens?"
+      "json_question": "Heeft de kling regelmatige en parallelle zijden en afslagnegatieven?"
     },
     {
       "question_id": "86",
@@ -323,16 +305,10 @@
       "text_answer": "het is een artefact"
     },
     {
-      "question_id": "92",
-      "issue": "question_text_mismatch",
-      "text_question": "Vertoont het artefact kenmerken die duiden op een recente beschadiging?",
-      "json_question": "beschadiging?"
-    },
-    {
       "question_id": "101",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact één of twee versplinterde uiteinden? (verbrijzeld)",
-      "json_question": "Heeft het artefact één of twee versplinterde uiteinden?"
+      "json_question": "Heeft het artefact een of twee versplinterde uiteinden? (verbrijzeld)"
     },
     {
       "question_id": "101",
@@ -356,7 +332,7 @@
       "question_id": "104",
       "issue": "question_text_mismatch",
       "text_question": "Is het grof bewerkte artefact voor een kl ein deel bewerkt , bekapt?",
-      "json_question": "bekapt?"
+      "json_question": "Is het grof bewerkte artefact voor een klein deel bewerkt, bekapt?"
     },
     {
       "question_id": "104",
@@ -374,7 +350,7 @@
       "question_id": "106",
       "issue": "question_text_mismatch",
       "text_question": "Is het grof bewerkte artefact voor een (klein ) deel bewerkt met enige grove afslagen naar één zijde (unifaciaal)?",
-      "json_question": "enige grove afslagen naar één zijde (unifaciaal)?"
+      "json_question": "Is het grof bewerkte artefact voor een klein deel bewerkt met enige grove afslagen naar een zijde (unifaciaal)?"
     },
     {
       "question_id": "107",
@@ -386,13 +362,13 @@
       "question_id": "109",
       "issue": "question_text_mismatch",
       "text_question": "Is de choppingtool aan één (tamelijk vlakke) zijde rondom bekapt aan de andere (bolle) zijde deels?",
-      "json_question": "bekapt aan de andere (bolle) zijde deels?"
+      "json_question": "Is de choppingtool aan een tamelijk vlakke zijde rondom bekapt en aan de andere bolle zijde deels?"
     },
     {
       "question_id": "110",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact min of meer de vorm van een bijl of vuistbijl of bladvorm?",
-      "json_question": "vuistbijl of bladvorm?"
+      "json_question": "Heeft het artefact min of meer de vorm van een bijl, vuistbijl of bladvorm?"
     },
     {
       "question_id": "110",
@@ -408,12 +384,6 @@
     },
     {
       "question_id": "111",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede?",
-      "json_question": "dwarsdoorsnede?"
-    },
-    {
-      "question_id": "111",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
@@ -422,37 +392,31 @@
       "question_id": "112",
       "issue": "question_text_mismatch",
       "text_question": "Is het e en klein artefact met een min of meer driehoekige dwarsdoorsnede, het ene oppervlak is bedekt met retouche , terwijl de beide andere grove afslag -vlakken zijn?",
-      "json_question": "terwijl de beide andere grove afslag -vlakken zijn?"
+      "json_question": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede, waarbij het ene oppervlak is bedekt met retouche terwijl de beide andere grove afslagvlakken zijn?"
     },
     {
       "question_id": "113",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het groter e grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een grove punt?",
-      "json_question": "een grove punt?"
+      "json_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een grove punt?"
     },
     {
       "question_id": "114",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een snede gemaakt door meerdere afslagen?",
-      "json_question": "een snede gemaakt door meerdere afslagen?"
+      "json_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een snede gemaakt door meerdere afslagen?"
     },
     {
       "question_id": "115",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een puntige ‘snede’ gemaakt door meerdere afslagen?",
-      "json_question": "een puntige ‘snede’ gemaakt door meerdere afslagen?"
+      "json_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een puntige snede gemaakt door meerdere afslagen?"
     },
     {
       "question_id": "116",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het grotere grof bewerkte artefact met nagenoeg vierkante doorsnede en een snede gemaakt door meerdere afslagen?",
-      "json_question": "afslagen?"
-    },
-    {
-      "question_id": "117",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het grotere grof bewerkte artefact een enigszins platte dwarsdoorsnede en een brede snede?",
-      "json_question": "dwarsdoorsnede en een brede snede?"
+      "json_question": "Heeft het grotere grof bewerkte artefact met nagenoeg vierkante doorsnede een snede gemaakt door meerdere afslagen?"
     },
     {
       "question_id": "117",
@@ -464,37 +428,37 @@
       "question_id": "118",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het asymmetrische artefact een ( bifaciaal) bewerkte werkkant tegenover een min of meer dikke zijde?",
-      "json_question": "werkkant tegenover een min of meer dikke zijde?"
+      "json_question": "Heeft het asymmetrische artefact een bifaciaal bewerkte werkkant tegenover een min of meer dikke zijde?"
     },
     {
       "question_id": "119",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact convexe werkkant en een rug alleen op het proximale uiteinde?",
-      "json_question": "proximale uiteinde?"
+      "json_question": "Heeft het artefact een convexe werkkant en een rug alleen op het proximale uiteinde?"
     },
     {
       "question_id": "120",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact een convexe werkkant en een rug die door loopt tot en voorbij beide uiteinden?",
-      "json_question": "loopt tot en voorbij beide uiteinden?"
+      "json_question": "Heeft het artefact een convexe werkkant en een rug die doorloopt tot en voorbij beide uiteinden?"
     },
     {
       "question_id": "121",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact een rechte werkkant en is de vorm enigszins driehoekig en heeft het artefact een dunne rug?",
-      "json_question": "driehoekig en heeft het artefact een dunne rug?"
+      "json_question": "Heeft het artefact een rechte werkkant, is de vorm enigszins driehoekig en heeft het artefact een dunne rug?"
     },
     {
       "question_id": "122",
       "issue": "question_text_mismatch",
       "text_question": "Is het artefact nagenoeg driehoekig van vorm met hypotenusa als snijkant maar met dikke rug?",
-      "json_question": "als snijkant maar met dikke rug?"
+      "json_question": "Is het artefact nagenoeg driehoekig van vorm met de hypotenusa als snijkant, maar met dikke rug?"
     },
     {
       "question_id": "123",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact een spitse hoek tussen rug en werkkant, de rug loopt door tot de snijkant aan het ‘distale ’uiteinde?",
-      "json_question": "rug loopt door tot de snijkant aan het ‘distale ’uiteinde?"
+      "json_question": "Heeft het artefact een spitse hoek tussen rug en werkkant, waarbij de rug doorloopt tot de snijkant aan het distale uiteinde?"
     },
     {
       "question_id": "124",
@@ -506,7 +470,7 @@
       "question_id": "125",
       "issue": "question_text_mismatch",
       "text_question": "Het artefact is vrijwel volledig bewerkt en is min of meer plat ; heeft het een enigszins afgewerkte werkkant of -punt?",
-      "json_question": "heeft het een enigszins afgewerkte werkkant of -punt?"
+      "json_question": "Het artefact is vrijwel volledig bewerkt en min of meer plat; heeft het een enigszins afgewerkte werkkant of -punt?"
     },
     {
       "question_id": "125",

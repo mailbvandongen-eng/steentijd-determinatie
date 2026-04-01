@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.27',
+    title: 'Vroege bifaciale en klingroutes bronvaster',
+    items: [
+      'De vroege klingroutes, controlevragen en eerste grof-bewerkte of bifaciale routes gebruiken nu weer volledige bronvragen',
+      'De bronaudit daalt daardoor verder naar 306 vraagtekst-mismatches en 423 parserfouten',
+      'De resterende bronopschoning verschuift nu steeds meer van hoofdroutes naar latere subroutes en technische labels',
+    ],
+  },
+  {
     version: '2.2.26',
     title: 'Vroege routevragen verder hersteld',
     items: [

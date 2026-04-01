@@ -355,7 +355,7 @@
     "nee": "kling--levallois"
   },
   "75": {
-    "vraag": "dorsale zijde haaks op de slagrichting van de afslag?",
+    "vraag": "Heeft de kling distale delen van afslagnegatieven op de dorsale zijde haaks op de slagrichting van de afslag?",
     "ja": "kling--kernpreparatie",
     "nee": "terug-artefactgroepen-start"
   },
@@ -365,7 +365,7 @@
     "nee": "kling--kernpreparatie"
   },
   "77": {
-    "vraag": "afslagnegatieven ?",
+    "vraag": "Heeft de kling regelmatige en parallelle zijden en afslagnegatieven?",
     "ja": "kling--montbanistijl",
     "nee": "terug-artefactgroepen-start"
   },
@@ -395,7 +395,7 @@
     "nee": "lamelle"
   },
   "83": {
-    "vraag": "afslagnegatieven?",
+    "vraag": "Heeft de kling geen regelmatige en parallelle zijden en afslagnegatieven?",
     "ja": "kling--coincystijl",
     "nee": "terug-artefactgroepen-start"
   },
@@ -410,7 +410,7 @@
     "nee": "kling"
   },
   "86": {
-    "vraag": "mens?",
+    "vraag": "Bent u zeker dat het artefact bewerkt is door de prehistorische mens?",
     "ja": "het-is-een-artefact",
     "nee": "ik-twijfel-het-is-een-incertofact-determineren-als"
   },
@@ -440,12 +440,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "92": {
-    "vraag": "beschadiging?",
+    "vraag": "Vertoont het artefact kenmerken die duiden op een recente beschadiging?",
     "ja": "vermeld-vermoedelijk--recente--beschadiging",
     "nee": "einde-te-vermelden-bij-opmerkingen-"
   },
   "101": {
-    "vraag": "Heeft het artefact  één of twee versplinterde uiteinden ?",
+    "vraag": "Heeft het artefact een of twee versplinterde uiteinden? (verbrijzeld)",
     "ja": "nee",
     "nee": "terug-artefactgroepen-start"
   },
@@ -460,7 +460,7 @@
     "nee": "grof-bewerkt"
   },
   "104": {
-    "vraag": "bekapt ?",
+    "vraag": "Is het grof bewerkte artefact voor een klein deel bewerkt, bekapt?",
     "ja": "nee-voor-een-groot-deel-bekapt",
     "nee": "voor-een-groot-deel-bekapt"
   },
@@ -470,7 +470,7 @@
     "nee": "de-kern-of-brok-is-voorzien-van-een-werkkant-punt"
   },
   "106": {
-    "vraag": "enige grove afslagen naar één zijde  (unifaciaal) ?",
+    "vraag": "Is het grof bewerkte artefact voor een klein deel bewerkt met enige grove afslagen naar een zijde (unifaciaal)?",
     "ja": "chopper",
     "nee": "naar-twee-zijden-een-choppingtool"
   },
@@ -485,77 +485,77 @@
     "nee": "geen-punt-choppingtool"
   },
   "109": {
-    "vraag": "bekapt aan de andere (bolle) zijde deels?",
+    "vraag": "Is de choppingtool aan een tamelijk vlakke zijde rondom bekapt en aan de andere bolle zijde deels?",
     "ja": "choppingtool--épanellé",
     "nee": "choppingtool"
   },
   "110": {
-    "vraag": "vuistbijl  of bladvorm ?",
+    "vraag": "Heeft het artefact min of meer de vorm van een bijl, vuistbijl of bladvorm?",
     "ja": "nee-het-bifaciale-artefact-heeft-een-andere-vorm",
     "nee": "het-bifaciale-artefact-heeft-een-andere-vorm"
   },
   "111": {
-    "vraag": "dwarsdoorsnede ?",
+    "vraag": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede?",
     "ja": "nee",
     "nee": "terug-artefactgroepen-start"
   },
   "112": {
-    "vraag": "terwijl de beide andere grove afslag -vlakken zijn?",
+    "vraag": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede, waarbij het ene oppervlak is bedekt met retouche terwijl de beide andere grove afslagvlakken zijn?",
     "ja": "spits--quinson",
     "nee": "met-één-of-twee-dmv-steile-retouche"
   },
   "113": {
-    "vraag": "een grove punt ?",
+    "vraag": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een grove punt?",
     "ja": "pic-of-hak",
     "nee": "terug-artefactgroepen-start"
   },
   "114": {
-    "vraag": "een snede gemaakt door meerdere afslagen ?",
+    "vraag": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een snede gemaakt door meerdere afslagen?",
     "ja": "bijl-kern",
     "nee": "terug-artefactgroepen-start"
   },
   "115": {
-    "vraag": "een puntige ‘snede’ gemaakt door meerdere afslagen ?",
+    "vraag": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een puntige snede gemaakt door meerdere afslagen?",
     "ja": "bijl-kern--puntig",
     "nee": "terug-artefactgroepen-start"
   },
   "116": {
-    "vraag": "afslagen ?",
+    "vraag": "Heeft het grotere grof bewerkte artefact met nagenoeg vierkante doorsnede een snede gemaakt door meerdere afslagen?",
     "ja": "beitel--kern",
     "nee": "terug-artefactgroepen-start"
   },
   "117": {
-    "vraag": "dwarsdoorsnede en een brede  snede ?",
+    "vraag": "Heeft het grotere grof bewerkte artefact een enigszins platte dwarsdoorsnede en een brede snede?",
     "ja": "vuistwig",
     "nee": "een-asymmetrische-driehoekige-dwarsdoorsnede"
   },
   "118": {
-    "vraag": "werkkant tegenover  een min of meer dikke zijde ?",
+    "vraag": "Heeft het asymmetrische artefact een bifaciaal bewerkte werkkant tegenover een min of meer dikke zijde?",
     "ja": "met-vlakke-retouche-bekapping-keilmesser",
     "nee": "met-getrapte-schubvormige-retouche"
   },
   "119": {
-    "vraag": "proximale  uiteinde ?",
+    "vraag": "Heeft het artefact een convexe werkkant en een rug alleen op het proximale uiteinde?",
     "ja": "keilmesser--köningsaue",
     "nee": "terug-artefactgroepen-start"
   },
   "120": {
-    "vraag": "loopt tot en voorbij beide uiteinden?",
+    "vraag": "Heeft het artefact een convexe werkkant en een rug die doorloopt tot en voorbij beide uiteinden?",
     "ja": "keilmesser--lichtenberger",
     "nee": "terug-artefactgroepen-start"
   },
   "121": {
-    "vraag": "driehoekig  en heeft het artefact een  dunne rug ?",
+    "vraag": "Heeft het artefact een rechte werkkant, is de vorm enigszins driehoekig en heeft het artefact een dunne rug?",
     "ja": "keilmesser--balver",
     "nee": "met-een-dikke-rug"
   },
   "122": {
-    "vraag": "als snijkant  maar met dikke rug ?",
+    "vraag": "Is het artefact nagenoeg driehoekig van vorm met de hypotenusa als snijkant, maar met dikke rug?",
     "ja": "keilmesser--buhlener",
     "nee": "terug-artefactgroepen-start"
   },
   "123": {
-    "vraag": "rug loopt door tot de snijkant aan het ‘distale ’uiteinde?",
+    "vraag": "Heeft het artefact een spitse hoek tussen rug en werkkant, waarbij de rug doorloopt tot de snijkant aan het distale uiteinde?",
     "ja": "keilmesser--bockstein",
     "nee": "terug-artefactgroepen-start"
   },
@@ -565,7 +565,7 @@
     "nee": "meer-afgeronde-rug-messer--pradnik"
   },
   "125": {
-    "vraag": "heeft het een enigszins  afgewerkte  werkkant of -punt?",
+    "vraag": "Het artefact is vrijwel volledig bewerkt en min of meer plat; heeft het een enigszins afgewerkte werkkant of -punt?",
     "ja": "het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
     "nee": "de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig"
   },
