@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.37',
+    title: 'Gekerfde en segmentvormige spitsen consistenter',
+    items: [
+      'De expertroute voor gekerfde spitsen loopt nu vanaf vraag 412 expliciet door naar de eenzijdige subtypeboom of eindigt leesbaar op een tweezijdig gekerfde spits',
+      'De segmentvormige spitsroute vanaf vraag 470 springt nu expliciet door naar de subtypevragen in plaats van op impliciete vraagvolgorde te leunen',
+      'Daardoor zijn nog minder spitsroutes afhankelijk van parserlabels of toevallige volgorde in de bronexport',
+    ],
+  },
+  {
     version: '2.2.36',
     title: 'Spitsroute in Expert rechtgetrokken',
     items: [

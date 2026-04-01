@@ -2209,6 +2209,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--tweezijdig-steil-geretoucheerd': 'Tweezijdig steil geretoucheerde spits',
   'spits-zonder-steel-of-kerf': 'Spits zonder steel of kerf',
   'een-artefact-zonder-duidelijke-punt': 'Artefact zonder duidelijke punt',
+  'aan-beide-zijden': 'Tweezijdig gekerfde spits',
   'spits-eenzijdig-en-basis': 'Spits met geretoucheerde zijde en basis',
   'spits-eenzijdig--steil-geretoucheerd': 'Eenzijdig steil geretoucheerde spits',
   'steil-geretoucheerde-spits-gemaakt-van-beide-zijden': 'Van beide zijden steil geretoucheerde spits',
@@ -2465,6 +2466,12 @@ function processExpertAnswer(
     return { isEnd: false, nextQuestion: answer === 'ja' ? '412' : '430' };
   }
 
+  if (questionId === '412') {
+    return answer === 'ja'
+      ? { isEnd: false, nextQuestion: '413' }
+      : { isEnd: true, result: 'aan-beide-zijden' };
+  }
+
   if (questionId === '430') {
     return { isEnd: false, nextQuestion: answer === 'ja' ? '431' : '476' };
   }
@@ -2475,6 +2482,10 @@ function processExpertAnswer(
 
   if (questionId === '450') {
     return { isEnd: false, nextQuestion: answer === 'ja' ? '451' : '470' };
+  }
+
+  if (questionId === '470' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '471' };
   }
 
   if (questionId === '476') {
