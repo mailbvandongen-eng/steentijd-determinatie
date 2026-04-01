@@ -22,7 +22,7 @@ import type { DecisionTreeMode } from './lib/decisionTree';
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.30';
+const APP_VERSION = '2.2.31';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;

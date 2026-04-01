@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.31',
+    title: 'Expert klingroute minder springerig',
+    items: [
+      'Geldige expertuitkomsten zoals Levallois-kling vallen niet meer automatisch door naar de volgende klingvraag alleen omdat er nog een vervolgvraag bestaat',
+      'Daardoor wisselt de expertboom minder onlogisch tussen verschillende klingtypen binnen één pad',
+      'Gemodificeerde Levallois-kling toont nu ook een leesbare naam als uitkomst',
+    ],
+  },
+  {
     version: '2.2.30',
     title: 'Vervolgflow en popup consistent gemaakt',
     items: [

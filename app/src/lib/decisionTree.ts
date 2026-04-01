@@ -2050,6 +2050,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'afslag--geslepen--bijl': 'Bijlafslag met slijpsporen',
   'kling--decorticatie': 'Decorticatie-kling',
   'kling--levallois': 'Levallois-kling',
+  'kling--levallois--gemodificeerd': 'Gemodificeerde Levallois-kling',
   'kling--kernpreparatie': 'Kernpreparatie-kling',
   'kling--montbanistijl': 'Kling in Montbani-stijl',
   stekerafslag: 'Stekerafslag',
@@ -2446,7 +2447,7 @@ function processExpertAnswer(
     return { isEnd: false, nextQuestion: nextNextQuestionId };
   }
 
-  const genericLabel = slugTokens(target).some((token) =>
+  const genericLabel = !DISPLAY_NAMES[target] && slugTokens(target).some((token) =>
     ['artefact', 'kern', 'werktuig', 'afslag', 'kling', 'bijl', 'beitel', 'spits', 'schrabber', 'dolk'].includes(token)
   );
   if (genericLabel && nextQuestionId) {
