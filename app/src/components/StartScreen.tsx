@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.17',
+    title: 'Expert afslag/kling-sprongen verbeterd',
+    items: [
+      'Hoofdlabels zoals bekapt, combinatie en afgeknot springen nu door naar hun echte expert-subboom',
+      'Restgroepen binnen de afslag/kling-sectie lopen contextafhankelijk door in plaats van vast te lopen',
+      'De expertflow voor afslag- en klingwerktuigen kapt daardoor minder vaak te vroeg af',
+    ],
+  },
+  {
     version: '2.2.16',
     title: 'Expert sprongen gerepareerd',
     items: [

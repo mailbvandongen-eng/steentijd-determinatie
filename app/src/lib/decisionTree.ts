@@ -85,10 +85,16 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'relatief-klein': '28',
   twee: '30',
   'afslagkling--werktuig': '201',
+  bekapt: '300',
+  'geretoucheerd-of-bijzondere-bewerking': '202',
+  'een-combinatiewerktuig': '270',
+  'combinatie--werktuig': '270',
+  'afgeknot-artefact': '301',
   'de-afslag-of-kling-is-niet-bewerkt': '41',
   afslag: '42',
   'geen-cortex': '73',
   kling: '71',
+  'zie-ook': '265',
 };
 
 function getExpertQuestionIndex(questionId: string): number {
@@ -135,6 +141,26 @@ function buildExpertQuestionNode(id: string): QuestionNode {
     vraag: (EXPERT_QUESTION_OVERRIDES[id] ?? raw.vraag).trim(),
     toelichting: `AWN bronvraag ..${id}`,
   };
+}
+
+function getExpertContextualJump(
+  questionId: string,
+  target: string
+): string | undefined {
+  if (target === 'nee-overige-groepen-afslagklingwerktuigen') {
+    if (questionId === '202') return '230';
+    if (questionId === '230') return '240';
+    if (questionId === '240') return '247';
+    if (questionId === '247') return '260';
+    if (questionId === '300') return '320';
+  }
+
+  if (target === 'nee-nee-overige-groepen-afslagklingwerktuigen') {
+    if (questionId === '260') return '270';
+    if (questionId === '270') return '300';
+  }
+
+  return undefined;
 }
 
 const expertTree: Record<string, QuestionNode> = Object.fromEntries(
@@ -1993,6 +2019,11 @@ function processExpertAnswer(
   const explicitJump = EXPERT_LABEL_JUMPS[target];
   if (explicitJump) {
     return { isEnd: false, nextQuestion: explicitJump };
+  }
+
+  const contextualJump = getExpertContextualJump(questionId, target);
+  if (contextualJump) {
+    return { isEnd: false, nextQuestion: contextualJump };
   }
 
   if (target === 'terug-artefactgroepen-start') {

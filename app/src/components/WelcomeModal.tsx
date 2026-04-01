@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.17', date: '1 apr 2026', changes: ['Bekapt, combinatie en afgeknot springen nu door naar hun echte expert-subboom', 'Restgroepen binnen de afslag/kling-sectie lopen contextafhankelijk door'] },
   { version: '2.2.16', date: '1 apr 2026', changes: ['Kapotte expert-sprongen voor gat, cortex en geslepen artefacten zijn gerepareerd', 'Losse parserlabels zoals \"nee\" lopen nu door naar de volgende AWN-vraag'] },
   { version: '2.2.15', date: '1 apr 2026', changes: ['Resultaatscherm legt nu uit waarom er geen vervolgkaart is', 'Bewuste eindpunten en nog niet uitgewerkte verdiepingen worden uit elkaar gehouden'] },
   { version: '2.2.14', date: '1 apr 2026', changes: ['Geretoucheerde afslagen en meerdere kernwerktuigen geven nu ook een vervolgkaart', 'Uitkomsten zonder eigen gevorderd-subboom lopen voorlopig door naar Expert'] },
