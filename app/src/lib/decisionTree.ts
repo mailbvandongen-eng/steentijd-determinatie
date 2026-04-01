@@ -265,12 +265,16 @@ function getExpertContextualJump(
     return '146';
   }
 
-  if ((target === 'nee-het-artefact-is-asymmetrisch' || target === 'het-artefact-is-asymmetrisch') && questionId === '154') {
-    return '155';
+  if (questionId === '154') {
+    return target === 'nee-het-artefact-is-asymmetrisch'
+      ? '155'
+      : undefined;
   }
 
-  if ((target === 'nee-aan-beide-oppervlakken' || target === 'aan-beide-oppervlakken') && questionId === '155') {
-    return '156';
+  if (questionId === '155') {
+    if (target === 'nee-aan-beide-oppervlakken') return '156';
+    if (target === 'aan-beide-oppervlakken') return '158';
+    return undefined;
   }
 
   if (target === 'relatief-grof-aan-beide-zijden' && questionId === '158') {
@@ -2248,6 +2252,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--blad--mauern': 'Mauern-bladspits',
   'spits--blad--szeletienne': 'Szeletien-bladspits',
   'half-steile-randretouche-aan-beide-zijden': 'Dolk met half-steile randretouche aan beide zijden',
+  'het-artefact-is-asymmetrisch': 'Asymmetrisch fijn bewerkt kernwerktuig',
   'franse-dolk': 'Franse dolk',
   'onregelmatig-dolk--kling--met-volledige--': 'Onregelmatige klingdolk met volledige retouche',
   'relatief-grof-aan-beide-zijden': 'Relatief grof aan beide zijden bewerkte dolk',

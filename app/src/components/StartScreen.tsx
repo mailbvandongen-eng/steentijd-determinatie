@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.38',
+    title: 'Dolkroutes beter gesplitst',
+    items: [
+      'De expertroute voor dolken splitst nu weer zoals in het algoritme tussen symmetrische en asymmetrische fijn bewerkte kernwerktuigen',
+      'Vraag 155 stuurt nu niet meer beide antwoorden naar dezelfde vervolgroute, maar onderscheidt eenzijdig en tweezijdig bewerkte dolken',
+      'Asymmetrische dolkvormen tonen nu bovendien een leesbare uitkomst in plaats van een technische bronlabel',
+    ],
+  },
+  {
     version: '2.2.37',
     title: 'Gekerfde en segmentvormige spitsen consistenter',
     items: [
