@@ -152,12 +152,18 @@ function getExpertContextualJump(
     if (questionId === '230') return '240';
     if (questionId === '240') return '247';
     if (questionId === '247') return '260';
+    if (questionId === '260') return '270';
+    if (questionId === '270') return '300';
     if (questionId === '300') return '320';
   }
 
   if (target === 'nee-nee-overige-groepen-afslagklingwerktuigen') {
     if (questionId === '260') return '270';
     if (questionId === '270') return '300';
+  }
+
+  if (target === 'nee-meerdere--boor--dubbel-of-boor--meervoudig' || target === 'meerdere--boor--dubbel-of-boor--meervoudig') {
+    if (questionId === '232') return '233';
   }
 
   return undefined;
@@ -1832,6 +1838,35 @@ const DISPLAY_NAMES: Record<string, string> = {
   stekerafslag: 'Stekerafslag',
   lamelle: 'Lamelle',
   'kling--coincystijl': 'Kling in Coincy-stijl',
+  'steker--meervoudig': 'Meervoudige steker',
+  'met-gebogen-punt-met-mini-stekerafslag-en-van-ventrale': 'Gebogen beksteker met mini-stekerafslag vanaf ventrale zijde',
+  'alternerende-bek--steker-o-g-steker--rr': 'Alternerende beksteker / steker RR',
+  'een-krukowski--kerfrest': 'Krukowski-kerfrest',
+  'de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-': 'Steil geretoucheerde Krukowski-kerfrest',
+  'kerfrest-of-microsteker': 'Kerfrest of microsteker',
+  'steker--a': 'A-steker',
+  'op-andere-manier-gemaakt': 'Op andere manier gemaakte steker',
+  'steker--corbiac': 'Corbiac-steker',
+  'steke-r-ra-versmald': 'Versmalde RA-steker',
+  'steker--bassaler': 'Bassaler-steker',
+  'steker--lacan': 'Lacan-steker',
+  'steker--ra': 'RA-steker',
+  'steker--aa': 'AA-steker',
+  steker: 'Steker',
+  'niet-naast-elkaar-steker--aa': 'AA-steker zonder naast elkaar liggende afslagen',
+  'steker--kielvormig': 'Kielvormige steker',
+  'steker--snuitvormig': 'Snuitvormige steker',
+  'steker--vachons': 'Vachons-steker',
+  'nee-meerdere--boor--dubbel-of-boor--meervoudig': 'Enkelvoudige boor',
+  'meerdere--boor--dubbel-of-boor--meervoudig': 'Dubbele of meervoudige boor',
+  'boor-dickenbännli': 'Dickenbaennli-boor',
+  'een-bec': 'Bec',
+  'een-boor': 'Boor',
+  ruimer: 'Ruimer',
+  'billhook--a': 'Billhook type A',
+  'billhook--b': 'Billhook type B',
+  vuurslag: 'Vuurslag',
+  klopsteen: 'Klopsteen',
   'rugmes--met-natuurlijke--rug': 'Rugmes met natuurlijke rug',
   'rugmes-aubri--audi': 'Rugmes type Aubry-Audi',
   'rugmes-klingmes--geretoucheerd': 'Geretoucheerd rugmes/klingmes',

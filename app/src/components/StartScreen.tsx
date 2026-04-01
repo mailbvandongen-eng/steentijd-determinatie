@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.18',
+    title: 'Expert eindlabels opgeschoond',
+    items: [
+      'Resterende boor- en combinatiesprongen in de afslag/kling-sectie lopen nu door',
+      'Technische expertlabels voor stekers, boren en verwante werktuigen tonen nu leesbare namen',
+      'De expertuitkomsten in deze sectie zijn daardoor minder intern en beter testbaar',
+    ],
+  },
+  {
     version: '2.2.17',
     title: 'Expert afslag/kling-sprongen verbeterd',
     items: [
