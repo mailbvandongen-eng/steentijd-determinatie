@@ -20,6 +20,7 @@ export interface ContinuationOption {
   sourceResultType: string;
   targetLevel: UserLevel;
   treeMode: DecisionTreeMode;
+  startQuestionId?: string;
   phaseId: AwnTestPhaseId;
   title: string;
   summary: string;
@@ -76,6 +77,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kern-levallois',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '21',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep Levallois-kern',
     summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
@@ -85,6 +87,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kern-diskusvormig',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '18',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep diskusvormige kern',
     summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
@@ -94,6 +97,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kern-kling',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '27',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep klingkern',
     summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
@@ -103,6 +107,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kern-afslag',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '23',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep afslagkern',
     summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
@@ -112,6 +117,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'geretoucheerde-afslag',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '202',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep geretoucheerde afslag',
     summary: 'Voor dit werktuigtype loopt de verdere AWN-verdieping nu via de volledige expertboom.',
@@ -121,6 +127,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'chopper-of-chopping-tool',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '103',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep chopper of chopping tool',
     summary: 'Voor kernwerktuigen zonder aparte gevorderd-subboom loopt de verdieping nu via de expertboom.',
@@ -130,6 +137,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kernwerktuig-grof',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '104',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep grof kernwerktuig',
     summary: 'Voor kernwerktuigen zonder aparte gevorderd-subboom loopt de verdieping nu via de expertboom.',
@@ -139,6 +147,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'boor-of-priem',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '230',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep boor of priem',
     summary: 'Voor kernwerktuigen zonder aparte gevorderd-subboom loopt de verdieping nu via de expertboom.',
@@ -148,6 +157,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kernwerktuig-klein',
     targetLevel: 'expert',
     treeMode: 'expert',
+    startQuestionId: '125',
     phaseId: 'phase-6-expert-volledige-boom',
     title: 'Verdiep klein kernwerktuig',
     summary: 'Voor kernwerktuigen zonder aparte gevorderd-subboom loopt de verdieping nu via de expertboom.',
@@ -157,6 +167,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'afslag-onbewerkt',
     targetLevel: 'gevorderd',
     treeMode: 'phase1-afslag',
+    startQuestionId: '42',
     phaseId: 'phase-1-klingen-en-afslagen',
     title: 'Verdiep afslagtype',
     summary: 'Test de AWN-verdieping voor onbewerkte afslagen.',
@@ -166,6 +177,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'kling-onbewerkt',
     targetLevel: 'gevorderd',
     treeMode: 'phase1-kling',
+    startQuestionId: '71',
     phaseId: 'phase-1-klingen-en-afslagen',
     title: 'Verdiep klingtype',
     summary: 'Test de AWN-verdieping voor onbewerkte klingen.',
@@ -175,6 +187,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'geretoucheerde-kling',
     targetLevel: 'gevorderd',
     treeMode: 'phase1-geretoucheerde-kling',
+    startQuestionId: '390',
     phaseId: 'phase-1-klingen-en-afslagen',
     title: 'Verdiep geretoucheerde kling',
     summary: 'Test de eerste AWN-verdieping voor steil geretoucheerde klingen.',
@@ -184,6 +197,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'rugmes',
     targetLevel: 'gevorderd',
     treeMode: 'phase1-rugmes',
+    startQuestionId: '381',
     phaseId: 'phase-1-klingen-en-afslagen',
     title: 'Verdiep rugmes',
     summary: 'Test de eerste AWN-verdieping voor rugmes-varianten.',
@@ -193,6 +207,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'klingschrabber',
     targetLevel: 'gevorderd',
     treeMode: 'phase1-klingschrabber',
+    startQuestionId: '335',
     phaseId: 'phase-1-klingen-en-afslagen',
     title: 'Verdiep klingschrabber',
     summary: 'Test de eerste AWN-verdieping voor klingschrabbers.',
@@ -202,6 +217,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'schrabber',
     targetLevel: 'gevorderd',
     treeMode: 'phase2-schrabber',
+    startQuestionId: '321',
     phaseId: 'phase-2-spitsen-en-schrapers',
     title: 'Verdiep schrabber',
     summary: 'Test de uitgebreidere AWN-verdieping voor schrabber-subtypen.',
@@ -211,6 +227,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'spits',
     targetLevel: 'gevorderd',
     treeMode: 'phase2-spits',
+    startQuestionId: '540',
     phaseId: 'phase-2-spitsen-en-schrapers',
     title: 'Verdiep spits',
     summary: 'Test de eerste uitgebreide AWN-verdieping voor spits-subtypen.',
@@ -220,6 +237,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'vuistbijl',
     targetLevel: 'gevorderd',
     treeMode: 'phase3-vuistbijl',
+    startQuestionId: '610',
     phaseId: 'phase-3-bifaciale-werktuigen',
     title: 'Verdiep vuistbijl',
     summary: 'Test de eerste AWN-verdieping voor vuistbijl-subtypen.',
@@ -229,6 +247,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'geslepen-vuurstenen-bijl',
     targetLevel: 'gevorderd',
     treeMode: 'phase4-geslepen-bijl',
+    startQuestionId: '801',
     phaseId: 'phase-4-geslepen-werktuigen',
     title: 'Verdiep geslepen vuurstenen bijl',
     summary: 'Test de AWN-verdieping voor vuurstenen bijl-subtypen.',
@@ -238,6 +257,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'geslepen-vuurstenen-artefact',
     targetLevel: 'gevorderd',
     treeMode: 'phase4-geslepen-artefact',
+    startQuestionId: '840',
     phaseId: 'phase-4-geslepen-werktuigen',
     title: 'Verdiep geslepen vuurstenen artefact',
     summary: 'Test de eerste AWN-verdieping voor beitels, dolken en andere geslepen vuurstenen artefacten.',
@@ -247,6 +267,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'doorboord-artefact',
     targetLevel: 'gevorderd',
     treeMode: 'phase5-doorboord-artefact',
+    startQuestionId: '900',
     phaseId: 'phase-5-doorboorde-werktuigen',
     title: 'Verdiep doorboord artefact',
     summary: 'Test de AWN-verdieping voor doorboorde werktuigen zonder directe beginner-specificatie.',
@@ -256,6 +277,7 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
     sourceResultType: 'hamerbijl',
     targetLevel: 'gevorderd',
     treeMode: 'phase5-hamerbijl',
+    startQuestionId: '930',
     phaseId: 'phase-5-doorboorde-werktuigen',
     title: 'Verdiep hamerbijl',
     summary: 'Test de AWN-verdieping voor hamerbijlen en verwante dubbelbijlen.',
@@ -264,8 +286,27 @@ const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
 };
 
 export function getContinuationOption(resultType: string, currentLevel: UserLevel): ContinuationOption | null {
-  if (currentLevel !== 'beginner') return null;
-  return CONTINUATION_MAP[resultType] ?? null;
+  const option = CONTINUATION_MAP[resultType] ?? null;
+  if (!option) return null;
+
+  if (currentLevel === 'beginner') {
+    return option;
+  }
+
+  if (currentLevel === 'gevorderd' && option.targetLevel === 'gevorderd') {
+    return {
+      ...option,
+      targetLevel: 'expert',
+      treeMode: 'expert',
+      startQuestionId: option.startQuestionId,
+      phaseId: 'phase-6-expert-volledige-boom',
+      title: `Verdiep ${option.title.replace(/^Verdiep /, '').toLowerCase()} in expertboom`,
+      summary: 'De gevorderde route is hier klaar; verdere AWN-verdieping loopt nu via de volledige expertboom.',
+      testLabel: 'Expertverdieping actief',
+    };
+  }
+
+  return null;
 }
 
 export function getPhaseById(phaseId: AwnTestPhaseId): AwnTestPhase | undefined {
@@ -278,7 +319,7 @@ export function isContinuationActive(option: ContinuationOption | null): boolean
 }
 
 export function getContinuationNotice(resultType: string, currentLevel: UserLevel): ContinuationNotice | null {
-  if (currentLevel !== 'beginner') return null;
+  if (currentLevel === 'expert') return null;
   if (CONTINUATION_MAP[resultType]) return null;
 
   if (['splinter', 'natuursteen-of-knol', 'brok-of-vorstsplijting'].includes(resultType)) {

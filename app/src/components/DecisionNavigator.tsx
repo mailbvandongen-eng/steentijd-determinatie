@@ -20,6 +20,7 @@ interface DecisionNavigatorProps {
   level?: UserLevel;
   isSandbox?: boolean;
   treeMode?: DecisionTreeMode;
+  startQuestionId?: string;
 }
 
 export function DecisionNavigator({
@@ -30,8 +31,9 @@ export function DecisionNavigator({
   level = 'beginner',
   isSandbox = false,
   treeMode = 'beginner',
+  startQuestionId,
 }: DecisionNavigatorProps) {
-  const [currentQuestionId, setCurrentQuestionId] = useState(() => getTreeStartQuestionId(treeMode));
+  const [currentQuestionId, setCurrentQuestionId] = useState(() => startQuestionId ?? getTreeStartQuestionId(treeMode));
   const [history, setHistory] = useState<string[]>([]);
   const [forwardHistory, setForwardHistory] = useState<string[]>([]);
   const [stepCount, setStepCount] = useState(1);
@@ -39,9 +41,6 @@ export function DecisionNavigator({
   const [currentHint, setCurrentHint] = useState<string | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
-  // Gevorderd mode: toon toelichting pas na antwoord
-  const [showToelichtingAfterAnswer, setShowToelichtingAfterAnswer] = useState(false);
-  const [lastAnswer, setLastAnswer] = useState<'ja' | 'nee' | null>(null);
 
   const question = getQuestion(currentQuestionId, treeMode);
   const images = getImagesForQuestion(currentQuestionId);
@@ -50,24 +49,21 @@ export function DecisionNavigator({
 
   // In gevorderd mode zijn hints niet beschikbaar
   const hintsEnabled = level === 'beginner' && isBeginnerTree;
-  // In gevorderd mode: toelichting pas na antwoord
   const showToelichtingDirectly = level === 'beginner' || !isBeginnerTree;
 
   useEffect(() => {
-    setCurrentQuestionId(getTreeStartQuestionId(treeMode));
+    setCurrentQuestionId(startQuestionId ?? getTreeStartQuestionId(treeMode));
     setHistory([]);
     setForwardHistory([]);
     setStepCount(1);
     setHintsUsed(0);
-  }, [treeMode]);
+  }, [treeMode, startQuestionId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     // Clear hint when question changes
     setCurrentHint(null);
     setHintError(null);
-    setShowToelichtingAfterAnswer(false);
-    setLastAnswer(null);
   }, [currentQuestionId]);
 
   const handleAnswer = (answer: 'ja' | 'nee') => {
@@ -104,31 +100,7 @@ export function DecisionNavigator({
       }
     };
 
-    // In gevorderd mode (niet expert): toon toelichting na antwoord (als er toelichting is)
-    if (level === 'gevorderd' && question.toelichting) {
-      setLastAnswer(answer);
-      setShowToelichtingAfterAnswer(true);
-      // Auto-proceed after 2 seconds, or user can click "Verder"
-    } else {
-      proceedToNext();
-    }
-  };
-
-  const handleContinueAfterFeedback = () => {
-    if (!question) return;
-    const result = processAnswer(currentQuestionId, lastAnswer!, treeMode);
-
-    if (result.isEnd && result.result) {
-      onComplete({
-        type: result.result,
-        description: formatTypeName(result.result),
-        hintsUsed,
-      });
-    } else if (result.nextQuestion) {
-      setHistory((prev) => [...prev, currentQuestionId]);
-      setCurrentQuestionId(result.nextQuestion);
-      setStepCount((c) => c + 1);
-    }
+    proceedToNext();
   };
 
   const handleGoBack = () => {
@@ -234,46 +206,6 @@ export function DecisionNavigator({
         )}
       </div>
 
-      {/* Gevorderd mode: Feedback modal after answer */}
-      {showToelichtingAfterAnswer && question.toelichting && (
-        <div className="absolute inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                lastAnswer === 'ja' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
-              }`}>
-                {lastAnswer === 'ja' ? (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                )}
-              </div>
-              <div>
-                <p className="font-semibold text-stone-900">
-                  Je antwoord: {lastAnswer === 'ja' ? 'Ja' : 'Nee'}
-                </p>
-                <p className="text-sm text-stone-500">Bekijk de toelichting</p>
-              </div>
-            </div>
-
-            <div className="bg-amber-50 p-3 rounded-lg border-l-4 border-amber-400">
-              <p className="text-sm text-stone-700">{question.toelichting}</p>
-            </div>
-
-            <button
-              onClick={handleContinueAfterFeedback}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-lg transition-colors"
-            >
-              Verder
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Content - scrollable */}
       <div className="flex-1 overflow-y-auto p-3">
         {/* Vraag */}
@@ -285,12 +217,6 @@ export function DecisionNavigator({
           {question.toelichting && showToelichtingDirectly && (
             <p className="text-sm text-stone-600 bg-amber-50 p-2 rounded border-l-4 border-amber-400">
               {question.toelichting}
-            </p>
-          )}
-          {/* In gevorderd mode: hint dat er toelichting komt na antwoord */}
-          {question.toelichting && !showToelichtingDirectly && !showToelichtingAfterAnswer && (
-            <p className="text-xs text-stone-400 italic mt-2">
-              Toelichting beschikbaar na je antwoord
             </p>
           )}
         </div>

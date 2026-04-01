@@ -22,11 +22,12 @@ import type { DecisionTreeMode } from './lib/decisionTree';
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.29';
+const APP_VERSION = '2.2.30';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
   sourceResultType: string;
+  startQuestionId?: string;
 }
 
 // Animation variants
@@ -178,13 +179,14 @@ function App() {
     async (result: { type: string; description?: string; hintsUsed: number; sourceResultType?: string }) => {
       // Store hints used for result view
       setSessionHintsUsed(result.hintsUsed);
+      const effectiveSourceResultType = continuationState?.sourceResultType ?? result.sourceResultType ?? result.type;
 
       if (currentSessionId) {
         await completeSession(
           currentSessionId,
           {
             type: result.type,
-            sourceResultType: result.sourceResultType,
+            sourceResultType: effectiveSourceResultType,
             description: result.description || '',
           },
           determinationSteps
@@ -217,7 +219,7 @@ function App() {
         }
       }
     },
-    [currentSessionId, determinationSteps, appMode, trainingSession]
+    [currentSessionId, determinationSteps, appMode, trainingSession, continuationState]
   );
 
   // Navigation handlers
@@ -309,6 +311,7 @@ function App() {
     setContinuationState({
       treeMode: option.treeMode,
       sourceResultType: option.sourceResultType,
+      startQuestionId: option.startQuestionId,
     });
     setView('decision');
   }, [currentSession]);
@@ -358,6 +361,7 @@ function App() {
           level={sessionLevel}
           isSandbox={sessionIsSandbox}
           treeMode={activeTreeMode}
+          startQuestionId={continuationState?.startQuestionId}
         />
       );
     }

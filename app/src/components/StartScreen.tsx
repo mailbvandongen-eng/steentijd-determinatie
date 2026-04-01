@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.30',
+    title: 'Vervolgflow en popup consistent gemaakt',
+    items: [
+      'Vervolg naar Expert start nu op een logisch instappunt in de AWN-boom in plaats van opnieuw bij het allereerste begin',
+      'Een gevorderde vervolgroute kan nu ook nog doorlopen naar Expert als de expertverdieping daarna nog relevant is',
+      'De antwoord-popup in gevorderd is verwijderd zodat antwoorden direct doorlopen zonder tussenscherm',
+    ],
+  },
+  {
     version: '2.2.29',
     title: 'Latere expert-subroutes en labels opgeschoond',
     items: [
