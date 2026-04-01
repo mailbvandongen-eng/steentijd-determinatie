@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.42',
+    title: 'Vroege expert-uitkomsten verder opgeschoond',
+    items: [
+      'Nog een batch vroege kern-, dolk- en doorboord-uitkomsten toont nu nette namen in plaats van ruwe labels',
+      'Daaronder vallen onder meer splinter, geteste brok of vorstsplijting, bijlafslag, bladschaaf, Scandinavische dolk en doorboord werktuig',
+      'Ook schoenleestbijl/dissel, disselkling en afslagbijl zijn nu als leesbare expertuitkomst benoemd',
+    ],
+  },
+  {
     version: '2.2.41',
     title: 'Meer gemodificeerde expert-typen benoemd',
     items: [
