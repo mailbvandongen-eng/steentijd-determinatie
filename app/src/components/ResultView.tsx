@@ -59,6 +59,7 @@ export function ResultView({
   shouldAutoValidate = false,
 }: ResultViewProps) {
   const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
+  const continuationTargetLabel = continuationOption?.targetLevel === 'expert' ? 'Expert' : 'Gevorderd';
   const hasRecordedResult = useRef(false);
   const validationStarted = useRef(false);
   const [showAllImages, setShowAllImages] = useState(false);
@@ -530,7 +531,7 @@ export function ResultView({
                   onClick={() => onContinueAtLevel(continuationOption)}
                   className="shrink-0 rounded-lg bg-amber-600 px-3 py-2 text-sm font-semibold text-white hover:bg-amber-700 transition-colors"
                 >
-                  Verder op Gevorderd
+                  Verder op {continuationTargetLabel}
                 </button>
               </div>
               <p className="text-xs text-stone-500 mt-3">

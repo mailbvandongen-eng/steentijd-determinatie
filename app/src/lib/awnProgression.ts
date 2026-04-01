@@ -66,6 +66,42 @@ export const AWN_TEST_PHASES: AwnTestPhase[] = [
 ];
 
 const CONTINUATION_MAP: Partial<Record<string, ContinuationOption>> = {
+  'kern-levallois': {
+    sourceResultType: 'kern-levallois',
+    targetLevel: 'expert',
+    treeMode: 'expert',
+    phaseId: 'phase-6-expert-volledige-boom',
+    title: 'Verdiep Levallois-kern',
+    summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
+    testLabel: 'Expertverdieping actief',
+  },
+  'kern-diskusvormig': {
+    sourceResultType: 'kern-diskusvormig',
+    targetLevel: 'expert',
+    treeMode: 'expert',
+    phaseId: 'phase-6-expert-volledige-boom',
+    title: 'Verdiep diskusvormige kern',
+    summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
+    testLabel: 'Expertverdieping actief',
+  },
+  'kern-kling': {
+    sourceResultType: 'kern-kling',
+    targetLevel: 'expert',
+    treeMode: 'expert',
+    phaseId: 'phase-6-expert-volledige-boom',
+    title: 'Verdiep klingkern',
+    summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
+    testLabel: 'Expertverdieping actief',
+  },
+  'kern-afslag': {
+    sourceResultType: 'kern-afslag',
+    targetLevel: 'expert',
+    treeMode: 'expert',
+    phaseId: 'phase-6-expert-volledige-boom',
+    title: 'Verdiep afslagkern',
+    summary: 'Voor kerntypen loopt de verdieping nu via de volledige AWN-expertboom.',
+    testLabel: 'Expertverdieping actief',
+  },
   'afslag-onbewerkt': {
     sourceResultType: 'afslag-onbewerkt',
     targetLevel: 'gevorderd',

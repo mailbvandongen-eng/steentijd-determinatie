@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.13',
+    title: 'Kernverdieping gekoppeld',
+    items: [
+      'Kernuitkomsten zoals klingkern, afslagkern en Levallois-kern geven nu een vervolgkaart',
+      'Voor deze groepen gaat de vervolgroute direct naar Expert, omdat daar nu de volledige AWN-boom zit',
+      'Vervolgknoppen tonen nu het juiste doelniveau in plaats van altijd Gevorderd',
+    ],
+  },
+  {
     version: '2.2.12',
     title: 'Expert doorgroei aangescherpt',
     items: [
