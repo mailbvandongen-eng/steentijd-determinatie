@@ -16,6 +16,9 @@ Eerste geautomatiseerde audit:
 - script: [`scripts/audit_algoritme_bron.py`](/mnt/c/projecten/steentijd/scripts/audit_algoritme_bron.py)
 - samenvatting: [`audit/algoritme_beslisboom_audit.md`](/mnt/c/projecten/steentijd/audit/algoritme_beslisboom_audit.md)
 - machine-readable: [`audit/algoritme_beslisboom_audit.json`](/mnt/c/projecten/steentijd/audit/algoritme_beslisboom_audit.json)
+- classificatiescript: [`scripts/classificeer_bronissues.py`](/mnt/c/projecten/steentijd/scripts/classificeer_bronissues.py)
+- classificatiesamenvatting: [`audit/algoritme_beslisboom_classificatie.md`](/mnt/c/projecten/steentijd/audit/algoritme_beslisboom_classificatie.md)
+- classificatiedata: [`audit/algoritme_beslisboom_classificatie.json`](/mnt/c/projecten/steentijd/audit/algoritme_beslisboom_classificatie.json)
 
 Uitkomst huidige audit:
 - 512 vragen uit `algoritme.txt`
@@ -27,6 +30,20 @@ Uitkomst huidige audit:
 
 Belangrijke nuance:
 de eerste audit is expres breed. Niet elk gemarkeerd label is een fout; een deel zijn routekoppen, parserlabels of geldige typen die later nog geclassificeerd moeten worden.
+
+Tweede auditlaag:
+- `parser_error`: 127
+- `route_label`: 95
+- `likely_valid_type`: 7
+
+Belangrijke nuance bij de tweede auditlaag:
+- de classificatie is bewust conservatief
+- twijfelgevallen vallen voorlopig eerder in `parser_error` dan in `likely_valid_type`
+- de eerstvolgende opschoningsronde moet dus starten bij:
+  - lege vragen in JSON
+  - ontbrekende knooppunten
+  - routekoppen met `nee-`, `het-`, `de-`
+  - beschadigde labels met afbrekingen zoals `ste-il`, `z-ijde`, `doorsned-e`
 
 Belangrijkste oorzaken:
 1. `beslisboom.json` is afgeleid uit een ruwe parser op `algoritme.txt`.

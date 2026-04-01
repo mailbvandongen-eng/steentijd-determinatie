@@ -59,6 +59,7 @@ pip install PyPDF2 pycryptodome PyMuPDF
 | `extract_images.py` | PDF → afbeeldingen + metadata |
 | `parse_algoritme.py` | Tekst → beslisboom JSON |
 | `scripts/audit_algoritme_bron.py` | Audit `algoritme.txt` ↔ `beslisboom.json` |
+| `scripts/classificeer_bronissues.py` | Classificeert auditissues in parserfouten, routekoppen en typen |
 
 ## Determinatie Structuur
 

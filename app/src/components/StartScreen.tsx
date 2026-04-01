@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.23',
+    title: 'Bronissues geclassificeerd',
+    items: [
+      'De baseline-audit wordt nu automatisch gesplitst in parserfouten, routekoppen en vermoedelijk geldige typen',
+      'De repo bevat nu een tweede auditlaag voor prioritering van bronopschoning',
+      'De volgende inhoudelijke opschoningsronde kan daardoor gericht op echte parserproblemen starten',
+    ],
+  },
+  {
     version: '2.2.22',
     title: 'Bronaudit basis toegevoegd',
     items: [
