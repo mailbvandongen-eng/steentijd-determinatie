@@ -22,7 +22,7 @@ import type { DecisionTreeMode } from './lib/decisionTree';
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.7';
+const APP_VERSION = '2.2.9';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -175,7 +175,7 @@ function App() {
   }, []);
 
   const handleDecisionComplete = useCallback(
-    async (result: { type: string; description?: string; hintsUsed: number }) => {
+    async (result: { type: string; description?: string; hintsUsed: number; sourceResultType?: string }) => {
       // Store hints used for result view
       setSessionHintsUsed(result.hintsUsed);
 
@@ -184,6 +184,7 @@ function App() {
           currentSessionId,
           {
             type: result.type,
+            sourceResultType: result.sourceResultType,
             description: result.description || '',
           },
           determinationSteps
@@ -363,7 +364,7 @@ function App() {
 
     if (view === 'result' && currentSession) {
       const continuationOption = currentSession.result
-        ? getContinuationOption(currentSession.result.type, sessionLevel)
+        ? getContinuationOption(currentSession.result.sourceResultType ?? currentSession.result.type, sessionLevel)
         : null;
       const activeContinuation = isContinuationActive(continuationOption) ? continuationOption : null;
 

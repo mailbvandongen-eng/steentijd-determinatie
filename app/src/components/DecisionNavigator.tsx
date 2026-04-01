@@ -5,7 +5,6 @@ import {
   processAnswer,
   getImagesForQuestion,
   formatTypeName,
-  resultMinLevels,
   getTreeLabel,
   getTreeStartQuestionId,
   type DecisionTreeMode,
@@ -18,7 +17,7 @@ const MAX_HINTS = 3;
 interface DecisionNavigatorProps {
   imageUrl: string;
   onStep: (step: DeterminationStep) => void;
-  onComplete: (result: { type: string; description?: string; hintsUsed: number }) => void;
+  onComplete: (result: { type: string; description?: string; hintsUsed: number; sourceResultType?: string }) => void;
   onBack: () => void;
   level?: UserLevel;
   isSandbox?: boolean;
@@ -92,27 +91,14 @@ export function DecisionNavigator({
     // Clear forward history when user makes a new answer choice
     setForwardHistory([]);
 
-    const levelOrder: Record<string, number> = { beginner: 0, gevorderd: 1, expert: 2 };
-
     const proceedToNext = () => {
       if (result.isEnd && result.result) {
-        // Dieptebegrenzing: check of dit resultaat bereikbaar is op het huidige niveau
-        const resultLevel = isBeginnerTree ? resultMinLevels[result.result] : undefined;
-        if (resultLevel && levelOrder[resultLevel] > levelOrder[level]) {
-          // Resultaat vereist hoger niveau
-          const vereistNiveau = resultLevel === 'expert' ? 'Expert' : 'Gevorderd';
-          onComplete({
-            type: 'onbepaald-beginnersniveau',
-            description: `Dit artefact is verder te determineren op niveau ${vereistNiveau}`,
-            hintsUsed,
-          });
-        } else {
-          onComplete({
-            type: result.result,
-            description: formatTypeName(result.result),
-            hintsUsed,
-          });
-        }
+        onComplete({
+          type: result.result,
+          description: formatTypeName(result.result),
+          hintsUsed,
+          sourceResultType: result.result,
+        });
       } else if (result.nextQuestion) {
         setHistory((prev) => [...prev, currentQuestionId]);
         setCurrentQuestionId(result.nextQuestion);

@@ -63,6 +63,7 @@ export interface DeterminationSession {
 
   result?: {
     type: string;
+    sourceResultType?: string;
     category?: string;
     description?: string;
     period?: string;
