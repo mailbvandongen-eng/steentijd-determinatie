@@ -60,7 +60,7 @@ export const AWN_TEST_PHASES: AwnTestPhase[] = [
   {
     id: 'phase-6-expert-volledige-boom',
     title: 'Fase 6: Expert Volledige Boom',
-    status: 'planned',
+    status: 'active',
     summary: 'Integratie van de volledige AWN-beslisboom met alle 511 vraagknooppunten.',
   },
 ];

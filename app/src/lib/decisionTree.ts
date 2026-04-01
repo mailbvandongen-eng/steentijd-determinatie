@@ -44,26 +44,6 @@ interface RawDecisionNode {
   nee: string | null;
 }
 
-// Minimale niveaus voor beginner-eindresultaten.
-// Resultaten zonder vermelding zijn beschikbaar op 'beginner'.
-export const resultMinLevels: Record<string, UserLevel> = {
-  'kern-levallois': 'gevorderd',
-  'kern-diskusvormig': 'gevorderd',
-  'kern-kling': 'gevorderd',
-  'kern-afslag': 'gevorderd',
-  'vuistbijl': 'gevorderd',
-  'chopper-of-chopping-tool': 'gevorderd',
-  'kernwerktuig-grof': 'gevorderd',
-  'boor-of-priem': 'gevorderd',
-  'kernwerktuig-klein': 'gevorderd',
-  'rugmes': 'gevorderd',
-  'klingschrabber': 'gevorderd',
-  'geretoucheerde-kling': 'gevorderd',
-  'schrabber': 'gevorderd',
-  'spits': 'gevorderd',
-  'geretoucheerde-afslag': 'gevorderd',
-};
-
 const fullDecisionTree = fullDecisionTreeData as Record<string, RawDecisionNode>;
 const expertQuestionOrder = Object.keys(fullDecisionTree);
 
@@ -1803,7 +1783,6 @@ const DISPLAY_NAMES: Record<string, string> = {
   'geslepen-stenen-artefact': 'Geslepen stenen artefact',
   hamerbijl: 'Hamerbijl of strijdhamer',
   'doorboord-artefact': 'Doorboord artefact',
-  'onbepaald-beginnersniveau': 'Onbepaald (beginnersniveau bereikt)',
   afslag: 'Afslag',
   kling: 'Kling',
   'afslag--kombewa': 'Kombewa-afslag',

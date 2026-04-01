@@ -4,6 +4,16 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.11', date: '1 apr 2026', changes: ['Verborgen niveau- en vervolglogica opgeschoond', 'Expertfase staat nu overal als actief', 'Unlock-uitleg verduidelijkt: reguliere doorgroei vereist correcte determinaties én docentvalidaties'] },
+  { version: '2.2.10', date: '1 apr 2026', changes: ['Wijzigingenbeheer aangevuld met recente AWN-versies', 'Wat is nieuw sluit nu beter aan op de live V2-uitrol'] },
+  { version: '2.2.9', date: '1 apr 2026', changes: ['Beginner toont nu het echte resultaat in plaats van "Onbepaald (beginnersniveau bereikt)"', 'Kern- en andere beginneruitkomsten zijn daardoor logischer leesbaar'] },
+  { version: '2.2.8', date: '1 apr 2026', changes: ['Vervolgknoppen werken nu ook na een beginner-cutoff doordat het echte onderliggende resultaat bewaard blijft'] },
+  { version: '2.2.7', date: '1 apr 2026', changes: ['Uitleg & testinformatie toegevoegd voor AWN-testers, trainers en geinteresseerden'] },
+  { version: '2.2.6', date: '1 apr 2026', changes: ['Expertmodus toegevoegd op basis van de volledige AWN-bronboom', 'Grotere AWN-secties zijn runtime testbaar geworden'] },
+  { version: '2.2.5', date: '1 apr 2026', changes: ['Geslepen en doorboorde werktuigen kregen verdieping op gevorderd niveau'] },
+  { version: '2.2.4', date: '1 apr 2026', changes: ['Vuistbijlen kregen een eerste subtypeboom op gevorderd niveau'] },
+  { version: '2.2.3', date: '1 apr 2026', changes: ['Spitsen en schrabbers kregen een eerste AWN-verdieping op gevorderd niveau'] },
+  { version: '2.2.2', date: '1 apr 2026', changes: ['Eerste vervolgknoppen op beginner-resultaten voor klingen en afslagen'] },
   { version: '2.2.0', date: '17 mrt 2026', changes: ['Progressiesysteem: Beginner → Gevorderd → Expert', 'Niveau selector op startscherm', 'Voortgangsbalk naar gevorderd niveau', 'Vrij spelen modus', 'Uitleg progressie in welkomstscherm'] },
   { version: '1.4.20', date: '22 feb 2026', changes: ['Verbeterde AI tekeningen (inkt stijl)', 'Zoeklocaties op kaart markeren', 'Kaart zoekfunctie', 'Kaartlagen panel (satelliet, filters)', 'Light mode standaard', 'Nieuwe professionele header'] },
   { version: '1.3.0', date: '21 feb 2026', changes: ['Vindplaats kaart toegevoegd', 'Vondsten zichtbaar op kaart', 'Verbeterd light mode contrast'] },
@@ -179,7 +189,7 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
               <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Doorgroeien van Beginner naar Gevorderd</h3>
               <div className="text-xs space-y-2" style={{ color: 'var(--text-secondary)' }}>
                 <p>
-                  De app heeft drie niveaus: <strong>Beginner</strong>, <strong>Gevorderd</strong>, en <strong>Expert</strong> (binnenkort).
+                  De app heeft drie niveaus: <strong>Beginner</strong>, <strong>Gevorderd</strong> en <strong>Expert</strong>.
                 </p>
                 <p>
                   <strong>Als Beginner</strong> krijg je volledige hulp: AI-hints (max 3 per sessie), referentiefoto's bij elke vraag, en uitleg bij de beslisboom.
@@ -188,15 +198,15 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   <strong>Hoe ontgrendel je Gevorderd?</strong>
                 </p>
                 <ul className="pl-3 space-y-1" style={{ color: 'var(--text-secondary)' }}>
-                  <li>• <strong>20 correcte determinaties</strong> — Na elke determinatie geeft de AI een beoordeling (correct/twijfelachtig/onjuist). Alleen "correct" telt mee.</li>
-                  <li>• <strong>5 docent-validaties</strong> — Neem deel aan een training en krijg bevestiging van een docent.</li>
-                  <li>• Of: een docent kan je direct naar Gevorderd promoveren.</li>
+                  <li>• <strong>Reguliere doorgroei vereist beide:</strong> 20 correcte determinaties en 5 docent-validaties.</li>
+                  <li>• Na elke determinatie geeft de AI een beoordeling (correct/twijfelachtig/onjuist). Alleen "correct" telt mee.</li>
+                  <li>• Een docent kan je ook direct naar Gevorderd of Expert promoveren.</li>
                 </ul>
                 <p>
-                  <strong>Op Gevorderd niveau</strong> werk je zelfstandiger: geen hints meer, en feedback alleen bij fouten.
+                  <strong>Op Gevorderd niveau</strong> werk je zelfstandiger: geen hints meer, minder directe uitleg en waar relevant een diepere AWN-vervolglaag.
                 </p>
                 <p style={{ color: 'var(--text-muted)' }}>
-                  Je kunt ook "vrij spelen" om niveaus te proberen zonder dat het meetelt voor je voortgang.
+                  Je kunt ook "vrij spelen" om beginner, gevorderd en expert te proberen zonder dat het meetelt voor je voortgang.
                 </p>
               </div>
             </section>

@@ -33,6 +33,23 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.11',
+    title: 'Niveaulogica opgeschoond',
+    items: [
+      'Achterhaalde beginner-cutoff restanten verwijderd',
+      'Expertfase staat nu overal als actief in plaats van gepland',
+      'Unlock-uitleg verduidelijkt: reguliere doorgroei vereist correcte determinaties en docentvalidaties',
+    ],
+  },
+  {
+    version: '2.2.10',
+    title: 'Wijzigingenbeheer bijgewerkt',
+    items: [
+      'Recente AWN-versies zijn toegevoegd aan "Wat is nieuw?"',
+      'Release-overzicht sluit nu beter aan op de live V2-uitrol',
+    ],
+  },
+  {
     version: '2.2.9',
     title: 'Echt resultaat op beginniveau',
     items: [
@@ -482,6 +499,9 @@ export function StartScreen({
                   <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
                     <p>
                       Van <strong>Beginner</strong> naar <strong>Gevorderd</strong> groei je door met correcte determinaties en docentvalidaties.
+                    </p>
+                    <p>
+                      Reguliere doorgroei werkt via beide sporen tegelijk: correcte determinaties én docentvalidaties. Een docent kan een gebruiker daarnaast handmatig promoveren.
                     </p>
                     <p>
                       Van <strong>Gevorderd</strong> naar <strong>Expert</strong> groeit de gebruiker verder via extra correcte determinaties en extra docentvalidaties.
