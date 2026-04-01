@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.50',
+    title: 'Vroege antwoordlabels verder opgeschoond',
+    items: [
+      'Een volgende batch vroege kern-, afslag- en vuistbijllabels in de AWN-bronboom is ontdaan van parservormen als een-rugmes, een-kern en een-vuistbijl-kernvormig',
+      'De ruwe bronaudit daalt daardoor verder naar 456 issues en 195 verdachte antwoordlabels',
+      'Ook de classificatie zakt mee naar 367 parserfouten en 84 routekoppen, waardoor de resterende rommel nu steeds meer in echte routevragen zit',
+    ],
+  },
+  {
     version: '2.2.49',
     title: 'Vroege bronvragen teruggezet naar algoritmetekst',
     items: [

@@ -2,20 +2,14 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 469,
+    "issue_count": 456,
     "empty_question_in_json": 0,
     "question_text_mismatch": 261,
-    "suspicious_label_count": 208,
+    "suspicious_label_count": 195,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
   },
   "issues": [
-    {
-      "question_id": "1",
-      "issue": "suspicious_ja_label",
-      "label": "een-splinter",
-      "text_answer": "een splinter"
-    },
     {
       "question_id": "4",
       "issue": "suspicious_nee_label",
@@ -39,24 +33,6 @@
       "issue": "suspicious_nee_label",
       "label": "het-artefact-is-een-knol--brok-of-vorstsplijting",
       "text_answer": "het artefact is een knol , brok of vorstsplijting"
-    },
-    {
-      "question_id": "8",
-      "issue": "suspicious_ja_label",
-      "label": "het-is-een-artefact",
-      "text_answer": "Het is een artefact"
-    },
-    {
-      "question_id": "9",
-      "issue": "suspicious_nee_label",
-      "label": "een-kern",
-      "text_answer": "een kern"
-    },
-    {
-      "question_id": "11",
-      "issue": "suspicious_nee_label",
-      "label": "een-klein-of-onherkenbaar-slagvlak",
-      "text_answer": "een klein of onherkenbaar slagvlak"
     },
     {
       "question_id": "12",
@@ -83,18 +59,6 @@
       "text_answer": "Nee zie vorige determinatie :"
     },
     {
-      "question_id": "45a",
-      "issue": "suspicious_ja_label",
-      "label": "een-rugmes",
-      "text_answer": "een rugmes"
-    },
-    {
-      "question_id": "45a",
-      "issue": "suspicious_nee_label",
-      "label": "een-afslag--decorticatie",
-      "text_answer": "een afslag -decorticatie"
-    },
-    {
       "question_id": "101",
       "issue": "suspicious_ja_label",
       "label": "nee",
@@ -119,12 +83,6 @@
       "text_answer": "Nee voor een groot deel bekapt"
     },
     {
-      "question_id": "107",
-      "issue": "suspicious_ja_label",
-      "label": "een-chopper--rondom--bekapt",
-      "text_answer": "een chopper -rondom -bekapt"
-    },
-    {
       "question_id": "110",
       "issue": "suspicious_ja_label",
       "label": "nee-het-bifaciale-artefact-heeft-een-andere-vorm",
@@ -141,18 +99,6 @@
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
-    },
-    {
-      "question_id": "117",
-      "issue": "suspicious_nee_label",
-      "label": "een-asymmetrische-driehoekige-dwarsdoorsnede",
-      "text_answer": "een asymmetrische driehoekige dwarsdoorsnede"
-    },
-    {
-      "question_id": "124",
-      "issue": "suspicious_ja_label",
-      "label": "de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--",
-      "text_answer": "de snede en rug lopen zijn nagenoeg recht keilmesser -"
     },
     {
       "question_id": "125",
@@ -203,12 +149,6 @@
       "json_question": "Lijkt het artefact op een vuistbijl maar met een snede in plaats van een punt?"
     },
     {
-      "question_id": "129a",
-      "issue": "suspicious_ja_label",
-      "label": "een-vuistwig",
-      "text_answer": "een vuistwig"
-    },
-    {
       "question_id": "130",
       "issue": "question_text_mismatch",
       "text_question": "Is het artefact aan slechts één vlakke zijde bewerkt of gemaakt van een afslag?",
@@ -233,22 +173,10 @@
       "text_answer": "Het artefact heeft de vorm van een vuistbijl"
     },
     {
-      "question_id": "132",
-      "issue": "suspicious_ja_label",
-      "label": "een-proto--vuistbijl",
-      "text_answer": "een proto -vuistbijl"
-    },
-    {
       "question_id": "132b",
       "issue": "question_text_mismatch",
       "text_question": "Is de de vuistbijl grof bewerkt en heeft het het uiterlijk van een kern?",
       "json_question": "Is de vuistbijl grof bewerkt en heeft zij het uiterlijk van een kern?"
-    },
-    {
-      "question_id": "132b",
-      "issue": "suspicious_ja_label",
-      "label": "een-vuistbijl--kernvormig",
-      "text_answer": "een vuistbijl -kernvormig"
     },
     {
       "question_id": "134",
@@ -261,12 +189,6 @@
       "issue": "question_text_mismatch",
       "text_question": "Is de vuistbijl is langwerpig en heeft die concave zijden en is die fijner bewerkt dan de ficron en lancetvormige vuistbijl?",
       "json_question": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij fijner bewerkt dan de ficron en lancetvormige vuistbijl?"
-    },
-    {
-      "question_id": "135a",
-      "issue": "suspicious_nee_label",
-      "label": "een-flesvorm-vuistbijl--flesvormig",
-      "text_answer": "een flesvorm vuistbijl -flesvormig"
     },
     {
       "question_id": "136",

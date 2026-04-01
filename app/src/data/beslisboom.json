@@ -1,7 +1,7 @@
 {
   "1": {
     "vraag": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
-    "ja": "een-splinter",
+    "ja": "splinter",
     "nee": null
   },
   "2": {
@@ -36,13 +36,13 @@
   },
   "8": {
     "vraag": "Heeft het meer dan 2 afslagnegatieven?",
-    "ja": "het-is-een-artefact",
+    "ja": "artefact",
     "nee": "1-of-2-het-is-een-brok-of-vorstsplijting"
   },
   "9": {
     "vraag": "Heeft het een werkkant of punt ?",
     "ja": "kern--werktuig",
-    "nee": "een-kern"
+    "nee": "kern"
   },
   "9a": {
     "vraag": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
@@ -57,7 +57,7 @@
   "11": {
     "vraag": "Heeft de kern één of meerdere  grote  herkenbar e slagvlak ken?",
     "ja": "groot-of-herkenbaar-slagvlak",
-    "nee": "een-klein-of-onherkenbaar-slagvlak"
+    "nee": "klein-of-onherkenbaar-slagvlak"
   },
   "12": {
     "vraag": "Is de kern gemaakt in Levallois -techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak , waarbij de afslagen aan één zijde steiler zijn -de onderzijde - dan die aan de andere zijde, lijkt op een omgekeerde schildpad )",
@@ -231,8 +231,8 @@
   },
   "45a": {
     "vraag": "Heeft de afslag aan één zijde cortex tegenover een scherpe zijde?",
-    "ja": "een-rugmes",
-    "nee": "een-afslag--decorticatie"
+    "ja": "rugmes",
+    "nee": "afslag--decorticatie"
   },
   "45": {
     "vraag": "Is de decorticatie -afslag  mogelijk gemodificeerd ?",
@@ -476,7 +476,7 @@
   },
   "107": {
     "vraag": "Is het artefact  naar één zijde (nagenoeg) rondom bekapt ?",
-    "ja": "een-chopper--rondom--bekapt",
+    "ja": "chopper--rondom--bekapt",
     "nee": "chopper"
   },
   "108": {
@@ -527,7 +527,7 @@
   "117": {
     "vraag": "Heeft het grotere grof bewerkte artefact een enigszins platte dwarsdoorsnede en een brede snede?",
     "ja": "vuistwig",
-    "nee": "een-asymmetrische-driehoekige-dwarsdoorsnede"
+    "nee": "asymmetrische-driehoekige-dwarsdoorsnede"
   },
   "118": {
     "vraag": "Heeft het asymmetrische artefact een ( bifaciaal) bewerkte werkkant tegenover een min of meer dikke zijde?",
@@ -561,7 +561,7 @@
   },
   "124": {
     "vraag": "Is de algemene vorm vierhoekig ?",
-    "ja": "de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--",
+    "ja": "keilmesser--rechtlijnig",
     "nee": "meer-afgeronde-rug-messer--pradnik"
   },
   "125": {
@@ -591,7 +591,7 @@
   },
   "129a": {
     "vraag": "Lijkt het artefact op een vuistbijl maar met een snede in plaats van een punt?",
-    "ja": "een-vuistwig",
+    "ja": "vuistwig",
     "nee": "met-een-evt-afgeronde-punt"
   },
   "130": {
@@ -606,12 +606,12 @@
   },
   "132": {
     "vraag": "De vuistbijl heeft een primitief uiterlijk en houdt het midden tussen een chopping tool en een vuistbijl.",
-    "ja": "een-proto--vuistbijl",
+    "ja": "proto--vuistbijl",
     "nee": "terug-artefactgroepen-start"
   },
   "132b": {
     "vraag": "Is de vuistbijl grof bewerkt en heeft zij het uiterlijk van een kern?",
-    "ja": "een-vuistbijl--kernvormig",
+    "ja": "vuistbijl--kernvormig",
     "nee": "zorgvuldiger-bewerkt"
   },
   "132a": {
@@ -637,7 +637,7 @@
   "135a": {
     "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm amandelvormig?",
     "ja": "vuistbijl--amandelvormig",
-    "nee": "een-flesvorm-vuistbijl--flesvormig"
+    "nee": "vuistbijl--flesvormig"
   },
   "136": {
     "vraag": "Heeft de vuistbijl een afgeronde punt en is zij relatief dun, met breedte groter dan 2,35 keer de dikte?",
