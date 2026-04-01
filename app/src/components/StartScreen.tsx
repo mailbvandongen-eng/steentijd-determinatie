@@ -33,6 +33,24 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.9',
+    title: 'Echt resultaat op beginniveau',
+    items: [
+      'Beginner toont nu het echte resultaat in plaats van "Onbepaald (beginnersniveau bereikt)"',
+      'Verborgen vervolgresultaten blijven beschikbaar voor latere verdieping',
+      'Kern- en andere beginneruitkomsten zijn daardoor logischer leesbaar',
+    ],
+  },
+  {
+    version: '2.2.8',
+    title: 'Vervolg na beginner cutoff',
+    items: [
+      'Verborgen beginnerresultaten bewaren nu het echte onderliggende type',
+      'Vervolgknoppen kunnen daardoor ook werken na een beginner cutoff',
+      'Overgang van beginner naar gevorderde verdieping is betrouwbaarder gemaakt',
+    ],
+  },
+  {
     version: '2.2.7',
     title: 'Testinformatie voor AWN',
     items: [
@@ -57,6 +75,15 @@ const CHANGELOG = [
       'Geslepen werktuigen krijgen vervolgknoppen',
       'Doorboorde werktuigen en hamerbijlen zijn verdiept',
       'Fase 4 en 5 van het AWN-progressieplan zijn geactiveerd',
+    ],
+  },
+  {
+    version: '2.2.4',
+    title: 'AWN testfase 3',
+    items: [
+      'Vuistbijlen kregen een eerste subtypeboom op gevorderd niveau',
+      'Bifaciale werktuigen zijn als aparte AWN-testfase toegevoegd',
+      'Eerste handmatige testpaden voor vuistbijlverdieping zijn vastgelegd',
     ],
   },
   {
