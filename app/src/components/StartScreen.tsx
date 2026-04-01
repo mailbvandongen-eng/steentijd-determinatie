@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.14',
+    title: 'Meer vervolgkaarten gedicht',
+    items: [
+      'Geretoucheerde afslagen en meerdere kernwerktuigen geven nu ook een vervolgkaart',
+      'Artefacttypen zonder eigen gevorderd-subboom lopen voorlopig door naar Expert',
+      'De vervolgkaartlaag sluit nu beter aan op de feitelijke AWN-verdieping in de app',
+    ],
+  },
+  {
     version: '2.2.13',
     title: 'Kernverdieping gekoppeld',
     items: [

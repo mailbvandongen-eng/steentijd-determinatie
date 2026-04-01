@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.14', date: '1 apr 2026', changes: ['Geretoucheerde afslagen en meerdere kernwerktuigen geven nu ook een vervolgkaart', 'Uitkomsten zonder eigen gevorderd-subboom lopen voorlopig door naar Expert'] },
   { version: '2.2.13', date: '1 apr 2026', changes: ['Kernuitkomsten zoals klingkern en afslagkern geven nu een vervolgkaart', 'Voor kerntypen gaat vervolg nu direct naar Expert', 'Vervolgknoppen tonen nu het juiste doelniveau'] },
   { version: '2.2.12', date: '1 apr 2026', changes: ['Expert unlock telt nu alleen correcte determinaties op gevorderd niveau mee', 'Docentpromotie naar expert blijft mogelijk', 'Voortgangsweergave en unlocklogica zijn gelijkgetrokken'] },
   { version: '2.2.11', date: '1 apr 2026', changes: ['Verborgen niveau- en vervolglogica opgeschoond', 'Expertfase staat nu overal als actief', 'Unlock-uitleg verduidelijkt: reguliere doorgroei vereist correcte determinaties én docentvalidaties'] },

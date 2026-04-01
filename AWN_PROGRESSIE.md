@@ -25,14 +25,23 @@ Huidige testfase:
 - Fase 5 is actief.
 - Fase 6 is actief.
 - Testbare beginner-uitkomsten met vervolgknop:
+  - `kern-levallois`
+  - `kern-diskusvormig`
+  - `kern-kling`
+  - `kern-afslag`
   - `afslag-onbewerkt`
   - `kling-onbewerkt`
   - `geretoucheerde-kling`
+  - `geretoucheerde-afslag`
   - `rugmes`
   - `klingschrabber`
   - `schrabber`
   - `spits`
   - `vuistbijl`
+  - `chopper-of-chopping-tool`
+  - `kernwerktuig-grof`
+  - `boor-of-priem`
+  - `kernwerktuig-klein`
   - `geslepen-vuurstenen-bijl`
   - `geslepen-vuurstenen-artefact`
   - `doorboord-artefact`
@@ -117,6 +126,7 @@ Fase 6 focus:
 - `expert` gebruikt nu een runtimeversie van de volledige AWN-bronboom uit `beslisboom.json`
 - de expert-engine springt vanuit grote bronlabels door naar de juiste AWN-secties
 - bronvragen met lege parsertekst zijn handmatig aangevuld waar nodig
+- beginner-uitkomsten zonder eigen gevorderd-subboom maar mét inhoudelijke verdieping lopen voorlopig via een vervolgkaart direct door naar `expert`
 
 Handmatige test voor fase 6:
 - start een nieuwe determinatie op niveau `expert`
