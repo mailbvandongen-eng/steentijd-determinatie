@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.21',
+    title: 'Bronbeleid en controleerbaar vraagpad',
+    items: [
+      'Bronbeleid voor algoritme, handleiding, hints, AI-toets en beeldmateriaal is vastgelegd',
+      'Resultaatscherm toont nu het doorlopen beslispad met vragen en antwoorden',
+      'Hints zijn niet langer beperkt tot drie en AI-validatie heet nu eerlijker AI-beeldtoets',
+    ],
+  },
+  {
     version: '2.2.20',
     title: 'Expert eindronde afgerond',
     items: [

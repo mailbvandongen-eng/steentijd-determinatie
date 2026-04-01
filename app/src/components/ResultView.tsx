@@ -86,6 +86,7 @@ export function ResultView({
   });
   const [isValidating, setIsValidating] = useState(false);
   const [showValidation, setShowValidation] = useState(true);
+  const [showSteps, setShowSteps] = useState(false);
 
   // Initialiseer localImages: gebruik images array, of maak er een van de enkele thumbnail
   const [localImages, setLocalImages] = useState<LabeledImage[]>(() => {
@@ -384,8 +385,8 @@ export function ResultView({
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                   <div>
-                    <p className="text-sm font-medium text-blue-700">AI controleert je antwoord...</p>
-                    <p className="text-xs text-blue-600">Vergelijkt met het algoritme</p>
+                    <p className="text-sm font-medium text-blue-700">AI voert een beeldtoets uit...</p>
+                    <p className="text-xs text-blue-600">Ondersteunende controle op zichtbare kenmerken</p>
                   </div>
                 </div>
               </div>
@@ -415,7 +416,7 @@ export function ResultView({
                         validation.verdict === 'onjuist' ? 'text-red-700' :
                         'text-amber-700'
                       }`}>
-                        AI Validatie: {
+                        AI Beeldtoets: {
                           validation.verdict === 'correct' ? 'Correct!' :
                           validation.verdict === 'onjuist' ? 'Niet helemaal' :
                           'Twijfelachtig'
@@ -517,6 +518,50 @@ export function ResultView({
               </div>
             )}
           </div>
+
+          {session.steps && session.steps.length > 0 && (
+            <div className="card mt-4">
+              <button
+                onClick={() => setShowSteps(!showSteps)}
+                className="w-full flex items-center justify-between text-left"
+              >
+                <div>
+                  <p className="text-sm font-semibold text-stone-900">Doorlopen stappen</p>
+                  <p className="text-xs text-stone-500">
+                    {session.steps.length} vragen • controleerbaar beslispad
+                  </p>
+                </div>
+                <ChevronDown className={`w-4 h-4 text-stone-500 transition-transform ${showSteps ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showSteps && (
+                <div className="mt-4 space-y-3">
+                  {session.steps.map((step, index) => (
+                    <div key={`${step.questionId}-${step.timestamp}-${index}`} className="rounded-xl border border-stone-200 bg-stone-50 p-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-xs font-medium text-stone-500">Stap {index + 1} • Vraag {step.questionId}</p>
+                        <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                          step.answer === 'ja'
+                            ? 'bg-green-100 text-green-700'
+                            : step.answer === 'nee'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-amber-100 text-amber-700'
+                        }`}>
+                          {step.answer}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm font-medium text-stone-900">{step.questionText}</p>
+                      {step.referenceImages.length > 0 && (
+                        <p className="mt-2 text-xs text-stone-500">
+                          Referentiebeelden: {step.referenceImages.join(', ')}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {continuationOption && onContinueAtLevel && (
             <div className="card mt-3 border border-amber-200 bg-amber-50">
