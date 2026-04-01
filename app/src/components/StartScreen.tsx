@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.54',
+    title: 'Vroege dolkvraagteksten bronvaster gemaakt',
+    items: [
+      'Een eerste batch vroege vraagteksten in de dolkroute gebruikt nu weer de letterlijke formulering uit het algoritmedocument',
+      'De bronaudit daalt daardoor verder naar 428 issues en 251 vraagtekst-mismatches',
+      'Ook de parserfoutcategorie daalt mee naar 357, terwijl de routekoppen gelijk blijven op 66',
+    ],
+  },
+  {
     version: '2.2.53',
     title: 'Vroege bifaciale routekoppen verder opgeschoond',
     items: [

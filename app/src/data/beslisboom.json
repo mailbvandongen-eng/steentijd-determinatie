@@ -715,22 +715,22 @@
     "nee": "terug-artefactgroepen-start"
   },
   "150": {
-    "vraag": "Is het bladvormige artefact op beide vlakken volledig bifaciaal bewerkt en heeft het twee puntige uiteinden?",
+    "vraag": "Is het bladvormige artefact op beide vlakken (bifaciaal) volledig bewerkt en heeft het twee puntige uiteinden?",
     "ja": "spits--blad--mauern",
     "nee": "terug-artefactgroepen-start"
   },
   "151": {
-    "vraag": "Heeft de bladspits een minder regelmatige vorm, vaak ovaal langwerpig of gedrongen, soms hartvormig?",
+    "vraag": "Heeft de b ladspits met een minder regelmatige vorm , vaak ovaal langwerpig of gedrongen, soms hartvormig?",
     "ja": "spits--blad--szeletienne",
     "nee": "spits--blad"
   },
   "154": {
-    "vraag": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?",
+    "vraag": "Heeft het fijn bewerkte kernwerktuig een symmetrisch e dolk vorm?",
     "ja": "symmetrische-dolkvorm",
     "nee": "asymmetrische-dolkvorm"
   },
   "155": {
-    "vraag": "Is de dolk gemaakt van een kling en aan een oppervlak bewerkt?",
+    "vraag": "Is de dolk gemaakt van een kling en aan één oppervlak bewerkt?",
     "ja": "een-oppervlak-bewerkt",
     "nee": "aan-beide-oppervlakken"
   },
@@ -770,17 +770,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "163": {
-    "vraag": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakteretouche?",
+    "vraag": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakte retouche?",
     "ja": "dolk--scandinavisch--type-ic",
     "nee": "terug-artefactgroepen-start"
   },
   "164": {
-    "vraag": "Heeft de dolk een iets meer uitgeretoucheerd, ingesnoerd handvat?",
+    "vraag": "Heeft de dolk een iets meer uitgeretoucheerd , ingesnoerd handvat?",
     "ja": "dolk--scandinavisch--type-id",
     "nee": "terug-artefactgroepen-start"
   },
   "165": {
-    "vraag": "Heeft de dolk een lancetvormig blad en is de doorsnede van het handvat lensvormig tot ovaal en minstens 2 mm dikker dan het blad?",
+    "vraag": "Heeft de dolk een lancetvormig blad en is doorsnede handvat lensvormig tot ovaal en min 2 mm dikker dan het blad?",
     "ja": "dolk--scandinavisch--type-ii",
     "nee": "terug-artefactgroepen-start"
   },
@@ -790,17 +790,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "168": {
-    "vraag": "Heeft de dolk een smal handvat met parallelle zijden, rombisch tot rechthoekig in doorsnede?",
+    "vraag": "Heeft de dolk een smal handvat met parallelle zijden rombisch tot rechthoekig in doorsnede?",
     "ja": "dolk--scandinavisch--type-iii",
     "nee": "terug-artefactgroepen-start"
   },
   "169": {
-    "vraag": "Is het handvat even dik als breed, met vierkante doorsnede en zonder pseudo-gietnaad?",
+    "vraag": "Is het h andvat even dik al s breed met vierkante doorsnede zonder pseudo gietnaad?",
     "ja": "dolk--scandinavisch--type-iiia",
     "nee": "terug-artefactgroepen-start"
   },
   "170": {
-    "vraag": "Is het handvat even dik als breed, met vierkante doorsnede en aan vier zijden voorzien van met drukretouche aangebrachte pseudo-gietnaad?",
+    "vraag": "Is het handvat even dik als breed met vierkante doorsnede met aan 4 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
     "ja": "dolk--scandinavisch--type-iiib",
     "nee": "terug-artefactgroepen-start"
   },

@@ -2,9 +2,9 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 438,
+    "issue_count": 428,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 261,
+    "question_text_mismatch": 251,
     "suspicious_label_count": 177,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
@@ -161,30 +161,6 @@
       "json_question": "Is het artefact bifaciaal bewerkt, bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?"
     },
     {
-      "question_id": "150",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het bladvormige artefact op beide vlakken (bifaciaal) volledig bewerkt en heeft het twee puntige uiteinden?",
-      "json_question": "Is het bladvormige artefact op beide vlakken volledig bifaciaal bewerkt en heeft het twee puntige uiteinden?"
-    },
-    {
-      "question_id": "151",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de b ladspits met een minder regelmatige vorm , vaak ovaal langwerpig of gedrongen, soms hartvormig?",
-      "json_question": "Heeft de bladspits een minder regelmatige vorm, vaak ovaal langwerpig of gedrongen, soms hartvormig?"
-    },
-    {
-      "question_id": "154",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het fijn bewerkte kernwerktuig een symmetrisch e dolk vorm?",
-      "json_question": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?"
-    },
-    {
-      "question_id": "155",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de dolk gemaakt van een kling en aan één oppervlak bewerkt?",
-      "json_question": "Is de dolk gemaakt van een kling en aan een oppervlak bewerkt?"
-    },
-    {
       "question_id": "155",
       "issue": "suspicious_ja_label",
       "label": "een-oppervlak-bewerkt",
@@ -216,33 +192,15 @@
     },
     {
       "question_id": "163",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakte retouche?",
-      "json_question": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakteretouche?"
-    },
-    {
-      "question_id": "163",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-ic",
       "text_answer": "dolk -scandinavisch -type-IC"
     },
     {
       "question_id": "164",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de dolk een iets meer uitgeretoucheerd , ingesnoerd handvat?",
-      "json_question": "Heeft de dolk een iets meer uitgeretoucheerd, ingesnoerd handvat?"
-    },
-    {
-      "question_id": "164",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-id",
       "text_answer": "dolk -scandinavisch -type-ID"
-    },
-    {
-      "question_id": "165",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de dolk een lancetvormig blad en is doorsnede handvat lensvormig tot ovaal en min 2 mm dikker dan het blad?",
-      "json_question": "Heeft de dolk een lancetvormig blad en is de doorsnede van het handvat lensvormig tot ovaal en minstens 2 mm dikker dan het blad?"
     },
     {
       "question_id": "165",
@@ -258,33 +216,15 @@
     },
     {
       "question_id": "168",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de dolk een smal handvat met parallelle zijden rombisch tot rechthoekig in doorsnede?",
-      "json_question": "Heeft de dolk een smal handvat met parallelle zijden, rombisch tot rechthoekig in doorsnede?"
-    },
-    {
-      "question_id": "168",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iii",
       "text_answer": "dolk -scandinavisch -type-III"
     },
     {
       "question_id": "169",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het h andvat even dik al s breed met vierkante doorsnede zonder pseudo gietnaad?",
-      "json_question": "Is het handvat even dik als breed, met vierkante doorsnede en zonder pseudo-gietnaad?"
-    },
-    {
-      "question_id": "169",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iiia",
       "text_answer": "dolk -scandinavisch -type-IIIA"
-    },
-    {
-      "question_id": "170",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het handvat even dik als breed met vierkante doorsnede met aan 4 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
-      "json_question": "Is het handvat even dik als breed, met vierkante doorsnede en aan vier zijden voorzien van met drukretouche aangebrachte pseudo-gietnaad?"
     },
     {
       "question_id": "170",

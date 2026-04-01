@@ -5,9 +5,9 @@ Let op: dit is een brede heuristische eerste audit. Niet elk gemarkeerd label is
 Samenvatting:
 - Vragen uit `algoritme.txt`: 512
 - Vragen uit `beslisboom.json`: 512
-- Totaal gevonden heuristische issues: 438
+- Totaal gevonden heuristische issues: 428
 - Lege vragen in JSON: 0
-- Vraagtekst-mismatches: 261
+- Vraagtekst-mismatches: 251
 - Verdachte antwoordlabels: 177
 - Ontbrekend in JSON: 0
 - Ontbrekend in txt-parse: 0
@@ -38,10 +38,10 @@ Eerste 30 issues:
 - `..147` `question_text_mismatch`
 - `..148` `question_text_mismatch`
 - `..149` `question_text_mismatch`
-- `..150` `question_text_mismatch`
-- `..151` `question_text_mismatch`
-- `..154` `question_text_mismatch`
-- `..155` `question_text_mismatch`
 - `..155` `suspicious_ja_label` -> `een-oppervlak-bewerkt`
+- `..157` `suspicious_nee_label` -> `onregelmatig-dolk--kling--met-volledige--`
+- `..160` `suspicious_ja_label` -> `dolk--scandinavisch--type-i`
+- `..161` `suspicious_ja_label` -> `dolk--scandinavisch--type-ia`
+- `..162` `suspicious_ja_label` -> `dolk--scandinavisch--type-ib`
 
 Volledige machine-readable audit: `audit/algoritme_beslisboom_audit.json`

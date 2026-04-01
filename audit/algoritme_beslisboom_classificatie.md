@@ -3,7 +3,7 @@
 Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
-- parser_error: 367
+- parser_error: 357
 - route_label: 66
 - likely_valid_type: 5
 
@@ -26,8 +26,8 @@ Voorbeelden parser_error:
 - `..147` `question_text_mismatch`
 - `..148` `question_text_mismatch`
 - `..149` `question_text_mismatch`
-- `..150` `question_text_mismatch`
-- `..151` `question_text_mismatch`
+- `..157` `suspicious_nee_label` -> `onregelmatig-dolk--kling--met-volledige--`
+- `..160` `suspicious_ja_label` -> `dolk--scandinavisch--type-i`
 
 Voorbeelden route_label:
 - `..4` `suspicious_nee_label` -> `het-is-een-geslepen--stenen--artefact`
