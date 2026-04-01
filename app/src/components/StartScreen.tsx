@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.46',
+    title: 'Schaaftypen en stekervarianten benoemd',
+    items: [
+      'Een nieuwe batch schaaftypen en stekervarianten toont nu nette namen in Expert, waaronder Quina, demi-Quina, beksteker en Noailles-steker',
+      'Ook vroege categorie-uitkomsten zoals artefact met afslagnegatieven hebben nu een leesbare schermnaam',
+      'Daardoor neemt het aantal ruwe eindlabels in de expertboom opnieuw verder af',
+    ],
+  },
+  {
     version: '2.2.45',
     title: 'Resterende spits- en kernuitkomsten benoemd',
     items: [
