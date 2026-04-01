@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.47',
+    title: 'Laatste expert-restlabels opgeschoond',
+    items: [
+      'De laatste zichtbare restlabels in Expert hebben nu leesbare namen, ook voor generieke categorieën, vroege kernlabels en opmerkingstypen',
+      'Daaronder vallen onder meer bijl, beitel, kern, artefact met één of twee afslagnegatieven, segmentvormige restgroepen en diverse vermeld- of twijfeluitkomsten',
+      'Deze ronde is bedoeld als afrondende opschoning van zichtbare expert-uitkomsten in plaats van nieuwe route- of boomlogica',
+    ],
+  },
+  {
     version: '2.2.46',
     title: 'Schaaftypen en stekervarianten benoemd',
     items: [
