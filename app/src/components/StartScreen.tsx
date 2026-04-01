@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.19',
+    title: 'Expert voor bifaciaal en doorboord aangescherpt',
+    items: [
+      'Bifaciale routekoppen zoals vuistbijl-, bladvorm- en kernwerktuiglabels springen nu door naar hun echte expertvragen',
+      'Geslepen bijlen, beitels en hamerbijlen lopen minder vaak vast op technische tussencategorieen',
+      'Resterende expertuitkomsten in deze secties tonen nu vaker leesbare AWN-namen',
+    ],
+  },
+  {
     version: '2.2.18',
     title: 'Expert eindlabels opgeschoond',
     items: [

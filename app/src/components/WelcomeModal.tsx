@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.19', date: '1 apr 2026', changes: ['Bifaciale routekoppen springen nu door naar hun echte expertvragen', 'Geslepen bijlen, beitels en hamerbijlen lopen minder vaak vast op technische tussencategorieen', 'Meer expertuitkomsten in deze secties tonen nu leesbare AWN-namen'] },
   { version: '2.2.18', date: '1 apr 2026', changes: ['Resterende boor- en combinatiesprongen in de afslag/kling-sectie lopen nu door', 'Technische expertlabels voor stekers en boren tonen nu leesbare namen'] },
   { version: '2.2.17', date: '1 apr 2026', changes: ['Bekapt, combinatie en afgeknot springen nu door naar hun echte expert-subboom', 'Restgroepen binnen de afslag/kling-sectie lopen contextafhankelijk door'] },
   { version: '2.2.16', date: '1 apr 2026', changes: ['Kapotte expert-sprongen voor gat, cortex en geslepen artefacten zijn gerepareerd', 'Losse parserlabels zoals \"nee\" lopen nu door naar de volgende AWN-vraag'] },

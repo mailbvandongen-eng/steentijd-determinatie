@@ -147,6 +147,42 @@ function getExpertContextualJump(
   questionId: string,
   target: string
 ): string | undefined {
+  if (target === 'breedte--29-cm-een-beitel' && questionId === '602') {
+    return '640';
+  }
+
+  if (target === 'een-bijl-dissel' && questionId === '603') {
+    return '623';
+  }
+
+  if (target === 'gemaakt-van-een-andere-steensoort-dan-vuursteen' && questionId === '604') {
+    return '660';
+  }
+
+  if (target === 'de-bijl-is-relatief-dik' && questionId === '618') {
+    return '620';
+  }
+
+  if (target === 'breedte--29-cm' && questionId === '620') {
+    return '640';
+  }
+
+  if (target === 'vuursteenbijl-met-rechthoekige-dwarsdoorsnede' && questionId === '621') {
+    return '622';
+  }
+
+  if (target === 'normale-sned-e' && questionId === '621') {
+    return '623';
+  }
+
+  if (target === 'dunbladig' && questionId === '633') {
+    return '637';
+  }
+
+  if (target === 'bijl-dissel' && questionId === '661') {
+    return '683';
+  }
+
   if (target === 'nee-overige-groepen-afslagklingwerktuigen') {
     if (questionId === '202') return '230';
     if (questionId === '230') return '240';
@@ -164,6 +200,120 @@ function getExpertContextualJump(
 
   if (target === 'nee-meerdere--boor--dubbel-of-boor--meervoudig' || target === 'meerdere--boor--dubbel-of-boor--meervoudig') {
     if (questionId === '232') return '233';
+  }
+
+  if (target === 'kern-gemodificeerd-of-brok-gemodificeerd' && questionId === '105') {
+    return '106';
+  }
+
+  if (target === 'de-kern-of-brok-is-voorzien-van-een-werkkant-punt' && questionId === '105') {
+    return '113';
+  }
+
+  if (
+    (target === 'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' ||
+      target === 'nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' ||
+      target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' ||
+      target === 'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig') &&
+    (questionId === '125' || questionId === '126')
+  ) {
+    return '126';
+  }
+
+  if (target === 'het-is-een-vuistbijl-of-bladvorm' && questionId === '130') {
+    return '131';
+  }
+
+  if (target === 'het-artefact-heeft-een-blad-vorm' && questionId === '131') {
+    return '149';
+  }
+
+  if (target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl' && questionId === '131') {
+    return '132';
+  }
+
+  if ((target === 'nee-heel-klein--6-cm-of-heel-dun' || target === 'heel-klein--6-cm-of-heel-dun') && questionId === '136') {
+    return '146';
+  }
+
+  if ((target === 'nee-het-artefact-is-asymmetrisch' || target === 'het-artefact-is-asymmetrisch') && questionId === '154') {
+    return '155';
+  }
+
+  if ((target === 'nee-aan-beide-oppervlakken' || target === 'aan-beide-oppervlakken') && questionId === '155') {
+    return '156';
+  }
+
+  if (target === 'relatief-grof-aan-beide-zijden' && questionId === '158') {
+    return '159';
+  }
+
+  if (target === 'dolk-engels' && questionId === '159') {
+    return '189';
+  }
+
+  if (target === 'dichter-bij-de-basis-dolk--oost-europ-ees' && questionId === '159') {
+    return '193';
+  }
+
+  if (target === 'dolk--scandinavisch' && questionId === '158') {
+    return '160';
+  }
+
+  if (target === 'niet-gefacetteerd' && questionId === '712') {
+    return '716';
+  }
+
+  if (target === 'type-h-en-g' && questionId === '718') {
+    return '719';
+  }
+
+  if (target === 'weinig-verdikking-bij-het-verdiept-liggende-gat' && questionId === '719') {
+    return '720';
+  }
+
+  if (target === 'type-k-en-l' && questionId === '720') {
+    return '721';
+  }
+
+  if (target === 'type-a--ba' && questionId === '722') {
+    return '723';
+  }
+
+  if (target === 'een-vierzijdige-dwarsdoorsnede' && questionId === '722') {
+    return '726';
+  }
+
+  if (
+    (target === 'nee-een-licht-convexe-tot-vlakke-bovenzijde-vlakke' ||
+      target === 'een-licht-convexe-tot-vlakke-bovenzijde-vlakke') &&
+    questionId === '727'
+  ) {
+    return '728';
+  }
+
+  if (target === 'type-c-en-ca' && questionId === '729') {
+    return '730';
+  }
+
+  if (target === 'een-ronde-dwarsdoorsnede-van-de-nek' && questionId === '730') {
+    return '731';
+  }
+
+  if (target === 'type-zuidvelde-en-emmen' && questionId === '731') {
+    return '732';
+  }
+
+  if (target === 'vlakke-bovenzijde-en-sterk-concave-onderzijde' && questionId === '731') {
+    return '733';
+  }
+
+  if (target === 'met-scherpe-verdikking' && questionId === '733') {
+    return '734';
+  }
+
+  if (target === 'symmetrisch--geen-uitgewaaierde-snede' && questionId === '734') {
+    return '735';
   }
 
   return undefined;
@@ -1951,6 +2101,48 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--naaldvormig': 'Naaldvormige spits',
   'spits--sauveterre': 'Sauveterre-spits',
   'spits--tweezijdig-steil-geretoucheerd': 'Tweezijdig steil geretoucheerde spits',
+  'nee-grof-bewerkt': 'Fijn oppervlaktegeretoucheerd bifaciaal werktuig',
+  'grof-bewerkt': 'Grof oppervlaktegeretoucheerd bifaciaal werktuig',
+  chopper: 'Chopper',
+  'een-chopper--rondom--bekapt': 'Rondom bekapte chopper',
+  'naar-twee-zijden-een-choppingtool': 'Chopping tool',
+  'choppingtool--met-geïsoleerde--bekapte--punt': 'Chopping tool met geisoleerde bekapte punt',
+  'geen-punt-choppingtool': 'Chopping tool zonder punt',
+  'choppingtool--épanellé': 'Epanelle chopping tool',
+  choppingtool: 'Chopping tool',
+  'met-één-of-twee-dmv-steile-retouche': 'Bifaciaal werktuig met een of twee steil geretoucheerde zijden',
+  'pic-of-hak': 'Pic of hak',
+  'bijl-kern': 'Kernbijl',
+  'bijl-kern--puntig': 'Puntige kernbijl',
+  'beitel--kern': 'Kernbeitel',
+  vuistwig: 'Vuistwig',
+  'een-asymmetrische-driehoekige-dwarsdoorsnede': 'Asymmetrische driehoekige dwarsdoorsnede',
+  'met-vlakke-retouche-bekapping-keilmesser': 'Keilmesser met vlakke retouche of bekapping',
+  'met-getrapte-schubvormige-retouche': 'Keilmesser met getrapte schubvormige retouche',
+  'keilmesser--köningsaue': 'Koeningsaue-keilmesser',
+  'keilmesser--lichtenberger': 'Lichtenberg-keilmesser',
+  'keilmesser--balver': 'Balver-keilmesser',
+  'met-een-dikke-rug': 'Keilmesser met dikke rug',
+  'keilmesser--buhlener': 'Buhlen-keilmesser',
+  'keilmesser--bockstein': 'Bockstein-keilmesser',
+  'de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--': 'Rechtlijnige keilmesser',
+  'meer-afgeronde-rug-messer--pradnik': 'Pradnik-messer',
+  'bijl-tranchet': 'Bijl met tranchet-snede',
+  'breed-te29-cm--halffabricaat--bijl': 'Halffabricaat van een bijl breder dan 2,9 cm',
+  'meer-een-beitel-vorm--breedte29-cm': 'Beitelvormig artefact smaller dan 2,9 cm',
+  'halffabricaat--beitel': 'Halffabricaat van een beitel',
+  'een-proto--vuistbijl': 'Proto-vuistbijl',
+  'spits--blad': 'Bladspits',
+  'spits--blad--mauern': 'Mauern-bladspits',
+  'spits--blad--szeletienne': 'Szeletien-bladspits',
+  'half-steile-randretouche-aan-beide-zijden': 'Dolk met half-steile randretouche aan beide zijden',
+  'franse-dolk': 'Franse dolk',
+  'onregelmatig-dolk--kling--met-volledige--': 'Onregelmatige klingdolk met volledige retouche',
+  'relatief-grof-aan-beide-zijden': 'Relatief grof aan beide zijden bewerkte dolk',
+  'dolk-engels': 'Engelse dolk',
+  'dichter-bij-de-basis-dolk--oost-europ-ees': 'Oost-Europese dolk',
+  'een-sikkel': 'Sikkel',
+  'kernwerktuig--fijn-bewerkt': 'Fijn bewerkt kernwerktuig',
   uniface: 'Uniface',
   'vuistbijl--lancetvormig': 'Lancetvormige vuistbijl',
   'vuistbijl--ficron': 'Ficron',
@@ -1992,6 +2184,12 @@ const DISPLAY_NAMES: Record<string, string> = {
   'bijl-met-holle--snede': 'Vuurstenen bijl met holle snede',
   'bijl-met-holle--snede--en-gebogen--onder--en-bovenzijde': 'Vuurstenen bijl met holle snede en gebogen onder- en bovenzijde',
   'bijl-met-holle--snede--en-parallelle--onder--en-bovenzijde': 'Vuurstenen bijl met holle snede en parallelle onder- en bovenzijde',
+  'bijl-vuursteen': 'Vuurstenen bijl',
+  'bijl-met-ovale--dwarsdoorsnede--en-smalle--top': 'Stenen bijl met ovale dwarsdoorsnede en smalle top',
+  'bijl-met-ronde--dwarsdoorsnede': 'Stenen bijl met ronde dwarsdoorsnede',
+  'bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--top': 'Stenen bijl met ronde dwarsdoorsnede en dunne smalle top',
+  'bijl-met-ronde--dwarsdoorsnede--en-stompe--top': 'Stenen bijl met ronde dwarsdoorsnede en stompe top',
+  'bijl-kleischalie': 'Geslepen bijl van kleischalie',
   'bijl-met-rechthoekige--dwarsdoorsnede--duntoppig': 'Duntoppige vuurstenen bijl met rechthoekige dwarsdoorsnede',
   'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--scherpe--top': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top',
   'bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--vlakke--top': 'Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top',
@@ -2026,6 +2224,26 @@ const DISPLAY_NAMES: Record<string, string> = {
   'bijl-hamer--gefacetteerd--type-2a': 'Gefacetteerde hamerbijl type 2a',
   'bijl-hamer--gefacetteerd--type-2b': 'Gefacetteerde hamerbijl type 2b',
   'bijl-hamer--knop': 'Knop-hamerbijl',
+  'een-afgeronde-verdikking-bijl-hamer--type-p1': 'Hamerbijl type P1',
+  'type-h-en-g': 'Hamerbijl type H of G',
+  'type-k-en-l': 'Hamerbijl type K of L',
+  'type-a--ba': 'Hamerbijl type A of Ba',
+  'type-c-en-ca': 'Hamerbijl type C of Ca',
+  'bijl-hamer--type-g': 'Hamerbijl type G',
+  'bijl-hamer--type-k': 'Hamerbijl type K',
+  'bijl-hamer--type-l': 'Hamerbijl type L',
+  'bijl-hamer--type-ba': 'Hamerbijl type Ba',
+  'bijl-hamer--type-b': 'Hamerbijl type B',
+  'bijl-hamer--type-i': 'Hamerbijl type I',
+  'bijl-hamer--type-r': 'Hamerbijl type R',
+  'bijl-hamer--type-c': 'Hamerbijl type C',
+  'bijl-hamer--type-d': 'Hamerbijl type D',
+  'bijl-hamer--type-f': 'Hamerbijl type F',
+  'bijl-hamer--type-muntendam': 'Hamerbijl type Muntendam',
+  'met-rand-bijl-hamer--type-zuidvelde': 'Hamerbijl type Zuidvelde',
+  'zonder-rand-bijl-hamer--type-emmen': 'Hamerbijl type Emmen',
+  'geen-versmalde-nek-wel-verdikking-rond-het-gat': 'Hamerbijl met verdikking rond het gat en zonder versmalde nek',
+  'wigvormig-zonder-verdikking': 'Wigvormige hamerbijl zonder verdikking',
 };
 
 function processExpertAnswer(
@@ -2086,7 +2304,7 @@ function processExpertAnswer(
   }
 
   const genericLabel = slugTokens(target).some((token) =>
-    ['artefact', 'kern', 'werktuig', 'afslag', 'kling', 'bijl', 'spits', 'schrabber', 'dolk'].includes(token)
+    ['artefact', 'kern', 'werktuig', 'afslag', 'kling', 'bijl', 'beitel', 'spits', 'schrabber', 'dolk'].includes(token)
   );
   if (genericLabel && nextQuestionId) {
     return { isEnd: false, nextQuestion: nextQuestionId };
