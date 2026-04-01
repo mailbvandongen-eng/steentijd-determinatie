@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.44',
+    title: 'Generieke expertcategorieën benoemd',
+    items: [
+      'Vroege en tussengelegen expertcategorieën zoals bekapt, afgeknot artefact, afslag- of klingwerktuig en geslepen artefact tonen nu nette namen',
+      'Ook meerdere bifaciale en kernwerktuig-koppen hebben nu een leesbare schermnaam in plaats van een technische route- of parserlabel',
+      'Daardoor blijven in Expert minder kale categoriecodes over als einduitkomst zichtbaar',
+    ],
+  },
+  {
     version: '2.2.43',
     title: 'Geslepen bijlen en hamerbijlen leesbaarder',
     items: [
