@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.40',
+    title: 'Meer expert-uitkomsten leesbaar gemaakt',
+    items: [
+      'Een extra batch geldige expertuitkomsten toont nu nette namen in plaats van ruwe AWN- of parserlabels',
+      'Daaronder vallen onder meer Tayac-, Quinson-, Soyons-, Emireh- en Mousterien-spitsen, Havelter-steelspits, Zonhoven-spits en Pseudo-Grand-Pressigny-dolk',
+      'Ook verschillende schrabbervarianten en restlabels zoals plaatselijk geretoucheerde artefacten zijn nu leesbaarder in de UI',
+    ],
+  },
+  {
     version: '2.2.39',
     title: 'Oppervlakteretouche-route bronvaster gemaakt',
     items: [
