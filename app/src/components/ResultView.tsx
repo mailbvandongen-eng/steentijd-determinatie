@@ -792,7 +792,7 @@ export function ResultView({
                   />
                 </div>
                 <div className="flex justify-between text-xs text-purple-700">
-                  <span>{profile.totalCorrect}/30 correct</span>
+                  <span>{profile.stats.gevorderd.correct}/30 correct op gevorderd</span>
                   <span>{profile.docentValidations}/10 validaties</span>
                 </div>
               </>

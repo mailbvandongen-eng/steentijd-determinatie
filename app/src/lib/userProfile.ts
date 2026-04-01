@@ -114,7 +114,7 @@ export function canUnlockExpert(profile: UserProfile): boolean {
   if (!profile.unlockedLevels.includes('gevorderd')) return false;
   const criteria = UNLOCK_CRITERIA.expert;
   return (
-    profile.totalCorrect >= criteria.correctDeterminations &&
+    profile.stats.gevorderd.correct >= criteria.correctDeterminations &&
     profile.docentValidations >= criteria.docentValidations
   );
 }
@@ -139,8 +139,9 @@ export function getProgressToExpert(profile: UserProfile): {
   validationsNeeded: number;
 } {
   const criteria = UNLOCK_CRITERIA.expert;
+  const gevorderdCorrect = profile.stats.gevorderd.correct;
 
-  const correctProgress = Math.min(profile.totalCorrect / criteria.correctDeterminations, 1);
+  const correctProgress = Math.min(gevorderdCorrect / criteria.correctDeterminations, 1);
   const validationProgress = Math.min(profile.docentValidations / criteria.docentValidations, 1);
 
   const percentage = Math.round(((correctProgress + validationProgress) / 2) * 100);
@@ -149,7 +150,7 @@ export function getProgressToExpert(profile: UserProfile): {
     percentage,
     correctProgress: Math.round(correctProgress * 100),
     validationProgress: Math.round(validationProgress * 100),
-    correctNeeded: Math.max(0, criteria.correctDeterminations - profile.totalCorrect),
+    correctNeeded: Math.max(0, criteria.correctDeterminations - gevorderdCorrect),
     validationsNeeded: Math.max(0, criteria.docentValidations - profile.docentValidations),
   };
 }

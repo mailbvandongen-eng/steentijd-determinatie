@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.12', date: '1 apr 2026', changes: ['Expert unlock telt nu alleen correcte determinaties op gevorderd niveau mee', 'Docentpromotie naar expert blijft mogelijk', 'Voortgangsweergave en unlocklogica zijn gelijkgetrokken'] },
   { version: '2.2.11', date: '1 apr 2026', changes: ['Verborgen niveau- en vervolglogica opgeschoond', 'Expertfase staat nu overal als actief', 'Unlock-uitleg verduidelijkt: reguliere doorgroei vereist correcte determinaties én docentvalidaties'] },
   { version: '2.2.10', date: '1 apr 2026', changes: ['Wijzigingenbeheer aangevuld met recente AWN-versies', 'Wat is nieuw sluit nu beter aan op de live V2-uitrol'] },
   { version: '2.2.9', date: '1 apr 2026', changes: ['Beginner toont nu het echte resultaat in plaats van "Onbepaald (beginnersniveau bereikt)"', 'Kern- en andere beginneruitkomsten zijn daardoor logischer leesbaar'] },
@@ -202,6 +203,9 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   <li>• Na elke determinatie geeft de AI een beoordeling (correct/twijfelachtig/onjuist). Alleen "correct" telt mee.</li>
                   <li>• Een docent kan je ook direct naar Gevorderd of Expert promoveren.</li>
                 </ul>
+                <p>
+                  <strong>Expert</strong> ontgrendel je normaal via 30 correcte determinaties op <strong>gevorderd niveau</strong> en 10 docent-validaties, of via directe promotie door een docent.
+                </p>
                 <p>
                   <strong>Op Gevorderd niveau</strong> werk je zelfstandiger: geen hints meer, minder directe uitleg en waar relevant een diepere AWN-vervolglaag.
                 </p>

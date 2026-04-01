@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.12',
+    title: 'Expert doorgroei aangescherpt',
+    items: [
+      'Expert unlock telt nu alleen correcte determinaties op gevorderd niveau mee',
+      'Docenten kunnen gebruikers nog steeds direct naar expert promoveren',
+      'Voortgangsteksten en balken tonen nu dezelfde expertregel als de unlocklogica',
+    ],
+  },
+  {
     version: '2.2.11',
     title: 'Niveaulogica opgeschoond',
     items: [
@@ -304,7 +313,7 @@ export function StartScreen({
             <ProgressBar
               correctProgress={progressToExpert.correctProgress}
               validationProgress={progressToExpert.validationProgress}
-              totalCorrect={profile.totalCorrect}
+              totalCorrect={profile.stats.gevorderd.correct}
               totalValidations={profile.docentValidations}
               correctNeeded={progressToExpert.correctNeeded}
               validationsNeeded={progressToExpert.validationsNeeded}
@@ -504,7 +513,7 @@ export function StartScreen({
                       Reguliere doorgroei werkt via beide sporen tegelijk: correcte determinaties én docentvalidaties. Een docent kan een gebruiker daarnaast handmatig promoveren.
                     </p>
                     <p>
-                      Van <strong>Gevorderd</strong> naar <strong>Expert</strong> groeit de gebruiker verder via extra correcte determinaties en extra docentvalidaties.
+                      Van <strong>Gevorderd</strong> naar <strong>Expert</strong> groeit de gebruiker verder via 30 correcte determinaties op <strong>gevorderd niveau</strong> en 10 docentvalidaties.
                     </p>
                     <p>
                       Via <strong>Vrij spelen</strong> kun je beginner, gevorderd en expert direct testen zonder dat dit invloed heeft op de opgeslagen voortgang.
