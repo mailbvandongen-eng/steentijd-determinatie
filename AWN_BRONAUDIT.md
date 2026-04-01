@@ -22,38 +22,32 @@ Eerste geautomatiseerde audit:
 
 Uitkomst huidige audit:
 - 512 vragen uit `algoritme.txt`
-- 511 vragen uit `beslisboom.json`
-- 229 heuristisch gemarkeerde issues
-- 9 lege vragen in JSON
+- 512 vragen uit `beslisboom.json`
+- 534 heuristisch gemarkeerde issues
+- 0 lege vragen in JSON
+- 315 vraagtekst-mismatches
 - 219 verdachte antwoordlabels
-- 1 vraag ontbreekt in `beslisboom.json`
+- 0 ontbrekende vragen in `beslisboom.json`
 
 Belangrijke nuance:
 de eerste audit is expres breed. Niet elk gemarkeerd label is een fout; een deel zijn routekoppen, parserlabels of geldige typen die later nog geclassificeerd moeten worden.
 
-Na eerste bronopschoning:
-- 512 vragen uit `algoritme.txt`
-- 512 vragen uit `beslisboom.json`
-- 224 heuristisch gemarkeerde issues
-- 0 lege vragen in JSON
-- 5 vraagtekst-mismatches
-- 0 ontbrekende vragen in `beslisboom.json`
-
-Wat in deze ronde concreet is verbeterd:
+Wat in de eerste bronopschoningen concreet is verbeterd:
 - de 9 lege vraagteksten zijn bronvast aangevuld uit `algoritme.txt`
 - vraag `801` is toegevoegd als expliciet bronplaceholder
+- de eerste verkorte hoofdvragen in de JSON-boom zijn weer uitgebreid naar bronformuleringen
 
 Tweede auditlaag:
-- `parser_error`: 127
+- `parser_error`: 432
 - `route_label`: 95
 - `likely_valid_type`: 7
 
 Belangrijke nuance bij de tweede auditlaag:
 - de classificatie is bewust conservatief
 - twijfelgevallen vallen voorlopig eerder in `parser_error` dan in `likely_valid_type`
-- de eerstvolgende opschoningsronde moet dus starten bij:
-  - lege vragen in JSON
-  - ontbrekende knooppunten
+- een groot deel van `parser_error` blijkt nu niet leegte maar verkorte of beschadigde vraagtekst in `beslisboom.json`
+- de eerstvolgende opschoningsrondes moeten dus starten bij:
+  - verkorte hoofdvragen en vroege routevragen
   - routekoppen met `nee-`, `het-`, `de-`
   - beschadigde labels met afbrekingen zoals `ste-il`, `z-ijde`, `doorsned-e`
 
@@ -63,7 +57,7 @@ Belangrijkste oorzaken:
 3. De `handleiding` wordt nog niet systematisch als bronlaag gebruikt voor hints, definities en beeldcontrole.
 
 Vastgestelde structurele afwijkingen:
-- Sommige vragen zijn leeg of beschadigd uit de parser gekomen.
+- Veel vragen zijn verkort of beschadigd uit de parser gekomen.
 - Sommige antwoordlabels zijn eigenlijk sprongen of tussenkoppen, geen eindtypes.
 - Sommige labels zijn technisch of parserachtig en moesten in de app handmatig leesbaar worden gemaakt.
 - De expertboom gebruikt daarom extra overrides en jumps om zich bruikbaar te gedragen.
@@ -79,7 +73,7 @@ Voorbeelden van bekende kwetsbare bronpunten:
 Betekenis voor de app:
 - `Beginner` en `Gevorderd` zijn productmatig bruikbaar.
 - `Expert` is inhoudelijk sterk verbeterd, maar nog deels een gerepareerde interpretatie van een onzuivere bronextractie.
-- De volgende kwaliteitsstap moet dus in de bronlaag gebeuren, niet alleen in de UI.
+- De volgende kwaliteitsstap moet dus vooral in de bronlaag gebeuren, niet alleen in de UI.
 
 Benodigde vervolgaudit:
 1. vraag-voor-vraag vergelijking `algoritme.txt -> beslisboom.json`
@@ -93,3 +87,8 @@ Benodigde vervolgaudit:
 
 Doel van de volgende auditfase:
 een bronvaste datastructuur maken die niet meer primair leunt op herstelwerk in de app.
+
+Huidige prioriteit:
+1. vroege hoofdvragen en routevragen in `beslisboom.json` terugbrengen naar de volledige bronformulering
+2. daarna routekoppen en technische antwoordlabels verder opschonen
+3. pas daarna hints, definities en beeldmateriaal systematisch aan `handleiding.txt` koppelen

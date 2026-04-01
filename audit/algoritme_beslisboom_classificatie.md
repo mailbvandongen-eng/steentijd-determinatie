@@ -3,31 +3,31 @@
 Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
-- parser_error: 122
+- parser_error: 432
 - route_label: 95
 - likely_valid_type: 7
 
 Voorbeelden parser_error:
+- `..5` `question_text_mismatch`
 - `..9` `suspicious_ja_label` -> `een-kern--werktuig`
 - `..9a` `suspicious_ja_label` -> `een-brokvorstsplijting--getest`
 - `..10` `question_text_mismatch`
 - `..12` `question_text_mismatch`
+- `..12a` `question_text_mismatch`
 - `..13` `suspicious_ja_label` -> `een-kern--gelegenhei-ds`
+- `..14` `question_text_mismatch`
+- `..15` `question_text_mismatch`
+- `..18` `question_text_mismatch`
+- `..19` `question_text_mismatch`
+- `..21` `question_text_mismatch`
+- `..23` `question_text_mismatch`
+- `..25` `question_text_mismatch`
+- `..26` `question_text_mismatch`
 - `..27` `suspicious_ja_label` -> `een-kern--kielvormig`
 - `..27` `suspicious_nee_label` -> `een-kern--kling`
+- `..28` `question_text_mismatch`
 - `..28a` `suspicious_nee_label` -> `een-kern--lamelle`
-- `..35` `question_text_mismatch`
-- `..45a` `suspicious_nee_label` -> `een-afslag--decorticatie`
-- `..107` `suspicious_ja_label` -> `een-chopper--rondom--bekapt`
-- `..128` `suspicious_nee_label` -> `meer-een-beitel-vorm--breedte29-cm`
-- `..132` `suspicious_ja_label` -> `een-proto--vuistbijl`
-- `..132b` `suspicious_ja_label` -> `een-vuistbijl--kernvormig`
-- `..135a` `suspicious_nee_label` -> `een-flesvorm-vuistbijl--flesvormig`
-- `..157` `suspicious_nee_label` -> `onregelmatig-dolk--kling--met-volledige--`
-- `..160` `suspicious_ja_label` -> `dolk--scandinavisch--type-i`
-- `..161` `suspicious_ja_label` -> `dolk--scandinavisch--type-ia`
-- `..162` `suspicious_ja_label` -> `dolk--scandinavisch--type-ib`
-- `..163` `suspicious_ja_label` -> `dolk--scandinavisch--type-ic`
+- `..31` `question_text_mismatch`
 
 Voorbeelden route_label:
 - `..1` `suspicious_ja_label` -> `een-splinter`

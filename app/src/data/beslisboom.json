@@ -20,12 +20,12 @@
     "nee": "het-is-een-geslepen--stenen--artefact"
   },
   "5": {
-    "vraag": "gepolijst e vlakken ?",
+    "vraag": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijste vlakken?",
     "ja": "geslepen--vuurstenen--artefact",
     "nee": "terug-artefactgroepen-start"
   },
   "6": {
-    "vraag": "een ventrale zijde ?",
+    "vraag": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
     "ja": "het-artefact-heeft-resten-van-een-ventrale-zijde",
     "nee": "het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt"
   },
@@ -60,27 +60,27 @@
     "nee": "een-klein-of-onherkenbaar-slagvlak"
   },
   "12": {
-    "vraag": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde, lijkt op een omgekeerde schildpad)",
+    "vraag": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven- en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde; lijkt op een omgekeerde schildpad)",
     "ja": "nee",
     "nee": "terug-artefactgroepen-start"
   },
   "12a": {
-    "vraag": "afslagnegatieven rondom zowel  aan boven - als onderzijde?",
+    "vraag": "Heeft de kern een discusvorm, ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven- als onderzijde?",
     "ja": "nee",
     "nee": "terug-artefactgroepen-start"
   },
   "13": {
-    "vraag": "afslagnegatieven?",
+    "vraag": "Heeft de kern een paar min of meer toevallige afslagnegatieven?",
     "ja": "een-kern--gelegenhei-ds",
     "nee": "terug-artefactgroepen-start"
   },
   "14": {
-    "vraag": "afslagnegatief?",
+    "vraag": "Heeft de relatief grote tot massieve kern een groot afslagnegatief?",
     "ja": "kern--kombewa",
     "nee": "terug-artefactgroepen-start"
   },
   "15": {
-    "vraag": "gebruikt?",
+    "vraag": "Heeft de kern twee en slechts twee net niet haaks op elkaar staande slagvlakken die beurtelings als afbouwvlak worden gebruikt?",
     "ja": "kern--quina",
     "nee": "terug-artefactgroepen-start"
   },
@@ -90,17 +90,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "17": {
-    "vraag": "twee tegengestelde richtingen?",
+    "vraag": "Heeft de kern versplinterde uiteinden of afslagnegatieven in twee tegengestelde richtingen?",
     "ja": "kern--bipolair",
     "nee": "onbepaalde-kern"
   },
   "18": {
-    "vraag": "afslagnegatieven rondom zowel  aan boven - als onderzijde?",
+    "vraag": "Heeft de kern een discusvorm, ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven- als onderzijde?",
     "ja": "nee",
     "nee": "terug-artefactgroepen-start"
   },
   "19": {
-    "vraag": "sterk bolle zijde?",
+    "vraag": "Heeft de kern een nagenoeg vlakke tot licht bolle zijde en een sterk bolle zijde?",
     "ja": "kern--levallois--ongebruikt",
     "nee": "beide-zijden-licht-bol-een-kern--diskusvormig"
   },
@@ -110,7 +110,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "21": {
-    "vraag": "afslagnegatieven ?",
+    "vraag": "Heeft de Levallois-kern een of meer klingvormige afslagnegatieven?",
     "ja": "kern--levallois--kling",
     "nee": "terug-artefactgroepen-start"
   },

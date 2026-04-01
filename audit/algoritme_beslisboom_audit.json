@@ -2,9 +2,9 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 224,
+    "issue_count": 534,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 5,
+    "question_text_mismatch": 315,
     "suspicious_label_count": 219,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
@@ -21,6 +21,12 @@
       "issue": "suspicious_nee_label",
       "label": "het-is-een-geslepen--stenen--artefact",
       "text_answer": "het is een geslepen -stenen -artefact"
+    },
+    {
+      "question_id": "5",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+      "json_question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijste vlakken?"
     },
     {
       "question_id": "6",
@@ -67,7 +73,7 @@
     {
       "question_id": "10",
       "issue": "question_text_mismatch",
-      "text_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat",
+      "text_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag -negatief)",
       "json_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag-negatief)"
     },
     {
@@ -85,14 +91,20 @@
     {
       "question_id": "12",
       "issue": "question_text_mismatch",
-      "text_question": "Is de kern gemaakt in Levallois -techniek? (Naar het midden",
-      "json_question": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde, lijkt op een omgekeerde schildpad)"
+      "text_question": "Is de kern gemaakt in Levallois -techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak , waarbij de afslagen aan één zijde steiler zijn -de onderzijde - dan die aan de andere zijde, lijkt op een omgekeerde schildpad )",
+      "json_question": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven- en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde; lijkt op een omgekeerde schildpad)"
     },
     {
       "question_id": "12",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
+    },
+    {
+      "question_id": "12a",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern een discusvorm , ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven - als onderzijde?",
+      "json_question": "Heeft de kern een discusvorm, ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven- als onderzijde?"
     },
     {
       "question_id": "12a",
@@ -107,16 +119,64 @@
       "text_answer": "een kern -gelegenhei ds"
     },
     {
+      "question_id": "14",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de relatief grote tot massieve kern één groot afslagnegatief?",
+      "json_question": "Heeft de relatief grote tot massieve kern een groot afslagnegatief?"
+    },
+    {
+      "question_id": "15",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern twee en slechts twee net niet haaks op elkaar staande slagvlakke n die beurtelings als afbouwvlak worden gebruikt?",
+      "json_question": "Heeft de kern twee en slechts twee net niet haaks op elkaar staande slagvlakken die beurtelings als afbouwvlak worden gebruikt?"
+    },
+    {
+      "question_id": "18",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern een discusvorm , ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven - als onderzijde?",
+      "json_question": "Heeft de kern een discusvorm, ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven- als onderzijde?"
+    },
+    {
       "question_id": "18",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
     },
     {
+      "question_id": "19",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern één nagenoeg vlakke tot licht bolle zijde en één sterk bolle zijde?",
+      "json_question": "Heeft de kern een nagenoeg vlakke tot licht bolle zijde en een sterk bolle zijde?"
+    },
+    {
+      "question_id": "21",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Levallois -kern één of meer klingvormige afslagnegatieven?",
+      "json_question": "Heeft de Levallois-kern een of meer klingvormige afslagnegatieven?"
+    },
+    {
+      "question_id": "23",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern naar het midden gerichte afslagnegatieven op het afbouwvlak?",
+      "json_question": "het afbouwvlak?"
+    },
+    {
       "question_id": "24",
       "issue": "suspicious_ja_label",
       "label": "nee-één-slagvlak",
       "text_answer": "Nee één slagvlak"
+    },
+    {
+      "question_id": "25",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslag negatieven?",
+      "json_question": "korte afslag negatieven?"
+    },
+    {
+      "question_id": "26",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kern lange afslagnegatieven overwegend max 10 mm breed?",
+      "json_question": "breed?"
     },
     {
       "question_id": "27",
@@ -131,10 +191,22 @@
       "text_answer": "een kern -kling"
     },
     {
+      "question_id": "28",
+      "issue": "question_text_mismatch",
+      "text_question": "Zijn de (overwegend meer dan 10 mm brede) afslagnegatieven regelmatig?",
+      "json_question": "afslagnegatieven regelmatig?"
+    },
+    {
       "question_id": "28a",
       "issue": "suspicious_nee_label",
       "label": "een-kern--lamelle",
       "text_answer": "een kern -lamelle"
+    },
+    {
+      "question_id": "31",
+      "issue": "question_text_mismatch",
+      "text_question": "De twee slagvlakken liggen tegenover elkaar, z ijn de afslagnegatieven klingvormig?",
+      "json_question": "afslagnegatieven klingvormig?"
     },
     {
       "question_id": "32",
@@ -143,16 +215,34 @@
       "text_answer": "Nee zie vorige determinatie :"
     },
     {
-      "question_id": "35",
+      "question_id": "33",
       "issue": "question_text_mismatch",
-      "text_question": "driehoekige of vierzijdige doorsnede? (Maar is niet de punt",
-      "json_question": "Heeft de knol, brok of kern een geretoucheerde punt met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)"
+      "text_question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+      "json_question": "mogelijk met negatief stekerafslag?"
+    },
+    {
+      "question_id": "34",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de knol, brok of kern een door relatief steile retouche verkregen werkkant, veelal gebogen?",
+      "json_question": "verkregen werkkant, veelal gebogen?"
+    },
+    {
+      "question_id": "37",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+      "json_question": "d.m.v. steile retouche en/of grove kerf bewerkte zijden?"
     },
     {
       "question_id": "40",
       "issue": "suspicious_nee_label",
       "label": "de-afslag-of-kling-is-niet-bewerkt",
       "text_answer": "de afslag of kling is niet bewerkt"
+    },
+    {
+      "question_id": "45a",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag aan één zijde cortex tegenover een scherpe zijde?",
+      "json_question": "zijde?"
     },
     {
       "question_id": "45a",
@@ -167,10 +257,100 @@
       "text_answer": "een afslag -decorticatie"
     },
     {
+      "question_id": "46",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag, veelal relatief groot , dun en vlak , met naar het midden gerichte (centripetale) afslagnegatieven op de dorsale zijde?",
+      "json_question": "zijde?"
+    },
+    {
+      "question_id": "48",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag (nagenoeg) driehoekige met één of meer afslagnegatieven op de dorsale zijde, de slagrichting is gelijk aan de as van het werktuig?",
+      "json_question": "aan de as van het werktuig?"
+    },
+    {
+      "question_id": "50",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de al dan niet geretoucheerde Levallois -spits een bifaciaal vlak geretoucheerde afknotting aan de basis?",
+      "json_question": "bifaciaal vlak geretoucheerde afknotting aan de basis?"
+    },
+    {
+      "question_id": "52",
+      "issue": "question_text_mismatch",
+      "text_question": "Lijkt het artefact op een Levallois -spits maar is de as van het werktuig ongelijk aan de richting waarin het artefact is losgemaakt van de kern?",
+      "json_question": "losgemaakt van de kern?"
+    },
+    {
+      "question_id": "54",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag distale delen van afslagnegatieven op de dorsale zijde haaks op de slagrichting van de afslag?",
+      "json_question": "dorsale zijde haaks op de slagrichting van de afslag?"
+    },
+    {
+      "question_id": "56",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag (een deel van) van het slagvlak van een kern als dorsale zijde en op de rand proximale delen van afslagnegatieven?",
+      "json_question": "afslagnegatieven?"
+    },
+    {
+      "question_id": "58",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag een bifaciaal bewerkt artefact , herkenbaar aan een dorsaal vlak met afslagnegatieven en een slagvlakrest met bifaciale bewerking?",
+      "json_question": "bifaciale bewerking?"
+    },
+    {
+      "question_id": "71a",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kling een driehoekige doorsnede en aan één zijde cortex tegenover een scherpe zijde?",
+      "json_question": "cortex tegenover een scherpe zijde?"
+    },
+    {
+      "question_id": "73",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kling met naar midden gerichte afslagnegatieven op dorsale zijde?",
+      "json_question": "dorsale zijde?"
+    },
+    {
+      "question_id": "75",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kling distale delen van afslagnegatieven op de dorsale zijde haaks op de slagrichting van de afslag?",
+      "json_question": "dorsale zijde haaks op de slagrichting van de afslag?"
+    },
+    {
+      "question_id": "77",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de k ling met regelmatige en parallelle zijden en afslagnegatieven?",
+      "json_question": "afslagnegatieven?"
+    },
+    {
+      "question_id": "83",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kling geen regelmatige en parallelle zijden en afslagnegatieven?",
+      "json_question": "afslagnegatieven?"
+    },
+    {
+      "question_id": "86",
+      "issue": "question_text_mismatch",
+      "text_question": "Bent u zeker dat het artefact bewerkt is door de prehistorische mens?",
+      "json_question": "mens?"
+    },
+    {
       "question_id": "86",
       "issue": "suspicious_ja_label",
       "label": "het-is-een-artefact",
       "text_answer": "het is een artefact"
+    },
+    {
+      "question_id": "92",
+      "issue": "question_text_mismatch",
+      "text_question": "Vertoont het artefact kenmerken die duiden op een recente beschadiging?",
+      "json_question": "beschadiging?"
+    },
+    {
+      "question_id": "101",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact één of twee versplinterde uiteinden? (verbrijzeld)",
+      "json_question": "Heeft het artefact één of twee versplinterde uiteinden?"
     },
     {
       "question_id": "101",
@@ -192,6 +372,12 @@
     },
     {
       "question_id": "104",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het grof bewerkte artefact voor een kl ein deel bewerkt , bekapt?",
+      "json_question": "bekapt?"
+    },
+    {
+      "question_id": "104",
       "issue": "suspicious_ja_label",
       "label": "nee-voor-een-groot-deel-bekapt",
       "text_answer": "Nee voor een groot deel bekapt"
@@ -203,10 +389,28 @@
       "text_answer": "de kern of brok is voorzien van een werkkant /punt"
     },
     {
+      "question_id": "106",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het grof bewerkte artefact voor een (klein ) deel bewerkt met enige grove afslagen naar één zijde (unifaciaal)?",
+      "json_question": "enige grove afslagen naar één zijde (unifaciaal)?"
+    },
+    {
       "question_id": "107",
       "issue": "suspicious_ja_label",
       "label": "een-chopper--rondom--bekapt",
       "text_answer": "een chopper -rondom -bekapt"
+    },
+    {
+      "question_id": "109",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de choppingtool aan één (tamelijk vlakke) zijde rondom bekapt aan de andere (bolle) zijde deels?",
+      "json_question": "bekapt aan de andere (bolle) zijde deels?"
+    },
+    {
+      "question_id": "110",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact min of meer de vorm van een bijl of vuistbijl of bladvorm?",
+      "json_question": "vuistbijl of bladvorm?"
     },
     {
       "question_id": "110",
@@ -222,9 +426,51 @@
     },
     {
       "question_id": "111",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "111",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
+    },
+    {
+      "question_id": "112",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het e en klein artefact met een min of meer driehoekige dwarsdoorsnede, het ene oppervlak is bedekt met retouche , terwijl de beide andere grove afslag -vlakken zijn?",
+      "json_question": "terwijl de beide andere grove afslag -vlakken zijn?"
+    },
+    {
+      "question_id": "113",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het groter e grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een grove punt?",
+      "json_question": "een grove punt?"
+    },
+    {
+      "question_id": "114",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een snede gemaakt door meerdere afslagen?",
+      "json_question": "een snede gemaakt door meerdere afslagen?"
+    },
+    {
+      "question_id": "115",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een puntige ‘snede’ gemaakt door meerdere afslagen?",
+      "json_question": "een puntige ‘snede’ gemaakt door meerdere afslagen?"
+    },
+    {
+      "question_id": "116",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het grotere grof bewerkte artefact met nagenoeg vierkante doorsnede en een snede gemaakt door meerdere afslagen?",
+      "json_question": "afslagen?"
+    },
+    {
+      "question_id": "117",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het grotere grof bewerkte artefact een enigszins platte dwarsdoorsnede en een brede snede?",
+      "json_question": "dwarsdoorsnede en een brede snede?"
     },
     {
       "question_id": "117",
@@ -233,10 +479,52 @@
       "text_answer": "een asymmetrische driehoekige dwarsdoorsnede"
     },
     {
+      "question_id": "118",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het asymmetrische artefact een ( bifaciaal) bewerkte werkkant tegenover een min of meer dikke zijde?",
+      "json_question": "werkkant tegenover een min of meer dikke zijde?"
+    },
+    {
+      "question_id": "119",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact convexe werkkant en een rug alleen op het proximale uiteinde?",
+      "json_question": "proximale uiteinde?"
+    },
+    {
+      "question_id": "120",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een convexe werkkant en een rug die door loopt tot en voorbij beide uiteinden?",
+      "json_question": "loopt tot en voorbij beide uiteinden?"
+    },
+    {
+      "question_id": "121",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een rechte werkkant en is de vorm enigszins driehoekig en heeft het artefact een dunne rug?",
+      "json_question": "driehoekig en heeft het artefact een dunne rug?"
+    },
+    {
+      "question_id": "122",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact nagenoeg driehoekig van vorm met hypotenusa als snijkant maar met dikke rug?",
+      "json_question": "als snijkant maar met dikke rug?"
+    },
+    {
+      "question_id": "123",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een spitse hoek tussen rug en werkkant, de rug loopt door tot de snijkant aan het ‘distale ’uiteinde?",
+      "json_question": "rug loopt door tot de snijkant aan het ‘distale ’uiteinde?"
+    },
+    {
       "question_id": "124",
       "issue": "suspicious_ja_label",
       "label": "de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--",
       "text_answer": "de snede en rug lopen zijn nagenoeg recht keilmesser -"
+    },
+    {
+      "question_id": "125",
+      "issue": "question_text_mismatch",
+      "text_question": "Het artefact is vrijwel volledig bewerkt en is min of meer plat ; heeft het een enigszins afgewerkte werkkant of -punt?",
+      "json_question": "heeft het een enigszins afgewerkte werkkant of -punt?"
     },
     {
       "question_id": "125",
@@ -264,15 +552,39 @@
     },
     {
       "question_id": "128",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact min of meer een bijlvorm maar is niet geslepen en is de snede gemaakt door retouche /bekapping haaks op de snede?",
+      "json_question": "haaks op de snede?"
+    },
+    {
+      "question_id": "128",
       "issue": "suspicious_nee_label",
       "label": "meer-een-beitel-vorm--breedte29-cm",
       "text_answer": "meer een beitel vorm , breedte<2,9 cm"
+    },
+    {
+      "question_id": "129",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een min of meer vierkante dwarsdoorsnede maar is niet geslepen?",
+      "json_question": "maar is niet geslepen?"
+    },
+    {
+      "question_id": "129a",
+      "issue": "question_text_mismatch",
+      "text_question": "Lijkt het artefact op een vuistbijl maar met een snede i.p.v. een punt?",
+      "json_question": "een punt?"
     },
     {
       "question_id": "129a",
       "issue": "suspicious_ja_label",
       "label": "een-vuistwig",
       "text_answer": "een vuistwig"
+    },
+    {
+      "question_id": "130",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact aan slechts één vlakke zijde bewerkt of gemaakt van een afslag?",
+      "json_question": "gemaakt van een afslag?"
     },
     {
       "question_id": "130",
@@ -300,9 +612,33 @@
     },
     {
       "question_id": "132b",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de de vuistbijl grof bewerkt en heeft het het uiterlijk van een kern?",
+      "json_question": "een kern?"
+    },
+    {
+      "question_id": "132b",
       "issue": "suspicious_ja_label",
       "label": "een-vuistbijl--kernvormig",
       "text_answer": "een vuistbijl -kernvormig"
+    },
+    {
+      "question_id": "134",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de vuistbijl is langwerpig en heeft die concave zijden, grof bewerkt?",
+      "json_question": "bewerkt?"
+    },
+    {
+      "question_id": "135",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de vuistbijl is langwerpig en heeft die concave zijden en is die fijner bewerkt dan de ficron en lancetvormige vuistbijl?",
+      "json_question": "die fijner bewerkt dan de ficron en lancetvormige vuistbijl?"
+    },
+    {
+      "question_id": "135a",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm amandelvormig?",
+      "json_question": "en is de vorm amandelvormig?"
     },
     {
       "question_id": "135a",
@@ -312,9 +648,87 @@
     },
     {
       "question_id": "136",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuistbijl heeft een (afgeronde) punt en is de vuistbijl relatief dun breedte > 2,35 X dikte?",
+      "json_question": "relatief dun breedte > 2,35 X dikte?"
+    },
+    {
+      "question_id": "136",
       "issue": "suspicious_ja_label",
       "label": "nee-heel-klein--6-cm-of-heel-dun",
       "text_answer": "Nee heel klein (< 6 cm) of heel dun"
+    },
+    {
+      "question_id": "138",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de n vuistbijl een hartvormige vorm , met zeer convexe zijde n en ronde basis en enigszins ronde punt?",
+      "json_question": "zijde n en ronde basis en enigszins ronde punt?"
+    },
+    {
+      "question_id": "139",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de gedrongen vuistbijl een driehoekig ogiefvormig vorm met convexe zijden en enigszins convexe basis?",
+      "json_question": "vorm met convexe zijden en enigszins convexe basis?"
+    },
+    {
+      "question_id": "140",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuistbijlen met een (korte) snede soms in de vorm van een tranchet -snede?",
+      "json_question": "van een tranchet -snede?"
+    },
+    {
+      "question_id": "142",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm langgerekt ovaa l, lengte > 1,5 X breedte?",
+      "json_question": "en is de vorm langgerekt ovaa l, lengte > 1,5 X breedte?"
+    },
+    {
+      "question_id": "143",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm ovaal lengte < 1,5 X breedte?",
+      "json_question": "en is de vorm ovaal lengte < 1,5 X breedte?"
+    },
+    {
+      "question_id": "144",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en de vorm is rond?",
+      "json_question": "en de vorm is rond?"
+    },
+    {
+      "question_id": "147",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact is bladvormig , lijkt het op een vuistbijl maar is vaak dunner , zonder dikke rug?",
+      "json_question": "vaak dunner , zonder dikke rug?"
+    },
+    {
+      "question_id": "148",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact bifaciaal bewerkt met fijnere bewerking aan ‘één lange zijde?",
+      "json_question": "‘één lange zijde?"
+    },
+    {
+      "question_id": "149",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact bifaciaal bewerkt en bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?",
+      "json_question": "vergeleken met een vuistbijl en Faustkeilblatt?"
+    },
+    {
+      "question_id": "150",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het bladvormige artefact op beide vlakken (bifaciaal) volledig bewerkt en heeft het twee puntige uiteinden?",
+      "json_question": "volledig bewerkt en heeft het twee puntige uiteinden?"
+    },
+    {
+      "question_id": "151",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de b ladspits met een minder regelmatige vorm , vaak ovaal langwerpig of gedrongen, soms hartvormig?",
+      "json_question": "ovaal langwerpig of gedrongen, soms hartvormig?"
+    },
+    {
+      "question_id": "154",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het fijn bewerkte kernwerktuig een symmetrisch e dolk vorm?",
+      "json_question": "vorm?"
     },
     {
       "question_id": "154",
@@ -330,6 +744,12 @@
     },
     {
       "question_id": "155",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de dolk gemaakt van een kling en aan één oppervlak bewerkt?",
+      "json_question": "bewerkt?"
+    },
+    {
+      "question_id": "155",
       "issue": "suspicious_ja_label",
       "label": "nee-aan-beide-oppervlakken",
       "text_answer": "Nee aan beide oppervlakken"
@@ -339,6 +759,12 @@
       "issue": "suspicious_nee_label",
       "label": "onregelmatig-dolk--kling--met-volledige--",
       "text_answer": "onregelmatig dolk -kling -met-volledige -"
+    },
+    {
+      "question_id": "160",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Scandinavische dolk geen geïsoleerd handvat en is de dolk nagenoeg even dik over de gehele lengte?",
+      "json_question": "de dolk nagenoeg even dik over de gehele lengte?"
     },
     {
       "question_id": "160",
@@ -354,9 +780,21 @@
     },
     {
       "question_id": "162",
+      "issue": "question_text_mismatch",
+      "text_question": "Ligt de grootste breedte nabij het midden, in ieder geval dichter bij het midden dan bij de punt?",
+      "json_question": "dichter bij het midden dan bij de punt?"
+    },
+    {
+      "question_id": "162",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-ib",
       "text_answer": "dolk -scandinavisch -type-IB"
+    },
+    {
+      "question_id": "163",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakte retouche?",
+      "json_question": "parallelle oppervlakte retouche?"
     },
     {
       "question_id": "163",
@@ -366,9 +804,21 @@
     },
     {
       "question_id": "164",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een iets meer uitgeretoucheerd , ingesnoerd handvat?",
+      "json_question": "handvat?"
+    },
+    {
+      "question_id": "164",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-id",
       "text_answer": "dolk -scandinavisch -type-ID"
+    },
+    {
+      "question_id": "165",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een lancetvormig blad en is doorsnede handvat lensvormig tot ovaal en min 2 mm dikker dan het blad?",
+      "json_question": "lensvormig tot ovaal en min 2 mm dikker dan het blad?"
     },
     {
       "question_id": "165",
@@ -384,9 +834,21 @@
     },
     {
       "question_id": "168",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een smal handvat met parallelle zijden rombisch tot rechthoekig in doorsnede?",
+      "json_question": "tot rechthoekig in doorsnede?"
+    },
+    {
+      "question_id": "168",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iii",
       "text_answer": "dolk -scandinavisch -type-III"
+    },
+    {
+      "question_id": "169",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het h andvat even dik al s breed met vierkante doorsnede zonder pseudo gietnaad?",
+      "json_question": "zonder pseudo gietnaad?"
     },
     {
       "question_id": "169",
@@ -396,9 +858,21 @@
     },
     {
       "question_id": "170",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het handvat even dik als breed met vierkante doorsnede met aan 4 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
+      "json_question": "pseudo -gietnaad?"
+    },
+    {
+      "question_id": "170",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iiib",
       "text_answer": "dolk -scandinavisch -type-IIIB"
+    },
+    {
+      "question_id": "171",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het handvat even dik als breed met vierkante doorsnede met aan 3 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
+      "json_question": "pseudo -gietnaad?"
     },
     {
       "question_id": "171",
@@ -408,15 +882,33 @@
     },
     {
       "question_id": "172",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het handvat even dik als breed met vierkante doorsnede met twee vlakken parallel aan het blad en aan 4 zijden voor zien van met drukretouche aangebrachte pseudo -gietnaad?",
+      "json_question": "van met drukretouche aangebrachte pseudo -gietnaad?"
+    },
+    {
+      "question_id": "172",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iiid",
       "text_answer": "dolk -scandinavisch -type-IIID"
     },
     {
       "question_id": "173",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het h andvat rombisch in doorsnede , pseudo gietnaad aan beide zijden en boven - en ondervlak?",
+      "json_question": "beide zijden en boven - en ondervlak?"
+    },
+    {
+      "question_id": "173",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iiie",
       "text_answer": "dolk -scandinavisch -type-IIIE"
+    },
+    {
+      "question_id": "174",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het h andvat breder dan dik, rombisch in doorsnede met aan vier zijden pseudo gietnaad?",
+      "json_question": "vier zijden pseudo gietnaad?"
     },
     {
       "question_id": "174",
@@ -432,9 +924,21 @@
     },
     {
       "question_id": "176",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een d ik handvat, rombisch in doorsnede, breder naar de basis, met vier pseudo gietnaden, en is het blad het breedst in het midden?",
+      "json_question": "breedst in het midden?"
+    },
+    {
+      "question_id": "176",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iva",
       "text_answer": "dolk -scandinavisch -type-IVA"
+    },
+    {
+      "question_id": "177",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een dik handvat, rombisch in doorsnede, breder naar de basis , vier pseudo gietnaden, en is het blad het breedst nabij handvat?",
+      "json_question": "nabij handvat?"
     },
     {
       "question_id": "177",
@@ -444,9 +948,21 @@
     },
     {
       "question_id": "178",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een d ik handvat, rombisch in doorsnede, gelijke doorsnede over grootste deel lengte , pseudo gietnaden aan voor- en achterzijde, relatief breed blad het breedst nabij handvat?",
+      "json_question": "handvat?"
+    },
+    {
+      "question_id": "178",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-ivc",
       "text_answer": "dolk -scandinavisch -type-IVC"
+    },
+    {
+      "question_id": "179",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een dunner handvat driehoekig met afgeronde achterzijde in doorsnede, pseudo -gietnaad alleen aan de voorzijde , relatief breed afgerond driehoekig blad in aanzicht, grootste breedte nabij handvat?",
+      "json_question": "grootste breedte nabij handvat?"
     },
     {
       "question_id": "179",
@@ -456,15 +972,33 @@
     },
     {
       "question_id": "180",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een d unner handvat driehoekig met afgeronde of vlakke achterzijde in doorsnede, pseudo -gietnaad alleen aan de voorzijde, vergeleken met type IVD smaller , afgerond driehoekig blad in aanzicht, grootste breedte nabij handvat?",
+      "json_question": "driehoekig blad in aanzicht, grootste breedte nabij handvat?"
+    },
+    {
+      "question_id": "180",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-ive",
       "text_answer": "dolk -scandinavisch -type-IVE"
     },
     {
       "question_id": "181",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een h andvat rechthoekig in doorsnede, grootste vlakken parallel aan blad met vier pseudo gietnaden?",
+      "json_question": "vlakken parallel aan blad met vier pseudo gietnaden?"
+    },
+    {
+      "question_id": "181",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-ivf",
       "text_answer": "dolk -scandinavisch -type-IVF"
+    },
+    {
+      "question_id": "182",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dolk een h andvat lensvormig tot licht rombisch in doorsnede breder naar de basis geen pseudo gietnaden behalve soms aan de basis?",
+      "json_question": "behalve soms aan de basis?"
     },
     {
       "question_id": "182",
@@ -483,6 +1017,12 @@
       "issue": "suspicious_ja_label",
       "label": "dolk-scandinavisch--type-vb",
       "text_answer": "dolk-scandinavisch -type-VB"
+    },
+    {
+      "question_id": "185",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het handvat met rechte, parallelle zijden en lensvormige tot ovale doorsnede , niet breed uitlopend naar het einde?",
+      "json_question": "tot ovale doorsnede , niet breed uitlopend naar het einde?"
     },
     {
       "question_id": "185",
@@ -515,10 +1055,46 @@
       "text_answer": "dolk -scandinavisch -type-VI"
     },
     {
+      "question_id": "189",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Engelse dolk nagenoeg parallelle zijden en een kort duidelijk afgezet handvat?",
+      "json_question": "duidelijk afgezet handvat?"
+    },
+    {
+      "question_id": "190",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Engelse dolk een knik op de grens tussen lemmet en handvat op de helft van de lengte?",
+      "json_question": "handvat op de helft van de lengte?"
+    },
+    {
+      "question_id": "191",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Engelse dolk een breed bladvormig , lemmet breedst nabij punt?",
+      "json_question": "nabij punt?"
+    },
+    {
+      "question_id": "192",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Engelse dolk een smal bladvormig blad met een knik?",
+      "json_question": "knik?"
+    },
+    {
+      "question_id": "193",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Oost -Europese dolk slanke vorm grootste breedte nabij het midden geen duidelijk afgezet handvat?",
+      "json_question": "nabij het midden geen duidelijk afgezet handvat?"
+    },
+    {
       "question_id": "193",
       "issue": "suspicious_ja_label",
       "label": "dolk--oost-europees--type-1",
       "text_answer": "dolk -oost-europees -type-1"
+    },
+    {
+      "question_id": "194",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Oost -Europese dolk een langwerpige tot rombische vorm met duidelijk afgezet handvat?",
+      "json_question": "vorm met duidelijk afgezet handvat?"
     },
     {
       "question_id": "194",
@@ -528,9 +1104,21 @@
     },
     {
       "question_id": "195",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Oost -Europese dolk min of meer driehoekig lemmet breedst aan de basis geen uitgeretoucheerd handvat?",
+      "json_question": "breedst aan de basis geen uitgeretoucheerd handvat?"
+    },
+    {
+      "question_id": "195",
       "issue": "suspicious_ja_label",
       "label": "dolk--oost-europees--type-5",
       "text_answer": "dolk -oost-europees -type-5"
+    },
+    {
+      "question_id": "196",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de Oost -Europese dolk een bladvormig lemmet en duidelijk uitgeretoucheerd handvat?",
+      "json_question": "duidelijk uitgeretoucheerd handvat?"
     },
     {
       "question_id": "196",
@@ -564,6 +1152,12 @@
     },
     {
       "question_id": "202",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+      "json_question": "met negatief stekerafslag?"
+    },
+    {
+      "question_id": "202",
       "issue": "suspicious_nee_label",
       "label": "nee-overige-groepen-afslagklingwerktuigen",
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
@@ -573,6 +1167,30 @@
       "issue": "suspicious_ja_label",
       "label": "een-combinatiewerktuig",
       "text_answer": "een combinatiewerktuig"
+    },
+    {
+      "question_id": "204",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag of kling meerdere kleine beitelkanten met negatief stekerafslag?",
+      "json_question": "negatief stekerafslag?"
+    },
+    {
+      "question_id": "205",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de steker bekvormig en gemaakt met mini-stekerafslag(en) van ventrale naar dorsale zijde?",
+      "json_question": "van ventrale naar dorsale zijde?"
+    },
+    {
+      "question_id": "207",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de beitelkant gevormd door aan de deels dorsale retouche en deels ventrale waardoor het ontmoetingspunt een soort steker vormt, de beitelkant staan onder een hoek met het vlak van de afslag of kling?",
+      "json_question": "van de afslag of kling?"
+    },
+    {
+      "question_id": "208",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt door een onopzettelijke breuk, ontstaan doordat het artefact tijdens het retoucheren is gebroken?",
+      "json_question": "artefact tijdens het retoucheren is gebroken?"
     },
     {
       "question_id": "208",
@@ -587,10 +1205,82 @@
       "text_answer": "(de Krukowski -kerfrest is aan één zijde steil geretoucheerd )"
     },
     {
-      "question_id": "230",
+      "question_id": "209",
       "issue": "question_text_mismatch",
-      "text_question": "driehoekige of vierzijdige doorsnede? (Maar is niet de punt",
-      "json_question": "Heeft het artefact 1, 2 of meer uitgeretoucheerde punten met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)"
+      "text_question": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt met een opzettelijk getordeerde breuk, de microsteker vertoont bij de breuk duidelijk een deel van een geretoucheerde kerf?",
+      "json_question": "geretoucheerde kerf?"
+    },
+    {
+      "question_id": "210",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de steker gemaakt met één enkele stekerafslag zonder voorbereiding van het slagvlak?",
+      "json_question": "voorbereiding van het slagvlak?"
+    },
+    {
+      "question_id": "211",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de steker gemaakt door de stekerafslag zijwaarts ( haaks op de slagrichting afslag/kling) aan te brengen?",
+      "json_question": "de slagrichting afslag/kling) aan te brengen?"
+    },
+    {
+      "question_id": "212",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de steker gemaakt door de stekerafslag te plaatsen op een al dan niet schuin geplaatste geretoucheerde rand?",
+      "json_question": "al dan niet schuin geplaatste geretoucheerde rand?"
+    },
+    {
+      "question_id": "214",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de RA -steker één boogvormig steil geretoucheerde zijde en een korte stekerafslag, veelal begrensd door een kerf?",
+      "json_question": "zijde en een korte stekerafslag, veelal begrensd door een kerf?"
+    },
+    {
+      "question_id": "215",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de RA -steker gemaakt op een kleine afslag of kling gevormd door een kleine stekerafslag vaak beëindigd door een kerf resulterend in een dunne (max. 2mm) steker?",
+      "json_question": "een kerf resulterend in een dunne (max. 2mm) steker?"
+    },
+    {
+      "question_id": "216",
+      "issue": "question_text_mismatch",
+      "text_question": "Vertoont de RA -steker een door retouche vanaf het stekerafslag -negatief dunner gemaakte b eitelkant?",
+      "json_question": "stekerafslag -negatief dunner gemaakte b eitelkant?"
+    },
+    {
+      "question_id": "217",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de RA -steker meermaals gemodificeerd (gemodificeerd RA steker waarvan opnieuw een stekerafslag is verwijderd, opnieuw geretoucheerd en nogmaals een steker afslag verwijderd)?",
+      "json_question": "verwijderd)?"
+    },
+    {
+      "question_id": "218",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het stekerafslag -negatief van de RA -steker grotendeels weggeretoucheerd?",
+      "json_question": "weggeretoucheerd?"
+    },
+    {
+      "question_id": "219",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de steker gemaakt door de beitelkant te maken met steker - afslagen van 2 zijden?",
+      "json_question": "afslagen van 2 zijden?"
+    },
+    {
+      "question_id": "220",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de steker gemaakt door stekerafslagen van 2 zijden , gemaakt met meerdere afslagen naast elkaar?",
+      "json_question": "gemaakt met meerdere afslagen naast elkaar?"
+    },
+    {
+      "question_id": "221",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de kielvormige steker relatief smal waarbij één stekervlak vrij plat is en het andere min of meer boogvormig?",
+      "json_question": "vrij plat is en het andere min of meer boogvormig?"
+    },
+    {
+      "question_id": "222",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de kielvormige -steker een vorm waarbij de beitel kant schuin staat op de afslag/kling doordat één vlak meer op het voor- of achter -vlak ligt?",
+      "json_question": "voor- of achter -vlak ligt?"
     },
     {
       "question_id": "230",
@@ -611,6 +1301,18 @@
       "text_answer": "Nee meerdere : boor -dubbel of boor -meervoudig"
     },
     {
+      "question_id": "234",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de punt verkregen door het artefact tweezijdig steil te retoucheren, geretoucheerd e met lange nek , en is het artefact is klein van afmeting (<2 cm)?",
+      "json_question": "is klein van afmeting (<2 cm)?"
+    },
+    {
+      "question_id": "235",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de punt verkregen door het bewerken m et steile retouche en heeft het artefact een vrij lange, rechte, neusvormige dikke punt?",
+      "json_question": "punt?"
+    },
+    {
       "question_id": "235",
       "issue": "suspicious_ja_label",
       "label": "een-bec",
@@ -618,9 +1320,27 @@
     },
     {
       "question_id": "236",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de relatief smalle punt verkregen door het bewerken met steile retouche (vaak met overliggende pseudoretouche ontstaan door draaiende beweging van het werktuig)?",
+      "json_question": "ontstaan door draaiende beweging van het werktuig)?"
+    },
+    {
+      "question_id": "236",
       "issue": "suspicious_ja_label",
       "label": "een-boor",
       "text_answer": "een boor"
+    },
+    {
+      "question_id": "237",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de relatief stompe punt verkregen door het bewerken met 1 of 2 grove afslagen of door retouche (vaak met pseudoretouche ontstaan door draaiende beweging van het werktuig) bedoeld om een bestaand gat groter te maken?",
+      "json_question": "werktuig) bedoeld om een bestaand gat groter te maken?"
+    },
+    {
+      "question_id": "240",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een inkeping d.m.v. één grote of meerdere kleine steile afslagnegatieven?",
+      "json_question": "kleine steile afslagnegatieven?"
     },
     {
       "question_id": "240",
@@ -635,10 +1355,40 @@
       "text_answer": "een combinatie -werktuig"
     },
     {
+      "question_id": "242",
+      "issue": "question_text_mismatch",
+      "text_question": "Lijkt h et gekerfde werktuig op een sikkel met een gehaakte werkkant, gemaakt door een grove (Clacton) kerf?",
+      "json_question": "werkkant, gemaakt door een grove (Clacton) kerf?"
+    },
+    {
+      "question_id": "243",
+      "issue": "question_text_mismatch",
+      "text_question": "Lijkt het gekerfde werktuig op een sikkel met een gehaakte werkkant, gemaakt door een geretoucheerde kerf?",
+      "json_question": "werkkant, gemaakt door een geretoucheerde kerf?"
+    },
+    {
+      "question_id": "245",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het gekerfde werktuig gemaakt van een relatief dikke kling?",
+      "json_question": "kling?"
+    },
+    {
+      "question_id": "247",
+      "issue": "question_text_mismatch",
+      "text_question": "Vertoont het artefact meerdere kleine kerven waardoor een vertanding ontstaat?",
+      "json_question": "vertanding ontstaat?"
+    },
+    {
       "question_id": "247",
       "issue": "suspicious_nee_label",
       "label": "nee-overige-groepen-afslagklingwerktuigen",
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "260",
+      "issue": "question_text_mismatch",
+      "text_question": "Vertoont het artefact 1 of 2 verbrijzeld e of versplinterde uiteinde?",
+      "json_question": "uiteinde?"
     },
     {
       "question_id": "260",
@@ -653,10 +1403,34 @@
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
     },
     {
+      "question_id": "261",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het verbrijzelde uiteinde ontstaan door slaan langs het uiteinde vaak resulterend in afgerond uiteinde?",
+      "json_question": "uiteinde vaak resulterend in afgerond uiteinde?"
+    },
+    {
+      "question_id": "262",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het verbrijzelde uiteinde ontstaan door h et gebruik als drevel om middels indirecte percussie steen te bewerken?",
+      "json_question": "drevel om middels indirecte percussie steen te bewerken?"
+    },
+    {
+      "question_id": "263",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het verbrijzelde uiteinde ontstaan door het gebruik als beitel en een klopsteen om hout , been of gewei te bewerken?",
+      "json_question": "en een klopsteen om hout , been of gewei te bewerken?"
+    },
+    {
       "question_id": "263",
       "issue": "suspicious_nee_label",
       "label": "zie-ook",
       "text_answer": "Zie ook"
+    },
+    {
+      "question_id": "264",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het verbrijzelde uiteinde ontstaan door p roductie van afslagen/klingen door op een (vaak kleine) kern op een aambeeld te slaan?",
+      "json_question": "aambeeld te slaan?"
     },
     {
       "question_id": "264",
@@ -669,6 +1443,18 @@
       "issue": "suspicious_nee_label",
       "label": "zie-ook",
       "text_answer": "Zie ook"
+    },
+    {
+      "question_id": "265",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het verbrijzelde uiteinde ontstaan door het gebruik van het artefact als hamer?",
+      "json_question": "artefact als hamer?"
+    },
+    {
+      "question_id": "266",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het verbrijzelde uiteinde ontstaan door gebruik van een relatief dik, stiftvormig werktuig met grove retouche vormen en 1 of 2 verbrijzelde of door gebruik afgeronde uiteinden?",
+      "json_question": "en 1 of 2 verbrijzelde of door gebruik afgeronde uiteinden?"
     },
     {
       "question_id": "266",
@@ -810,9 +1596,33 @@
     },
     {
       "question_id": "300",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas?",
+      "json_question": "distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas?"
+    },
+    {
+      "question_id": "300",
       "issue": "suspicious_nee_label",
       "label": "nee-overige-groepen-afslagklingwerktuigen",
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "304",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de kling is afgeknot door steile of half -steile retouche van de dorsale naar de ventr ale zijde en is d e retouche vervolgens gebruikt als slagvlak om daarna langwerpige afslagen van de dorsale zijde te verwijderen?",
+      "json_question": "dorsale zijde te verwijderen?"
+    },
+    {
+      "question_id": "305",
+      "issue": "question_text_mismatch",
+      "text_question": "Lijkt de kling lijkt op een Kost ienki-afgeknotte kling waarbij de ventrale retouche bedoeld was om daarna lamellen van de zijkant te verwijderen?",
+      "json_question": "zijkant te verwijderen?"
+    },
+    {
+      "question_id": "320",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de a fslag of kling een door relatief steile retouche verkregen werkkant, veelal gebogen , soms vrijwel rondom?",
+      "json_question": "verkregen werkkant, veelal gebogen , soms vrijwel rondom?"
     },
     {
       "question_id": "320",
@@ -827,10 +1637,64 @@
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
     },
     {
+      "question_id": "321",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een schrabberkap met relatief lichte retouche ; vaak onderdeel van een combinatiewerktuig met een ‘normale’ schrabber of ander werktuig?",
+      "json_question": "een ‘normale’ schrabber of ander werktuig?"
+    },
+    {
+      "question_id": "322",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een combinatie werktuig van schrabber tegenover ventraal geretoucheerde afknotting?",
+      "json_question": "tegenover ventraal geretoucheerde afknotting?"
+    },
+    {
+      "question_id": "323",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact groot en rond/ovaal en vrijwel rondom geretoucheerd?",
+      "json_question": "geretoucheerd?"
+    },
+    {
+      "question_id": "325",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een korte schrabber gemaakt van een kling of afslag met een brede schrabberkap tegenover een rechte basis in de vorm van een duimnagel met nagenoeg gelijke lengte en breedte en kleiner dan 3 cm?",
+      "json_question": "breedte en kleiner dan 3 cm?"
+    },
+    {
+      "question_id": "328",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de s chrabber gemaakt op een dikke afslag (caréné) of brok (rabot), met vlakke kant en steile retouche/afslagnegatieven, omgekeerd bootvormig?",
+      "json_question": "omgekeerd bootvormig?"
+    },
+    {
+      "question_id": "334",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de klingschrabber taps toelopende geretoucheerde zijden aan de achterkant?",
+      "json_question": "zijden aan de achterkant?"
+    },
+    {
+      "question_id": "336",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de klingschrabber een schrabberkap aan t wee uiteinden?",
+      "json_question": "uiteinden?"
+    },
+    {
+      "question_id": "350",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden?",
+      "json_question": "steil geretoucheerde lange zijden?"
+    },
+    {
       "question_id": "350",
       "issue": "suspicious_ja_label",
       "label": "een-schaaf--limace",
       "text_answer": "een schaaf -limace"
+    },
+    {
+      "question_id": "351",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant?",
+      "json_question": "verkregen enigszins scherpe werkkant?"
     },
     {
       "question_id": "351",
@@ -839,10 +1703,106 @@
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
     },
     {
+      "question_id": "352",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag één of meerdere zijden met schubvormige of getrapt -schubvormige retouche?",
+      "json_question": "getrapt -schubvormige retouche?"
+    },
+    {
+      "question_id": "353",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een dik werktuig met getrapte schubvormige retouche aan één zijde?",
+      "json_question": "retouche aan één zijde?"
+    },
+    {
+      "question_id": "354",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een dik werktuig met niet getrapte schubvormige retouche of een dun werktuig met getrapte schubvormige retouche aan 1 zijde?",
+      "json_question": "schubvormige retouche aan 1 zijde?"
+    },
+    {
+      "question_id": "355",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een dun werktuig met getrapte schubvormige retouche aan twee zijden?",
+      "json_question": "retouche aan twee zijden?"
+    },
+    {
+      "question_id": "356",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een bifaciaal, bladvormig stuk met aan één zijde vlakke retouche?",
+      "json_question": "vlakke retouche?"
+    },
+    {
+      "question_id": "358",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de schaaf een schaafkant haaks op de slagrichting tegenover het slagpunt?",
+      "json_question": "tegenover het slagpunt?"
+    },
+    {
+      "question_id": "360",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de schaaf t wee schaaf kanten die niet op elkaar aansluiten?",
+      "json_question": "aansluiten?"
+    },
+    {
+      "question_id": "361",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de schaaf twee symmetrische convergerende schaafkanten , as werktuig (nagenoeg) in slagrichting?",
+      "json_question": "schaafkanten , as werktuig (nagenoeg) in slagrichting?"
+    },
+    {
+      "question_id": "362",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de schaaf twee schaafkanten die elkaar raken waarbij één schaafzijde (nagenoeg) tegenover de slagvlakrest ligt?",
+      "json_question": "één schaafzijde (nagenoeg) tegenover de slagvlakrest ligt?"
+    },
+    {
+      "question_id": "364",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de schaaf twee schaafkanten die elkaar raken bij één uiteinde?",
+      "json_question": "uiteinde?"
+    },
+    {
+      "question_id": "380",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag of kling een driehoekige dwarsdoorsnede met één scherpe (ongeretoucheerde) rand tegenover dikke re kant?",
+      "json_question": "één scherpe (ongeretoucheerde) rand tegenover dikke re kant?"
+    },
+    {
       "question_id": "380",
       "issue": "suspicious_nee_label",
       "label": "nee-een-afslagkling-met-rand---of-oppervlakteretouche",
       "text_answer": "nee een afslag/kling met rand - of oppervlakteretouche"
+    },
+    {
+      "question_id": "381",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het rugmes een decorticatie afslag of kling zonder retouche?",
+      "json_question": "retouche?"
+    },
+    {
+      "question_id": "382",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het rugmes een asymmetrische afslag of kling met een relatief dunne en gebogen geretoucheerde rug?",
+      "json_question": "relatief dunne en gebogen geretoucheerde rug?"
+    },
+    {
+      "question_id": "383",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het rugmes een rechthoekige kling met steil geretoucheerde rug?",
+      "json_question": "rug?"
+    },
+    {
+      "question_id": "385",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een afslag met beperkte lokale intentionele retouche (geen werkkant of punt)?",
+      "json_question": "retouche (geen werkkant of punt)?"
+    },
+    {
+      "question_id": "390",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een afslag of kling met 1 of meer geheel of gedeeltelijk (half -) steil geretoucheerde zijden?",
+      "json_question": "gedeeltelijk (half -) steil geretoucheerde zijden?"
     },
     {
       "question_id": "391",
@@ -852,9 +1812,39 @@
     },
     {
       "question_id": "392",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een typische geometrische vorm: driehoekig, vierhoekig of segmentvorm met 1 of 2 steil geretoucheerde zijden?",
+      "json_question": "geretoucheerde zijden?"
+    },
+    {
+      "question_id": "392",
       "issue": "suspicious_nee_label",
       "label": "een-artefact-zonder-duidelijke-punt",
       "text_answer": "een artefact zonder duidelijke punt"
+    },
+    {
+      "question_id": "392a",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een overwegend grote en dikke kling met één of twee (half-)steile geretoucheerde zijden , soms voorzien van 2 tegenover elkaar liggende kerven of insnoeringen?",
+      "json_question": "van 2 tegenover elkaar liggende kerven of insnoeringen?"
+    },
+    {
+      "question_id": "393",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een afslag met ondiepe schrabber -achtige retouche langs één of meer zijden?",
+      "json_question": "retouche langs één of meer zijden?"
+    },
+    {
+      "question_id": "394",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact vierkant, rechthoekig met soms een gebogen zijde veelal grotendeels aan 3 zijden vrij steil geretoucheerd?",
+      "json_question": "zijde veelal grotendeels aan 3 zijden vrij steil geretoucheerd?"
+    },
+    {
+      "question_id": "395",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurkets een rechthoekige vorm en is die aan 3 zijden geretoucheerd?",
+      "json_question": "geretoucheerd?"
     },
     {
       "question_id": "395",
@@ -863,10 +1853,46 @@
       "text_answer": "de vuurkets is aan één zijde is afgerond of de vuurkets"
     },
     {
+      "question_id": "396",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een relatief zeer dun plat vuursteenelement , al dan niet rondom geretoucheerd?",
+      "json_question": "dan niet rondom geretoucheerd?"
+    },
+    {
+      "question_id": "397",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een smalle kling of lamelle aan één of meerdere zijden steil geretoucheerd zonder duidelijke punt?",
+      "json_question": "zijden steil geretoucheerd zonder duidelijke punt?"
+    },
+    {
       "question_id": "397",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
+    },
+    {
+      "question_id": "398",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de kling/lamelle aan één zijde dorsaal en soms één zijde ventraal geretoucheerd?",
+      "json_question": "ventraal geretoucheerd?"
+    },
+    {
+      "question_id": "399",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een smalle kling of lamelle aan één zijde steil geretoucheerd en aan één of beide uiteinden, haaks op de geretoucheerde zijde?",
+      "json_question": "geretoucheerde zijde?"
+    },
+    {
+      "question_id": "400",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact een driehoekige smalle kling of la melle aan één zijde steil geretoucheerd tot aan een uiteinde?",
+      "json_question": "zijde steil geretoucheerd tot aan een uiteinde?"
+    },
+    {
+      "question_id": "410",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft h et artefact minimaal 1 duidelijke punt (is een spits) en is het gesteeld of heeft een gekerfde basis?",
+      "json_question": "is het gesteeld of heeft een gekerfde basis?"
     },
     {
       "question_id": "410",
@@ -879,6 +1905,66 @@
       "issue": "suspicious_ja_label",
       "label": "nee-aan-beide-zijden",
       "text_answer": "Nee aan beide zijden"
+    },
+    {
+      "question_id": "413",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de relatief korte spits gemaakt door een kling aan één zijde te retoucheren tot een punt en tegenover de punt door twee geretoucheerde kerven te voorzien van een steel?",
+      "json_question": "geretoucheerde kerven te voorzien van een steel?"
+    },
+    {
+      "question_id": "414",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de relatief lange spits een korte steel gemaakt door twee kerven ongelijk van diepte en lengte waarbij de retouchering bij de steel soms langs één rand van de dorsale en langs de andere rand van de ventrale zijde komt?",
+      "json_question": "andere rand van de ventrale zijde komt?"
+    },
+    {
+      "question_id": "415",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een aan twee zijden (deels) geretoucheerde en d.m.v. een kerf versmalde basis en is de steel kegelvormig?",
+      "json_question": "d.m.v. een kerf versmalde basis en is de steel kegelvormig?"
+    },
+    {
+      "question_id": "416",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits een l angwerpige steelspits en het spits deel is het ongeretoucheerde feather uiteinde van de kling?",
+      "json_question": "ongeretoucheerde feather uiteinde van de kling?"
+    },
+    {
+      "question_id": "417",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits een m in of meer ruitvormige steelspits met bifaciaal geretoucheerde basis?",
+      "json_question": "bifaciaal geretoucheerde basis?"
+    },
+    {
+      "question_id": "418",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits een s teelspits met relatief lange veelal smalle steel met een vaak ogiefvormige top?",
+      "json_question": "met een vaak ogiefvormige top?"
+    },
+    {
+      "question_id": "419",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits polymorfe kerf/steel gekenmerkt door een retouchering van een of twee randen, of door een afknotting en met een korte steel gevormd door een dorsale of ventrale steile retouchering?",
+      "json_question": "steile retouchering?"
+    },
+    {
+      "question_id": "420",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits van variabele grootte gemaakt van een kling, een relatief lange, door soms ventrale oppervlakte retouche gemaakte brede steel, waarbij de punt soms ook dunner is gemaakt door oppervlakte retouche?",
+      "json_question": "gemaakt door oppervlakte retouche?"
+    },
+    {
+      "question_id": "421",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een smallere steel gemaakt door een relatief lange kerf aan één zijde en vaak een ogiefvormige punt?",
+      "json_question": "lange kerf aan één zijde en vaak een ogiefvormige punt?"
+    },
+    {
+      "question_id": "430",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag/kling een g eometrische vorm (driehoek, vierhoek, segment )?",
+      "json_question": "vierhoek, segment )?"
     },
     {
       "question_id": "430",
@@ -899,6 +1985,48 @@
       "text_answer": "Nee vierhoekig of segmentvorm"
     },
     {
+      "question_id": "433",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm en een holle basis door iets vlakkere vaak ventrale randretouche?",
+      "json_question": "iets vlakkere vaak ventrale randretouche?"
+    },
+    {
+      "question_id": "434",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm in de vorm van een ongelijkbenige driehoek?",
+      "json_question": "ongelijkbenige driehoek?"
+    },
+    {
+      "question_id": "435",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm in de vorm van een gelijkbenige driehoe k, hypotenusa ongeretoucheerd?",
+      "json_question": "gelijkbenige driehoe k, hypotenusa ongeretoucheerd?"
+    },
+    {
+      "question_id": "436",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm in de vorm van een rechthoekige driehoek met van ventrale zijde vlak geretoucheerde basis (retouche inverse plat RIP)?",
+      "json_question": "geretoucheerde basis (retouche inverse plat RIP)?"
+    },
+    {
+      "question_id": "437",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm in de vorm van een stompe driehoek met van ventrale zijde vlak geretoucheerde basis (retouche inverse plat RIP)?",
+      "json_question": "basis (retouche inverse plat RIP)?"
+    },
+    {
+      "question_id": "438",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm in de vorm van een driehoek neigend naar een vierhoek?",
+      "json_question": "driehoek neigend naar een vierhoek?"
+    },
+    {
+      "question_id": "439",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een driehoekige vorm in de vorm van een driehoek neigend naar een trapezium?",
+      "json_question": "driehoek neigend naar een trapezium?"
+    },
+    {
       "question_id": "450",
       "issue": "suspicious_ja_label",
       "label": "nee-een-segmentvorm",
@@ -917,10 +2045,52 @@
       "text_answer": "een symmetrisch of asymmetrische trapezium"
     },
     {
+      "question_id": "454",
+      "issue": "question_text_mismatch",
+      "text_question": "L/B= lengte : breedte <1? (ongeretoucheerde zijde : geretoucheerde zijde)",
+      "json_question": "L/B= lengte : breedte <1?"
+    },
+    {
+      "question_id": "455",
+      "issue": "question_text_mismatch",
+      "text_question": "1<L/B < 2? (ongeretoucheerde zijde : geretoucheerde zijde)",
+      "json_question": "1<L/B < 2?"
+    },
+    {
+      "question_id": "456",
+      "issue": "question_text_mismatch",
+      "text_question": "L/B > 2? (ongeretoucheerde zijde : geretoucheerde zijde)",
+      "json_question": "L/B > 2?"
+    },
+    {
       "question_id": "470",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
+    },
+    {
+      "question_id": "471",
+      "issue": "question_text_mismatch",
+      "text_question": "Is bolle zijde van de relatief brede spits geretoucheerd, soms aan een zijde enigszins afgeknot?",
+      "json_question": "aan een zijde enigszins afgeknot?"
+    },
+    {
+      "question_id": "473",
+      "issue": "question_text_mismatch",
+      "text_question": "Is rechte zijde van de spits geretoucheerd en de gebogen zijde niet?",
+      "json_question": "niet?"
+    },
+    {
+      "question_id": "474",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een ruit- tot wilgenbladvorm met deels marginale vaak ventrale retouche?",
+      "json_question": "marginale vaak ventrale retouche?"
+    },
+    {
+      "question_id": "476",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits één (al dan niet geheel) geretoucheerde zijde mogelijk met geretoucheerde basis?",
+      "json_question": "mogelijk met geretoucheerde basis?"
     },
     {
       "question_id": "476",
@@ -936,15 +2106,129 @@
     },
     {
       "question_id": "477",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits één geheel geretoucheerde zijde mogelijk met geretoucheerde basis?",
+      "json_question": "geretoucheerde basis?"
+    },
+    {
+      "question_id": "477",
       "issue": "suspicious_nee_label",
       "label": "nee-een-gedeeltelijk-geretoucheerde-z-ijde",
       "text_answer": "nee een gedeeltelijk geretoucheerde z ijde"
     },
     {
       "question_id": "479",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits alleen een gedeeltelijk geretoucheerde zijde (schuin afgeknot)?",
+      "json_question": "(schuin afgeknot)?"
+    },
+    {
+      "question_id": "479",
       "issue": "suspicious_nee_label",
       "label": "nee-één-zijde-deels-en-basis",
       "text_answer": "nee één zijde (deels) en basis"
+    },
+    {
+      "question_id": "480",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits één gedeeltelijk geretoucheerde zijde ( schuin afgeknot ) en een steil geretoucheerde afgeknotte basis?",
+      "json_question": "afgeknot ) en een steil geretoucheerde afgeknotte basis?"
+    },
+    {
+      "question_id": "482",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits één gebogen geheel geretoucheerdé zijde en een schuin afgeknotte basis?",
+      "json_question": "schuin afgeknotte basis?"
+    },
+    {
+      "question_id": "483",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het een lange, smalle driehoekige spits met scheef afgeknotte basis?",
+      "json_question": "afgeknotte basis?"
+    },
+    {
+      "question_id": "484",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits een rechte of licht gebogen geretoucheerde zijde en afgeknotte basis?",
+      "json_question": "zijde en afgeknotte basis?"
+    },
+    {
+      "question_id": "485",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits een vrij symmetrische driehoekige spits met één zijde geheel en de basis haaks op de lengterichting geretoucheerd; soms andere zijde gedeeltelijk geretoucheerd?",
+      "json_question": "geretoucheerd; soms andere zijde gedeeltelijk geretoucheerd?"
+    },
+    {
+      "question_id": "487",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vrij symmetrische spits één geheel geretoucheerde zijde, de andere zijde en basis niet lengte : breedte L:B < 5?",
+      "json_question": "zijde, de andere zijde en basis niet lengte : breedte L:B < 5?"
+    },
+    {
+      "question_id": "488",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vrij symmetrische spits één geheel geretoucheerde zijde, de andere zijde en basis niet lengte : breedte L:B > 5?",
+      "json_question": "zijde, de andere zijde en basis niet lengte : breedte L:B > 5?"
+    },
+    {
+      "question_id": "489",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de spits één gebogen geheel geretoucheerde zijde, de andere zijde en basis niet en ligt de punt niet op de lengteas?",
+      "json_question": "andere zijde en basis niet en ligt de punt niet op de lengteas?"
+    },
+    {
+      "question_id": "490",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits geretoucheerd aan één zijde en vertoont de geretoucheerde zijde 2 duidelijke knikken?",
+      "json_question": "geretoucheerde zijde 2 duidelijke knikken?"
+    },
+    {
+      "question_id": "491",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits geretoucheerd aan één zijde en vertoont de geretoucheerde zijde 1 duidelijke knik?",
+      "json_question": "geretoucheerde zijde 1 duidelijke knik?"
+    },
+    {
+      "question_id": "493",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de slanke spits nagenoeg evenwijdige zijden , de geretoucheerde zijde is recht of licht bol, punt ligt op de lengteas , soms tegenoverliggende zijde gedeeltelijk licht geretoucheerd, de steile retouche is vaak van zowel dorsale als ventrale zijde aangebracht (gekruist steil geretoucheerd)?",
+      "json_question": "als ventrale zijde aangebracht (gekruist steil geretoucheerd)?"
+    },
+    {
+      "question_id": "495",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits gemaakt van een lamelle a an twee zijden geretoucheerd 2 scherpe uiteinden lengte : breedte L:B >4?",
+      "json_question": "geretoucheerd 2 scherpe uiteinden lengte : breedte L:B >4?"
+    },
+    {
+      "question_id": "496",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits min of meer d riehoekig met één geheel en één gedeeltelijk van de top geretoucheerde zijde L :B < 5?",
+      "json_question": "gedeeltelijk van de top geretoucheerde zijde L :B < 5?"
+    },
+    {
+      "question_id": "497",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits een vrij smalle spits aan beide zijden geretoucheerd, één zijde geheel, de andere zijde gedeeltelijk en 1 scherp uiteinde L:B > 5?",
+      "json_question": "en 1 scherp uiteinde L:B > 5?"
+    },
+    {
+      "question_id": "498",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits een lamelle aan beide zijden (deels) geretoucheerd , einden puntig niet altijd scherp?",
+      "json_question": "einden puntig niet altijd scherp?"
+    },
+    {
+      "question_id": "499",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de spits aan beide zijden over de gehele lengte geretoucheerd?",
+      "json_question": "geretoucheerd?"
+    },
+    {
+      "question_id": "500",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact relatief lang en gemaakt van Grand Pressigny vuursteen?",
+      "json_question": "vuursteen?"
     },
     {
       "question_id": "540",
@@ -989,10 +2273,28 @@
       "text_answer": "Nee gelijkbenig of gelijkzijdig"
     },
     {
+      "question_id": "545",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact twee punten in de vorm van een maretakblad?",
+      "json_question": "maretakblad?"
+    },
+    {
       "question_id": "546",
       "issue": "suspicious_ja_label",
       "label": "nee-gelijkzijdig",
       "text_answer": "Nee gelijkzijdig"
+    },
+    {
+      "question_id": "547",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact driehoekig van vorm (zijden soms licht convex) en vertoont het vlakke randretouche?",
+      "json_question": "en vertoont het vlakke randretouche?"
+    },
+    {
+      "question_id": "548",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact met (nagenoeg) volledige oppervlakteretouche een driehoekige vorm?",
+      "json_question": "oppervlakteretouche een driehoekige vorm?"
     },
     {
       "question_id": "548",
@@ -1019,16 +2321,100 @@
       "text_answer": "het artefact heeft kerf/steel (geen schachtdoorn) aan de"
     },
     {
+      "question_id": "554",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de bladspits gemaakt van een forse kling of afslag waarvan beide vlakken (bifaciaal) gedeeltelijk zijn bewerkt en zijn alleen de top en de basis zijn geretoucheerd?",
+      "json_question": "alleen de top en de basis zijn geretoucheerd?"
+    },
+    {
+      "question_id": "555",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de bladspits gemaakt van een ovaal klingachtig stuk , vaak slank, soms gedrongen, soms zeer regelmatige oppervlakte retouche, aan de bovenzijde aan de uiteinden, soms aan de ventrale zijde, vooral aan de uiteinden, ten slotte, tegenover een vrij puntig distaal uiteinde een vrij afgeronde basis?",
+      "json_question": "een vrij puntig distaal uiteinde een vrij afgeronde basis?"
+    },
+    {
+      "question_id": "559",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het spits van variabele grootte met een lange brede steel, gemaakt met een kerf langer dan de helft van de lengte van het stuk?",
+      "json_question": "het stuk?"
+    },
+    {
       "question_id": "561",
       "issue": "suspicious_ja_label",
       "label": "spits--driehoekig--met-schachtdoor-n-en-korte--",
       "text_answer": "spits -driehoekig -met-schachtdoor n-en-korte -"
     },
     {
+      "question_id": "562",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de driehoekig spits relatief breed met schachtdoorn en weerhaken nagenoeg even lang of langer als schachtdoorn en rechte zijden?",
+      "json_question": "rechte zijden?"
+    },
+    {
+      "question_id": "563",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de driehoek ige spits met schachtdoorn naar binnen gebogen weerhaken?",
+      "json_question": "gebogen weerhaken?"
+    },
+    {
+      "question_id": "564",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de driehoekige spits ogiefvormige zijden en naar binnen inbuigende weerhaken en puntige schachtdoorn?",
+      "json_question": "binnen inbuigende weerhaken en puntige schachtdoorn?"
+    },
+    {
+      "question_id": "565",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de relatief lange spits met licht gebogen zijden en een schachtdoorn en weerhaken?",
+      "json_question": "schachtdoorn en weerhaken?"
+    },
+    {
+      "question_id": "570",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een vuistbijl?",
+      "json_question": "vorm van een vuistbijl?"
+    },
+    {
+      "question_id": "570a",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de afslag/kling meer een bijlvorm met snede gemaakt door retouche/bekapping haaks op de snede?",
+      "json_question": "door retouche/bekapping haaks op de snede?"
+    },
+    {
       "question_id": "570a",
       "issue": "suspicious_ja_label",
       "label": "een-halffabricaat---bijl",
       "text_answer": "een halffabricaat - bijl"
+    },
+    {
+      "question_id": "571",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een hacherau (vuistbijl met snede)?",
+      "json_question": "vorm van een hacherau (vuistbijl met snede)?"
+    },
+    {
+      "question_id": "572",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een bijl met de snede nagenoeg in het midden?",
+      "json_question": "vorm van een bijl met de snede nagenoeg in het midden?"
+    },
+    {
+      "question_id": "573",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een bijl met de snede niet in het midden?",
+      "json_question": "vorm van een bijl met de snede niet in het midden?"
+    },
+    {
+      "question_id": "574",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een beitel?",
+      "json_question": "vorm van een beitel?"
+    },
+    {
+      "question_id": "600",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+      "json_question": "een deel is gepolijst?"
     },
     {
       "question_id": "601",
@@ -1044,6 +2430,12 @@
     },
     {
       "question_id": "602",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+      "json_question": "breed , >2,9 cm?"
+    },
+    {
+      "question_id": "602",
       "issue": "suspicious_ja_label",
       "label": "een-bijl",
       "text_answer": "een bijl"
@@ -1056,15 +2448,75 @@
     },
     {
       "question_id": "603",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+      "json_question": "een snede niet in het midden?"
+    },
+    {
+      "question_id": "603",
       "issue": "suspicious_ja_label",
       "label": "een-bijl-dissel",
       "text_answer": "een bijl-dissel"
     },
     {
       "question_id": "604",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+      "json_question": "leisteen )?"
+    },
+    {
+      "question_id": "604",
       "issue": "suspicious_nee_label",
       "label": "gemaakt-van-een-andere-steensoort-dan-vuursteen",
       "text_answer": "gemaakt van een andere steensoort dan vuursteen"
+    },
+    {
+      "question_id": "605",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+      "json_question": "met variabele omtrek?"
+    },
+    {
+      "question_id": "606",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vlakbijl een klokvormige omtrek met gebogen zijden, grootste breedte op ca. 1/3 van de snede?",
+      "json_question": "grootste breedte op ca. 1/3 van de snede?"
+    },
+    {
+      "question_id": "607",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vla kbijl een trapeziumvormige omtrek met rechte zijden?",
+      "json_question": "zijden?"
+    },
+    {
+      "question_id": "608",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vlakbijl een rechthoekige tot zwak trapeziumvormige omtrek?",
+      "json_question": "trapeziumvormige omtrek?"
+    },
+    {
+      "question_id": "609",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "610",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de relatief dikke vuurstenen bijl een min of meer ovale dwarsdoorsnede met een smalle top (in bovenaanzicht )?",
+      "json_question": "dwarsdoorsnede met een smalle top (in bovenaanzicht )?"
+    },
+    {
+      "question_id": "611",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de smaltoppige vuurstenen bijl een min of meer ovale dwarsdoorsnede en geslepen zijden?",
+      "json_question": "dwarsdoorsnede en geslepen zijden?"
+    },
+    {
+      "question_id": "612",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een ovale tot vlak -ovale dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
     },
     {
       "question_id": "612",
@@ -1074,9 +2526,39 @@
     },
     {
       "question_id": "613",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een afgerond rombische dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "613",
       "issue": "suspicious_ja_label",
       "label": "bijl-smaltoppig--met-afgerond--rombische--",
       "text_answer": "bijl-smaltoppig -met-afgerond -rombische -"
+    },
+    {
+      "question_id": "614",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede en een brede top?",
+      "json_question": "dwarsdoorsnede en een brede top?"
+    },
+    {
+      "question_id": "616",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede en geslepen zijden?",
+      "json_question": "dwarsdoorsnede en geslepen zijden?"
+    },
+    {
+      "question_id": "617",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede en is die langer dan 15 cm?",
+      "json_question": "dwarsdoorsnede en is die langer dan 15 cm?"
+    },
+    {
+      "question_id": "618",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
     },
     {
       "question_id": "618",
@@ -1086,21 +2568,63 @@
     },
     {
       "question_id": "620",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+      "json_question": "dwarsdoorsnede , breedte > 2,9 cm?"
+    },
+    {
+      "question_id": "620",
       "issue": "suspicious_nee_label",
       "label": "breedte--29-cm",
       "text_answer": "breedte < 2,9 cm."
     },
     {
-      "question_id": "622",
+      "question_id": "621",
       "issue": "question_text_mismatch",
-      "text_question": "doorsnede en een brede snede? (breed, dissel of hol)",
-      "json_question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een brede snede? (breed, dissel of hol)"
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+      "json_question": "extra breed)?"
     },
     {
       "question_id": "622",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-brede--",
       "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en-brede -"
+    },
+    {
+      "question_id": "623",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een dissel snede?",
+      "json_question": "doorsnede en een dissel snede?"
+    },
+    {
+      "question_id": "626",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een holle snede?",
+      "json_question": "doorsnede en een holle snede?"
+    },
+    {
+      "question_id": "627",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl met holle snede een gebogen onder - en bovenzijde?",
+      "json_question": "en bovenzijde?"
+    },
+    {
+      "question_id": "628",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl met holle snede een parallelle onder - en bovenzijde?",
+      "json_question": "en bovenzijde?"
+    },
+    {
+      "question_id": "629",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een dunne top?",
+      "json_question": "dwarsdoorsnede en een dunne top?"
+    },
+    {
+      "question_id": "630",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een dunne en scherpe top?",
+      "json_question": "dwarsdoorsnede en een dunne en scherpe top?"
     },
     {
       "question_id": "630",
@@ -1110,15 +2634,39 @@
     },
     {
       "question_id": "631",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een vlakke top in dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede en een vlakke top in dwarsdoorsnede?"
+    },
+    {
+      "question_id": "631",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
       "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en dunne -"
     },
     {
       "question_id": "632",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een onregelmatige top in dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "632",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
       "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en-dunne -"
+    },
+    {
+      "question_id": "633",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de bijl een dik blad (Dmax>½B maxe) en rechthoekige dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "634",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dikbladige vuursteenbijl met rechthoekige dwarsdoorsnede een sterk gebogen profiel in lengtedoorsnede met de grootste dikte in het midden?",
+      "json_question": "met de grootste dikte in het midden?"
     },
     {
       "question_id": "634",
@@ -1128,15 +2676,39 @@
     },
     {
       "question_id": "635",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dikbladige vuursteenbijl met rechthoekige dwarsdoorsnede een licht gebogen profiel in lengtedoorsnede?",
+      "json_question": "lengtedoorsnede?"
+    },
+    {
+      "question_id": "635",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
       "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dikbladig -"
     },
     {
       "question_id": "636",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dikbladige vuursteenbijl met rechthoekige dwarsdoorsnede nagenoeg parallelle zijden in lengtedoorsned e?",
+      "json_question": "lengtedoorsned e?"
+    },
+    {
+      "question_id": "636",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
       "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dikbladig -"
+    },
+    {
+      "question_id": "637",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de b ijl een dun blad (Dmax<½B max) en rechthoekige dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "638",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dunbladige vuursteenbijl sterk gekromde onder - en bovenzijden?",
+      "json_question": "bovenzijden?"
     },
     {
       "question_id": "638",
@@ -1146,9 +2718,51 @@
     },
     {
       "question_id": "639",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de dunbladige vuursteenbijl parallelle onder - en bovenzijden?",
+      "json_question": "bovenzijden?"
+    },
+    {
+      "question_id": "639",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--",
       "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dunbladig -"
+    },
+    {
+      "question_id": "640",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het werktuig smal (max 2,9 cm) , breedte nagenoeg gelijk aan dikte?",
+      "json_question": "aan dikte?"
+    },
+    {
+      "question_id": "660",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de bijl relatief klein en gemaakt van kleischalie (gelaagd gesteente ontstaan uit klei)?",
+      "json_question": "gesteente ontstaan uit klei)?"
+    },
+    {
+      "question_id": "661",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl (niet van vuursteen of lydiet) een snede in het midden?",
+      "json_question": "in het midden?"
+    },
+    {
+      "question_id": "662",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl (niet van vuursteen of lydiet) een ronde dwarsdoorsnede?",
+      "json_question": "dwarsdoorsnede?"
+    },
+    {
+      "question_id": "663",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een ronde dwarsdoorsnede en een dunne en smalle top?",
+      "json_question": "en smalle top?"
+    },
+    {
+      "question_id": "664",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een ronde dwarsdoorsnede op het dikste deel en een dunne en smalle top?",
+      "json_question": "deel en een dunne en smalle top?"
     },
     {
       "question_id": "664",
@@ -1158,15 +2772,135 @@
     },
     {
       "question_id": "665",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een ronde dwarsdoorsnede met 1 tot 4 afgeplatte zijden en een dunne en smalle top?",
+      "json_question": "afgeplatte zijden en een dunne en smalle top?"
+    },
+    {
+      "question_id": "665",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--",
       "text_answer": "bijl-met-ronde -dwarsdoorsnede -en-dunne -smalle -"
+    },
+    {
+      "question_id": "666",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een ronde dwarsdoorsnede en een stompe top?",
+      "json_question": "top?"
+    },
+    {
+      "question_id": "667",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een ronde dwarsdoorsnede op het dikste deel en een stompe top?",
+      "json_question": "deel en een stompe top?"
+    },
+    {
+      "question_id": "668",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een ronde dwarsdoorsnede met 1 tot 4 afgeplatte zijden en een stompe top?",
+      "json_question": "afgeplatte zijden en een stompe top?"
+    },
+    {
+      "question_id": "671",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een vlak -ovale dwarsdoorsnede over de gehele lengte en smalle top?",
+      "json_question": "gehele lengte en smalle top?"
     },
     {
       "question_id": "671",
       "issue": "suspicious_ja_label",
       "label": "bijl-met-ovale--doorsnede--en-smalle--top-doorsnede--",
       "text_answer": "bijl-met-ovale -doorsnede -en-smalle -top-doorsnede -"
+    },
+    {
+      "question_id": "672",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een vlak -ovale dwarsdoorsnede met afgeplatte zijden en smalle top?",
+      "json_question": "afgeplatte zijden en smalle top?"
+    },
+    {
+      "question_id": "673",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een vlak-ovale dwarsdoorsnede, klokvormige omtrek en een brede top?",
+      "json_question": "klokvormige omtrek en een brede top?"
+    },
+    {
+      "question_id": "675",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een rechthoekige doorsnede en is die slank en tamelijk lang B<½ L?",
+      "json_question": "slank en tamelijk lang B<½ L?"
+    },
+    {
+      "question_id": "676",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de lange stenen bijl een rechthoekige doorsnede en is die klokvormig?",
+      "json_question": "die klokvormig?"
+    },
+    {
+      "question_id": "677",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de lange stenen bijl een rechthoekige doorsnede en is die trapeziumvormig?",
+      "json_question": "die trapeziumvormig?"
+    },
+    {
+      "question_id": "678",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de lange stenen bijl een rechthoekige doorsnede en is die rechthoekig van vorm?",
+      "json_question": "die rechthoekig van vorm?"
+    },
+    {
+      "question_id": "679",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de stenen bijl een rechthoekige doorsnede en is die breed en tamelijk kort B>½L?",
+      "json_question": "breed en tamelijk kort B>½L?"
+    },
+    {
+      "question_id": "680",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de korte stenen bijl een rechthoekige doorsnede en is die klokvormig?",
+      "json_question": "die klokvormig?"
+    },
+    {
+      "question_id": "681",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de korte stenen bijl een rechthoekige doorsnede en is die trapeziumvormig?",
+      "json_question": "die trapeziumvormig?"
+    },
+    {
+      "question_id": "682",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de korte stenen bijl een rechthoekige doorsnede en is die rechthoekig van vorm?",
+      "json_question": "die rechthoekig van vorm?"
+    },
+    {
+      "question_id": "683",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de bijl geheel of gedeeltelijk geslepen met de snede niet in het midden of is de bijl asymmetrisch in lengtedoorsnede?",
+      "json_question": "het midden of is de bijl asymmetrisch in lengtedoorsnede?"
+    },
+    {
+      "question_id": "704",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+      "json_question": "in het midden?"
+    },
+    {
+      "question_id": "705",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+      "json_question": "evenwijdig aan het gat?"
+    },
+    {
+      "question_id": "707",
+      "issue": "question_text_mismatch",
+      "text_question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+      "json_question": "en heeft die 2 ‘snedes ’?"
+    },
+    {
+      "question_id": "708",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de dubbelbijl is wel symmetrisch qua zij aanzicht maar heeft die maar één echte snede en zit het gat zit iets meer naar de stompe kant?",
+      "json_question": "stompe kant?"
     },
     {
       "question_id": "708",
@@ -1188,9 +2922,21 @@
     },
     {
       "question_id": "713",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een vlakke bovenzijde en licht concave onderzijde en een gefacetteerd oppervlak?",
+      "json_question": "onderzijde en een gefacetteerd oppervlak?"
+    },
+    {
+      "question_id": "713",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--gefacetteerd--type-1",
       "text_answer": "bijl-hamer -gefacetteerd -type-1"
+    },
+    {
+      "question_id": "714",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een vlakke boven - en onderzijde en duidelijke rand op de versterking rond gat en een gefacetteerd oppervlak?",
+      "json_question": "oppervlak?"
     },
     {
       "question_id": "714",
@@ -1200,9 +2946,21 @@
     },
     {
       "question_id": "715",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een vlakke boven - onderzijde zonder duidelijke rand op de versterking rond gat en een gefacetteerd oppervlak?",
+      "json_question": "oppervlak?"
+    },
+    {
+      "question_id": "715",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--gefacetteerd--type-2b",
       "text_answer": "bijl-hamer -gefacetteerd -type-2b"
+    },
+    {
+      "question_id": "717",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+      "json_question": "onderzijde?"
     },
     {
       "question_id": "717",
@@ -1212,9 +2970,21 @@
     },
     {
       "question_id": "718",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een sterke concave onderzijde en min of meer vierzijdige dwarsdoorsnede bij de nek?",
+      "json_question": "meer vierzijdige dwarsdoorsnede bij de nek?"
+    },
+    {
+      "question_id": "718",
       "issue": "suspicious_ja_label",
       "label": "type-h-en-g",
       "text_answer": "type H en G"
+    },
+    {
+      "question_id": "719",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+      "json_question": "uitgewaaierde nek een scherpe verdikking bij het gat?"
     },
     {
       "question_id": "719",
@@ -1224,9 +2994,21 @@
     },
     {
       "question_id": "720",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+      "json_question": "onderzijde en sterk versmalde nek en zit het gat in de nek?"
+    },
+    {
+      "question_id": "720",
       "issue": "suspicious_ja_label",
       "label": "type-k-en-l",
       "text_answer": "type K en L"
+    },
+    {
+      "question_id": "721",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+      "json_question": "verkleinde of genepen nek?"
     },
     {
       "question_id": "721",
@@ -1242,6 +3024,12 @@
     },
     {
       "question_id": "722",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+      "json_question": "een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?"
+    },
+    {
+      "question_id": "722",
       "issue": "suspicious_ja_label",
       "label": "type-a--ba",
       "text_answer": "type A , BA"
@@ -1254,9 +3042,21 @@
     },
     {
       "question_id": "723",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl met ronde dwarsdoorsnede en scherpe verdikking bij de snede?",
+      "json_question": "verdikking bij de snede?"
+    },
+    {
+      "question_id": "723",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--type-ba",
       "text_answer": "bijl-hamer -type-BA"
+    },
+    {
+      "question_id": "724",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de asymmetrische hamerbijl met convexe boven en concave onderzijde en vierzijdige dwarsdoorsnede en een scherpe verdikking bij het steelgat?",
+      "json_question": "scherpe verdikking bij het steelgat?"
     },
     {
       "question_id": "724",
@@ -1272,9 +3072,21 @@
     },
     {
       "question_id": "726",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+      "json_question": "een symmetrische vorm , vierzijdige dwarsdoorsnede?"
+    },
+    {
+      "question_id": "726",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--type-i",
       "text_answer": "bijl-hamer -type-I"
+    },
+    {
+      "question_id": "727",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een convexe boven - en licht convexe onderzijde zonder of lichte verdikking rond het gat?",
+      "json_question": "onderzijde zonder of lichte verdikking rond het gat?"
     },
     {
       "question_id": "727",
@@ -1290,6 +3102,12 @@
     },
     {
       "question_id": "728",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+      "json_question": "zonder verdikking rond het gat?"
+    },
+    {
+      "question_id": "728",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--type-r",
       "text_answer": "bijl-hamer -type-R"
@@ -1302,9 +3120,21 @@
     },
     {
       "question_id": "729",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde , vlakke onderzijde en afgeronde verdikking rond het gat?",
+      "json_question": "vlakke onderzijde en afgeronde verdikking rond het gat?"
+    },
+    {
+      "question_id": "729",
       "issue": "suspicious_ja_label",
       "label": "type-c-en-ca",
       "text_answer": "type C en CA"
+    },
+    {
+      "question_id": "730",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+      "json_question": "vierhoekige doorsnede?"
     },
     {
       "question_id": "730",
@@ -1320,9 +3150,21 @@
     },
     {
       "question_id": "731",
+      "issue": "question_text_mismatch",
+      "text_question": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
+      "json_question": "onderzijde zonder verdikking bij het gat?"
+    },
+    {
+      "question_id": "731",
       "issue": "suspicious_ja_label",
       "label": "type-zuidvelde-en-emmen",
       "text_answer": "type Zuidvelde en Emmen"
+    },
+    {
+      "question_id": "732",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat?",
+      "json_question": "versterking van het gat?"
     },
     {
       "question_id": "732",
@@ -1338,15 +3180,33 @@
     },
     {
       "question_id": "733",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl een vlakke tot licht concave bovenzijde en sterk concave onderzijde en afgeronde verdikking bij het steelgat?",
+      "json_question": "steelgat?"
+    },
+    {
+      "question_id": "733",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--type-f",
       "text_answer": "bijl-hamer -type-F"
     },
     {
       "question_id": "734",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl met vlakke tot licht concave bovenzijde en concave onderzijde een duidelijke verdikking rond het steelgat, een asymmetrische vorm en sterk uitgewaaierde snede?",
+      "json_question": "snede?"
+    },
+    {
+      "question_id": "734",
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--type-d",
       "text_answer": "bijl-hamer -type-D"
+    },
+    {
+      "question_id": "735",
+      "issue": "question_text_mismatch",
+      "text_question": "Heeft de hamerbijl type K een convexe bovenzijde en concave onderzijde en gebogen en versmalde nek?",
+      "json_question": "onderzijde en gebogen en versmalde nek?"
     },
     {
       "question_id": "735",
@@ -1382,13 +3242,13 @@
     },
     "5": {
       "question_id": "5",
-      "question_text": "gepolijst e vlakken?",
+      "question_text": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
       "ja_raw": "geslepen -vuurstenen -artefact",
       "nee_raw": "Terug artefactgroepen start"
     },
     "6": {
       "question_id": "6",
-      "question_text": "een ventrale zijde?",
+      "question_text": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
       "ja_raw": "het artefact heeft (resten) van een ventrale zijde",
       "nee_raw": "het is bifaciaal bewerkt of deels niet bewerkt"
     },

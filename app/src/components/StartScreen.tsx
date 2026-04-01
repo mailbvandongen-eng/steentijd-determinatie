@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.25',
+    title: 'Eerste vraagteksten bronvaster gemaakt',
+    items: [
+      'De eerste hoofdvragen in de AWN-bronboom zijn nu uitgebreid van verkorte prompts naar volledige bronformuleringen',
+      'De bronaudit meet nu scherper dat veel JSON-vragen nog verkort zijn ten opzichte van het algoritmedocument',
+      'Deze release markeert de eerste echte opschoningsronde van vraagteksten, niet alleen van route- en spronglogica',
+    ],
+  },
+  {
     version: '2.2.24',
     title: 'Eerste bronreparatie uitgevoerd',
     items: [

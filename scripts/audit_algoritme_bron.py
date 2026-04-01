@@ -59,17 +59,34 @@ def normalize_label(value: str | None) -> str | None:
     return value or None
 
 
-def extract_first_question_line(page: str) -> str:
-    candidates = []
-    for line in page.splitlines():
-      stripped = normalize_whitespace(line)
-      if "?" in stripped:
-          candidates.append(stripped)
+def extract_question_text(page: str) -> str:
+    lines = [normalize_whitespace(line) for line in page.splitlines()]
 
-    # Kies de eerste echte vraagregel; korte labels als "Natuurlijk ..2" vallen af.
-    for candidate in candidates:
-        if len(candidate) > 12 and not candidate.startswith(".."):
-            return normalize_question(candidate)
+    qid_index = next((i for i, line in enumerate(lines) if QUESTION_ID_RE.search(line)), None)
+    if qid_index is None:
+        return ""
+
+    collected: list[str] = []
+    for line in lines[qid_index + 1 :]:
+        if not line:
+            if collected:
+                continue
+            continue
+
+        if line.startswith(("Ja", "Nee", "Terug")):
+            break
+
+        if QUESTION_ID_RE.search(line):
+            break
+
+        if line in {"Natuurlijk", "Niet-natuurlijk", "Vuursteen kwartsiet lydiet"}:
+            continue
+
+        collected.append(line)
+
+    question = normalize_question(" ".join(collected))
+    if "?" in question and len(question) > 12:
+        return question
     return ""
 
 
@@ -93,7 +110,7 @@ def parse_algoritme_questions(content: str) -> dict[str, TextQuestion]:
         question_id = qid_match.group(1)
         parsed[question_id] = TextQuestion(
             question_id=question_id,
-            question_text=extract_first_question_line(page),
+            question_text=extract_question_text(page),
             ja_raw=extract_answer_line(page, "Ja"),
             nee_raw=extract_answer_line(page, "Nee"),
         )
