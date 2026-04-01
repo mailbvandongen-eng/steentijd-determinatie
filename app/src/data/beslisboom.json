@@ -35,7 +35,7 @@
     "nee": "het-artefact-is-een-knol--brok-of-vorstsplijting"
   },
   "8": {
-    "vraag": "",
+    "vraag": "Heeft het meer dan 2 afslagnegatieven?",
     "ja": "het-is-een-artefact",
     "nee": "1-of-2-het-is-een-brok-of-vorstsplijting"
   },
@@ -50,7 +50,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "10": {
-    "vraag": "",
+    "vraag": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag-negatief)",
     "ja": "mogelijk-gemodificeerd",
     "nee": "niet-gemodificeerd-brok-of-vorstsplijting"
   },
@@ -60,7 +60,7 @@
     "nee": "een-klein-of-onherkenbaar-slagvlak"
   },
   "12": {
-    "vraag": "",
+    "vraag": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde, lijkt op een omgekeerde schildpad)",
     "ja": "nee",
     "nee": "terug-artefactgroepen-start"
   },
@@ -190,7 +190,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "35": {
-    "vraag": "",
+    "vraag": "Heeft de knol, brok of kern een geretoucheerde punt met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)",
     "ja": "boor--kern",
     "nee": "terug-artefactgroepen-start"
   },
@@ -605,7 +605,7 @@
     "nee": "het-artefact-heeft-de-vorm-van-een-vuistbijl"
   },
   "132": {
-    "vraag": "",
+    "vraag": "De vuistbijl heeft een primitief uiterlijk en houdt het midden tussen een chopping tool en een vuistbijl.",
     "ja": "een-proto--vuistbijl",
     "nee": "terug-artefactgroepen-start"
   },
@@ -670,7 +670,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "141": {
-    "vraag": "",
+    "vraag": "Is de vuistbijl gedeeltelijk bewerkt, aan één zijde bewerkt of gemaakt van een dikke afslag?",
     "ja": "uniface",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1060,7 +1060,7 @@
     "nee": "steker--kielvormig"
   },
   "230": {
-    "vraag": "",
+    "vraag": "Heeft het artefact 1, 2 of meer uitgeretoucheerde punten met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)",
     "ja": "boor-bec-of-ruimer",
     "nee": "nee-overige-groepen-afslagklingwerktuigen"
   },
@@ -1965,7 +1965,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "560": {
-    "vraag": "",
+    "vraag": "Heeft het artefact alleen een schachtdoorn? (dennenboompje)",
     "ja": "spits--driehoekig--met-schachtdoorn",
     "nee": "met-weerhaken"
   },
@@ -2130,7 +2130,7 @@
     "nee": "normale-sned-e"
   },
   "622": {
-    "vraag": "",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een brede snede? (breed, dissel of hol)",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--en-brede--",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2552,6 +2552,11 @@
   "800": {
     "vraag": "Heeft het artefact  een plaatvorm met 2 of meer gaten?",
     "ja": "polsbeschermer",
+    "nee": "terug-artefactgroepen-start"
+  },
+  "801": {
+    "vraag": "Nog verder uit te werken",
+    "ja": "terug-artefactgroepen-start",
     "nee": "terug-artefactgroepen-start"
   }
 }

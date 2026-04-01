@@ -76,7 +76,12 @@ VALID_TYPE_HINTS = (
 
 
 def classify_issue(issue: dict) -> str:
-    if issue["issue"] in {"empty_question_in_json", "missing_in_beslisboom_json", "missing_in_algoritme_txt_parse"}:
+    if issue["issue"] in {
+        "empty_question_in_json",
+        "missing_in_beslisboom_json",
+        "missing_in_algoritme_txt_parse",
+        "question_text_mismatch",
+    }:
         return "parser_error"
 
     label = issue.get("label", "")

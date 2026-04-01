@@ -1,14 +1,14 @@
 {
   "summary": {
     "algoritme_questions": 512,
-    "json_questions": 511,
-    "issue_count": 229,
-    "empty_question_in_json": 9,
-    "question_text_mismatch": 0,
+    "json_questions": 512,
+    "issue_count": 224,
+    "empty_question_in_json": 0,
+    "question_text_mismatch": 5,
     "suspicious_label_count": 219,
-    "missing_in_json": 1,
+    "missing_in_json": 0,
     "missing_in_txt_parse": 0,
-    "parser_error": 127,
+    "parser_error": 122,
     "route_label": 95,
     "likely_valid_type": 7
   },
@@ -50,12 +50,6 @@
     },
     {
       "question_id": "8",
-      "issue": "empty_question_in_json",
-      "text_question": "",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "8",
       "issue": "suspicious_ja_label",
       "label": "het-is-een-artefact",
       "text_answer": "Het is een artefact",
@@ -84,8 +78,9 @@
     },
     {
       "question_id": "10",
-      "issue": "empty_question_in_json",
+      "issue": "question_text_mismatch",
       "text_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat",
+      "json_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag-negatief)",
       "category": "parser_error"
     },
     {
@@ -104,8 +99,9 @@
     },
     {
       "question_id": "12",
-      "issue": "empty_question_in_json",
+      "issue": "question_text_mismatch",
       "text_question": "Is de kern gemaakt in Levallois -techniek? (Naar het midden",
+      "json_question": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde, lijkt op een omgekeerde schildpad)",
       "category": "parser_error"
     },
     {
@@ -173,8 +169,9 @@
     },
     {
       "question_id": "35",
-      "issue": "empty_question_in_json",
+      "issue": "question_text_mismatch",
       "text_question": "driehoekige of vierzijdige doorsnede? (Maar is niet de punt",
+      "json_question": "Heeft de knol, brok of kern een geretoucheerde punt met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)",
       "category": "parser_error"
     },
     {
@@ -347,12 +344,6 @@
     },
     {
       "question_id": "132",
-      "issue": "empty_question_in_json",
-      "text_question": "",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "132",
       "issue": "suspicious_ja_label",
       "label": "een-proto--vuistbijl",
       "text_answer": "een proto -vuistbijl",
@@ -378,12 +369,6 @@
       "label": "nee-heel-klein--6-cm-of-heel-dun",
       "text_answer": "Nee heel klein (< 6 cm) of heel dun",
       "category": "route_label"
-    },
-    {
-      "question_id": "141",
-      "issue": "empty_question_in_json",
-      "text_question": "",
-      "category": "parser_error"
     },
     {
       "question_id": "154",
@@ -702,8 +687,9 @@
     },
     {
       "question_id": "230",
-      "issue": "empty_question_in_json",
+      "issue": "question_text_mismatch",
       "text_question": "driehoekige of vierzijdige doorsnede? (Maar is niet de punt",
+      "json_question": "Heeft het artefact 1, 2 of meer uitgeretoucheerde punten met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)",
       "category": "parser_error"
     },
     {
@@ -1204,12 +1190,6 @@
       "category": "route_label"
     },
     {
-      "question_id": "560",
-      "issue": "empty_question_in_json",
-      "text_question": "Heeft het artefact alleen een schachtdoorn? (dennenboompje)",
-      "category": "parser_error"
-    },
-    {
       "question_id": "561",
       "issue": "suspicious_ja_label",
       "label": "spits--driehoekig--met-schachtdoor-n-en-korte--",
@@ -1295,8 +1275,9 @@
     },
     {
       "question_id": "622",
-      "issue": "empty_question_in_json",
+      "issue": "question_text_mismatch",
       "text_question": "doorsnede en een brede snede? (breed, dissel of hol)",
+      "json_question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een brede snede? (breed, dissel of hol)",
       "category": "parser_error"
     },
     {
@@ -1598,12 +1579,6 @@
       "issue": "suspicious_ja_label",
       "label": "bijl-hamer--type-muntendam",
       "text_answer": "bijl-hamer -type-muntendam",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "801",
-      "issue": "missing_in_beslisboom_json",
-      "text_question": "",
       "category": "parser_error"
     }
   ]

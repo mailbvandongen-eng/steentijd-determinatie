@@ -4,12 +4,12 @@ Let op: dit is een brede heuristische eerste audit. Niet elk gemarkeerd label is
 
 Samenvatting:
 - Vragen uit `algoritme.txt`: 512
-- Vragen uit `beslisboom.json`: 511
-- Totaal gevonden heuristische issues: 229
-- Lege vragen in JSON: 9
-- Vraagtekst-mismatches: 0
+- Vragen uit `beslisboom.json`: 512
+- Totaal gevonden heuristische issues: 224
+- Lege vragen in JSON: 0
+- Vraagtekst-mismatches: 5
 - Verdachte antwoordlabels: 219
-- Ontbrekend in JSON: 1
+- Ontbrekend in JSON: 0
 - Ontbrekend in txt-parse: 0
 
 Eerste 30 issues:
@@ -18,15 +18,14 @@ Eerste 30 issues:
 - `..6` `suspicious_ja_label` -> `het-artefact-heeft-resten-van-een-ventrale-zijde`
 - `..6` `suspicious_nee_label` -> `het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt`
 - `..7` `suspicious_nee_label` -> `het-artefact-is-een-knol--brok-of-vorstsplijting`
-- `..8` `empty_question_in_json`
 - `..8` `suspicious_ja_label` -> `het-is-een-artefact`
 - `..9` `suspicious_ja_label` -> `een-kern--werktuig`
 - `..9` `suspicious_nee_label` -> `een-kern`
 - `..9a` `suspicious_ja_label` -> `een-brokvorstsplijting--getest`
-- `..10` `empty_question_in_json`
+- `..10` `question_text_mismatch`
 - `..11` `suspicious_ja_label` -> `nee-een-klein-of-onherkenbaar-slagvlak`
 - `..11` `suspicious_nee_label` -> `een-klein-of-onherkenbaar-slagvlak`
-- `..12` `empty_question_in_json`
+- `..12` `question_text_mismatch`
 - `..12` `suspicious_ja_label` -> `nee`
 - `..12a` `suspicious_ja_label` -> `nee`
 - `..13` `suspicious_ja_label` -> `een-kern--gelegenhei-ds`
@@ -36,12 +35,13 @@ Eerste 30 issues:
 - `..27` `suspicious_nee_label` -> `een-kern--kling`
 - `..28a` `suspicious_nee_label` -> `een-kern--lamelle`
 - `..32` `suspicious_ja_label` -> `nee-zie-vorige-determinatie-`
-- `..35` `empty_question_in_json`
+- `..35` `question_text_mismatch`
 - `..40` `suspicious_nee_label` -> `de-afslag-of-kling-is-niet-bewerkt`
 - `..45a` `suspicious_ja_label` -> `een-rugmes`
 - `..45a` `suspicious_nee_label` -> `een-afslag--decorticatie`
 - `..86` `suspicious_ja_label` -> `het-is-een-artefact`
 - `..101` `suspicious_ja_label` -> `nee`
 - `..102` `suspicious_ja_label` -> `nee`
+- `..103` `suspicious_ja_label` -> `nee-grof-bewerkt`
 
 Volledige machine-readable audit: `audit/algoritme_beslisboom_audit.json`

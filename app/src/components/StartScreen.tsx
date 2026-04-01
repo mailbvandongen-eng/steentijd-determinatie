@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.24',
+    title: 'Eerste bronreparatie uitgevoerd',
+    items: [
+      'Lege vraagteksten in de AWN-bronboom zijn nu aangevuld vanuit het algoritmedocument',
+      'Het ontbrekende bronknooppunt 801 is toegevoegd als expliciete placeholder',
+      'De geautomatiseerde audit laat nu geen lege vragen of ontbrekende knooppunten meer zien',
+    ],
+  },
+  {
     version: '2.2.23',
     title: 'Bronissues geclassificeerd',
     items: [

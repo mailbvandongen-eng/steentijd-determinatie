@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.24', date: '1 apr 2026', changes: ['Lege vraagteksten in de AWN-bronboom zijn nu aangevuld vanuit het algoritmedocument', 'Het ontbrekende bronknooppunt 801 is toegevoegd als expliciete placeholder', 'De geautomatiseerde audit laat nu geen lege vragen of ontbrekende knooppunten meer zien'] },
   { version: '2.2.23', date: '1 apr 2026', changes: ['De baseline-audit wordt nu automatisch gesplitst in parserfouten, routekoppen en vermoedelijk geldige typen', 'De repo bevat nu een tweede auditlaag voor prioritering van bronopschoning', 'De volgende inhoudelijke opschoningsronde kan daardoor gericht op echte parserproblemen starten'] },
   { version: '2.2.22', date: '1 apr 2026', changes: ['Een eerste geautomatiseerde audit vergelijkt nu algoritme.txt met beslisboom.json', 'De repo bevat nu een auditrapport met lege vragen, ontbrekende knooppunten en verdachte labels', 'Dit vormt de basis voor de volgende bronvaste opschoningsronde van de expertboom'] },
   { version: '2.2.21', date: '1 apr 2026', changes: ['Bronbeleid voor algoritme, handleiding, hints, AI-toets en beeldmateriaal is vastgelegd', 'Resultaatscherm toont nu het doorlopen beslispad met vragen en antwoorden', 'Hints zijn niet langer beperkt tot drie en AI-validatie heet nu AI-beeldtoets'] },

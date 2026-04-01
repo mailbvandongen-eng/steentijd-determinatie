@@ -31,6 +31,18 @@ Uitkomst huidige audit:
 Belangrijke nuance:
 de eerste audit is expres breed. Niet elk gemarkeerd label is een fout; een deel zijn routekoppen, parserlabels of geldige typen die later nog geclassificeerd moeten worden.
 
+Na eerste bronopschoning:
+- 512 vragen uit `algoritme.txt`
+- 512 vragen uit `beslisboom.json`
+- 224 heuristisch gemarkeerde issues
+- 0 lege vragen in JSON
+- 5 vraagtekst-mismatches
+- 0 ontbrekende vragen in `beslisboom.json`
+
+Wat in deze ronde concreet is verbeterd:
+- de 9 lege vraagteksten zijn bronvast aangevuld uit `algoritme.txt`
+- vraag `801` is toegevoegd als expliciet bronplaceholder
+
 Tweede auditlaag:
 - `parser_error`: 127
 - `route_label`: 95
