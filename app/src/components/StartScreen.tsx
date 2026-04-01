@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.36',
+    title: 'Spitsroute in Expert rechtgetrokken',
+    items: [
+      'De hoofdvertakkingen voor spitsen springen nu door naar de juiste deelboom in plaats van op parserlabels als "geen punt" of "segmentvorm" te stranden',
+      'Ook de eenzijdig en tweezijdig geretoucheerde spitsroutes lopen nu consistenter door vanaf vraag 476 tot en met de subtypevragen',
+      'Ruwe eindlabels zoals "spits zonder steel of kerf" en eenzijdig of tweezijdig steil geretoucheerde spitsen tonen nu leesbare uitkomsten',
+    ],
+  },
+  {
     version: '2.2.35',
     title: 'Combinatiewerktuigroute aangescherpt',
     items: [

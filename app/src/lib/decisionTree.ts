@@ -2207,6 +2207,11 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--naaldvormig': 'Naaldvormige spits',
   'spits--sauveterre': 'Sauveterre-spits',
   'spits--tweezijdig-steil-geretoucheerd': 'Tweezijdig steil geretoucheerde spits',
+  'spits-zonder-steel-of-kerf': 'Spits zonder steel of kerf',
+  'een-artefact-zonder-duidelijke-punt': 'Artefact zonder duidelijke punt',
+  'spits-eenzijdig-en-basis': 'Spits met geretoucheerde zijde en basis',
+  'spits-eenzijdig--steil-geretoucheerd': 'Eenzijdig steil geretoucheerde spits',
+  'steil-geretoucheerde-spits-gemaakt-van-beide-zijden': 'Van beide zijden steil geretoucheerde spits',
   'nee-grof-bewerkt': 'Fijn oppervlaktegeretoucheerd bifaciaal werktuig',
   'grof-bewerkt': 'Grof oppervlaktegeretoucheerd bifaciaal werktuig',
   chopper: 'Chopper',
@@ -2450,6 +2455,42 @@ function processExpertAnswer(
 
   if (questionId === '290' && answer === 'nee') {
     return { isEnd: true, result: 'een-combinatiewerktuig' };
+  }
+
+  if (questionId === '391') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '410' : '392' };
+  }
+
+  if (questionId === '410') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '412' : '430' };
+  }
+
+  if (questionId === '430') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '431' : '476' };
+  }
+
+  if (questionId === '431') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '432' : '450' };
+  }
+
+  if (questionId === '450') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '451' : '470' };
+  }
+
+  if (questionId === '476') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '477' : '493' };
+  }
+
+  if (questionId === '477') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '478' : '479' };
+  }
+
+  if (questionId === '478') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '487' : '485' };
+  }
+
+  if (questionId === '479' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '480' };
   }
 
   if (!target) {
