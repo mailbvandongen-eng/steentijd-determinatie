@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.16',
+    title: 'Expert sprongen gerepareerd',
+    items: [
+      'Kapotte expert-sprongen voor gat, cortex en geslepen artefacten zijn gerepareerd',
+      'Interne parserlabels zoals losse \"nee\"-uitkomsten lopen nu door naar de volgende AWN-vraag',
+      'De expertboom kapt daardoor minder vaak te vroeg af op technische tussenlabels',
+    ],
+  },
+  {
     version: '2.2.15',
     title: 'Vervolgstatus zichtbaar gemaakt',
     items: [

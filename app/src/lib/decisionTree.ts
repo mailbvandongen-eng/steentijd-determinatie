@@ -61,16 +61,20 @@ const EXPERT_QUESTION_OVERRIDES: Partial<Record<string, string>> = {
 
 const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'doorboord--artefact': '700',
+  'géén-gat-of-een-natuurlijk-gat': '3',
   'artefact-van-vuursteen--kwartsiet-of-lydiet': '5',
   'van-een-andere-steensoort': '4',
   'geslepen--bijl': '660',
   'geslepen--vuurstenen--artefact': '601',
+  'nee-het-artefact-is-een-artefact--geslepen': '602',
+  'het-artefact-is-een-artefact--geslepen': '602',
   'het-artefact-heeft-resten-van-een-ventrale-zijde': '40',
   'het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt': '125',
   'één-of-meer-afslagnegatieven': '8',
   'het-artefact-is-een-knol--brok-of-vorstsplijting': '9a',
   'het-is-een-artefact': '9',
   '1-of-2-het-is-een-brok-of-vorstsplijting': '10',
+  'mogelijk-gemodificeerd': '32',
   'een-kern--werktuig': '33',
   'een-kern': '11',
   'nee-een-klein-of-onherkenbaar-slagvlak': '18',
@@ -83,6 +87,7 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'afslagkling--werktuig': '201',
   'de-afslag-of-kling-is-niet-bewerkt': '41',
   afslag: '42',
+  'geen-cortex': '73',
   kling: '71',
 };
 
@@ -1994,6 +1999,10 @@ function processExpertAnswer(
     return nextQuestionId
       ? { isEnd: false, nextQuestion: nextQuestionId }
       : { isEnd: true, result: formatTypeName(target) };
+  }
+
+  if (target === 'nee' && nextQuestionId) {
+    return { isEnd: false, nextQuestion: nextQuestionId };
   }
 
   if (answer === 'ja' && isExpertQuestionRelatedToLabel(nextQuestionId, target)) {
