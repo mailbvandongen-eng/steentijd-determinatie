@@ -2,14 +2,14 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 456,
+    "issue_count": 450,
     "empty_question_in_json": 0,
     "question_text_mismatch": 261,
-    "suspicious_label_count": 195,
+    "suspicious_label_count": 189,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0,
     "parser_error": 367,
-    "route_label": 84,
+    "route_label": 78,
     "likely_valid_type": 5
   },
   "issues": [
@@ -63,13 +63,6 @@
       "category": "route_label"
     },
     {
-      "question_id": "32",
-      "issue": "suspicious_ja_label",
-      "label": "nee-zie-vorige-determinatie-",
-      "text_answer": "Nee zie vorige determinatie :",
-      "category": "route_label"
-    },
-    {
       "question_id": "101",
       "issue": "suspicious_ja_label",
       "label": "nee",
@@ -81,20 +74,6 @@
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee",
-      "category": "route_label"
-    },
-    {
-      "question_id": "103",
-      "issue": "suspicious_ja_label",
-      "label": "nee-grof-bewerkt",
-      "text_answer": "Nee grof bewerkt",
-      "category": "route_label"
-    },
-    {
-      "question_id": "104",
-      "issue": "suspicious_ja_label",
-      "label": "nee-voor-een-groot-deel-bekapt",
-      "text_answer": "Nee voor een groot deel bekapt",
       "category": "route_label"
     },
     {
@@ -130,13 +109,6 @@
       "issue": "suspicious_nee_label",
       "label": "de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig",
       "text_answer": "de vorm van een bijl , beitel of ander kernwerktuig",
-      "category": "route_label"
-    },
-    {
-      "question_id": "126",
-      "issue": "suspicious_ja_label",
-      "label": "nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
-      "text_answer": "Nee het artefact heeft de vorm van een vuistbijl of bladvorm",
       "category": "route_label"
     },
     {
@@ -231,13 +203,6 @@
       "category": "parser_error"
     },
     {
-      "question_id": "136",
-      "issue": "suspicious_ja_label",
-      "label": "nee-heel-klein--6-cm-of-heel-dun",
-      "text_answer": "Nee heel klein (< 6 cm) of heel dun",
-      "category": "route_label"
-    },
-    {
       "question_id": "138",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de n vuistbijl een hartvormige vorm , met zeer convexe zijde n en ronde basis en enigszins ronde punt?",
@@ -323,13 +288,6 @@
     },
     {
       "question_id": "154",
-      "issue": "suspicious_ja_label",
-      "label": "nee-het-artefact-is-asymmetrisch",
-      "text_answer": "Nee het artefact is asymmetrisch",
-      "category": "route_label"
-    },
-    {
-      "question_id": "154",
       "issue": "suspicious_nee_label",
       "label": "het-artefact-is-asymmetrisch",
       "text_answer": "het artefact is asymmetrisch",
@@ -345,7 +303,7 @@
     {
       "question_id": "155",
       "issue": "suspicious_ja_label",
-      "label": "nee-aan-beide-oppervlakken",
+      "label": "een-oppervlak-bewerkt",
       "text_answer": "Nee aan beide oppervlakken",
       "category": "route_label"
     },

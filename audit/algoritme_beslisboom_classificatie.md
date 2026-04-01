@@ -4,7 +4,7 @@ Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
 - parser_error: 367
-- route_label: 84
+- route_label: 78
 - likely_valid_type: 5
 
 Voorbeelden parser_error:
@@ -37,19 +37,19 @@ Voorbeelden route_label:
 - `..12` `suspicious_ja_label` -> `nee`
 - `..12a` `suspicious_ja_label` -> `nee`
 - `..18` `suspicious_ja_label` -> `nee`
-- `..32` `suspicious_ja_label` -> `nee-zie-vorige-determinatie-`
 - `..101` `suspicious_ja_label` -> `nee`
 - `..102` `suspicious_ja_label` -> `nee`
-- `..103` `suspicious_ja_label` -> `nee-grof-bewerkt`
-- `..104` `suspicious_ja_label` -> `nee-voor-een-groot-deel-bekapt`
 - `..110` `suspicious_ja_label` -> `nee-het-bifaciale-artefact-heeft-een-andere-vorm`
 - `..110` `suspicious_nee_label` -> `het-bifaciale-artefact-heeft-een-andere-vorm`
 - `..111` `suspicious_ja_label` -> `nee`
 - `..125` `suspicious_ja_label` -> `het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
 - `..125` `suspicious_nee_label` -> `de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig`
-- `..126` `suspicious_ja_label` -> `nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
 - `..126` `suspicious_nee_label` -> `het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
 - `..130` `suspicious_nee_label` -> `het-is-een-vuistbijl-of-bladvorm`
+- `..131` `suspicious_ja_label` -> `het-artefact-heeft-een-blad-vorm`
+- `..131` `suspicious_nee_label` -> `het-artefact-heeft-de-vorm-van-een-vuistbijl`
+- `..154` `suspicious_nee_label` -> `het-artefact-is-asymmetrisch`
+- `..155` `suspicious_ja_label` -> `een-oppervlak-bewerkt`
 
 Voorbeelden likely_valid_type:
 - `..197` `suspicious_ja_label` -> `een-sikkel`

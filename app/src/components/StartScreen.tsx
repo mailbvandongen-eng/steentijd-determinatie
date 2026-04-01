@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.51',
+    title: 'Vroege routekoppen verder teruggedrongen',
+    items: [
+      'Een nieuwe batch vroege bifaciale en dolkroutes gebruikt nu minder parserachtige nee-labels en meer expliciete tussenstappen, zonder de bestaande spronglogica te veranderen',
+      'De ruwe bronaudit daalt daardoor verder naar 450 issues en 189 verdachte antwoordlabels',
+      'De classificatie zakt mee naar 78 routekoppen, waardoor vooral de kale nee-labels in de bronlaag steeds verder worden teruggedrongen',
+    ],
+  },
+  {
     version: '2.2.50',
     title: 'Vroege antwoordlabels verder opgeschoond',
     items: [

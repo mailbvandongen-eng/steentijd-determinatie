@@ -176,7 +176,7 @@
   },
   "32": {
     "vraag": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-    "ja": "nee-zie-vorige-determinatie-",
+    "ja": "ga-door-zie-vorige-determinatie",
     "nee": "zie-vorige-determinatie-"
   },
   "33": {
@@ -456,12 +456,12 @@
   },
   "103": {
     "vraag": "Is het artefact  met oppervlakte retouche fijn bewerkt?",
-    "ja": "nee-grof-bewerkt",
+    "ja": "fijn-bewerkt",
     "nee": "grof-bewerkt"
   },
   "104": {
     "vraag": "Is het grof bewerkte artefact voor een kl ein deel bewerkt , bekapt?",
-    "ja": "nee-voor-een-groot-deel-bekapt",
+    "ja": "klein-deel-bekapt",
     "nee": "voor-een-groot-deel-bekapt"
   },
   "105": {
@@ -571,7 +571,7 @@
   },
   "126": {
     "vraag": "Heeft het artefact  een snede als werkkant ?",
-    "ja": "nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
+    "ja": "bijl-beitel-of-ander-kernwerktuig",
     "nee": "het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm"
   },
   "127": {
@@ -641,7 +641,7 @@
   },
   "136": {
     "vraag": "Heeft de vuistbijl een afgeronde punt en is zij relatief dun, met breedte groter dan 2,35 keer de dikte?",
-    "ja": "nee-heel-klein--6-cm-of-heel-dun",
+    "ja": "niet-heel-klein-of-dun",
     "nee": "heel-klein--6-cm-of-heel-dun"
   },
   "137a": {
@@ -726,12 +726,12 @@
   },
   "154": {
     "vraag": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?",
-    "ja": "nee-het-artefact-is-asymmetrisch",
+    "ja": "symmetrische-dolkvorm",
     "nee": "het-artefact-is-asymmetrisch"
   },
   "155": {
     "vraag": "Is de dolk gemaakt van een kling en aan een oppervlak bewerkt?",
-    "ja": "nee-aan-beide-oppervlakken",
+    "ja": "een-oppervlak-bewerkt",
     "nee": "aan-beide-oppervlakken"
   },
   "156": {

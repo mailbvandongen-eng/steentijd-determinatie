@@ -237,7 +237,7 @@ function getExpertContextualJump(
   }
 
   if (questionId === '126') {
-    if (target === 'nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '127';
+    if (target === 'nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' || target === 'bijl-beitel-of-ander-kernwerktuig') return '127';
     if (target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '130';
   }
 
@@ -269,18 +269,18 @@ function getExpertContextualJump(
     return '132';
   }
 
-  if ((target === 'nee-heel-klein--6-cm-of-heel-dun' || target === 'heel-klein--6-cm-of-heel-dun') && questionId === '136') {
+  if ((target === 'nee-heel-klein--6-cm-of-heel-dun' || target === 'niet-heel-klein-of-dun' || target === 'heel-klein--6-cm-of-heel-dun') && questionId === '136') {
     return '146';
   }
 
   if (questionId === '154') {
-    return target === 'nee-het-artefact-is-asymmetrisch'
+    return target === 'nee-het-artefact-is-asymmetrisch' || target === 'symmetrische-dolkvorm'
       ? '155'
       : undefined;
   }
 
   if (questionId === '155') {
-    if (target === 'nee-aan-beide-oppervlakken') return '156';
+    if (target === 'nee-aan-beide-oppervlakken' || target === 'een-oppervlak-bewerkt') return '156';
     if (target === 'aan-beide-oppervlakken') return '158';
     return undefined;
   }
@@ -2103,6 +2103,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'de-afslag-of-kling-is-niet-bewerkt': 'Onbewerkte afslag of kling',
   'afslag-of-kling-onbewerkt': 'Onbewerkte afslag of kling',
   'geretoucheerd-of-bijzondere-bewerking': 'Geretoucheerd of bijzonder bewerkt artefact',
+  'ga-door-zie-vorige-determinatie': 'Ga door met de vorige determinatie',
   'kling--decorticatie': 'Decorticatie-kling',
   'kling--decorticatie--gemodificeerd': 'Gemodificeerde decorticatie-kling',
   'kling--levallois': 'Levallois-kling',
@@ -2339,7 +2340,9 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits-eenzijdig--steil-geretoucheerd': 'Eenzijdig steil geretoucheerde spits',
   'steil-geretoucheerde-spits-gemaakt-van-beide-zijden': 'Van beide zijden steil geretoucheerde spits',
   'nee-grof-bewerkt': 'Fijn oppervlaktegeretoucheerd bifaciaal werktuig',
+  'fijn-bewerkt': 'Fijn oppervlaktegeretoucheerd bifaciaal werktuig',
   'grof-bewerkt': 'Grof oppervlaktegeretoucheerd bifaciaal werktuig',
+  'klein-deel-bekapt': 'Voor een klein deel bekapt artefact',
   'dikke-vuistbijlen': 'Dikke vuistbijlen',
   dun: 'Dun artefact',
   dunbladig: 'Dunbladig artefact',
@@ -2359,6 +2362,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt': 'Bifaciaal of deels onbewerkt artefact',
   'de-kern-of-brok-is-voorzien-van-een-werkkant-punt': 'Kern of brok met werkkant of punt',
   'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
+  'bijl-beitel-of-ander-kernwerktuig': 'Bijl-, beitel- of ander kernwerktuig',
   'het-is-een-vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
   'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig': 'Bijl-, beitel- of ander kernwerktuig',
   'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
@@ -2410,6 +2414,8 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--blad--szeletienne': 'Szeletien-bladspits',
   'half-steile-randretouche-aan-beide-zijden': 'Dolk met half-steile randretouche aan beide zijden',
   'het-artefact-is-asymmetrisch': 'Asymmetrisch fijn bewerkt kernwerktuig',
+  'symmetrische-dolkvorm': 'Symmetrische dolkvorm',
+  'een-oppervlak-bewerkt': 'Aan een oppervlak bewerkte dolk',
   'franse-dolk': 'Franse dolk',
   'onregelmatig-dolk--kling--met-volledige--': 'Onregelmatige klingdolk met volledige retouche',
   'relatief-grof-aan-beide-zijden': 'Relatief grof aan beide zijden bewerkte dolk',
