@@ -32,6 +32,7 @@ ROUTE_PREFIXES = (
 
 ROUTE_EXACT = {
     "nee",
+    "artefact",
     "het-is-een-artefact",
     "een-combinatiewerktuig",
     "een-combinatie--werktuig",
@@ -39,6 +40,10 @@ ROUTE_EXACT = {
     "steile-retouche",
     "vlakke-rand---of-oppervlakte-retouche",
     "het-is-een-geslepen--stenen--artefact",
+    "groot-of-herkenbaar-slagvlak",
+    "meer-dan-één-slagvlak",
+    "afslag-of-kling-onbewerkt",
+    "kern-of-brok-met-werkkant-punt",
 }
 
 PARSER_PATTERNS = (
@@ -72,6 +77,7 @@ VALID_TYPE_HINTS = (
     "vuurkets",
     "billhook",
     "lamelle",
+    "getest",
 )
 
 

@@ -41,12 +41,12 @@
   },
   "9": {
     "vraag": "Heeft het een werkkant of punt ?",
-    "ja": "een-kern--werktuig",
+    "ja": "kern--werktuig",
     "nee": "een-kern"
   },
   "9a": {
     "vraag": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-    "ja": "een-brokvorstsplijting--getest",
+    "ja": "brokvorstsplijting--getest",
     "nee": "terug-artefactgroepen-start"
   },
   "10": {
@@ -56,7 +56,7 @@
   },
   "11": {
     "vraag": "Heeft de kern één of meerdere  grote  herkenbar e slagvlak ken?",
-    "ja": "nee-een-klein-of-onherkenbaar-slagvlak",
+    "ja": "groot-of-herkenbaar-slagvlak",
     "nee": "een-klein-of-onherkenbaar-slagvlak"
   },
   "12": {
@@ -71,7 +71,7 @@
   },
   "13": {
     "vraag": "Heeft de kern een paar min of meer toevallige afslagnegatieven?",
-    "ja": "een-kern--gelegenhei-ds",
+    "ja": "kern--gelegenheids",
     "nee": "terug-artefactgroepen-start"
   },
   "14": {
@@ -126,7 +126,7 @@
   },
   "24": {
     "vraag": "Heeft de kern meer dan één  slagvlak ken?",
-    "ja": "nee-één-slagvlak",
+    "ja": "meer-dan-één-slagvlak",
     "nee": "één-slagvlak"
   },
   "25": {
@@ -141,8 +141,8 @@
   },
   "27": {
     "vraag": "Heeft de kern een bootvorm ?",
-    "ja": "een-kern--kielvormig",
-    "nee": "een-kern--kling"
+    "ja": "kern--kielvormig",
+    "nee": "kern--kling"
   },
   "27a": {
     "vraag": "Zijn de klingkernen relatief groot ?",
@@ -157,7 +157,7 @@
   "28a": {
     "vraag": "Heeft de kern een (omgekeerde) boot vorm ?",
     "ja": "kern--kielvormig-ook-wel-aangeduid-als-kielvormige",
-    "nee": "een-kern--lamelle"
+    "nee": "kern--lamelle"
   },
   "29": {
     "vraag": "Heeft de kern meer dan twee slagvlakken ?",
@@ -207,7 +207,7 @@
   "40": {
     "vraag": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
     "ja": "afslagkling--werktuig",
-    "nee": "de-afslag-of-kling-is-niet-bewerkt"
+    "nee": "afslag-of-kling-onbewerkt"
   },
   "41": {
     "vraag": "Is de lengte maximaal 2 x  de breedte?",
@@ -411,7 +411,7 @@
   },
   "86": {
     "vraag": "Bent u zeker dat het artefact bewerkt is door de prehistorische mens?",
-    "ja": "het-is-een-artefact",
+    "ja": "artefact",
     "nee": "ik-twijfel-het-is-een-incertofact-determineren-als"
   },
   "87": {
@@ -467,7 +467,7 @@
   "105": {
     "vraag": "Is van een kern of brok een primitief werktuig  gemaakt?",
     "ja": "kern-gemodificeerd-of-brok-gemodificeerd",
-    "nee": "de-kern-of-brok-is-voorzien-van-een-werkkant-punt"
+    "nee": "kern-of-brok-met-werkkant-punt"
   },
   "106": {
     "vraag": "Is het grof bewerkte artefact voor een klein deel bewerkt met enige grove afslagen naar een zijde (unifaciaal)?",

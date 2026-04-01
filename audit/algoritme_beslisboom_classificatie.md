@@ -3,18 +3,15 @@
 Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
-- parser_error: 420
-- route_label: 95
+- parser_error: 414
+- route_label: 90
 - likely_valid_type: 7
 
 Voorbeelden parser_error:
 - `..5` `question_text_mismatch`
-- `..9` `suspicious_ja_label` -> `een-kern--werktuig`
-- `..9a` `suspicious_ja_label` -> `een-brokvorstsplijting--getest`
 - `..10` `question_text_mismatch`
 - `..12` `question_text_mismatch`
 - `..12a` `question_text_mismatch`
-- `..13` `suspicious_ja_label` -> `een-kern--gelegenhei-ds`
 - `..14` `question_text_mismatch`
 - `..15` `question_text_mismatch`
 - `..18` `question_text_mismatch`
@@ -22,12 +19,15 @@ Voorbeelden parser_error:
 - `..21` `question_text_mismatch`
 - `..25` `question_text_mismatch`
 - `..26` `question_text_mismatch`
-- `..27` `suspicious_ja_label` -> `een-kern--kielvormig`
-- `..27` `suspicious_nee_label` -> `een-kern--kling`
 - `..28` `question_text_mismatch`
-- `..28a` `suspicious_nee_label` -> `een-kern--lamelle`
 - `..31` `question_text_mismatch`
 - `..33` `question_text_mismatch`
+- `..37` `question_text_mismatch`
+- `..45a` `question_text_mismatch`
+- `..45a` `suspicious_nee_label` -> `een-afslag--decorticatie`
+- `..46` `question_text_mismatch`
+- `..48` `question_text_mismatch`
+- `..50` `question_text_mismatch`
 
 Voorbeelden route_label:
 - `..1` `suspicious_ja_label` -> `een-splinter`
@@ -36,20 +36,20 @@ Voorbeelden route_label:
 - `..6` `suspicious_nee_label` -> `het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt`
 - `..7` `suspicious_nee_label` -> `het-artefact-is-een-knol--brok-of-vorstsplijting`
 - `..8` `suspicious_ja_label` -> `het-is-een-artefact`
-- `..11` `suspicious_ja_label` -> `nee-een-klein-of-onherkenbaar-slagvlak`
 - `..11` `suspicious_nee_label` -> `een-klein-of-onherkenbaar-slagvlak`
 - `..12` `suspicious_ja_label` -> `nee`
 - `..12a` `suspicious_ja_label` -> `nee`
 - `..18` `suspicious_ja_label` -> `nee`
-- `..24` `suspicious_ja_label` -> `nee-één-slagvlak`
 - `..32` `suspicious_ja_label` -> `nee-zie-vorige-determinatie-`
-- `..40` `suspicious_nee_label` -> `de-afslag-of-kling-is-niet-bewerkt`
-- `..86` `suspicious_ja_label` -> `het-is-een-artefact`
 - `..101` `suspicious_ja_label` -> `nee`
 - `..102` `suspicious_ja_label` -> `nee`
 - `..103` `suspicious_ja_label` -> `nee-grof-bewerkt`
 - `..104` `suspicious_ja_label` -> `nee-voor-een-groot-deel-bekapt`
-- `..105` `suspicious_nee_label` -> `de-kern-of-brok-is-voorzien-van-een-werkkant-punt`
+- `..110` `suspicious_ja_label` -> `nee-het-bifaciale-artefact-heeft-een-andere-vorm`
+- `..110` `suspicious_nee_label` -> `het-bifaciale-artefact-heeft-een-andere-vorm`
+- `..111` `suspicious_ja_label` -> `nee`
+- `..117` `suspicious_nee_label` -> `een-asymmetrische-driehoekige-dwarsdoorsnede`
+- `..124` `suspicious_ja_label` -> `de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--`
 
 Voorbeelden likely_valid_type:
 - `..9` `suspicious_nee_label` -> `een-kern`

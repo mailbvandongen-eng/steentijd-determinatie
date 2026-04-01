@@ -2,10 +2,10 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 522,
+    "issue_count": 511,
     "empty_question_in_json": 0,
     "question_text_mismatch": 303,
-    "suspicious_label_count": 219,
+    "suspicious_label_count": 208,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
   },
@@ -54,33 +54,15 @@
     },
     {
       "question_id": "9",
-      "issue": "suspicious_ja_label",
-      "label": "een-kern--werktuig",
-      "text_answer": "een kern -werktuig"
-    },
-    {
-      "question_id": "9",
       "issue": "suspicious_nee_label",
       "label": "een-kern",
       "text_answer": "een kern"
-    },
-    {
-      "question_id": "9a",
-      "issue": "suspicious_ja_label",
-      "label": "een-brokvorstsplijting--getest",
-      "text_answer": "een brok/vorstsplijting -getest"
     },
     {
       "question_id": "10",
       "issue": "question_text_mismatch",
       "text_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag -negatief)",
       "json_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag-negatief)"
-    },
-    {
-      "question_id": "11",
-      "issue": "suspicious_ja_label",
-      "label": "nee-een-klein-of-onherkenbaar-slagvlak",
-      "text_answer": "Nee een klein of onherkenbaar slagvlak"
     },
     {
       "question_id": "11",
@@ -111,12 +93,6 @@
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee"
-    },
-    {
-      "question_id": "13",
-      "issue": "suspicious_ja_label",
-      "label": "een-kern--gelegenhei-ds",
-      "text_answer": "een kern -gelegenhei ds"
     },
     {
       "question_id": "14",
@@ -155,12 +131,6 @@
       "json_question": "Heeft de Levallois-kern een of meer klingvormige afslagnegatieven?"
     },
     {
-      "question_id": "24",
-      "issue": "suspicious_ja_label",
-      "label": "nee-één-slagvlak",
-      "text_answer": "Nee één slagvlak"
-    },
-    {
       "question_id": "25",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslag negatieven?",
@@ -173,28 +143,10 @@
       "json_question": "Heeft de kern lange afslagnegatieven overwegend maximaal 10 mm breed?"
     },
     {
-      "question_id": "27",
-      "issue": "suspicious_ja_label",
-      "label": "een-kern--kielvormig",
-      "text_answer": "een kern -kielvormig"
-    },
-    {
-      "question_id": "27",
-      "issue": "suspicious_nee_label",
-      "label": "een-kern--kling",
-      "text_answer": "een kern -kling"
-    },
-    {
       "question_id": "28",
       "issue": "question_text_mismatch",
       "text_question": "Zijn de (overwegend meer dan 10 mm brede) afslagnegatieven regelmatig?",
       "json_question": "Zijn de overwegend meer dan 10 mm brede afslagnegatieven regelmatig?"
-    },
-    {
-      "question_id": "28a",
-      "issue": "suspicious_nee_label",
-      "label": "een-kern--lamelle",
-      "text_answer": "een kern -lamelle"
     },
     {
       "question_id": "31",
@@ -219,12 +171,6 @@
       "issue": "question_text_mismatch",
       "text_question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
       "json_question": "Is de knol, brok of vorstsplijting voorzien van een of twee door steile retouche en/of grove kerf bewerkte zijden?"
-    },
-    {
-      "question_id": "40",
-      "issue": "suspicious_nee_label",
-      "label": "de-afslag-of-kling-is-niet-bewerkt",
-      "text_answer": "de afslag of kling is niet bewerkt"
     },
     {
       "question_id": "45a",
@@ -299,12 +245,6 @@
       "json_question": "Heeft de kling regelmatige en parallelle zijden en afslagnegatieven?"
     },
     {
-      "question_id": "86",
-      "issue": "suspicious_ja_label",
-      "label": "het-is-een-artefact",
-      "text_answer": "het is een artefact"
-    },
-    {
       "question_id": "101",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact één of twee versplinterde uiteinden? (verbrijzeld)",
@@ -339,12 +279,6 @@
       "issue": "suspicious_ja_label",
       "label": "nee-voor-een-groot-deel-bekapt",
       "text_answer": "Nee voor een groot deel bekapt"
-    },
-    {
-      "question_id": "105",
-      "issue": "suspicious_nee_label",
-      "label": "de-kern-of-brok-is-voorzien-van-een-werkkant-punt",
-      "text_answer": "de kern of brok is voorzien van een werkkant /punt"
     },
     {
       "question_id": "106",

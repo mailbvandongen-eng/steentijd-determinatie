@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.48',
+    title: 'Vroege bronlabels genormaliseerd',
+    items: [
+      'Een eerste batch vroege kern- en afslaglabels in de AWN-bronboom is nu minder parserachtig en sluit beter aan op de termen die de app zelf toont',
+      'Daaronder vallen onder meer kernwerktuig, geteste brok of vorstsplijting, kern met meer dan een slagvlak, onbewerkte afslag of kling en kern of brok met werkkant of punt',
+      'De baseline-bronaudit daalt daardoor verder naar 511 issues en 208 verdachte antwoordlabels, met een bijgewerkte classificatie van 414 parserfouten en 90 routekoppen',
+    ],
+  },
+  {
     version: '2.2.47',
     title: 'Laatste expert-restlabels opgeschoond',
     items: [
