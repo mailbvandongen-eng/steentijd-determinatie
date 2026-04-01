@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.43',
+    title: 'Geslepen bijlen en hamerbijlen leesbaarder',
+    items: [
+      'Meerdere half-afgebroken expertlabels voor geslepen bijlen tonen nu nette namen, vooral bij breedtoppige, smaltoppige en rechthoekige doorsneden',
+      'Ook varianten van dissels en hamerbijlen met verdikkingen of ronde doorsneden zijn nu benoemd',
+      'Daardoor eindigen opnieuw minder geslepen en doorboorde expertpaden op een technische slug',
+    ],
+  },
+  {
     version: '2.2.42',
     title: 'Vroege expert-uitkomsten verder opgeschoond',
     items: [
