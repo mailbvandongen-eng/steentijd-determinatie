@@ -2424,6 +2424,16 @@ function processExpertAnswer(
   }
 
   if (target === 'terug-artefactgroepen-start') {
+    const yesTarget = question.ja;
+    if (
+      answer === 'nee' &&
+      yesTarget &&
+      isExpertQuestionRelatedToLabel(nextQuestionId, yesTarget) &&
+      nextNextQuestionId
+    ) {
+      return { isEnd: false, nextQuestion: nextNextQuestionId };
+    }
+
     return nextQuestionId
       ? { isEnd: false, nextQuestion: nextQuestionId }
       : { isEnd: true, result: formatTypeName(target) };

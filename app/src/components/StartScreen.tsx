@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.32',
+    title: 'Expert nee-routes beter gesprongen',
+    items: [
+      'Nee-antwoorden op subtypevragen in de expertboom slaan nu de ja-specifieke vervolgvraag beter over als die alleen bij de ja-tak hoort',
+      'Daardoor springen kling-, kern- en afslagroutes minder onlogisch door naar een subtype dat alleen bij het andere antwoord past',
+      'Met name de expert-klingroute loopt nu consistenter door bij nee-antwoorden op Levallois- en vergelijkbare subtypevragen',
+    ],
+  },
+  {
     version: '2.2.31',
     title: 'Expert klingroute minder springerig',
     items: [
