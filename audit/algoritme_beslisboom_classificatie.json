@@ -2,14 +2,14 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 450,
+    "issue_count": 444,
     "empty_question_in_json": 0,
     "question_text_mismatch": 261,
-    "suspicious_label_count": 189,
+    "suspicious_label_count": 183,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0,
     "parser_error": 367,
-    "route_label": 78,
+    "route_label": 72,
     "likely_valid_type": 5
   },
   "issues": [
@@ -42,41 +42,6 @@
       "category": "route_label"
     },
     {
-      "question_id": "12",
-      "issue": "suspicious_ja_label",
-      "label": "nee",
-      "text_answer": "Nee",
-      "category": "route_label"
-    },
-    {
-      "question_id": "12a",
-      "issue": "suspicious_ja_label",
-      "label": "nee",
-      "text_answer": "Nee",
-      "category": "route_label"
-    },
-    {
-      "question_id": "18",
-      "issue": "suspicious_ja_label",
-      "label": "nee",
-      "text_answer": "Nee",
-      "category": "route_label"
-    },
-    {
-      "question_id": "101",
-      "issue": "suspicious_ja_label",
-      "label": "nee",
-      "text_answer": "Nee",
-      "category": "route_label"
-    },
-    {
-      "question_id": "102",
-      "issue": "suspicious_ja_label",
-      "label": "nee",
-      "text_answer": "Nee",
-      "category": "route_label"
-    },
-    {
       "question_id": "110",
       "issue": "suspicious_ja_label",
       "label": "nee-het-bifaciale-artefact-heeft-een-andere-vorm",
@@ -88,13 +53,6 @@
       "issue": "suspicious_nee_label",
       "label": "het-bifaciale-artefact-heeft-een-andere-vorm",
       "text_answer": "het (bifaciale) artefact heeft een andere vorm",
-      "category": "route_label"
-    },
-    {
-      "question_id": "111",
-      "issue": "suspicious_ja_label",
-      "label": "nee",
-      "text_answer": "Nee",
       "category": "route_label"
     },
     {

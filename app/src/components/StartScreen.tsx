@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.52',
+    title: 'Kale nee-labels in vroege routes verminderd',
+    items: [
+      'Zes vroege kale nee-labels in kern-, artefact- en bifaciale routes zijn vervangen door expliciete doorgangslabels met dezelfde vervolgvraag',
+      'De ruwe bronaudit daalt daardoor verder naar 444 issues en 183 verdachte antwoordlabels',
+      'De classificatie zakt mee naar 72 routekoppen, zodat de bronlaag minder vaak op een kaal nee-label leunt',
+    ],
+  },
+  {
     version: '2.2.51',
     title: 'Vroege routekoppen verder teruggedrongen',
     items: [

@@ -61,12 +61,12 @@
   },
   "12": {
     "vraag": "Is de kern gemaakt in Levallois -techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak , waarbij de afslagen aan één zijde steiler zijn -de onderzijde - dan die aan de andere zijde, lijkt op een omgekeerde schildpad )",
-    "ja": "nee",
+    "ja": "levallois-bevestigd",
     "nee": "terug-artefactgroepen-start"
   },
   "12a": {
     "vraag": "Heeft de kern een discusvorm , ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven - als onderzijde?",
-    "ja": "nee",
+    "ja": "discusvorm-bevestigd",
     "nee": "terug-artefactgroepen-start"
   },
   "13": {
@@ -96,7 +96,7 @@
   },
   "18": {
     "vraag": "Heeft de kern een discusvorm , ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven - als onderzijde?",
-    "ja": "nee",
+    "ja": "discusvorm-bevestigd",
     "nee": "terug-artefactgroepen-start"
   },
   "19": {
@@ -446,12 +446,12 @@
   },
   "101": {
     "vraag": "Heeft het artefact één of twee versplinterde uiteinden? (verbrijzeld)",
-    "ja": "nee",
+    "ja": "versplinterde-uiteinden-aanwezig",
     "nee": "terug-artefactgroepen-start"
   },
   "102": {
     "vraag": "Is het artefact  gekerfd of getand?",
-    "ja": "nee",
+    "ja": "gekerfd-of-getand-aanwezig",
     "nee": "terug-artefactgroepen-start"
   },
   "103": {
@@ -496,7 +496,7 @@
   },
   "111": {
     "vraag": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede?",
-    "ja": "nee",
+    "ja": "klein-driehoekige-dwarsdoorsnede",
     "nee": "terug-artefactgroepen-start"
   },
   "112": {

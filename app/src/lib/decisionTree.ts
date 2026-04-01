@@ -231,6 +231,32 @@ function getExpertContextualJump(
     return '113';
   }
 
+  if (
+    (target === 'levallois-bevestigd' && questionId === '12')
+  ) {
+    return '13';
+  }
+
+  if (target === 'discusvorm-bevestigd' && questionId === '12a') {
+    return '13';
+  }
+
+  if (target === 'discusvorm-bevestigd' && questionId === '18') {
+    return '19';
+  }
+
+  if (target === 'versplinterde-uiteinden-aanwezig' && questionId === '101') {
+    return '102';
+  }
+
+  if (target === 'gekerfd-of-getand-aanwezig' && questionId === '102') {
+    return '103';
+  }
+
+  if (target === 'klein-driehoekige-dwarsdoorsnede' && questionId === '111') {
+    return '112';
+  }
+
   if (questionId === '125') {
     if (target === 'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '126';
     if (target === 'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig') return '127';
@@ -2104,6 +2130,11 @@ const DISPLAY_NAMES: Record<string, string> = {
   'afslag-of-kling-onbewerkt': 'Onbewerkte afslag of kling',
   'geretoucheerd-of-bijzondere-bewerking': 'Geretoucheerd of bijzonder bewerkt artefact',
   'ga-door-zie-vorige-determinatie': 'Ga door met de vorige determinatie',
+  'levallois-bevestigd': 'Levallois-kenmerken bevestigd',
+  'discusvorm-bevestigd': 'Discusvorm bevestigd',
+  'versplinterde-uiteinden-aanwezig': 'Versplinterde uiteinden aanwezig',
+  'gekerfd-of-getand-aanwezig': 'Gekerfd of getand aanwezig',
+  'klein-driehoekige-dwarsdoorsnede': 'Klein artefact met driehoekige dwarsdoorsnede',
   'kling--decorticatie': 'Decorticatie-kling',
   'kling--decorticatie--gemodificeerd': 'Gemodificeerde decorticatie-kling',
   'kling--levallois': 'Levallois-kling',
