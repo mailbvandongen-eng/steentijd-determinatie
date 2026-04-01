@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.33',
+    title: 'Meer expert-eindtypes herkenbaar gemaakt',
+    items: [
+      'Ontbrekende schermnamen voor onder meer Montbani-klingkern, gekerfd werktuig en getand werktuig zijn toegevoegd',
+      'Daardoor blijven deze uitkomsten stabieler als echt eindtype staan in plaats van sneller als tussenlabel te worden behandeld',
+      'Dit sluit vooral de kern-, kling- en werktuigroutes beter aan op de verwachte expertuitkomst',
+    ],
+  },
+  {
     version: '2.2.32',
     title: 'Expert nee-routes beter gesprongen',
     items: [
