@@ -257,14 +257,18 @@ function getExpertContextualJump(
     return '112';
   }
 
+  if (target === 'bijl-vuistbijl-of-bladvorm' && questionId === '110') {
+    return '111';
+  }
+
   if (questionId === '125') {
-    if (target === 'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '126';
-    if (target === 'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig') return '127';
+    if (target === 'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' || target === 'vuistbijl-of-bladvorm') return '126';
+    if (target === 'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig' || target === 'bijl-beitel-of-ander-kernwerktuig') return '127';
   }
 
   if (questionId === '126') {
     if (target === 'nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' || target === 'bijl-beitel-of-ander-kernwerktuig') return '127';
-    if (target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '130';
+    if (target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' || target === 'vuistbijlvorm-of-bladvorm') return '130';
   }
 
   if (target === 'het-is-een-vuistbijl-of-bladvorm' && questionId === '130') {
@@ -2391,15 +2395,19 @@ const DISPLAY_NAMES: Record<string, string> = {
   'met-één-of-twee-dmv-steile-retouche': 'Bifaciaal werktuig met een of twee steil geretoucheerde zijden',
   'pic-of-hak': 'Pic of hak',
   'het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt': 'Bifaciaal of deels onbewerkt artefact',
+  'bijl-vuistbijl-of-bladvorm': 'Artefact met bijl-, vuistbijl- of bladvorm',
   'de-kern-of-brok-is-voorzien-van-een-werkkant-punt': 'Kern of brok met werkkant of punt',
   'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
+  'vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
   'bijl-beitel-of-ander-kernwerktuig': 'Bijl-, beitel- of ander kernwerktuig',
   'het-is-een-vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
   'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig': 'Bijl-, beitel- of ander kernwerktuig',
   'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
+  'vuistbijlvorm-of-bladvorm': 'Vuistbijl- of bladvormig artefact',
   'het-artefact-heeft-een-blad-vorm': 'Bladvormig artefact',
   'het-artefact-heeft-de-vorm-van-een-vuistbijl': 'Vuistbijlvormig artefact',
   'het-bifaciale-artefact-heeft-een-andere-vorm': 'Ander bifaciaal artefact',
+  'ander-bifaciaal-artefact': 'Ander bifaciaal artefact',
   'een-bijl': 'Bijl',
   'een-bijl-dissel': 'Bijl of dissel',
   'bijl-hamer': 'Hamerbijl',
@@ -2445,6 +2453,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--blad--szeletienne': 'Szeletien-bladspits',
   'half-steile-randretouche-aan-beide-zijden': 'Dolk met half-steile randretouche aan beide zijden',
   'het-artefact-is-asymmetrisch': 'Asymmetrisch fijn bewerkt kernwerktuig',
+  'asymmetrische-dolkvorm': 'Asymmetrische dolkvorm',
   'symmetrische-dolkvorm': 'Symmetrische dolkvorm',
   'een-oppervlak-bewerkt': 'Aan een oppervlak bewerkte dolk',
   'franse-dolk': 'Franse dolk',

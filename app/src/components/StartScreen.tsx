@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.53',
+    title: 'Vroege bifaciale routekoppen verder opgeschoond',
+    items: [
+      'De vroege bifaciale route rond vraag 110, 125, 126 en 154 gebruikt nu explicietere labels in plaats van parserkoppen met het- en nee-vormen',
+      'De ruwe bronaudit daalt daardoor verder naar 438 issues en 177 verdachte antwoordlabels',
+      'De classificatie zakt mee naar 66 routekoppen, waardoor de resterende bronrommel steeds meer verschuift naar latere subtypevragen',
+    ],
+  },
+  {
     version: '2.2.52',
     title: 'Kale nee-labels in vroege routes verminderd',
     items: [

@@ -491,8 +491,8 @@
   },
   "110": {
     "vraag": "Heeft het artefact min of meer de vorm van een bijl of vuistbijl of bladvorm?",
-    "ja": "nee-het-bifaciale-artefact-heeft-een-andere-vorm",
-    "nee": "het-bifaciale-artefact-heeft-een-andere-vorm"
+    "ja": "bijl-vuistbijl-of-bladvorm",
+    "nee": "ander-bifaciaal-artefact"
   },
   "111": {
     "vraag": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede?",
@@ -566,13 +566,13 @@
   },
   "125": {
     "vraag": "Het artefact is vrijwel volledig bewerkt en is min of meer plat ; heeft het een enigszins afgewerkte werkkant of -punt?",
-    "ja": "het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
-    "nee": "de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig"
+    "ja": "vuistbijl-of-bladvorm",
+    "nee": "bijl-beitel-of-ander-kernwerktuig"
   },
   "126": {
     "vraag": "Heeft het artefact  een snede als werkkant ?",
     "ja": "bijl-beitel-of-ander-kernwerktuig",
-    "nee": "het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm"
+    "nee": "vuistbijlvorm-of-bladvorm"
   },
   "127": {
     "vraag": "Heeft het artefact  een tranchet -snede ?",
@@ -727,7 +727,7 @@
   "154": {
     "vraag": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?",
     "ja": "symmetrische-dolkvorm",
-    "nee": "het-artefact-is-asymmetrisch"
+    "nee": "asymmetrische-dolkvorm"
   },
   "155": {
     "vraag": "Is de dolk gemaakt van een kling en aan een oppervlak bewerkt?",

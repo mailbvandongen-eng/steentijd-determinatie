@@ -5,10 +5,10 @@ Let op: dit is een brede heuristische eerste audit. Niet elk gemarkeerd label is
 Samenvatting:
 - Vragen uit `algoritme.txt`: 512
 - Vragen uit `beslisboom.json`: 512
-- Totaal gevonden heuristische issues: 444
+- Totaal gevonden heuristische issues: 438
 - Lege vragen in JSON: 0
 - Vraagtekst-mismatches: 261
-- Verdachte antwoordlabels: 183
+- Verdachte antwoordlabels: 177
 - Ontbrekend in JSON: 0
 - Ontbrekend in txt-parse: 0
 
@@ -17,11 +17,6 @@ Eerste 30 issues:
 - `..6` `suspicious_ja_label` -> `het-artefact-heeft-resten-van-een-ventrale-zijde`
 - `..6` `suspicious_nee_label` -> `het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt`
 - `..7` `suspicious_nee_label` -> `het-artefact-is-een-knol--brok-of-vorstsplijting`
-- `..110` `suspicious_ja_label` -> `nee-het-bifaciale-artefact-heeft-een-andere-vorm`
-- `..110` `suspicious_nee_label` -> `het-bifaciale-artefact-heeft-een-andere-vorm`
-- `..125` `suspicious_ja_label` -> `het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
-- `..125` `suspicious_nee_label` -> `de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig`
-- `..126` `suspicious_nee_label` -> `het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
 - `..128` `question_text_mismatch`
 - `..128` `suspicious_nee_label` -> `meer-een-beitel-vorm--breedte29-cm`
 - `..129` `question_text_mismatch`
@@ -43,5 +38,10 @@ Eerste 30 issues:
 - `..147` `question_text_mismatch`
 - `..148` `question_text_mismatch`
 - `..149` `question_text_mismatch`
+- `..150` `question_text_mismatch`
+- `..151` `question_text_mismatch`
+- `..154` `question_text_mismatch`
+- `..155` `question_text_mismatch`
+- `..155` `suspicious_ja_label` -> `een-oppervlak-bewerkt`
 
 Volledige machine-readable audit: `audit/algoritme_beslisboom_audit.json`

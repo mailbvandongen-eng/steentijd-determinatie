@@ -4,7 +4,7 @@ Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
 - parser_error: 367
-- route_label: 72
+- route_label: 66
 - likely_valid_type: 5
 
 Voorbeelden parser_error:
@@ -34,15 +34,9 @@ Voorbeelden route_label:
 - `..6` `suspicious_ja_label` -> `het-artefact-heeft-resten-van-een-ventrale-zijde`
 - `..6` `suspicious_nee_label` -> `het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt`
 - `..7` `suspicious_nee_label` -> `het-artefact-is-een-knol--brok-of-vorstsplijting`
-- `..110` `suspicious_ja_label` -> `nee-het-bifaciale-artefact-heeft-een-andere-vorm`
-- `..110` `suspicious_nee_label` -> `het-bifaciale-artefact-heeft-een-andere-vorm`
-- `..125` `suspicious_ja_label` -> `het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
-- `..125` `suspicious_nee_label` -> `de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig`
-- `..126` `suspicious_nee_label` -> `het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm`
 - `..130` `suspicious_nee_label` -> `het-is-een-vuistbijl-of-bladvorm`
 - `..131` `suspicious_ja_label` -> `het-artefact-heeft-een-blad-vorm`
 - `..131` `suspicious_nee_label` -> `het-artefact-heeft-de-vorm-van-een-vuistbijl`
-- `..154` `suspicious_nee_label` -> `het-artefact-is-asymmetrisch`
 - `..155` `suspicious_ja_label` -> `een-oppervlak-bewerkt`
 - `..202` `suspicious_nee_label` -> `nee-overige-groepen-afslagklingwerktuigen`
 - `..203` `suspicious_ja_label` -> `een-combinatiewerktuig`
@@ -50,6 +44,12 @@ Voorbeelden route_label:
 - `..230` `suspicious_nee_label` -> `nee-overige-groepen-afslagklingwerktuigen`
 - `..231` `suspicious_ja_label` -> `een-combinatiewerktuig`
 - `..232` `suspicious_ja_label` -> `nee-meerdere--boor--dubbel-of-boor--meervoudig`
+- `..235` `suspicious_ja_label` -> `een-bec`
+- `..240` `suspicious_nee_label` -> `nee-overige-groepen-afslagklingwerktuigen`
+- `..241a` `suspicious_ja_label` -> `een-combinatie--werktuig`
+- `..247` `suspicious_nee_label` -> `nee-overige-groepen-afslagklingwerktuigen`
+- `..260` `suspicious_ja_label` -> `nee-nee-overige-groepen-afslagklingwerktuigen`
+- `..260` `suspicious_nee_label` -> `nee-overige-groepen-afslagklingwerktuigen`
 
 Voorbeelden likely_valid_type:
 - `..197` `suspicious_ja_label` -> `een-sikkel`

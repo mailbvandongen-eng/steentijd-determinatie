@@ -2,14 +2,14 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 444,
+    "issue_count": 438,
     "empty_question_in_json": 0,
     "question_text_mismatch": 261,
-    "suspicious_label_count": 183,
+    "suspicious_label_count": 177,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0,
     "parser_error": 367,
-    "route_label": 72,
+    "route_label": 66,
     "likely_valid_type": 5
   },
   "issues": [
@@ -39,41 +39,6 @@
       "issue": "suspicious_nee_label",
       "label": "het-artefact-is-een-knol--brok-of-vorstsplijting",
       "text_answer": "het artefact is een knol , brok of vorstsplijting",
-      "category": "route_label"
-    },
-    {
-      "question_id": "110",
-      "issue": "suspicious_ja_label",
-      "label": "nee-het-bifaciale-artefact-heeft-een-andere-vorm",
-      "text_answer": "Nee het (bifaciale) artefact heeft een andere vorm",
-      "category": "route_label"
-    },
-    {
-      "question_id": "110",
-      "issue": "suspicious_nee_label",
-      "label": "het-bifaciale-artefact-heeft-een-andere-vorm",
-      "text_answer": "het (bifaciale) artefact heeft een andere vorm",
-      "category": "route_label"
-    },
-    {
-      "question_id": "125",
-      "issue": "suspicious_ja_label",
-      "label": "het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
-      "text_answer": "het heeft de vorm van een vuistbijl of bladvorm",
-      "category": "route_label"
-    },
-    {
-      "question_id": "125",
-      "issue": "suspicious_nee_label",
-      "label": "de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig",
-      "text_answer": "de vorm van een bijl , beitel of ander kernwerktuig",
-      "category": "route_label"
-    },
-    {
-      "question_id": "126",
-      "issue": "suspicious_nee_label",
-      "label": "het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
-      "text_answer": "het artefact heeft de vorm van een vuistbijl of bladvorm",
       "category": "route_label"
     },
     {
@@ -243,13 +208,6 @@
       "text_question": "Heeft het fijn bewerkte kernwerktuig een symmetrisch e dolk vorm?",
       "json_question": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?",
       "category": "parser_error"
-    },
-    {
-      "question_id": "154",
-      "issue": "suspicious_nee_label",
-      "label": "het-artefact-is-asymmetrisch",
-      "text_answer": "het artefact is asymmetrisch",
-      "category": "route_label"
     },
     {
       "question_id": "155",
