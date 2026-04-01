@@ -2125,6 +2125,15 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-boor--getand': 'Getande boor',
   'werktuig--gekerfd': 'Gekerfd werktuig',
   'werktuig--getand': 'Getand werktuig',
+  'boor--kern-ga-naar-gemodificeerde-kernen': 'Boor op kern of gemodificeerde kern',
+  'boorachtig--artefact': 'Boorachtig artefact',
+  'onderdeel-van-een-spits': 'Kerf als onderdeel van een spits',
+  'afslag--gekerfd': 'Gekerfde afslag',
+  'kling--aurignacien': 'Aurignacien-kling',
+  'kling--montbani--gekerfd': 'Gekerfde Montbani-kling',
+  'afslag--getand': 'Getande afslag',
+  'kling--montbani--getand': 'Getande Montbani-kling',
+  'van-een-k-ling-kling--getand': 'Getande kling',
   'een-gekerfd--en-getand--artefact': 'Gekerfd en getand artefact',
   'een-gekerfd--en-afgeknot--artefact': 'Gekerfd en afgeknot artefact',
   'een-getand--en-afgeknot--artefact': 'Getand en afgeknot artefact',
@@ -2353,6 +2362,16 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-halffabricaat---bijl': 'Halffabricaat van een bijl',
   'breedte--29-cm-een-beitel': 'Beitel met breedte kleiner dan 2,9 cm',
   'breedte--29-cm': 'Artefact met breedte kleiner dan 2,9 cm',
+  'afslag--afgeknot': 'Afgeknotte afslag',
+  'afslag--afgeknot--tweezijdig': 'Tweezijdig afgeknotte afslag',
+  'kling--afgeknot': 'Afgeknotte kling',
+  'kling--afgeknot--kostienki': 'Kostienki-afgeknotte kling',
+  'kling--afgeknot--bertonne': 'Bertonne-afgeknotte kling',
+  'aan-twee-zijden-kling--afgeknot--tweezijdig': 'Tweezijdig afgeknotte kling',
+  'drevel--afslag-of-drevel--kern': 'Drevel op afslag of kern',
+  'beitel--afslag-of-beitel--kern': 'Beitel op afslag of kern',
+  'een-bikkel': 'Bikkel',
+  'artefact--met-versplinterd--uiteinde': 'Artefact met versplinterd uiteinde',
   dellensteen: 'Dellensteen',
   'doorboorde--rolsteen': 'Doorboorde rolsteen',
   'doorboorde--schijfvormige--steen': 'Doorboorde schijfvormige steen',
@@ -2409,6 +2428,21 @@ function processExpertAnswer(
   const target = answer === 'ja' ? question.ja : question.nee;
   const nextQuestionId = getExpertQuestionIdAt(questionId, 1);
   const nextNextQuestionId = getExpertQuestionIdAt(questionId, 2);
+
+  if (questionId === '232') {
+    if (answer === 'ja') {
+      return { isEnd: false, nextQuestion: '233' };
+    }
+    return { isEnd: true, result: 'meerdere--boor--dubbel-of-boor--meervoudig' };
+  }
+
+  if (questionId === '260') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '261' : '270' };
+  }
+
+  if (questionId === '270') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '271' : '300' };
+  }
 
   if (!target) {
     return nextQuestionId

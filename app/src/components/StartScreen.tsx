@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.34',
+    title: 'Expert werktuigroutes logischer gemaakt',
+    items: [
+      'Boor- en combinatiewerktuigroutes in Expert reageren nu verschillend op ja en nee waar de parser eerder beide antwoorden op dezelfde vervolgstap liet landen',
+      'Ontbrekende schermnamen voor gekerfde, getande en afgeknotte afslag- en klingtypen zijn toegevoegd',
+      'Daardoor lopen deze werktuigroutes minder springerig en eindigen ze vaker op een herkenbaar subtype',
+    ],
+  },
+  {
     version: '2.2.33',
     title: 'Meer expert-eindtypes herkenbaar gemaakt',
     items: [
