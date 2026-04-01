@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.39',
+    title: 'Oppervlakteretouche-route bronvaster gemaakt',
+    items: [
+      'De latere expert-subboom voor oppervlakteretouche loopt nu vraag voor vraag volgens het algoritme door, onder meer rond driehoekige, bladvormige en schachtdoorn-spitsen',
+      'Meerdere nee-antwoorden die eerder te vroeg eindigden of op een verkeerde subtak belandden springen nu naar de juiste vervolgvraag',
+      'Ontbrekende schermnamen voor Sögel-, Post-Swidry- en klokbekerspitsen en verwante uitkomsten zijn toegevoegd',
+    ],
+  },
+  {
     version: '2.2.38',
     title: 'Dolkroutes beter gesplitst',
     items: [

@@ -2155,8 +2155,19 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--driehoekig--met-oppervlakteretouche--holle-basis': 'Driehoekige spits met oppervlakteretouche en holle basis',
   'spits--driehoekig--met-oppervlakteretouche': 'Driehoekige spits met oppervlakteretouche',
   'spits--driehoekig--met-oppervlakteretouche--': 'Driehoekige spits met oppervlakteretouche',
+  'spits--sögel': 'Sögel-spits',
+  'spits--post-swidry': 'Post-Swidry-spits',
   'spits--driehoekig--met-schachtdoor-n-en-korte--': 'Driehoekige spits met schachtdoorn en korte basis',
+  'spits--driehoekig--met-schachtdoorn': 'Driehoekige spits met schachtdoorn',
+  'spits--brede--klokbekerspits': 'Brede klokbekerspits',
+  'spits--smalle--klokbekerspits': 'Smalle klokbekerspits',
+  'spits-weerdinge': 'Weerdinge-spits',
+  'spits--ogivale--courte': 'Ogivale courte-spits',
   'spits--met-oppervlakte--retouche': 'Spits met oppervlakteretouche',
+  'oppervlakte-retouche': 'Artefact met oppervlakteretouche',
+  'het-artefact-is-bekapt': 'Bekapt artefact',
+  'met-weerhaken': 'Spits met weerhaken',
+  'lange-weerhaken': 'Spits met lange weerhaken',
   'spits--gelijkzijdige--driehoek': 'Gelijkzijdige driehoekige spits',
   'spits--bladspits': 'Bladspits',
   'spits--bladspits--jerzmanowice': 'Jerzmanowice-bladspits',
@@ -2507,6 +2518,86 @@ function processExpertAnswer(
 
   if (questionId === '479' && answer === 'nee') {
     return { isEnd: false, nextQuestion: '480' };
+  }
+
+  if (questionId === '542') {
+    return { isEnd: false, nextQuestion: '543' };
+  }
+
+  if (questionId === '543') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '544' : '553' };
+  }
+
+  if (questionId === '544') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '545' : '546' };
+  }
+
+  if (questionId === '546') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '547' : '552' };
+  }
+
+  if (questionId === '547' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '548' };
+  }
+
+  if (questionId === '548' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '549' };
+  }
+
+  if (questionId === '549' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '550' };
+  }
+
+  if (questionId === '550' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '551' };
+  }
+
+  if (questionId === '553') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '554' : '558' };
+  }
+
+  if (questionId === '554' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '555' };
+  }
+
+  if (questionId === '555' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '556' };
+  }
+
+  if (questionId === '556' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '557' };
+  }
+
+  if (questionId === '557' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '558' };
+  }
+
+  if (questionId === '558' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '559' };
+  }
+
+  if (questionId === '559' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '560' };
+  }
+
+  if (questionId === '560' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '561' };
+  }
+
+  if (questionId === '561' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '562' };
+  }
+
+  if (questionId === '562' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '563' };
+  }
+
+  if (questionId === '563' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '564' };
+  }
+
+  if (questionId === '564' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '565' };
   }
 
   if (!target) {
