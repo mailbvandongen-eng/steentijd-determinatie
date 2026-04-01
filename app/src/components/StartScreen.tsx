@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.41',
+    title: 'Meer gemodificeerde expert-typen benoemd',
+    items: [
+      'Een volgende batch gemodificeerde afslagen, klingen en schaaftypen toont nu leesbare namen in Expert',
+      'Ook resttypen zoals boor op kern, klingbeitel, onvolledig doorboorde dellensteen en polsbeschermer zijn nu benoemd',
+      'Daardoor eindigt de expertboom opnieuw minder vaak op een ruwe slug of half parserlabel',
+    ],
+  },
+  {
     version: '2.2.40',
     title: 'Meer expert-uitkomsten leesbaar gemaakt',
     items: [
