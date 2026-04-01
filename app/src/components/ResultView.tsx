@@ -9,7 +9,7 @@ import { exportToPdf } from '../lib/pdfExport';
 import { LocationPickerModal } from './LocationPickerModal';
 import { updateDeterminationWithAIValidation } from '../lib/trainingSession';
 import { useUser } from '../contexts/UserContext';
-import type { ContinuationOption } from '../lib/awnProgression';
+import { getContinuationNotice, type ContinuationOption } from '../lib/awnProgression';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -60,6 +60,11 @@ export function ResultView({
 }: ResultViewProps) {
   const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
   const continuationTargetLabel = continuationOption?.targetLevel === 'expert' ? 'Expert' : 'Gevorderd';
+  const continuationNotice = !continuationOption && session.result?.sourceResultType
+    ? getContinuationNotice(session.result.sourceResultType, level)
+    : !continuationOption && session.result?.type
+      ? getContinuationNotice(session.result.type, level)
+      : null;
   const hasRecordedResult = useRef(false);
   const validationStarted = useRef(false);
   const [showAllImages, setShowAllImages] = useState(false);
@@ -536,6 +541,20 @@ export function ResultView({
               </div>
               <p className="text-xs text-stone-500 mt-3">
                 Dit is een testfase van de AWN-uitbreiding. Je start een nieuwe sessie met hetzelfde artefact.
+              </p>
+            </div>
+          )}
+
+          {continuationNotice && (
+            <div className={`card mt-3 border ${continuationNotice.tone === 'info' ? 'border-sky-200 bg-sky-50' : 'border-stone-200 bg-stone-50'}`}>
+              <p className={`text-xs font-semibold uppercase tracking-wide ${continuationNotice.tone === 'info' ? 'text-sky-700' : 'text-stone-600'}`}>
+                Geen vervolgkaart
+              </p>
+              <p className="text-sm font-semibold text-stone-900 mt-1">
+                {continuationNotice.title}
+              </p>
+              <p className="text-sm text-stone-600 mt-1">
+                {continuationNotice.summary}
               </p>
             </div>
           )}

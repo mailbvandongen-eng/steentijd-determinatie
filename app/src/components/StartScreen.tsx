@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.15',
+    title: 'Vervolgstatus zichtbaar gemaakt',
+    items: [
+      'Resultaatscherm legt nu uit waarom er geen vervolgkaart is',
+      'Beginner toont expliciet het verschil tussen een bewust eindpunt en een nog niet uitgewerkte verdieping',
+      'Testers hoeven daardoor niet meer te raden of een stil einde een bug is',
+    ],
+  },
+  {
     version: '2.2.14',
     title: 'Meer vervolgkaarten gedicht',
     items: [

@@ -26,6 +26,12 @@ export interface ContinuationOption {
   testLabel: string;
 }
 
+export interface ContinuationNotice {
+  title: string;
+  summary: string;
+  tone: 'neutral' | 'info';
+}
+
 export const AWN_TEST_PHASES: AwnTestPhase[] = [
   {
     id: 'phase-1-klingen-en-afslagen',
@@ -269,4 +275,27 @@ export function getPhaseById(phaseId: AwnTestPhaseId): AwnTestPhase | undefined 
 export function isContinuationActive(option: ContinuationOption | null): boolean {
   if (!option) return false;
   return getPhaseById(option.phaseId)?.status === 'active';
+}
+
+export function getContinuationNotice(resultType: string, currentLevel: UserLevel): ContinuationNotice | null {
+  if (currentLevel !== 'beginner') return null;
+  if (CONTINUATION_MAP[resultType]) return null;
+
+  if (['splinter', 'natuursteen-of-knol', 'brok-of-vorstsplijting'].includes(resultType)) {
+    return {
+      title: 'Bewust eindpunt op beginnerniveau',
+      summary: 'Voor dit resultaat is er nu geen verdere AWN-verdieping nodig. Dit geldt hier als een logisch eindpunt.',
+      tone: 'neutral',
+    };
+  }
+
+  if (['geslepen-bijl-andere-steensoort', 'geslepen-stenen-artefact', 'kern-gelegenheids', 'onbepaald-artefact'].includes(resultType)) {
+    return {
+      title: 'Nog geen vervolg in deze app',
+      summary: 'Dit resultaat kan extra expertise vragen, maar heeft op dit moment nog geen aparte vervolgroute in Steentijd.',
+      tone: 'info',
+    };
+  }
+
+  return null;
 }
