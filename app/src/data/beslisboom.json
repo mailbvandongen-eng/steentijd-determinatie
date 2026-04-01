@@ -805,22 +805,22 @@
     "nee": "terug-artefactgroepen-start"
   },
   "171": {
-    "vraag": "pseudo -gietnaad ?",
+    "vraag": "Is het handvat even dik als breed met vierkante doorsnede met aan 3 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
     "ja": "dolk--scandinavisch--type-iiic",
     "nee": "terug-artefactgroepen-start"
   },
   "172": {
-    "vraag": "van met drukretouche aangebrachte pseudo -gietnaad?",
+    "vraag": "Is het handvat even dik als breed met vierkante doorsnede met twee vlakken parallel aan het blad en aan 4 zijden voor zien van met drukretouche aangebrachte pseudo -gietnaad?",
     "ja": "dolk--scandinavisch--type-iiid",
     "nee": "terug-artefactgroepen-start"
   },
   "173": {
-    "vraag": "beide zijden en boven - en ondervlak ?",
+    "vraag": "Is het h andvat rombisch in doorsnede , pseudo gietnaad aan beide zijden en boven - en ondervlak?",
     "ja": "dolk--scandinavisch--type-iiie",
     "nee": "terug-artefactgroepen-start"
   },
   "174": {
-    "vraag": "vier zijden pseudo gietnaad ?",
+    "vraag": "Is het h andvat breder dan dik, rombisch in doorsnede met aan vier zijden pseudo gietnaad?",
     "ja": "dolk--scandinavisch--type-iiif",
     "nee": "terug-artefactgroepen-start"
   },
@@ -895,42 +895,42 @@
     "nee": "dolk--scandinavisch--type-vi"
   },
   "189": {
-    "vraag": "duidelijk afgezet handvat ?",
+    "vraag": "Heeft de Engelse dolk nagenoeg parallelle zijden en een kort duidelijk afgezet handvat?",
     "ja": "dolk--engels--met-kort--handvat",
     "nee": "terug-artefactgroepen-start"
   },
   "190": {
-    "vraag": "handvat op de helft van de lengte?",
+    "vraag": "Heeft de Engelse dolk een knik op de grens tussen lemmet en handvat op de helft van de lengte?",
     "ja": "dolk--engels--met-lang-handvat--class--1",
     "nee": "terug-artefactgroepen-start"
   },
   "191": {
-    "vraag": "nabij  punt?",
+    "vraag": "Heeft de Engelse dolk een breed bladvormig , lemmet breedst nabij punt?",
     "ja": "dolk--engels--met-lang-handvat--class--2",
     "nee": "terug-artefactgroepen-start"
   },
   "192": {
-    "vraag": "knik?",
+    "vraag": "Heeft de Engelse dolk een smal bladvormig blad met een knik?",
     "ja": "met-een-knik-dolk--engels--met-lang-handvat--class--3",
     "nee": "zonder-knik-dolk--engels--met-lang-handvat--class--4"
   },
   "193": {
-    "vraag": "nabij het midden  geen duidelijk afgezet handvat ?",
+    "vraag": "Heeft de Oost -Europese dolk slanke vorm grootste breedte nabij het midden geen duidelijk afgezet handvat?",
     "ja": "dolk--oost-europees--type-1",
     "nee": "terug-artefactgroepen-start"
   },
   "194": {
-    "vraag": "vorm  met duidelijk afgezet handvat ?",
+    "vraag": "Heeft de Oost -Europese dolk een langwerpige tot rombische vorm met duidelijk afgezet handvat?",
     "ja": "dolk--oost-europees--type-2",
     "nee": "terug-artefactgroepen-start"
   },
   "195": {
-    "vraag": "breedst aan de basis  geen uitgeretoucheerd handvat ?",
+    "vraag": "Heeft de Oost -Europese dolk min of meer driehoekig lemmet breedst aan de basis geen uitgeretoucheerd handvat?",
     "ja": "dolk--oost-europees--type-5",
     "nee": "terug-artefactgroepen-start"
   },
   "196": {
-    "vraag": "duidelijk uitgeretoucheerd handvat ?",
+    "vraag": "Heeft de Oost -Europese dolk een bladvormig lemmet en duidelijk uitgeretoucheerd handvat?",
     "ja": "een-breed-lemmet-dolk--oost-europees--type-3",
     "nee": "een-smal-lemmet-dolk--oost-europees--type-4"
   },
@@ -955,7 +955,7 @@
     "nee": "geretoucheerd-of-bijzondere-bewerking"
   },
   "202": {
-    "vraag": "met negatief stekerafslag ?",
+    "vraag": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
     "ja": "steker",
     "nee": "nee-overige-groepen-afslagklingwerktuigen"
   },
@@ -965,12 +965,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "204": {
-    "vraag": "negatief stekerafslag?",
+    "vraag": "Heeft de afslag of kling meerdere kleine beitelkanten met negatief stekerafslag?",
     "ja": "steker--meervoudig",
     "nee": "terug-artefactgroepen-start"
   },
   "205": {
-    "vraag": "van ventrale naar dorsale zijde?",
+    "vraag": "Is de steker bekvormig en gemaakt met mini-stekerafslag(en) van ventrale naar dorsale zijde?",
     "ja": "steker--bek",
     "nee": "terug-artefactgroepen-start"
   },
@@ -980,32 +980,32 @@
     "nee": "terug-artefactgroepen-start"
   },
   "207": {
-    "vraag": "van de afslag of kling?",
+    "vraag": "Is de beitelkant gevormd door aan de deels dorsale retouche en deels ventrale waardoor het ontmoetingspunt een soort steker vormt, de beitelkant staan onder een hoek met het vlak van de afslag of kling?",
     "ja": "alternerende-bek--steker-o-g-steker--rr",
     "nee": "terug-artefactgroepen-start"
   },
   "208": {
-    "vraag": "artefact  tijdens het retoucheren is gebroken ?",
+    "vraag": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt door een onopzettelijke breuk, ontstaan doordat het artefact tijdens het retoucheren is gebroken?",
     "ja": "een-krukowski--kerfrest",
     "nee": "de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-"
   },
   "209": {
-    "vraag": "geretoucheerde kerf?",
+    "vraag": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt met een opzettelijk getordeerde breuk, de microsteker vertoont bij de breuk duidelijk een deel van een geretoucheerde kerf?",
     "ja": "kerfrest-of-microsteker",
     "nee": "terug-artefactgroepen-start"
   },
   "210": {
-    "vraag": "voorbereiding  van het slagvlak?",
+    "vraag": "Is de steker gemaakt met één enkele stekerafslag zonder voorbereiding van het slagvlak?",
     "ja": "steker--a",
     "nee": "op-andere-manier-gemaakt"
   },
   "211": {
-    "vraag": "de slagrichting  afslag/kling) aan te brengen?",
+    "vraag": "Is de steker gemaakt door de stekerafslag zijwaarts ( haaks op de slagrichting afslag/kling) aan te brengen?",
     "ja": "steker--corbiac",
     "nee": "steker--a"
   },
   "212": {
-    "vraag": "al dan niet schuin geplaatste geretoucheerde rand ?",
+    "vraag": "Is de steker gemaakt door de stekerafslag te plaatsen op een al dan niet schuin geplaatste geretoucheerde rand?",
     "ja": "steker--ra",
     "nee": "met-twee-steker-aflagen-van-2-zijden"
   },
@@ -1015,7 +1015,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "214": {
-    "vraag": "zijde  en een korte stekerafslag, veelal begrensd door een kerf?",
+    "vraag": "Heeft de RA -steker één boogvormig steil geretoucheerde zijde en een korte stekerafslag, veelal begrensd door een kerf?",
     "ja": "steker--papegaaienbek",
     "nee": "terug-artefactgroepen-start"
   },

@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.55',
+    title: 'Dolk- en stekervraagteksten verder hersteld',
+    items: [
+      'Een grote volgende batch dolk- en stekervraagteksten gebruikt nu weer de letterlijke algoritmeformulering in plaats van afgebroken parserrestjes',
+      'De bronaudit daalt daardoor verder naar 406 issues en 229 vraagtekst-mismatches',
+      'Ook de parserfoutcategorie daalt mee naar 335, terwijl de routekoppen stabiel blijven op 66',
+    ],
+  },
+  {
     version: '2.2.54',
     title: 'Vroege dolkvraagteksten bronvaster gemaakt',
     items: [

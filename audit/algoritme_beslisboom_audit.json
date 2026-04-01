@@ -2,9 +2,9 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 428,
+    "issue_count": 406,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 251,
+    "question_text_mismatch": 229,
     "suspicious_label_count": 177,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
@@ -234,21 +234,9 @@
     },
     {
       "question_id": "171",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het handvat even dik als breed met vierkante doorsnede met aan 3 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
-      "json_question": "pseudo -gietnaad?"
-    },
-    {
-      "question_id": "171",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iiic",
       "text_answer": "dolk -scandinavisch -type-IIIC"
-    },
-    {
-      "question_id": "172",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het handvat even dik als breed met vierkante doorsnede met twee vlakken parallel aan het blad en aan 4 zijden voor zien van met drukretouche aangebrachte pseudo -gietnaad?",
-      "json_question": "van met drukretouche aangebrachte pseudo -gietnaad?"
     },
     {
       "question_id": "172",
@@ -258,21 +246,9 @@
     },
     {
       "question_id": "173",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het h andvat rombisch in doorsnede , pseudo gietnaad aan beide zijden en boven - en ondervlak?",
-      "json_question": "beide zijden en boven - en ondervlak?"
-    },
-    {
-      "question_id": "173",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-iiie",
       "text_answer": "dolk -scandinavisch -type-IIIE"
-    },
-    {
-      "question_id": "174",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het h andvat breder dan dik, rombisch in doorsnede met aan vier zijden pseudo gietnaad?",
-      "json_question": "vier zijden pseudo gietnaad?"
     },
     {
       "question_id": "174",
@@ -419,46 +395,10 @@
       "text_answer": "dolk -scandinavisch -type-VI"
     },
     {
-      "question_id": "189",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Engelse dolk nagenoeg parallelle zijden en een kort duidelijk afgezet handvat?",
-      "json_question": "duidelijk afgezet handvat?"
-    },
-    {
-      "question_id": "190",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Engelse dolk een knik op de grens tussen lemmet en handvat op de helft van de lengte?",
-      "json_question": "handvat op de helft van de lengte?"
-    },
-    {
-      "question_id": "191",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Engelse dolk een breed bladvormig , lemmet breedst nabij punt?",
-      "json_question": "nabij punt?"
-    },
-    {
-      "question_id": "192",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Engelse dolk een smal bladvormig blad met een knik?",
-      "json_question": "knik?"
-    },
-    {
-      "question_id": "193",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Oost -Europese dolk slanke vorm grootste breedte nabij het midden geen duidelijk afgezet handvat?",
-      "json_question": "nabij het midden geen duidelijk afgezet handvat?"
-    },
-    {
       "question_id": "193",
       "issue": "suspicious_ja_label",
       "label": "dolk--oost-europees--type-1",
       "text_answer": "dolk -oost-europees -type-1"
-    },
-    {
-      "question_id": "194",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Oost -Europese dolk een langwerpige tot rombische vorm met duidelijk afgezet handvat?",
-      "json_question": "vorm met duidelijk afgezet handvat?"
     },
     {
       "question_id": "194",
@@ -468,21 +408,9 @@
     },
     {
       "question_id": "195",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Oost -Europese dolk min of meer driehoekig lemmet breedst aan de basis geen uitgeretoucheerd handvat?",
-      "json_question": "breedst aan de basis geen uitgeretoucheerd handvat?"
-    },
-    {
-      "question_id": "195",
       "issue": "suspicious_ja_label",
       "label": "dolk--oost-europees--type-5",
       "text_answer": "dolk -oost-europees -type-5"
-    },
-    {
-      "question_id": "196",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Oost -Europese dolk een bladvormig lemmet en duidelijk uitgeretoucheerd handvat?",
-      "json_question": "duidelijk uitgeretoucheerd handvat?"
     },
     {
       "question_id": "196",
@@ -516,12 +444,6 @@
     },
     {
       "question_id": "202",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
-      "json_question": "met negatief stekerafslag?"
-    },
-    {
-      "question_id": "202",
       "issue": "suspicious_nee_label",
       "label": "nee-overige-groepen-afslagklingwerktuigen",
       "text_answer": "nee overige groepen afslag/klingwerktuigen"
@@ -531,30 +453,6 @@
       "issue": "suspicious_ja_label",
       "label": "een-combinatiewerktuig",
       "text_answer": "een combinatiewerktuig"
-    },
-    {
-      "question_id": "204",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de afslag of kling meerdere kleine beitelkanten met negatief stekerafslag?",
-      "json_question": "negatief stekerafslag?"
-    },
-    {
-      "question_id": "205",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de steker bekvormig en gemaakt met mini-stekerafslag(en) van ventrale naar dorsale zijde?",
-      "json_question": "van ventrale naar dorsale zijde?"
-    },
-    {
-      "question_id": "207",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de beitelkant gevormd door aan de deels dorsale retouche en deels ventrale waardoor het ontmoetingspunt een soort steker vormt, de beitelkant staan onder een hoek met het vlak van de afslag of kling?",
-      "json_question": "van de afslag of kling?"
-    },
-    {
-      "question_id": "208",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt door een onopzettelijke breuk, ontstaan doordat het artefact tijdens het retoucheren is gebroken?",
-      "json_question": "artefact tijdens het retoucheren is gebroken?"
     },
     {
       "question_id": "208",
@@ -567,36 +465,6 @@
       "issue": "suspicious_nee_label",
       "label": "de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-",
       "text_answer": "(de Krukowski -kerfrest is aan één zijde steil geretoucheerd )"
-    },
-    {
-      "question_id": "209",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt met een opzettelijk getordeerde breuk, de microsteker vertoont bij de breuk duidelijk een deel van een geretoucheerde kerf?",
-      "json_question": "geretoucheerde kerf?"
-    },
-    {
-      "question_id": "210",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de steker gemaakt met één enkele stekerafslag zonder voorbereiding van het slagvlak?",
-      "json_question": "voorbereiding van het slagvlak?"
-    },
-    {
-      "question_id": "211",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de steker gemaakt door de stekerafslag zijwaarts ( haaks op de slagrichting afslag/kling) aan te brengen?",
-      "json_question": "de slagrichting afslag/kling) aan te brengen?"
-    },
-    {
-      "question_id": "212",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de steker gemaakt door de stekerafslag te plaatsen op een al dan niet schuin geplaatste geretoucheerde rand?",
-      "json_question": "al dan niet schuin geplaatste geretoucheerde rand?"
-    },
-    {
-      "question_id": "214",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de RA -steker één boogvormig steil geretoucheerde zijde en een korte stekerafslag, veelal begrensd door een kerf?",
-      "json_question": "zijde en een korte stekerafslag, veelal begrensd door een kerf?"
     },
     {
       "question_id": "215",

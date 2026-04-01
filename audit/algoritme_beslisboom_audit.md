@@ -5,9 +5,9 @@ Let op: dit is een brede heuristische eerste audit. Niet elk gemarkeerd label is
 Samenvatting:
 - Vragen uit `algoritme.txt`: 512
 - Vragen uit `beslisboom.json`: 512
-- Totaal gevonden heuristische issues: 428
+- Totaal gevonden heuristische issues: 406
 - Lege vragen in JSON: 0
-- Vraagtekst-mismatches: 251
+- Vraagtekst-mismatches: 229
 - Verdachte antwoordlabels: 177
 - Ontbrekend in JSON: 0
 - Ontbrekend in txt-parse: 0
