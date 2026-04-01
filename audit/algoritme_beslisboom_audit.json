@@ -2,9 +2,9 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 525,
+    "issue_count": 522,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 306,
+    "question_text_mismatch": 303,
     "suspicious_label_count": 219,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
@@ -500,7 +500,7 @@
       "question_id": "128",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact min of meer een bijlvorm maar is niet geslepen en is de snede gemaakt door retouche /bekapping haaks op de snede?",
-      "json_question": "haaks op de snede?"
+      "json_question": "Heeft het artefact min of meer een bijlvorm, is het niet geslepen en is de snede gemaakt door retouche of bekapping haaks op de snede?"
     },
     {
       "question_id": "128",
@@ -512,13 +512,13 @@
       "question_id": "129",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het artefact een min of meer vierkante dwarsdoorsnede maar is niet geslepen?",
-      "json_question": "maar is niet geslepen?"
+      "json_question": "Heeft het artefact een min of meer vierkante dwarsdoorsnede, maar is het niet geslepen?"
     },
     {
       "question_id": "129a",
       "issue": "question_text_mismatch",
       "text_question": "Lijkt het artefact op een vuistbijl maar met een snede i.p.v. een punt?",
-      "json_question": "een punt?"
+      "json_question": "Lijkt het artefact op een vuistbijl maar met een snede in plaats van een punt?"
     },
     {
       "question_id": "129a",
@@ -530,7 +530,7 @@
       "question_id": "130",
       "issue": "question_text_mismatch",
       "text_question": "Is het artefact aan slechts één vlakke zijde bewerkt of gemaakt van een afslag?",
-      "json_question": "gemaakt van een afslag?"
+      "json_question": "Is het artefact aan slechts een vlakke zijde bewerkt of gemaakt van een afslag?"
     },
     {
       "question_id": "130",
@@ -560,7 +560,7 @@
       "question_id": "132b",
       "issue": "question_text_mismatch",
       "text_question": "Is de de vuistbijl grof bewerkt en heeft het het uiterlijk van een kern?",
-      "json_question": "een kern?"
+      "json_question": "Is de vuistbijl grof bewerkt en heeft zij het uiterlijk van een kern?"
     },
     {
       "question_id": "132b",
@@ -572,19 +572,13 @@
       "question_id": "134",
       "issue": "question_text_mismatch",
       "text_question": "Is de vuistbijl is langwerpig en heeft die concave zijden, grof bewerkt?",
-      "json_question": "bewerkt?"
+      "json_question": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij grof bewerkt?"
     },
     {
       "question_id": "135",
       "issue": "question_text_mismatch",
       "text_question": "Is de vuistbijl is langwerpig en heeft die concave zijden en is die fijner bewerkt dan de ficron en lancetvormige vuistbijl?",
-      "json_question": "die fijner bewerkt dan de ficron en lancetvormige vuistbijl?"
-    },
-    {
-      "question_id": "135a",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm amandelvormig?",
-      "json_question": "en is de vorm amandelvormig?"
+      "json_question": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij fijner bewerkt dan de ficron en lancetvormige vuistbijl?"
     },
     {
       "question_id": "135a",
@@ -596,7 +590,7 @@
       "question_id": "136",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de vuistbijl heeft een (afgeronde) punt en is de vuistbijl relatief dun breedte > 2,35 X dikte?",
-      "json_question": "relatief dun breedte > 2,35 X dikte?"
+      "json_question": "Heeft de vuistbijl een afgeronde punt en is zij relatief dun, met breedte groter dan 2,35 keer de dikte?"
     },
     {
       "question_id": "136",
@@ -608,73 +602,73 @@
       "question_id": "138",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de n vuistbijl een hartvormige vorm , met zeer convexe zijde n en ronde basis en enigszins ronde punt?",
-      "json_question": "zijde n en ronde basis en enigszins ronde punt?"
+      "json_question": "Heeft de vuistbijl een hartvormige vorm, met zeer convexe zijden, ronde basis en enigszins ronde punt?"
     },
     {
       "question_id": "139",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de gedrongen vuistbijl een driehoekig ogiefvormig vorm met convexe zijden en enigszins convexe basis?",
-      "json_question": "vorm met convexe zijden en enigszins convexe basis?"
+      "json_question": "Heeft de gedrongen vuistbijl een driehoekige ogiefvorm met convexe zijden en enigszins convexe basis?"
     },
     {
       "question_id": "140",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de vuistbijlen met een (korte) snede soms in de vorm van een tranchet -snede?",
-      "json_question": "van een tranchet -snede?"
+      "json_question": "Heeft de vuistbijl een korte snede, soms in de vorm van een tranchet-snede?"
     },
     {
       "question_id": "142",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm langgerekt ovaa l, lengte > 1,5 X breedte?",
-      "json_question": "en is de vorm langgerekt ovaa l, lengte > 1,5 X breedte?"
+      "json_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm langgerekt ovaal, met lengte groter dan 1,5 keer de breedte?"
     },
     {
       "question_id": "143",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm ovaal lengte < 1,5 X breedte?",
-      "json_question": "en is de vorm ovaal lengte < 1,5 X breedte?"
+      "json_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm ovaal, met lengte kleiner dan 1,5 keer de breedte?"
     },
     {
       "question_id": "144",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en de vorm is rond?",
-      "json_question": "en de vorm is rond?"
+      "json_question": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm rond?"
     },
     {
       "question_id": "147",
       "issue": "question_text_mismatch",
       "text_question": "Is het artefact is bladvormig , lijkt het op een vuistbijl maar is vaak dunner , zonder dikke rug?",
-      "json_question": "vaak dunner , zonder dikke rug?"
+      "json_question": "Is het artefact bladvormig, lijkt het op een vuistbijl maar is het vaak dunner en zonder dikke rug?"
     },
     {
       "question_id": "148",
       "issue": "question_text_mismatch",
       "text_question": "Is het artefact bifaciaal bewerkt met fijnere bewerking aan ‘één lange zijde?",
-      "json_question": "‘één lange zijde?"
+      "json_question": "Is het artefact bifaciaal bewerkt met fijnere bewerking aan een lange zijde?"
     },
     {
       "question_id": "149",
       "issue": "question_text_mismatch",
       "text_question": "Is het artefact bifaciaal bewerkt en bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?",
-      "json_question": "vergeleken met een vuistbijl en Faustkeilblatt?"
+      "json_question": "Is het artefact bifaciaal bewerkt, bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?"
     },
     {
       "question_id": "150",
       "issue": "question_text_mismatch",
       "text_question": "Is het bladvormige artefact op beide vlakken (bifaciaal) volledig bewerkt en heeft het twee puntige uiteinden?",
-      "json_question": "volledig bewerkt en heeft het twee puntige uiteinden?"
+      "json_question": "Is het bladvormige artefact op beide vlakken volledig bifaciaal bewerkt en heeft het twee puntige uiteinden?"
     },
     {
       "question_id": "151",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de b ladspits met een minder regelmatige vorm , vaak ovaal langwerpig of gedrongen, soms hartvormig?",
-      "json_question": "ovaal langwerpig of gedrongen, soms hartvormig?"
+      "json_question": "Heeft de bladspits een minder regelmatige vorm, vaak ovaal langwerpig of gedrongen, soms hartvormig?"
     },
     {
       "question_id": "154",
       "issue": "question_text_mismatch",
       "text_question": "Heeft het fijn bewerkte kernwerktuig een symmetrisch e dolk vorm?",
-      "json_question": "vorm?"
+      "json_question": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?"
     },
     {
       "question_id": "154",
@@ -692,7 +686,7 @@
       "question_id": "155",
       "issue": "question_text_mismatch",
       "text_question": "Is de dolk gemaakt van een kling en aan één oppervlak bewerkt?",
-      "json_question": "bewerkt?"
+      "json_question": "Is de dolk gemaakt van een kling en aan een oppervlak bewerkt?"
     },
     {
       "question_id": "155",
@@ -708,12 +702,6 @@
     },
     {
       "question_id": "160",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Scandinavische dolk geen geïsoleerd handvat en is de dolk nagenoeg even dik over de gehele lengte?",
-      "json_question": "de dolk nagenoeg even dik over de gehele lengte?"
-    },
-    {
-      "question_id": "160",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-i",
       "text_answer": "dolk -scandinavisch -type-I"
@@ -726,12 +714,6 @@
     },
     {
       "question_id": "162",
-      "issue": "question_text_mismatch",
-      "text_question": "Ligt de grootste breedte nabij het midden, in ieder geval dichter bij het midden dan bij de punt?",
-      "json_question": "dichter bij het midden dan bij de punt?"
-    },
-    {
-      "question_id": "162",
       "issue": "suspicious_ja_label",
       "label": "dolk--scandinavisch--type-ib",
       "text_answer": "dolk -scandinavisch -type-IB"
@@ -740,7 +722,7 @@
       "question_id": "163",
       "issue": "question_text_mismatch",
       "text_question": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakte retouche?",
-      "json_question": "parallelle oppervlakte retouche?"
+      "json_question": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakteretouche?"
     },
     {
       "question_id": "163",
@@ -752,7 +734,7 @@
       "question_id": "164",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de dolk een iets meer uitgeretoucheerd , ingesnoerd handvat?",
-      "json_question": "handvat?"
+      "json_question": "Heeft de dolk een iets meer uitgeretoucheerd, ingesnoerd handvat?"
     },
     {
       "question_id": "164",
@@ -764,7 +746,7 @@
       "question_id": "165",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de dolk een lancetvormig blad en is doorsnede handvat lensvormig tot ovaal en min 2 mm dikker dan het blad?",
-      "json_question": "lensvormig tot ovaal en min 2 mm dikker dan het blad?"
+      "json_question": "Heeft de dolk een lancetvormig blad en is de doorsnede van het handvat lensvormig tot ovaal en minstens 2 mm dikker dan het blad?"
     },
     {
       "question_id": "165",
@@ -782,7 +764,7 @@
       "question_id": "168",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de dolk een smal handvat met parallelle zijden rombisch tot rechthoekig in doorsnede?",
-      "json_question": "tot rechthoekig in doorsnede?"
+      "json_question": "Heeft de dolk een smal handvat met parallelle zijden, rombisch tot rechthoekig in doorsnede?"
     },
     {
       "question_id": "168",
@@ -794,7 +776,7 @@
       "question_id": "169",
       "issue": "question_text_mismatch",
       "text_question": "Is het h andvat even dik al s breed met vierkante doorsnede zonder pseudo gietnaad?",
-      "json_question": "zonder pseudo gietnaad?"
+      "json_question": "Is het handvat even dik als breed, met vierkante doorsnede en zonder pseudo-gietnaad?"
     },
     {
       "question_id": "169",
@@ -806,7 +788,7 @@
       "question_id": "170",
       "issue": "question_text_mismatch",
       "text_question": "Is het handvat even dik als breed met vierkante doorsnede met aan 4 zijden voorzien van met drukretouche aangebrachte pseudo -gietnaad?",
-      "json_question": "pseudo -gietnaad?"
+      "json_question": "Is het handvat even dik als breed, met vierkante doorsnede en aan vier zijden voorzien van met drukretouche aangebrachte pseudo-gietnaad?"
     },
     {
       "question_id": "170",

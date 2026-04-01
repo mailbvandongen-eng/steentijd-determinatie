@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.29',
+    title: 'Latere expert-subroutes en labels opgeschoond',
+    items: [
+      'Een volgende batch bifaciale en dolkroutes gebruikt nu weer volledige bronvragen uit het algoritmedocument',
+      'Meerdere parserachtige expertuitkomsten tonen nu leesbare schermnamen, onder meer bij combinatiewerktuigen, spitsen en bijlsubtypen',
+      'De bronaudit daalt daardoor verder naar 303 vraagtekst-mismatches en 420 parserfouten',
+    ],
+  },
+  {
     version: '2.2.28',
     title: 'Expert lus bij vraag 126 gerepareerd',
     items: [

@@ -580,22 +580,22 @@
     "nee": "terug-artefactgroepen-start"
   },
   "128": {
-    "vraag": "haaks  op de snede ?",
+    "vraag": "Heeft het artefact min of meer een bijlvorm, is het niet geslepen en is de snede gemaakt door retouche of bekapping haaks op de snede?",
     "ja": "breed-te29-cm--halffabricaat--bijl",
     "nee": "meer-een-beitel-vorm--breedte29-cm"
   },
   "129": {
-    "vraag": "maar is niet geslepen ?",
+    "vraag": "Heeft het artefact een min of meer vierkante dwarsdoorsnede, maar is het niet geslepen?",
     "ja": "halffabricaat--beitel",
     "nee": "terug-artefactgroepen-start"
   },
   "129a": {
-    "vraag": "een punt?",
+    "vraag": "Lijkt het artefact op een vuistbijl maar met een snede in plaats van een punt?",
     "ja": "een-vuistwig",
     "nee": "met-een-evt-afgeronde-punt"
   },
   "130": {
-    "vraag": "gemaakt van een afslag ?",
+    "vraag": "Is het artefact aan slechts een vlakke zijde bewerkt of gemaakt van een afslag?",
     "ja": "uniface",
     "nee": "het-is-een-vuistbijl-of-bladvorm"
   },
@@ -610,7 +610,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "132b": {
-    "vraag": "een kern?",
+    "vraag": "Is de vuistbijl grof bewerkt en heeft zij het uiterlijk van een kern?",
     "ja": "een-vuistbijl--kernvormig",
     "nee": "zorgvuldiger-bewerkt"
   },
@@ -625,22 +625,22 @@
     "nee": "terug-artefactgroepen-start"
   },
   "134": {
-    "vraag": "bewerkt?",
+    "vraag": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij grof bewerkt?",
     "ja": "vuistbijl--ficron",
     "nee": "fijner-bewerkt"
   },
   "135": {
-    "vraag": "die fijner bewerkt  dan de  ficron  en lancetvormige vuistbijl ?",
+    "vraag": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij fijner bewerkt dan de ficron en lancetvormige vuistbijl?",
     "ja": "vuistbijl--micoque",
     "nee": "terug-artefactgroepen-start"
   },
   "135a": {
-    "vraag": "en is de vorm amandelvormig ?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm amandelvormig?",
     "ja": "vuistbijl--amandelvormig",
     "nee": "een-flesvorm-vuistbijl--flesvormig"
   },
   "136": {
-    "vraag": "relatief dun breedte > 2,35 X dikte ?",
+    "vraag": "Heeft de vuistbijl een afgeronde punt en is zij relatief dun, met breedte groter dan 2,35 keer de dikte?",
     "ja": "nee-heel-klein--6-cm-of-heel-dun",
     "nee": "heel-klein--6-cm-of-heel-dun"
   },
@@ -650,7 +650,7 @@
     "nee": "onregelmatig-driehoekig-vuistbijl--sub-driehoekig"
   },
   "138": {
-    "vraag": "zijde n en ronde basis  en enigszins ronde punt ?",
+    "vraag": "Heeft de vuistbijl een hartvormige vorm, met zeer convexe zijden, ronde basis en enigszins ronde punt?",
     "ja": "vuistbijl--hartvormig",
     "nee": "terug-artefactgroepen-start"
   },
@@ -660,12 +660,12 @@
     "nee": "onregelmatig-driehoekig-vuistbijl--sub-hartvorm-ig"
   },
   "139": {
-    "vraag": "vorm met convexe zijden  en enigszins convexe basis ?",
+    "vraag": "Heeft de gedrongen vuistbijl een driehoekige ogiefvorm met convexe zijden en enigszins convexe basis?",
     "ja": "vuistbijl--bout--coupé",
     "nee": "terug-artefactgroepen-start"
   },
   "140": {
-    "vraag": "van een tranchet -snede?",
+    "vraag": "Heeft de vuistbijl een korte snede, soms in de vorm van een tranchet-snede?",
     "ja": "vuistbijl--met-korte--snede",
     "nee": "terug-artefactgroepen-start"
   },
@@ -675,17 +675,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "142": {
-    "vraag": "en is de vorm langgerekt ovaa l, lengte > 1,5 X breedte ?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm langgerekt ovaal, met lengte groter dan 1,5 keer de breedte?",
     "ja": "vuistbijl--limande",
     "nee": "terug-artefactgroepen-start"
   },
   "143": {
-    "vraag": "en is de vorm ovaal  lengte < 1,5 X breedte ?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm ovaal, met lengte kleiner dan 1,5 keer de breedte?",
     "ja": "vuistbijl--ovaal",
     "nee": "terug-artefactgroepen-start"
   },
   "144": {
-    "vraag": "en de vorm is rond?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm rond?",
     "ja": "vuistbijl--rond-og-vuistbijl--disque",
     "nee": "terug-artefactgroepen-start"
   },
@@ -700,37 +700,37 @@
     "nee": "terug-artefactgroepen-start"
   },
   "147": {
-    "vraag": "vaak dunner , zonder dikke rug ?",
+    "vraag": "Is het artefact bladvormig, lijkt het op een vuistbijl maar is het vaak dunner en zonder dikke rug?",
     "ja": "vuistbijl--faustkeilblatt",
     "nee": "terug-artefactgroepen-start"
   },
   "148": {
-    "vraag": "‘één lange zijde?",
+    "vraag": "Is het artefact bifaciaal bewerkt met fijnere bewerking aan een lange zijde?",
     "ja": "schaaf--blad",
     "nee": "terug-artefactgroepen-start"
   },
   "149": {
-    "vraag": "vergeleken met een vuistbijl  en Faustkeilblatt ?",
+    "vraag": "Is het artefact bifaciaal bewerkt, bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?",
     "ja": "spits--blad",
     "nee": "terug-artefactgroepen-start"
   },
   "150": {
-    "vraag": "volledig  bewerkt  en heeft het  twee puntige uiteinden ?",
+    "vraag": "Is het bladvormige artefact op beide vlakken volledig bifaciaal bewerkt en heeft het twee puntige uiteinden?",
     "ja": "spits--blad--mauern",
     "nee": "terug-artefactgroepen-start"
   },
   "151": {
-    "vraag": "ovaal langwerpig of gedrongen, soms hartvormig ?",
+    "vraag": "Heeft de bladspits een minder regelmatige vorm, vaak ovaal langwerpig of gedrongen, soms hartvormig?",
     "ja": "spits--blad--szeletienne",
     "nee": "spits--blad"
   },
   "154": {
-    "vraag": "vorm ?",
+    "vraag": "Heeft het fijn bewerkte kernwerktuig een symmetrische dolkvorm?",
     "ja": "nee-het-artefact-is-asymmetrisch",
     "nee": "het-artefact-is-asymmetrisch"
   },
   "155": {
-    "vraag": "bewerkt?",
+    "vraag": "Is de dolk gemaakt van een kling en aan een oppervlak bewerkt?",
     "ja": "nee-aan-beide-oppervlakken",
     "nee": "aan-beide-oppervlakken"
   },
@@ -755,7 +755,7 @@
     "nee": "dichter-bij-de-basis-dolk--oost-europ-ees"
   },
   "160": {
-    "vraag": "de dolk  nagenoeg even dik over de gehele lengte ?",
+    "vraag": "Heeft de Scandinavische dolk geen geïsoleerd handvat en is de dolk nagenoeg even dik over de gehele lengte?",
     "ja": "dolk--scandinavisch--type-i",
     "nee": "terug-artefactgroepen-start"
   },
@@ -765,22 +765,22 @@
     "nee": "terug-artefactgroepen-start"
   },
   "162": {
-    "vraag": "dichter bij het midden dan bij de punt ?",
+    "vraag": "Ligt de grootste breedte nabij het midden, in ieder geval dichter bij het midden dan bij de punt?",
     "ja": "dolk--scandinavisch--type-ib",
     "nee": "terug-artefactgroepen-start"
   },
   "163": {
-    "vraag": "parallelle oppervlakte  retouche?",
+    "vraag": "Is het handvat licht concaaf en is de dolk afgewerkt met parallelle oppervlakteretouche?",
     "ja": "dolk--scandinavisch--type-ic",
     "nee": "terug-artefactgroepen-start"
   },
   "164": {
-    "vraag": "handvat?",
+    "vraag": "Heeft de dolk een iets meer uitgeretoucheerd, ingesnoerd handvat?",
     "ja": "dolk--scandinavisch--type-id",
     "nee": "terug-artefactgroepen-start"
   },
   "165": {
-    "vraag": "lensvormig tot ovaal  en min 2 mm dikker  dan het blad?",
+    "vraag": "Heeft de dolk een lancetvormig blad en is de doorsnede van het handvat lensvormig tot ovaal en minstens 2 mm dikker dan het blad?",
     "ja": "dolk--scandinavisch--type-ii",
     "nee": "terug-artefactgroepen-start"
   },
@@ -790,17 +790,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "168": {
-    "vraag": "tot rechthoekig  in doorsnede ?",
+    "vraag": "Heeft de dolk een smal handvat met parallelle zijden, rombisch tot rechthoekig in doorsnede?",
     "ja": "dolk--scandinavisch--type-iii",
     "nee": "terug-artefactgroepen-start"
   },
   "169": {
-    "vraag": "zonder pseudo gietnaad ?",
+    "vraag": "Is het handvat even dik als breed, met vierkante doorsnede en zonder pseudo-gietnaad?",
     "ja": "dolk--scandinavisch--type-iiia",
     "nee": "terug-artefactgroepen-start"
   },
   "170": {
-    "vraag": "pseudo -gietnaad ?",
+    "vraag": "Is het handvat even dik als breed, met vierkante doorsnede en aan vier zijden voorzien van met drukretouche aangebrachte pseudo-gietnaad?",
     "ja": "dolk--scandinavisch--type-iiib",
     "nee": "terug-artefactgroepen-start"
   },
