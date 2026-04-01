@@ -23,9 +23,9 @@ Eerste geautomatiseerde audit:
 Uitkomst huidige audit:
 - 512 vragen uit `algoritme.txt`
 - 512 vragen uit `beslisboom.json`
-- 511 heuristisch gemarkeerde issues
+- 469 heuristisch gemarkeerde issues
 - 0 lege vragen in JSON
-- 303 vraagtekst-mismatches
+- 261 vraagtekst-mismatches
 - 208 verdachte antwoordlabels
 - 0 ontbrekende vragen in `beslisboom.json`
 
@@ -43,7 +43,7 @@ Wat in de eerste bronopschoningen concreet is verbeterd:
 - meerdere technische expertlabels hebben nu expliciete leesbare schermnamen
 
 Tweede auditlaag:
-- `parser_error`: 414
+- `parser_error`: 372
 - `route_label`: 90
 - `likely_valid_type`: 7
 

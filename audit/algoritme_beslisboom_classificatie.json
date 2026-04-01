@@ -2,13 +2,13 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 511,
+    "issue_count": 469,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 303,
+    "question_text_mismatch": 261,
     "suspicious_label_count": 208,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0,
-    "parser_error": 414,
+    "parser_error": 372,
     "route_label": 90,
     "likely_valid_type": 7
   },
@@ -26,13 +26,6 @@
       "label": "het-is-een-geslepen--stenen--artefact",
       "text_answer": "het is een geslepen -stenen -artefact",
       "category": "route_label"
-    },
-    {
-      "question_id": "5",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
-      "json_question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijste vlakken?",
-      "category": "parser_error"
     },
     {
       "question_id": "6",
@@ -70,13 +63,6 @@
       "category": "likely_valid_type"
     },
     {
-      "question_id": "10",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag -negatief)",
-      "json_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat retouche, een stekerafslag-negatief)",
-      "category": "parser_error"
-    },
-    {
       "question_id": "11",
       "issue": "suspicious_nee_label",
       "label": "een-klein-of-onherkenbaar-slagvlak",
@@ -85,13 +71,6 @@
     },
     {
       "question_id": "12",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de kern gemaakt in Levallois -techniek? (Naar het midden gerichte afslagnegatieven aan boven en ondervlak , waarbij de afslagen aan één zijde steiler zijn -de onderzijde - dan die aan de andere zijde, lijkt op een omgekeerde schildpad )",
-      "json_question": "Is de kern gemaakt in Levallois-techniek? (Naar het midden gerichte afslagnegatieven aan boven- en ondervlak, waarbij de afslagen aan een zijde steiler zijn dan aan de andere zijde; lijkt op een omgekeerde schildpad)",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "12",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee",
@@ -99,38 +78,10 @@
     },
     {
       "question_id": "12a",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern een discusvorm , ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven - als onderzijde?",
-      "json_question": "Heeft de kern een discusvorm, ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven- als onderzijde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "12a",
       "issue": "suspicious_ja_label",
       "label": "nee",
       "text_answer": "Nee",
       "category": "route_label"
-    },
-    {
-      "question_id": "14",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de relatief grote tot massieve kern één groot afslagnegatief?",
-      "json_question": "Heeft de relatief grote tot massieve kern een groot afslagnegatief?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "15",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern twee en slechts twee net niet haaks op elkaar staande slagvlakke n die beurtelings als afbouwvlak worden gebruikt?",
-      "json_question": "Heeft de kern twee en slechts twee net niet haaks op elkaar staande slagvlakken die beurtelings als afbouwvlak worden gebruikt?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "18",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern een discusvorm , ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven - als onderzijde?",
-      "json_question": "Heeft de kern een discusvorm, ofwel naar het midden gerichte afslagnegatieven rondom zowel aan boven- als onderzijde?",
-      "category": "parser_error"
     },
     {
       "question_id": "18",
@@ -138,48 +89,6 @@
       "label": "nee",
       "text_answer": "Nee",
       "category": "route_label"
-    },
-    {
-      "question_id": "19",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern één nagenoeg vlakke tot licht bolle zijde en één sterk bolle zijde?",
-      "json_question": "Heeft de kern een nagenoeg vlakke tot licht bolle zijde en een sterk bolle zijde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "21",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de Levallois -kern één of meer klingvormige afslagnegatieven?",
-      "json_question": "Heeft de Levallois-kern een of meer klingvormige afslagnegatieven?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "25",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslag negatieven?",
-      "json_question": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslagnegatieven?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "26",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern lange afslagnegatieven overwegend max 10 mm breed?",
-      "json_question": "Heeft de kern lange afslagnegatieven overwegend maximaal 10 mm breed?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "28",
-      "issue": "question_text_mismatch",
-      "text_question": "Zijn de (overwegend meer dan 10 mm brede) afslagnegatieven regelmatig?",
-      "json_question": "Zijn de overwegend meer dan 10 mm brede afslagnegatieven regelmatig?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "31",
-      "issue": "question_text_mismatch",
-      "text_question": "De twee slagvlakken liggen tegenover elkaar, z ijn de afslagnegatieven klingvormig?",
-      "json_question": "De twee slagvlakken liggen tegenover elkaar; zijn de afslagnegatieven klingvormig?",
-      "category": "parser_error"
     },
     {
       "question_id": "32",
@@ -187,27 +96,6 @@
       "label": "nee-zie-vorige-determinatie-",
       "text_answer": "Nee zie vorige determinatie :",
       "category": "route_label"
-    },
-    {
-      "question_id": "33",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
-      "json_question": "Heeft de knol, brok of kern een zeer kleine beitelkant, mogelijk met negatief van een stekerafslag?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "37",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
-      "json_question": "Is de knol, brok of vorstsplijting voorzien van een of twee door steile retouche en/of grove kerf bewerkte zijden?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "45a",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de afslag aan één zijde cortex tegenover een scherpe zijde?",
-      "json_question": "Heeft de afslag aan een zijde cortex tegenover een scherpe zijde?",
-      "category": "parser_error"
     },
     {
       "question_id": "45a",
@@ -221,76 +109,6 @@
       "issue": "suspicious_nee_label",
       "label": "een-afslag--decorticatie",
       "text_answer": "een afslag -decorticatie",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "46",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de afslag, veelal relatief groot , dun en vlak , met naar het midden gerichte (centripetale) afslagnegatieven op de dorsale zijde?",
-      "json_question": "Is de afslag, veelal relatief groot, dun en vlak, met naar het midden gerichte afslagnegatieven op de dorsale zijde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "48",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de afslag (nagenoeg) driehoekige met één of meer afslagnegatieven op de dorsale zijde, de slagrichting is gelijk aan de as van het werktuig?",
-      "json_question": "Is de afslag nagenoeg driehoekig met een of meer afslagnegatieven op de dorsale zijde, waarbij de slagrichting gelijk is aan de as van het werktuig?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "50",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de al dan niet geretoucheerde Levallois -spits een bifaciaal vlak geretoucheerde afknotting aan de basis?",
-      "json_question": "Heeft de al dan niet geretoucheerde Levallois-spits een bifaciaal vlak geretoucheerde afknotting aan de basis?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "52",
-      "issue": "question_text_mismatch",
-      "text_question": "Lijkt het artefact op een Levallois -spits maar is de as van het werktuig ongelijk aan de richting waarin het artefact is losgemaakt van de kern?",
-      "json_question": "Lijkt het artefact op een Levallois-spits, maar is de as van het werktuig ongelijk aan de richting waarin het artefact is losgemaakt van de kern?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "56",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de afslag (een deel van) van het slagvlak van een kern als dorsale zijde en op de rand proximale delen van afslagnegatieven?",
-      "json_question": "Heeft de afslag een deel van het slagvlak van een kern als dorsale zijde en op de rand proximale delen van afslagnegatieven?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "58",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de afslag een bifaciaal bewerkt artefact , herkenbaar aan een dorsaal vlak met afslagnegatieven en een slagvlakrest met bifaciale bewerking?",
-      "json_question": "Is de afslag een bifaciaal bewerkt artefact, herkenbaar aan een dorsaal vlak met afslagnegatieven en een slagvlakrest met bifaciale bewerking?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "71a",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kling een driehoekige doorsnede en aan één zijde cortex tegenover een scherpe zijde?",
-      "json_question": "Heeft de kling een driehoekige doorsnede en aan een zijde cortex tegenover een scherpe zijde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "73",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kling met naar midden gerichte afslagnegatieven op dorsale zijde?",
-      "json_question": "Heeft de kling naar het midden gerichte afslagnegatieven op de dorsale zijde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "77",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de k ling met regelmatige en parallelle zijden en afslagnegatieven?",
-      "json_question": "Heeft de kling regelmatige en parallelle zijden en afslagnegatieven?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "101",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het artefact één of twee versplinterde uiteinden? (verbrijzeld)",
-      "json_question": "Heeft het artefact een of twee versplinterde uiteinden? (verbrijzeld)",
       "category": "parser_error"
     },
     {
@@ -316,44 +134,16 @@
     },
     {
       "question_id": "104",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het grof bewerkte artefact voor een kl ein deel bewerkt , bekapt?",
-      "json_question": "Is het grof bewerkte artefact voor een klein deel bewerkt, bekapt?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "104",
       "issue": "suspicious_ja_label",
       "label": "nee-voor-een-groot-deel-bekapt",
       "text_answer": "Nee voor een groot deel bekapt",
       "category": "route_label"
     },
     {
-      "question_id": "106",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het grof bewerkte artefact voor een (klein ) deel bewerkt met enige grove afslagen naar één zijde (unifaciaal)?",
-      "json_question": "Is het grof bewerkte artefact voor een klein deel bewerkt met enige grove afslagen naar een zijde (unifaciaal)?",
-      "category": "parser_error"
-    },
-    {
       "question_id": "107",
       "issue": "suspicious_ja_label",
       "label": "een-chopper--rondom--bekapt",
       "text_answer": "een chopper -rondom -bekapt",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "109",
-      "issue": "question_text_mismatch",
-      "text_question": "Is de choppingtool aan één (tamelijk vlakke) zijde rondom bekapt aan de andere (bolle) zijde deels?",
-      "json_question": "Is de choppingtool aan een tamelijk vlakke zijde rondom bekapt en aan de andere bolle zijde deels?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "110",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het artefact min of meer de vorm van een bijl of vuistbijl of bladvorm?",
-      "json_question": "Heeft het artefact min of meer de vorm van een bijl, vuistbijl of bladvorm?",
       "category": "parser_error"
     },
     {
@@ -378,41 +168,6 @@
       "category": "route_label"
     },
     {
-      "question_id": "112",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het e en klein artefact met een min of meer driehoekige dwarsdoorsnede, het ene oppervlak is bedekt met retouche , terwijl de beide andere grove afslag -vlakken zijn?",
-      "json_question": "Is het een klein artefact met een min of meer driehoekige dwarsdoorsnede, waarbij het ene oppervlak is bedekt met retouche terwijl de beide andere grove afslagvlakken zijn?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "113",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het groter e grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een grove punt?",
-      "json_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een grove punt?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "114",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een snede gemaakt door meerdere afslagen?",
-      "json_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een snede gemaakt door meerdere afslagen?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "115",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvorige, driehoekige of rechthoekige doorsnede en een puntige ‘snede’ gemaakt door meerdere afslagen?",
-      "json_question": "Heeft het grotere grof bewerkte artefact met een trapeziumvormige, driehoekige of rechthoekige doorsnede een puntige snede gemaakt door meerdere afslagen?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "116",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het grotere grof bewerkte artefact met nagenoeg vierkante doorsnede en een snede gemaakt door meerdere afslagen?",
-      "json_question": "Heeft het grotere grof bewerkte artefact met nagenoeg vierkante doorsnede een snede gemaakt door meerdere afslagen?",
-      "category": "parser_error"
-    },
-    {
       "question_id": "117",
       "issue": "suspicious_nee_label",
       "label": "een-asymmetrische-driehoekige-dwarsdoorsnede",
@@ -420,60 +175,11 @@
       "category": "route_label"
     },
     {
-      "question_id": "118",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het asymmetrische artefact een ( bifaciaal) bewerkte werkkant tegenover een min of meer dikke zijde?",
-      "json_question": "Heeft het asymmetrische artefact een bifaciaal bewerkte werkkant tegenover een min of meer dikke zijde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "119",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het artefact convexe werkkant en een rug alleen op het proximale uiteinde?",
-      "json_question": "Heeft het artefact een convexe werkkant en een rug alleen op het proximale uiteinde?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "120",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het artefact een convexe werkkant en een rug die door loopt tot en voorbij beide uiteinden?",
-      "json_question": "Heeft het artefact een convexe werkkant en een rug die doorloopt tot en voorbij beide uiteinden?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "121",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het artefact een rechte werkkant en is de vorm enigszins driehoekig en heeft het artefact een dunne rug?",
-      "json_question": "Heeft het artefact een rechte werkkant, is de vorm enigszins driehoekig en heeft het artefact een dunne rug?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "122",
-      "issue": "question_text_mismatch",
-      "text_question": "Is het artefact nagenoeg driehoekig van vorm met hypotenusa als snijkant maar met dikke rug?",
-      "json_question": "Is het artefact nagenoeg driehoekig van vorm met de hypotenusa als snijkant, maar met dikke rug?",
-      "category": "parser_error"
-    },
-    {
-      "question_id": "123",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft het artefact een spitse hoek tussen rug en werkkant, de rug loopt door tot de snijkant aan het ‘distale ’uiteinde?",
-      "json_question": "Heeft het artefact een spitse hoek tussen rug en werkkant, waarbij de rug doorloopt tot de snijkant aan het distale uiteinde?",
-      "category": "parser_error"
-    },
-    {
       "question_id": "124",
       "issue": "suspicious_ja_label",
       "label": "de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--",
       "text_answer": "de snede en rug lopen zijn nagenoeg recht keilmesser -",
       "category": "route_label"
-    },
-    {
-      "question_id": "125",
-      "issue": "question_text_mismatch",
-      "text_question": "Het artefact is vrijwel volledig bewerkt en is min of meer plat ; heeft het een enigszins afgewerkte werkkant of -punt?",
-      "json_question": "Het artefact is vrijwel volledig bewerkt en min of meer plat; heeft het een enigszins afgewerkte werkkant of -punt?",
-      "category": "parser_error"
     },
     {
       "question_id": "125",

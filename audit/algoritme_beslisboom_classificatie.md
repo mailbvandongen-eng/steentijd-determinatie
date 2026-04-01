@@ -3,31 +3,31 @@
 Deze tweede auditlaag deelt de baseline-issues op in werkcategorieën.
 
 Samenvatting:
-- parser_error: 414
+- parser_error: 372
 - route_label: 90
 - likely_valid_type: 7
 
 Voorbeelden parser_error:
-- `..5` `question_text_mismatch`
-- `..10` `question_text_mismatch`
-- `..12` `question_text_mismatch`
-- `..12a` `question_text_mismatch`
-- `..14` `question_text_mismatch`
-- `..15` `question_text_mismatch`
-- `..18` `question_text_mismatch`
-- `..19` `question_text_mismatch`
-- `..21` `question_text_mismatch`
-- `..25` `question_text_mismatch`
-- `..26` `question_text_mismatch`
-- `..28` `question_text_mismatch`
-- `..31` `question_text_mismatch`
-- `..33` `question_text_mismatch`
-- `..37` `question_text_mismatch`
-- `..45a` `question_text_mismatch`
 - `..45a` `suspicious_nee_label` -> `een-afslag--decorticatie`
-- `..46` `question_text_mismatch`
-- `..48` `question_text_mismatch`
-- `..50` `question_text_mismatch`
+- `..107` `suspicious_ja_label` -> `een-chopper--rondom--bekapt`
+- `..128` `question_text_mismatch`
+- `..128` `suspicious_nee_label` -> `meer-een-beitel-vorm--breedte29-cm`
+- `..129` `question_text_mismatch`
+- `..129a` `question_text_mismatch`
+- `..130` `question_text_mismatch`
+- `..132` `suspicious_ja_label` -> `een-proto--vuistbijl`
+- `..132b` `question_text_mismatch`
+- `..132b` `suspicious_ja_label` -> `een-vuistbijl--kernvormig`
+- `..134` `question_text_mismatch`
+- `..135` `question_text_mismatch`
+- `..135a` `suspicious_nee_label` -> `een-flesvorm-vuistbijl--flesvormig`
+- `..136` `question_text_mismatch`
+- `..138` `question_text_mismatch`
+- `..139` `question_text_mismatch`
+- `..140` `question_text_mismatch`
+- `..142` `question_text_mismatch`
+- `..143` `question_text_mismatch`
+- `..144` `question_text_mismatch`
 
 Voorbeelden route_label:
 - `..1` `suspicious_ja_label` -> `een-splinter`

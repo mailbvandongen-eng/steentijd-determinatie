@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.49',
+    title: 'Vroege bronvragen teruggezet naar algoritmetekst',
+    items: [
+      'Een grote batch vroege kern-, afslag-, kling- en bifaciale vragen in de AWN-bronboom gebruikt nu weer de letterlijke formulering uit het algoritmedocument',
+      'Daardoor daalt de bronaudit van 303 naar 261 vraagtekst-mismatches en van 511 naar 469 totale issues',
+      'De grootste resterende bronafwijkingen zitten nu minder in de vroege hoofdroutes en meer in latere subtypevragen en parserlabels',
+    ],
+  },
+  {
     version: '2.2.48',
     title: 'Vroege bronlabels genormaliseerd',
     items: [
