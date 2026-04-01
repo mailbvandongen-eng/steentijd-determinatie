@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.28',
+    title: 'Expert lus bij vraag 126 gerepareerd',
+    items: [
+      'De expertboom loopt bij de bifaciale route niet meer vast op vraag 126 over snede of werkkant',
+      'De antwoorden op vraag 125 en 126 springen nu door naar de juiste vervolgvraag in plaats van terug naar dezelfde vraag',
+      'Klingkern naar Expert kan daardoor weer doorlopen in de vuistbijl- of kernwerktuigroutes',
+    ],
+  },
+  {
     version: '2.2.27',
     title: 'Vroege bifaciale en klingroutes bronvaster',
     items: [

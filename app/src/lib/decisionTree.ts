@@ -222,14 +222,14 @@ function getExpertContextualJump(
     return '113';
   }
 
-  if (
-    (target === 'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' ||
-      target === 'nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' ||
-      target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm' ||
-      target === 'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig') &&
-    (questionId === '125' || questionId === '126')
-  ) {
-    return '126';
+  if (questionId === '125') {
+    if (target === 'het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '126';
+    if (target === 'de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig') return '127';
+  }
+
+  if (questionId === '126') {
+    if (target === 'nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '127';
+    if (target === 'het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm') return '130';
   }
 
   if (target === 'het-is-een-vuistbijl-of-bladvorm' && questionId === '130') {
