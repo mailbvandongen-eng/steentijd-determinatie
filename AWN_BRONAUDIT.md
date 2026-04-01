@@ -12,6 +12,22 @@ eerste audit op basis van:
 Hoofdconclusie:
 de app volgt de AWN-structuur inmiddels redelijk goed, maar nog niet exact het algoritmedocument.
 
+Eerste geautomatiseerde audit:
+- script: [`scripts/audit_algoritme_bron.py`](/mnt/c/projecten/steentijd/scripts/audit_algoritme_bron.py)
+- samenvatting: [`audit/algoritme_beslisboom_audit.md`](/mnt/c/projecten/steentijd/audit/algoritme_beslisboom_audit.md)
+- machine-readable: [`audit/algoritme_beslisboom_audit.json`](/mnt/c/projecten/steentijd/audit/algoritme_beslisboom_audit.json)
+
+Uitkomst huidige audit:
+- 512 vragen uit `algoritme.txt`
+- 511 vragen uit `beslisboom.json`
+- 229 heuristisch gemarkeerde issues
+- 9 lege vragen in JSON
+- 219 verdachte antwoordlabels
+- 1 vraag ontbreekt in `beslisboom.json`
+
+Belangrijke nuance:
+de eerste audit is expres breed. Niet elk gemarkeerd label is een fout; een deel zijn routekoppen, parserlabels of geldige typen die later nog geclassificeerd moeten worden.
+
 Belangrijkste oorzaken:
 1. `beslisboom.json` is afgeleid uit een ruwe parser op `algoritme.txt`.
 2. De app heeft daarom een herstel- en spronglaag nodig in `decisionTree.ts`.

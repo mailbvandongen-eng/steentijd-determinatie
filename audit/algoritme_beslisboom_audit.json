@@ -1,0 +1,1440 @@
+{
+  "summary": {
+    "algoritme_questions": 512,
+    "json_questions": 511,
+    "issue_count": 229,
+    "empty_question_in_json": 9,
+    "question_text_mismatch": 0,
+    "suspicious_label_count": 219,
+    "missing_in_json": 1,
+    "missing_in_txt_parse": 0
+  },
+  "issues": [
+    {
+      "question_id": "1",
+      "issue": "suspicious_ja_label",
+      "label": "een-splinter",
+      "text_answer": "een splinter"
+    },
+    {
+      "question_id": "4",
+      "issue": "suspicious_nee_label",
+      "label": "het-is-een-geslepen--stenen--artefact",
+      "text_answer": "het is een geslepen -stenen -artefact"
+    },
+    {
+      "question_id": "6",
+      "issue": "suspicious_ja_label",
+      "label": "het-artefact-heeft-resten-van-een-ventrale-zijde",
+      "text_answer": "het artefact heeft (resten) van een ventrale zijde"
+    },
+    {
+      "question_id": "6",
+      "issue": "suspicious_nee_label",
+      "label": "het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt",
+      "text_answer": "het is bifaciaal bewerkt of deels niet bewerkt"
+    },
+    {
+      "question_id": "7",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-is-een-knol--brok-of-vorstsplijting",
+      "text_answer": "het artefact is een knol , brok of vorstsplijting"
+    },
+    {
+      "question_id": "8",
+      "issue": "empty_question_in_json",
+      "text_question": ""
+    },
+    {
+      "question_id": "8",
+      "issue": "suspicious_ja_label",
+      "label": "het-is-een-artefact",
+      "text_answer": "Het is een artefact"
+    },
+    {
+      "question_id": "9",
+      "issue": "suspicious_ja_label",
+      "label": "een-kern--werktuig",
+      "text_answer": "een kern -werktuig"
+    },
+    {
+      "question_id": "9",
+      "issue": "suspicious_nee_label",
+      "label": "een-kern",
+      "text_answer": "een kern"
+    },
+    {
+      "question_id": "9a",
+      "issue": "suspicious_ja_label",
+      "label": "een-brokvorstsplijting--getest",
+      "text_answer": "een brok/vorstsplijting -getest"
+    },
+    {
+      "question_id": "10",
+      "issue": "empty_question_in_json",
+      "text_question": "Is de brok of vorstsplijting mogelijk gemodificeerd? (wat"
+    },
+    {
+      "question_id": "11",
+      "issue": "suspicious_ja_label",
+      "label": "nee-een-klein-of-onherkenbaar-slagvlak",
+      "text_answer": "Nee een klein of onherkenbaar slagvlak"
+    },
+    {
+      "question_id": "11",
+      "issue": "suspicious_nee_label",
+      "label": "een-klein-of-onherkenbaar-slagvlak",
+      "text_answer": "een klein of onherkenbaar slagvlak"
+    },
+    {
+      "question_id": "12",
+      "issue": "empty_question_in_json",
+      "text_question": "Is de kern gemaakt in Levallois -techniek? (Naar het midden"
+    },
+    {
+      "question_id": "12",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "12a",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "13",
+      "issue": "suspicious_ja_label",
+      "label": "een-kern--gelegenhei-ds",
+      "text_answer": "een kern -gelegenhei ds"
+    },
+    {
+      "question_id": "18",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "24",
+      "issue": "suspicious_ja_label",
+      "label": "nee-één-slagvlak",
+      "text_answer": "Nee één slagvlak"
+    },
+    {
+      "question_id": "27",
+      "issue": "suspicious_ja_label",
+      "label": "een-kern--kielvormig",
+      "text_answer": "een kern -kielvormig"
+    },
+    {
+      "question_id": "27",
+      "issue": "suspicious_nee_label",
+      "label": "een-kern--kling",
+      "text_answer": "een kern -kling"
+    },
+    {
+      "question_id": "28a",
+      "issue": "suspicious_nee_label",
+      "label": "een-kern--lamelle",
+      "text_answer": "een kern -lamelle"
+    },
+    {
+      "question_id": "32",
+      "issue": "suspicious_ja_label",
+      "label": "nee-zie-vorige-determinatie-",
+      "text_answer": "Nee zie vorige determinatie :"
+    },
+    {
+      "question_id": "35",
+      "issue": "empty_question_in_json",
+      "text_question": "driehoekige of vierzijdige doorsnede? (Maar is niet de punt"
+    },
+    {
+      "question_id": "40",
+      "issue": "suspicious_nee_label",
+      "label": "de-afslag-of-kling-is-niet-bewerkt",
+      "text_answer": "de afslag of kling is niet bewerkt"
+    },
+    {
+      "question_id": "45a",
+      "issue": "suspicious_ja_label",
+      "label": "een-rugmes",
+      "text_answer": "een rugmes"
+    },
+    {
+      "question_id": "45a",
+      "issue": "suspicious_nee_label",
+      "label": "een-afslag--decorticatie",
+      "text_answer": "een afslag -decorticatie"
+    },
+    {
+      "question_id": "86",
+      "issue": "suspicious_ja_label",
+      "label": "het-is-een-artefact",
+      "text_answer": "het is een artefact"
+    },
+    {
+      "question_id": "101",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "102",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "103",
+      "issue": "suspicious_ja_label",
+      "label": "nee-grof-bewerkt",
+      "text_answer": "Nee grof bewerkt"
+    },
+    {
+      "question_id": "104",
+      "issue": "suspicious_ja_label",
+      "label": "nee-voor-een-groot-deel-bekapt",
+      "text_answer": "Nee voor een groot deel bekapt"
+    },
+    {
+      "question_id": "105",
+      "issue": "suspicious_nee_label",
+      "label": "de-kern-of-brok-is-voorzien-van-een-werkkant-punt",
+      "text_answer": "de kern of brok is voorzien van een werkkant /punt"
+    },
+    {
+      "question_id": "107",
+      "issue": "suspicious_ja_label",
+      "label": "een-chopper--rondom--bekapt",
+      "text_answer": "een chopper -rondom -bekapt"
+    },
+    {
+      "question_id": "110",
+      "issue": "suspicious_ja_label",
+      "label": "nee-het-bifaciale-artefact-heeft-een-andere-vorm",
+      "text_answer": "Nee het (bifaciale) artefact heeft een andere vorm"
+    },
+    {
+      "question_id": "110",
+      "issue": "suspicious_nee_label",
+      "label": "het-bifaciale-artefact-heeft-een-andere-vorm",
+      "text_answer": "het (bifaciale) artefact heeft een andere vorm"
+    },
+    {
+      "question_id": "111",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "117",
+      "issue": "suspicious_nee_label",
+      "label": "een-asymmetrische-driehoekige-dwarsdoorsnede",
+      "text_answer": "een asymmetrische driehoekige dwarsdoorsnede"
+    },
+    {
+      "question_id": "124",
+      "issue": "suspicious_ja_label",
+      "label": "de-snede-en-rug-lopen-zijn-nagenoeg-recht-keilmesser--",
+      "text_answer": "de snede en rug lopen zijn nagenoeg recht keilmesser -"
+    },
+    {
+      "question_id": "125",
+      "issue": "suspicious_ja_label",
+      "label": "het-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
+      "text_answer": "het heeft de vorm van een vuistbijl of bladvorm"
+    },
+    {
+      "question_id": "125",
+      "issue": "suspicious_nee_label",
+      "label": "de-vorm-van-een-bijl--beitel-of-ander-kernwerktuig",
+      "text_answer": "de vorm van een bijl , beitel of ander kernwerktuig"
+    },
+    {
+      "question_id": "126",
+      "issue": "suspicious_ja_label",
+      "label": "nee-het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
+      "text_answer": "Nee het artefact heeft de vorm van een vuistbijl of bladvorm"
+    },
+    {
+      "question_id": "126",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-heeft-de-vorm-van-een-vuistbijl-of-bladvorm",
+      "text_answer": "het artefact heeft de vorm van een vuistbijl of bladvorm"
+    },
+    {
+      "question_id": "128",
+      "issue": "suspicious_nee_label",
+      "label": "meer-een-beitel-vorm--breedte29-cm",
+      "text_answer": "meer een beitel vorm , breedte<2,9 cm"
+    },
+    {
+      "question_id": "129a",
+      "issue": "suspicious_ja_label",
+      "label": "een-vuistwig",
+      "text_answer": "een vuistwig"
+    },
+    {
+      "question_id": "130",
+      "issue": "suspicious_nee_label",
+      "label": "het-is-een-vuistbijl-of-bladvorm",
+      "text_answer": "het is een vuistbijl of bladvorm"
+    },
+    {
+      "question_id": "131",
+      "issue": "suspicious_ja_label",
+      "label": "het-artefact-heeft-een-blad-vorm",
+      "text_answer": "Het artefact heeft een blad vorm"
+    },
+    {
+      "question_id": "131",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-heeft-de-vorm-van-een-vuistbijl",
+      "text_answer": "Het artefact heeft de vorm van een vuistbijl"
+    },
+    {
+      "question_id": "132",
+      "issue": "empty_question_in_json",
+      "text_question": ""
+    },
+    {
+      "question_id": "132",
+      "issue": "suspicious_ja_label",
+      "label": "een-proto--vuistbijl",
+      "text_answer": "een proto -vuistbijl"
+    },
+    {
+      "question_id": "132b",
+      "issue": "suspicious_ja_label",
+      "label": "een-vuistbijl--kernvormig",
+      "text_answer": "een vuistbijl -kernvormig"
+    },
+    {
+      "question_id": "135a",
+      "issue": "suspicious_nee_label",
+      "label": "een-flesvorm-vuistbijl--flesvormig",
+      "text_answer": "een flesvorm vuistbijl -flesvormig"
+    },
+    {
+      "question_id": "136",
+      "issue": "suspicious_ja_label",
+      "label": "nee-heel-klein--6-cm-of-heel-dun",
+      "text_answer": "Nee heel klein (< 6 cm) of heel dun"
+    },
+    {
+      "question_id": "141",
+      "issue": "empty_question_in_json",
+      "text_question": ""
+    },
+    {
+      "question_id": "154",
+      "issue": "suspicious_ja_label",
+      "label": "nee-het-artefact-is-asymmetrisch",
+      "text_answer": "Nee het artefact is asymmetrisch"
+    },
+    {
+      "question_id": "154",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-is-asymmetrisch",
+      "text_answer": "het artefact is asymmetrisch"
+    },
+    {
+      "question_id": "155",
+      "issue": "suspicious_ja_label",
+      "label": "nee-aan-beide-oppervlakken",
+      "text_answer": "Nee aan beide oppervlakken"
+    },
+    {
+      "question_id": "157",
+      "issue": "suspicious_nee_label",
+      "label": "onregelmatig-dolk--kling--met-volledige--",
+      "text_answer": "onregelmatig dolk -kling -met-volledige -"
+    },
+    {
+      "question_id": "160",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-i",
+      "text_answer": "dolk -scandinavisch -type-I"
+    },
+    {
+      "question_id": "161",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ia",
+      "text_answer": "dolk -scandinavisch -type-IA"
+    },
+    {
+      "question_id": "162",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ib",
+      "text_answer": "dolk -scandinavisch -type-IB"
+    },
+    {
+      "question_id": "163",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ic",
+      "text_answer": "dolk -scandinavisch -type-IC"
+    },
+    {
+      "question_id": "164",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-id",
+      "text_answer": "dolk -scandinavisch -type-ID"
+    },
+    {
+      "question_id": "165",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ii",
+      "text_answer": "dolk -scandinavisch -type-II"
+    },
+    {
+      "question_id": "167",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iib",
+      "text_answer": "dolk -scandinavisch -type-IIB"
+    },
+    {
+      "question_id": "168",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iii",
+      "text_answer": "dolk -scandinavisch -type-III"
+    },
+    {
+      "question_id": "169",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iiia",
+      "text_answer": "dolk -scandinavisch -type-IIIA"
+    },
+    {
+      "question_id": "170",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iiib",
+      "text_answer": "dolk -scandinavisch -type-IIIB"
+    },
+    {
+      "question_id": "171",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iiic",
+      "text_answer": "dolk -scandinavisch -type-IIIC"
+    },
+    {
+      "question_id": "172",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iiid",
+      "text_answer": "dolk -scandinavisch -type-IIID"
+    },
+    {
+      "question_id": "173",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iiie",
+      "text_answer": "dolk -scandinavisch -type-IIIE"
+    },
+    {
+      "question_id": "174",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iiif",
+      "text_answer": "dolk -scandinavisch -type-IIIF"
+    },
+    {
+      "question_id": "175",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iv",
+      "text_answer": "dolk -scandinavisch -type-IV"
+    },
+    {
+      "question_id": "176",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-iva",
+      "text_answer": "dolk -scandinavisch -type-IVA"
+    },
+    {
+      "question_id": "177",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ivb",
+      "text_answer": "dolk -scandinavisch -type-IVB"
+    },
+    {
+      "question_id": "178",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ivc",
+      "text_answer": "dolk -scandinavisch -type-IVC"
+    },
+    {
+      "question_id": "179",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ivd",
+      "text_answer": "dolk -scandinavisch -type-IVD"
+    },
+    {
+      "question_id": "180",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ive",
+      "text_answer": "dolk -scandinavisch -type-IVE"
+    },
+    {
+      "question_id": "181",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-ivf",
+      "text_answer": "dolk -scandinavisch -type-IVF"
+    },
+    {
+      "question_id": "182",
+      "issue": "suspicious_ja_label",
+      "label": "dolk-scandinavisch--type-v",
+      "text_answer": "dolk-scandinavisch -type-V"
+    },
+    {
+      "question_id": "183",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-va",
+      "text_answer": "dolk -scandinavisch -type-VA"
+    },
+    {
+      "question_id": "184",
+      "issue": "suspicious_ja_label",
+      "label": "dolk-scandinavisch--type-vb",
+      "text_answer": "dolk-scandinavisch -type-VB"
+    },
+    {
+      "question_id": "185",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-vi",
+      "text_answer": "dolk -scandinavisch -type-VI"
+    },
+    {
+      "question_id": "186",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch---type-via",
+      "text_answer": "dolk -scandinavisch --type-VIA"
+    },
+    {
+      "question_id": "187",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-vib",
+      "text_answer": "dolk -scandinavisch -type-VIB"
+    },
+    {
+      "question_id": "188",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--scandinavisch--type-vic",
+      "text_answer": "dolk -scandinavisch -type-VIC"
+    },
+    {
+      "question_id": "188",
+      "issue": "suspicious_nee_label",
+      "label": "dolk--scandinavisch--type-vi",
+      "text_answer": "dolk -scandinavisch -type-VI"
+    },
+    {
+      "question_id": "193",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--oost-europees--type-1",
+      "text_answer": "dolk -oost-europees -type-1"
+    },
+    {
+      "question_id": "194",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--oost-europees--type-2",
+      "text_answer": "dolk -oost-europees -type-2"
+    },
+    {
+      "question_id": "195",
+      "issue": "suspicious_ja_label",
+      "label": "dolk--oost-europees--type-5",
+      "text_answer": "dolk -oost-europees -type-5"
+    },
+    {
+      "question_id": "196",
+      "issue": "suspicious_ja_label",
+      "label": "een-breed-lemmet-dolk--oost-europees--type-3",
+      "text_answer": "een breed lemmet dolk -oost-europees -type-3"
+    },
+    {
+      "question_id": "196",
+      "issue": "suspicious_nee_label",
+      "label": "een-smal-lemmet-dolk--oost-europees--type-4",
+      "text_answer": "een smal lemmet dolk -oost-europees -type-4"
+    },
+    {
+      "question_id": "197",
+      "issue": "suspicious_ja_label",
+      "label": "een-sikkel",
+      "text_answer": "een sikkel"
+    },
+    {
+      "question_id": "198",
+      "issue": "suspicious_ja_label",
+      "label": "sikkel--type-a",
+      "text_answer": "sikkel -type-A"
+    },
+    {
+      "question_id": "199",
+      "issue": "suspicious_ja_label",
+      "label": "sikkel--type-b",
+      "text_answer": "sikkel -type-B"
+    },
+    {
+      "question_id": "202",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "203",
+      "issue": "suspicious_ja_label",
+      "label": "een-combinatiewerktuig",
+      "text_answer": "een combinatiewerktuig"
+    },
+    {
+      "question_id": "208",
+      "issue": "suspicious_ja_label",
+      "label": "een-krukowski--kerfrest",
+      "text_answer": "een krukowski -kerfrest"
+    },
+    {
+      "question_id": "208",
+      "issue": "suspicious_nee_label",
+      "label": "de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-",
+      "text_answer": "(de Krukowski -kerfrest is aan één zijde steil geretoucheerd )"
+    },
+    {
+      "question_id": "230",
+      "issue": "empty_question_in_json",
+      "text_question": "driehoekige of vierzijdige doorsnede? (Maar is niet de punt"
+    },
+    {
+      "question_id": "230",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "231",
+      "issue": "suspicious_ja_label",
+      "label": "een-combinatiewerktuig",
+      "text_answer": "een combinatiewerktuig"
+    },
+    {
+      "question_id": "232",
+      "issue": "suspicious_ja_label",
+      "label": "nee-meerdere--boor--dubbel-of-boor--meervoudig",
+      "text_answer": "Nee meerdere : boor -dubbel of boor -meervoudig"
+    },
+    {
+      "question_id": "235",
+      "issue": "suspicious_ja_label",
+      "label": "een-bec",
+      "text_answer": "een bec"
+    },
+    {
+      "question_id": "236",
+      "issue": "suspicious_ja_label",
+      "label": "een-boor",
+      "text_answer": "een boor"
+    },
+    {
+      "question_id": "240",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "241a",
+      "issue": "suspicious_ja_label",
+      "label": "een-combinatie--werktuig",
+      "text_answer": "een combinatie -werktuig"
+    },
+    {
+      "question_id": "247",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "260",
+      "issue": "suspicious_ja_label",
+      "label": "nee-nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "Nee nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "260",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "263",
+      "issue": "suspicious_nee_label",
+      "label": "zie-ook",
+      "text_answer": "Zie ook"
+    },
+    {
+      "question_id": "264",
+      "issue": "suspicious_ja_label",
+      "label": "een-kern--bipolair",
+      "text_answer": "een kern -bipolair"
+    },
+    {
+      "question_id": "264",
+      "issue": "suspicious_nee_label",
+      "label": "zie-ook",
+      "text_answer": "Zie ook"
+    },
+    {
+      "question_id": "266",
+      "issue": "suspicious_ja_label",
+      "label": "een-bikkel",
+      "text_answer": "een bikkel"
+    },
+    {
+      "question_id": "270",
+      "issue": "suspicious_ja_label",
+      "label": "nee-nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "Nee nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "270",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "271",
+      "issue": "suspicious_ja_label",
+      "label": "een-schaaf--schrabber",
+      "text_answer": "een schaaf -schrabber"
+    },
+    {
+      "question_id": "272",
+      "issue": "suspicious_ja_label",
+      "label": "een-schaaf--steker",
+      "text_answer": "een schaaf -steker"
+    },
+    {
+      "question_id": "273",
+      "issue": "suspicious_ja_label",
+      "label": "een-schaaf--boor",
+      "text_answer": "een schaaf -boor"
+    },
+    {
+      "question_id": "274",
+      "issue": "suspicious_ja_label",
+      "label": "een-schaaf--gekerfd",
+      "text_answer": "een schaaf -gekerfd"
+    },
+    {
+      "question_id": "275",
+      "issue": "suspicious_ja_label",
+      "label": "een-schaaf--getand",
+      "text_answer": "een schaaf -getand"
+    },
+    {
+      "question_id": "276",
+      "issue": "suspicious_ja_label",
+      "label": "een-schrabber--steker",
+      "text_answer": "een schrabber -steker"
+    },
+    {
+      "question_id": "277",
+      "issue": "suspicious_ja_label",
+      "label": "een-schrabber--steker--krombek",
+      "text_answer": "een schrabber -steker -krombek"
+    },
+    {
+      "question_id": "278",
+      "issue": "suspicious_ja_label",
+      "label": "een-schrabber--boor",
+      "text_answer": "een schrabber -boor"
+    },
+    {
+      "question_id": "279",
+      "issue": "suspicious_ja_label",
+      "label": "een-schrabber--gekerfd",
+      "text_answer": "een schrabber -gekerfd"
+    },
+    {
+      "question_id": "280",
+      "issue": "suspicious_ja_label",
+      "label": "een-schrabber--afgeknot",
+      "text_answer": "een schrabber -afgeknot"
+    },
+    {
+      "question_id": "281",
+      "issue": "suspicious_ja_label",
+      "label": "een-steker--boor",
+      "text_answer": "een steker -boor"
+    },
+    {
+      "question_id": "282",
+      "issue": "suspicious_ja_label",
+      "label": "een-steker--gekerfd",
+      "text_answer": "een steker -gekerfd"
+    },
+    {
+      "question_id": "283",
+      "issue": "suspicious_ja_label",
+      "label": "een-steker--krombek--gekerfd",
+      "text_answer": "een steker -krombek -gekerfd"
+    },
+    {
+      "question_id": "284",
+      "issue": "suspicious_ja_label",
+      "label": "een-steker--afgeknot",
+      "text_answer": "een steker -afgeknot"
+    },
+    {
+      "question_id": "286",
+      "issue": "suspicious_ja_label",
+      "label": "een-boor---gekerfd",
+      "text_answer": "een boor - gekerfd"
+    },
+    {
+      "question_id": "287",
+      "issue": "suspicious_ja_label",
+      "label": "een-boor--getand",
+      "text_answer": "een boor -getand"
+    },
+    {
+      "question_id": "288",
+      "issue": "suspicious_ja_label",
+      "label": "een-gekerfd--en-getand--artefact",
+      "text_answer": "een gekerfd -en-getand -artefact"
+    },
+    {
+      "question_id": "289",
+      "issue": "suspicious_ja_label",
+      "label": "een-gekerfd--en-afgeknot--artefact",
+      "text_answer": "een gekerfd -en-afgeknot -artefact"
+    },
+    {
+      "question_id": "290",
+      "issue": "suspicious_ja_label",
+      "label": "een-getand--en-afgeknot--artefact",
+      "text_answer": "een getand -en-afgeknot -artefact"
+    },
+    {
+      "question_id": "290",
+      "issue": "suspicious_nee_label",
+      "label": "een-combinatiewerktuig",
+      "text_answer": "een combinatiewerktuig"
+    },
+    {
+      "question_id": "300",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "320",
+      "issue": "suspicious_ja_label",
+      "label": "een-schrabber",
+      "text_answer": "een schrabber"
+    },
+    {
+      "question_id": "320",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "350",
+      "issue": "suspicious_ja_label",
+      "label": "een-schaaf--limace",
+      "text_answer": "een schaaf -limace"
+    },
+    {
+      "question_id": "351",
+      "issue": "suspicious_nee_label",
+      "label": "nee-overige-groepen-afslagklingwerktuigen",
+      "text_answer": "nee overige groepen afslag/klingwerktuigen"
+    },
+    {
+      "question_id": "380",
+      "issue": "suspicious_nee_label",
+      "label": "nee-een-afslagkling-met-rand---of-oppervlakteretouche",
+      "text_answer": "nee een afslag/kling met rand - of oppervlakteretouche"
+    },
+    {
+      "question_id": "391",
+      "issue": "suspicious_ja_label",
+      "label": "nee-geen-punt-of-een-geometrische-vorm",
+      "text_answer": "Nee geen punt, of een geometrische vorm"
+    },
+    {
+      "question_id": "392",
+      "issue": "suspicious_nee_label",
+      "label": "een-artefact-zonder-duidelijke-punt",
+      "text_answer": "een artefact zonder duidelijke punt"
+    },
+    {
+      "question_id": "395",
+      "issue": "suspicious_nee_label",
+      "label": "de-vuurkets-is-aan-één-zijde-is-afgerond-of-de-vuurkets",
+      "text_answer": "de vuurkets is aan één zijde is afgerond of de vuurkets"
+    },
+    {
+      "question_id": "397",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "410",
+      "issue": "suspicious_ja_label",
+      "label": "nee-spits-zonder-steel-of-kerf",
+      "text_answer": "Nee spits zonder steel of kerf"
+    },
+    {
+      "question_id": "412",
+      "issue": "suspicious_ja_label",
+      "label": "nee-aan-beide-zijden",
+      "text_answer": "Nee aan beide zijden"
+    },
+    {
+      "question_id": "430",
+      "issue": "suspicious_ja_label",
+      "label": "nee-de-spits-heeft-ste-il-geretoucheerde-zijden-en-evt-basis",
+      "text_answer": "Nee de spits heeft ste il geretoucheerde zijde(n) en evt. basis"
+    },
+    {
+      "question_id": "430",
+      "issue": "suspicious_nee_label",
+      "label": "de-spits-heeft-ste-il-geretoucheerde-zijden-en-evt-basis",
+      "text_answer": "de spits heeft ste il geretoucheerde zijde(n) en evt. basis"
+    },
+    {
+      "question_id": "431",
+      "issue": "suspicious_ja_label",
+      "label": "nee-vierhoekig-of-segmentvorm",
+      "text_answer": "Nee vierhoekig of segmentvorm"
+    },
+    {
+      "question_id": "450",
+      "issue": "suspicious_ja_label",
+      "label": "nee-een-segmentvorm",
+      "text_answer": "Nee een segmentvorm"
+    },
+    {
+      "question_id": "450",
+      "issue": "suspicious_nee_label",
+      "label": "een-segmentvorm",
+      "text_answer": "een segmentvorm"
+    },
+    {
+      "question_id": "453",
+      "issue": "suspicious_nee_label",
+      "label": "een-symmetrisch-of-asymmetrische-trapezium",
+      "text_answer": "een symmetrisch of asymmetrische trapezium"
+    },
+    {
+      "question_id": "470",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "476",
+      "issue": "suspicious_ja_label",
+      "label": "nee-nee-twee-zijden",
+      "text_answer": "Nee nee twee zijden"
+    },
+    {
+      "question_id": "476",
+      "issue": "suspicious_nee_label",
+      "label": "nee-twee-zijden",
+      "text_answer": "nee twee zijden"
+    },
+    {
+      "question_id": "477",
+      "issue": "suspicious_nee_label",
+      "label": "nee-een-gedeeltelijk-geretoucheerde-z-ijde",
+      "text_answer": "nee een gedeeltelijk geretoucheerde z ijde"
+    },
+    {
+      "question_id": "479",
+      "issue": "suspicious_nee_label",
+      "label": "nee-één-zijde-deels-en-basis",
+      "text_answer": "nee één zijde (deels) en basis"
+    },
+    {
+      "question_id": "540",
+      "issue": "suspicious_ja_label",
+      "label": "nee-het-is-bekapt",
+      "text_answer": "Nee het is bekapt"
+    },
+    {
+      "question_id": "540",
+      "issue": "suspicious_nee_label",
+      "label": "het-is-bekapt",
+      "text_answer": "het is bekapt"
+    },
+    {
+      "question_id": "541",
+      "issue": "suspicious_ja_label",
+      "label": "nee-nee-de-vorm-van-een-spits",
+      "text_answer": "Nee nee de vorm van een spits"
+    },
+    {
+      "question_id": "541",
+      "issue": "suspicious_nee_label",
+      "label": "nee-de-vorm-van-een-spits",
+      "text_answer": "nee de vorm van een spits"
+    },
+    {
+      "question_id": "542",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "543",
+      "issue": "suspicious_ja_label",
+      "label": "nee-bladvormig",
+      "text_answer": "Nee bladvormig"
+    },
+    {
+      "question_id": "544",
+      "issue": "suspicious_ja_label",
+      "label": "nee-gelijkbenig-of-gelijkzijdig",
+      "text_answer": "Nee gelijkbenig of gelijkzijdig"
+    },
+    {
+      "question_id": "546",
+      "issue": "suspicious_ja_label",
+      "label": "nee-gelijkzijdig",
+      "text_answer": "Nee gelijkzijdig"
+    },
+    {
+      "question_id": "548",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-is-bekapt",
+      "text_answer": "het artefact is bekapt"
+    },
+    {
+      "question_id": "549",
+      "issue": "suspicious_ja_label",
+      "label": "spits--driehoekig--met-oppervlakteretouche--",
+      "text_answer": "spits -driehoekig -met-oppervlakteretouche -"
+    },
+    {
+      "question_id": "551",
+      "issue": "suspicious_ja_label",
+      "label": "spits--driehoekig--met-oppervlakteretouche--",
+      "text_answer": "spits -driehoekig -met-oppervlakteretouche -"
+    },
+    {
+      "question_id": "553",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-heeft-kerfsteel-geen-schachtdoorn-aan-de",
+      "text_answer": "het artefact heeft kerf/steel (geen schachtdoorn) aan de"
+    },
+    {
+      "question_id": "560",
+      "issue": "empty_question_in_json",
+      "text_question": "Heeft het artefact alleen een schachtdoorn? (dennenboompje)"
+    },
+    {
+      "question_id": "561",
+      "issue": "suspicious_ja_label",
+      "label": "spits--driehoekig--met-schachtdoor-n-en-korte--",
+      "text_answer": "spits -driehoekig -met-schachtdoor n-en-korte -"
+    },
+    {
+      "question_id": "570a",
+      "issue": "suspicious_ja_label",
+      "label": "een-halffabricaat---bijl",
+      "text_answer": "een halffabricaat - bijl"
+    },
+    {
+      "question_id": "601",
+      "issue": "suspicious_ja_label",
+      "label": "nee-het-artefact-is-een-artefact--geslepen",
+      "text_answer": "Nee het artefact is een artefact -geslepen"
+    },
+    {
+      "question_id": "601",
+      "issue": "suspicious_nee_label",
+      "label": "het-artefact-is-een-artefact--geslepen",
+      "text_answer": "het artefact is een artefact -geslepen"
+    },
+    {
+      "question_id": "602",
+      "issue": "suspicious_ja_label",
+      "label": "een-bijl",
+      "text_answer": "een bijl"
+    },
+    {
+      "question_id": "602",
+      "issue": "suspicious_nee_label",
+      "label": "breedte--29-cm-een-beitel",
+      "text_answer": "breedte < 2,9 cm een beitel"
+    },
+    {
+      "question_id": "603",
+      "issue": "suspicious_ja_label",
+      "label": "een-bijl-dissel",
+      "text_answer": "een bijl-dissel"
+    },
+    {
+      "question_id": "604",
+      "issue": "suspicious_nee_label",
+      "label": "gemaakt-van-een-andere-steensoort-dan-vuursteen",
+      "text_answer": "gemaakt van een andere steensoort dan vuursteen"
+    },
+    {
+      "question_id": "612",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-smaltoppig--met-ovale--tot-vlak-ovale--",
+      "text_answer": "bijl-smaltoppig -met-ovale -tot-vlak-ovale -"
+    },
+    {
+      "question_id": "613",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-smaltoppig--met-afgerond--rombische--",
+      "text_answer": "bijl-smaltoppig -met-afgerond -rombische -"
+    },
+    {
+      "question_id": "618",
+      "issue": "suspicious_nee_label",
+      "label": "de-bijl-is-relatief-dik",
+      "text_answer": "de bijl is relatief dik"
+    },
+    {
+      "question_id": "620",
+      "issue": "suspicious_nee_label",
+      "label": "breedte--29-cm",
+      "text_answer": "breedte < 2,9 cm."
+    },
+    {
+      "question_id": "622",
+      "issue": "empty_question_in_json",
+      "text_question": "doorsnede en een brede snede? (breed, dissel of hol)"
+    },
+    {
+      "question_id": "622",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-brede--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en-brede -"
+    },
+    {
+      "question_id": "630",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en-dunne -"
+    },
+    {
+      "question_id": "631",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en dunne -"
+    },
+    {
+      "question_id": "632",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -en-dunne -"
+    },
+    {
+      "question_id": "634",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dikbladig -"
+    },
+    {
+      "question_id": "635",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dikbladig -"
+    },
+    {
+      "question_id": "636",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dikbladig -"
+    },
+    {
+      "question_id": "638",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dunbladig -"
+    },
+    {
+      "question_id": "639",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--",
+      "text_answer": "bijl-met-rechthoekige -dwarsdoorsnede -dunbladig -"
+    },
+    {
+      "question_id": "664",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--",
+      "text_answer": "bijl-met-ronde -dwarsdoorsnede -en-dunne -smalle -"
+    },
+    {
+      "question_id": "665",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--",
+      "text_answer": "bijl-met-ronde -dwarsdoorsnede -en-dunne -smalle -"
+    },
+    {
+      "question_id": "671",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-met-ovale--doorsnede--en-smalle--top-doorsnede--",
+      "text_answer": "bijl-met-ovale -doorsnede -en-smalle -top-doorsnede -"
+    },
+    {
+      "question_id": "708",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-dubbel--type-a",
+      "text_answer": "bijl-dubbel -type-A"
+    },
+    {
+      "question_id": "709",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-dubbel--type-b",
+      "text_answer": "bijl-dubbel -type-B"
+    },
+    {
+      "question_id": "710",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-dubbel--type-c",
+      "text_answer": "bijl-dubbel -type-C"
+    },
+    {
+      "question_id": "713",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--gefacetteerd--type-1",
+      "text_answer": "bijl-hamer -gefacetteerd -type-1"
+    },
+    {
+      "question_id": "714",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--gefacetteerd--type-2a",
+      "text_answer": "bijl-hamer -gefacetteerd -type-2a"
+    },
+    {
+      "question_id": "715",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--gefacetteerd--type-2b",
+      "text_answer": "bijl-hamer -gefacetteerd -type-2b"
+    },
+    {
+      "question_id": "717",
+      "issue": "suspicious_ja_label",
+      "label": "nee",
+      "text_answer": "Nee"
+    },
+    {
+      "question_id": "718",
+      "issue": "suspicious_ja_label",
+      "label": "type-h-en-g",
+      "text_answer": "type H en G"
+    },
+    {
+      "question_id": "719",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-g",
+      "text_answer": "bijl-hamer -type-G"
+    },
+    {
+      "question_id": "720",
+      "issue": "suspicious_ja_label",
+      "label": "type-k-en-l",
+      "text_answer": "type K en L"
+    },
+    {
+      "question_id": "721",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-l",
+      "text_answer": "bijl-hamer -type-L"
+    },
+    {
+      "question_id": "721",
+      "issue": "suspicious_nee_label",
+      "label": "bijl-hamer--type-k",
+      "text_answer": "bijl-hamer -type-K"
+    },
+    {
+      "question_id": "722",
+      "issue": "suspicious_ja_label",
+      "label": "type-a--ba",
+      "text_answer": "type A , BA"
+    },
+    {
+      "question_id": "722",
+      "issue": "suspicious_nee_label",
+      "label": "een-vierzijdige-dwarsdoorsnede",
+      "text_answer": "een vierzijdige dwarsdoorsnede"
+    },
+    {
+      "question_id": "723",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-ba",
+      "text_answer": "bijl-hamer -type-BA"
+    },
+    {
+      "question_id": "724",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-b",
+      "text_answer": "bijl-hamer -type-B"
+    },
+    {
+      "question_id": "724",
+      "issue": "suspicious_nee_label",
+      "label": "een-afgeronde-verdikking-bijl-hamer--type-p1",
+      "text_answer": "een afgeronde verdikking bijl-hamer -type-P1"
+    },
+    {
+      "question_id": "726",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-i",
+      "text_answer": "bijl-hamer -type-I"
+    },
+    {
+      "question_id": "727",
+      "issue": "suspicious_ja_label",
+      "label": "nee-een-licht-convexe-tot-vlakke-bovenzijde-vlakke",
+      "text_answer": "Nee een licht convexe tot vlakke bovenzijde, vlakke"
+    },
+    {
+      "question_id": "727",
+      "issue": "suspicious_nee_label",
+      "label": "een-licht-convexe-tot-vlakke-bovenzijde-vlakke",
+      "text_answer": "een licht convexe tot vlakke bovenzijde, vlakke"
+    },
+    {
+      "question_id": "728",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-r",
+      "text_answer": "bijl-hamer -type-R"
+    },
+    {
+      "question_id": "728",
+      "issue": "suspicious_nee_label",
+      "label": "met-lichte-verdikking-bijl-hamer--type-epe",
+      "text_answer": "met lichte verdikking bijl-hamer -type-epe"
+    },
+    {
+      "question_id": "729",
+      "issue": "suspicious_ja_label",
+      "label": "type-c-en-ca",
+      "text_answer": "type C en CA"
+    },
+    {
+      "question_id": "730",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-c",
+      "text_answer": "bijl-hamer -type-C"
+    },
+    {
+      "question_id": "730",
+      "issue": "suspicious_nee_label",
+      "label": "een-ronde-dwarsdoorsnede-van-de-nek",
+      "text_answer": "een ronde dwarsdoorsnede van de nek"
+    },
+    {
+      "question_id": "731",
+      "issue": "suspicious_ja_label",
+      "label": "type-zuidvelde-en-emmen",
+      "text_answer": "type Zuidvelde en Emmen"
+    },
+    {
+      "question_id": "732",
+      "issue": "suspicious_ja_label",
+      "label": "met-rand-bijl-hamer--type-zuidvelde",
+      "text_answer": "met rand bijl-hamer -type-zuidvelde"
+    },
+    {
+      "question_id": "732",
+      "issue": "suspicious_nee_label",
+      "label": "zonder-rand-bijl-hamer--type-emmen",
+      "text_answer": "zonder rand bijl-hamer -type-emmen"
+    },
+    {
+      "question_id": "733",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-f",
+      "text_answer": "bijl-hamer -type-F"
+    },
+    {
+      "question_id": "734",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-d",
+      "text_answer": "bijl-hamer -type-D"
+    },
+    {
+      "question_id": "735",
+      "issue": "suspicious_ja_label",
+      "label": "bijl-hamer--type-muntendam",
+      "text_answer": "bijl-hamer -type-muntendam"
+    },
+    {
+      "question_id": "801",
+      "issue": "missing_in_beslisboom_json",
+      "text_question": ""
+    }
+  ],
+  "sample_questions": {
+    "1": {
+      "question_id": "1",
+      "question_text": "Is het artefact niet bewerkt en kleiner dan 1 cm?",
+      "ja_raw": "een splinter",
+      "nee_raw": ""
+    },
+    "2": {
+      "question_id": "2",
+      "question_text": "Vertoont het artefact een niet natuurlijk gat?",
+      "ja_raw": "doorboord -artefact",
+      "nee_raw": "géén gat of een natuurlijk gat"
+    },
+    "3": {
+      "question_id": "3",
+      "question_text": "Is het vuursteen, kwartsiet of lydiet?",
+      "ja_raw": "artefact van vuursteen , kwartsiet of lydiet",
+      "nee_raw": "Van een andere steensoort"
+    },
+    "4": {
+      "question_id": "4",
+      "question_text": "Heeft het de vorm van een geslepen bijl?",
+      "ja_raw": "geslepen -bijl",
+      "nee_raw": "het is een geslepen -stenen -artefact"
+    },
+    "5": {
+      "question_id": "5",
+      "question_text": "gepolijst e vlakken?",
+      "ja_raw": "geslepen -vuurstenen -artefact",
+      "nee_raw": "Terug artefactgroepen start"
+    },
+    "6": {
+      "question_id": "6",
+      "question_text": "een ventrale zijde?",
+      "ja_raw": "het artefact heeft (resten) van een ventrale zijde",
+      "nee_raw": "het is bifaciaal bewerkt of deels niet bewerkt"
+    },
+    "7": {
+      "question_id": "7",
+      "question_text": "Heeft het afslagnegatieven?",
+      "ja_raw": "één of meer afslagnegatieven",
+      "nee_raw": "het artefact is een knol , brok of vorstsplijting"
+    },
+    "8": {
+      "question_id": "8",
+      "question_text": "",
+      "ja_raw": "Het is een artefact",
+      "nee_raw": "1 of 2: het is een brok of vorstsplijting"
+    },
+    "9": {
+      "question_id": "9",
+      "question_text": "Heeft het een werkkant of punt?",
+      "ja_raw": "een kern -werktuig",
+      "nee_raw": "een kern"
+    },
+    "9a": {
+      "question_id": "9a",
+      "question_text": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven?",
+      "ja_raw": "een brok/vorstsplijting -getest",
+      "nee_raw": "Terug artefactgroepen start"
+    }
+  }
+}

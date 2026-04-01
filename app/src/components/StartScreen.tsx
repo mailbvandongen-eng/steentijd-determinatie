@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.22',
+    title: 'Bronaudit basis toegevoegd',
+    items: [
+      'Een eerste geautomatiseerde audit vergelijkt nu algoritme.txt met beslisboom.json',
+      'De repo bevat nu een auditrapport met lege vragen, ontbrekende knooppunten en verdachte labels',
+      'Dit vormt de basis voor de volgende bronvaste opschoningsronde van de expertboom',
+    ],
+  },
+  {
     version: '2.2.21',
     title: 'Bronbeleid en controleerbaar vraagpad',
     items: [

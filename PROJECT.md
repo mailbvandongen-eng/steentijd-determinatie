@@ -58,6 +58,7 @@ pip install PyPDF2 pycryptodome PyMuPDF
 | `extract_pdf.py` | PDF → tekst extractie |
 | `extract_images.py` | PDF → afbeeldingen + metadata |
 | `parse_algoritme.py` | Tekst → beslisboom JSON |
+| `scripts/audit_algoritme_bron.py` | Audit `algoritme.txt` ↔ `beslisboom.json` |
 
 ## Determinatie Structuur
 

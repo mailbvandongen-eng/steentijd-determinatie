@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.22', date: '1 apr 2026', changes: ['Een eerste geautomatiseerde audit vergelijkt nu algoritme.txt met beslisboom.json', 'De repo bevat nu een auditrapport met lege vragen, ontbrekende knooppunten en verdachte labels', 'Dit vormt de basis voor de volgende bronvaste opschoningsronde van de expertboom'] },
   { version: '2.2.21', date: '1 apr 2026', changes: ['Bronbeleid voor algoritme, handleiding, hints, AI-toets en beeldmateriaal is vastgelegd', 'Resultaatscherm toont nu het doorlopen beslispad met vragen en antwoorden', 'Hints zijn niet langer beperkt tot drie en AI-validatie heet nu AI-beeldtoets'] },
   { version: '2.2.20', date: '1 apr 2026', changes: ['Laatste routelekken in vuistbijl-, boor- en oppervlakteretoucheroutes springen nu door naar de juiste expertvragen', 'Kernlabels en dolksubtypen tonen nu vaker leesbare AWN-namen', 'De expertboom eindigt daardoor minder vaak op technische tussencategorieen'] },
   { version: '2.2.19', date: '1 apr 2026', changes: ['Bifaciale routekoppen springen nu door naar hun echte expertvragen', 'Geslepen bijlen, beitels en hamerbijlen lopen minder vaak vast op technische tussencategorieen', 'Meer expertuitkomsten in deze secties tonen nu leesbare AWN-namen'] },
