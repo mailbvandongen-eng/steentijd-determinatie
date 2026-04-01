@@ -89,6 +89,7 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   bekapt: '300',
   'geretoucheerd-of-bijzondere-bewerking': '202',
   'een-combinatiewerktuig': '270',
+  'een-combinatie--werktuig': '270',
   'combinatie--werktuig': '270',
   'afgeknot-artefact': '301',
   'de-afslag-of-kling-is-niet-bewerkt': '41',
@@ -2006,6 +2007,8 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-kern--gelegenhei-ds': 'Gelegenheidskern',
   'een-kern--lamelle': 'Lamellenkern',
   'een-kern--bipolair': 'Bipolaire kern',
+  'een-combinatiewerktuig': 'Combinatiewerktuig',
+  'een-combinatie--werktuig': 'Combinatiewerktuig',
   'langwerpig-driehoekig-vuistbijl--langwerpig--driehoekig': 'Langwerpig driehoekige vuistbijl',
   'onregelmatig-driehoekig-vuistbijl--sub-driehoekig': 'Sub-driehoekige vuistbijl',
   'langwerpig-driehoekig-vuistbijl--langwerpig--hartvormig': 'Langwerpig hartvormige vuistbijl',
@@ -2107,6 +2110,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'schrabber--kling': 'Kling-schrabber',
   'schrabber--wehlen-of-gesteeld': 'Wehlen- of gesteelde schrabber',
   'een-schaaf--schrabber': 'Schaaf-schrabber',
+  schaaf: 'Schaaf',
   'een-schaaf--steker': 'Schaaf-steker',
   'een-schaaf--boor': 'Schaaf-boor',
   'een-schaaf--gekerfd': 'Gekerfde schaaf',
@@ -2442,6 +2446,10 @@ function processExpertAnswer(
 
   if (questionId === '270') {
     return { isEnd: false, nextQuestion: answer === 'ja' ? '271' : '300' };
+  }
+
+  if (questionId === '290' && answer === 'nee') {
+    return { isEnd: true, result: 'een-combinatiewerktuig' };
   }
 
   if (!target) {

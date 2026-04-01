@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.35',
+    title: 'Combinatiewerktuigroute aangescherpt',
+    items: [
+      'Algemene combinatiewerktuig-uitkomsten springen niet meer onterecht terug een subtypeboom in als ze al als eindresultaat bedoeld zijn',
+      'Een extra parservariant van combinatiewerktuig wordt nu ook als vervolgroute herkend',
+      'Schaaf en combinatiewerktuig tonen nu bovendien expliciete schermnamen in Expert',
+    ],
+  },
+  {
     version: '2.2.34',
     title: 'Expert werktuigroutes logischer gemaakt',
     items: [
