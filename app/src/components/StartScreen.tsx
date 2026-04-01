@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.26',
+    title: 'Vroege routevragen verder hersteld',
+    items: [
+      'Een tweede batch vroege kern-, afslag- en klingvragen gebruikt nu weer volledige bronformuleringen uit het algoritmedocument',
+      'De bronaudit daalt daardoor verder naar 312 vraagtekst-mismatches en 429 parserfouten',
+      'De belangrijkste resterende bronafwijkingen zitten nu nog in latere routevragen en technische antwoordlabels',
+    ],
+  },
+  {
     version: '2.2.25',
     title: 'Eerste vraagteksten bronvaster gemaakt',
     items: [

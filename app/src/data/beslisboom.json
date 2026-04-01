@@ -120,7 +120,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "23": {
-    "vraag": "het afbouwvlak ?",
+    "vraag": "Heeft de kern naar het midden gerichte afslagnegatieven op het afbouwvlak?",
     "ja": "aan-beide-zijden-kern--diskusvormig",
     "nee": null
   },
@@ -130,12 +130,12 @@
     "nee": "één-slagvlak"
   },
   "25": {
-    "vraag": "korte afslag negatieven?",
+    "vraag": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslagnegatieven?",
     "ja": "kern--afslag--piramida-al",
     "nee": "lange-afslagnegatieven"
   },
   "26": {
-    "vraag": "breed?",
+    "vraag": "Heeft de kern lange afslagnegatieven overwegend maximaal 10 mm breed?",
     "ja": "kern--lamelle",
     "nee": "kern--kling"
   },
@@ -150,7 +150,7 @@
     "nee": "relatief-klein"
   },
   "28": {
-    "vraag": "afslagnegatieven regelmatig ?",
+    "vraag": "Zijn de overwegend meer dan 10 mm brede afslagnegatieven regelmatig?",
     "ja": "met-parallelle-afslagnegatieven-kern--kling--montbani",
     "nee": "kern--kling--coincy"
   },
@@ -170,7 +170,7 @@
     "nee": "kern--orthogon-aal"
   },
   "31": {
-    "vraag": "afslagnegatieven klingvormig?",
+    "vraag": "De twee slagvlakken liggen tegenover elkaar; zijn de afslagnegatieven klingvormig?",
     "ja": "kern--bidirectioneel--kling",
     "nee": "kern--bidirectioneel--afslag"
   },
@@ -180,12 +180,12 @@
     "nee": "zie-vorige-determinatie-"
   },
   "33": {
-    "vraag": "mogelijk met negatief stekerafslag?",
+    "vraag": "Heeft de knol, brok of kern een zeer kleine beitelkant, mogelijk met negatief van een stekerafslag?",
     "ja": "steker--kern",
     "nee": "terug-artefactgroepen-start"
   },
   "34": {
-    "vraag": "verkregen werkkant, veelal gebogen?",
+    "vraag": "Heeft de knol, brok of kern een door relatief steile retouche verkregen werkkant, veelal gebogen?",
     "ja": "schrabber--kern",
     "nee": "terug-artefactgroepen-start"
   },
@@ -200,7 +200,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "37": {
-    "vraag": "d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+    "vraag": "Is de knol, brok of vorstsplijting voorzien van een of twee door steile retouche en/of grove kerf bewerkte zijden?",
     "ja": "spits--tayac",
     "nee": "terug-artefactgroepen-start"
   },
@@ -230,7 +230,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "45a": {
-    "vraag": "zijde ?",
+    "vraag": "Heeft de afslag aan een zijde cortex tegenover een scherpe zijde?",
     "ja": "een-rugmes",
     "nee": "een-afslag--decorticatie"
   },
@@ -240,7 +240,7 @@
     "nee": "afslag--decorticatie"
   },
   "46": {
-    "vraag": "zijde?",
+    "vraag": "Is de afslag, veelal relatief groot, dun en vlak, met naar het midden gerichte afslagnegatieven op de dorsale zijde?",
     "ja": "afslag--levallois",
     "nee": "terug-artefactgroepen-start"
   },
@@ -250,7 +250,7 @@
     "nee": "afslag--levallois"
   },
   "48": {
-    "vraag": "aan de as  van het werktuig?",
+    "vraag": "Is de afslag nagenoeg driehoekig met een of meer afslagnegatieven op de dorsale zijde, waarbij de slagrichting gelijk is aan de as van het werktuig?",
     "ja": "spits--levallois",
     "nee": "terug-artefactgroepen-start"
   },
@@ -260,7 +260,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "50": {
-    "vraag": "bifaciaal vlak geretoucheerde afknotting aan de basis ?",
+    "vraag": "Heeft de al dan niet geretoucheerde Levallois-spits een bifaciaal vlak geretoucheerde afknotting aan de basis?",
     "ja": "spits--emireh",
     "nee": "terug-artefactgroepen-start"
   },
@@ -270,7 +270,7 @@
     "nee": "spits--levallois"
   },
   "52": {
-    "vraag": "losgemaakt van de kern?",
+    "vraag": "Lijkt het artefact op een Levallois-spits, maar is de as van het werktuig ongelijk aan de richting waarin het artefact is losgemaakt van de kern?",
     "ja": "spits--pseudo--levallois",
     "nee": "terug-artefactgroepen-start"
   },
@@ -280,7 +280,7 @@
     "nee": "spits--pseudo--levallois"
   },
   "54": {
-    "vraag": "dorsale zijde haaks op de slagrichting van de afslag?",
+    "vraag": "Heeft de afslag distale delen van afslagnegatieven op de dorsale zijde haaks op de slagrichting van de afslag?",
     "ja": "afslag--kernpreparatie",
     "nee": "terug-artefactgroepen-start"
   },
@@ -290,7 +290,7 @@
     "nee": "afslag--kernpreparatie"
   },
   "56": {
-    "vraag": "afslagnegatieven?",
+    "vraag": "Heeft de afslag een deel van het slagvlak van een kern als dorsale zijde en op de rand proximale delen van afslagnegatieven?",
     "ja": "afslag--kernvernieuwing",
     "nee": "terug-artefactgroepen-start"
   },
@@ -300,7 +300,7 @@
     "nee": "afslag--kernvernieuwing"
   },
   "58": {
-    "vraag": "bifaciale bewerking ?",
+    "vraag": "Is de afslag een bifaciaal bewerkt artefact, herkenbaar aan een dorsaal vlak met afslagnegatieven en een slagvlakrest met bifaciale bewerking?",
     "ja": "afslag--vuistbijl",
     "nee": "terug-artefactgroepen-start"
   },
@@ -335,7 +335,7 @@
     "nee": "geen-cortex"
   },
   "71a": {
-    "vraag": "cortex  tegenover een scherpe zijde ?",
+    "vraag": "Heeft de kling een driehoekige doorsnede en aan een zijde cortex tegenover een scherpe zijde?",
     "ja": "rugmes",
     "nee": "kling--decorticatie"
   },
@@ -345,7 +345,7 @@
     "nee": "kling--decorticatie"
   },
   "73": {
-    "vraag": "dorsale zijde?",
+    "vraag": "Heeft de kling naar het midden gerichte afslagnegatieven op de dorsale zijde?",
     "ja": "kling--levallois",
     "nee": "terug-artefactgroepen-start"
   },

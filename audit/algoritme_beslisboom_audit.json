@@ -2,9 +2,9 @@
   "summary": {
     "algoritme_questions": 512,
     "json_questions": 512,
-    "issue_count": 534,
+    "issue_count": 531,
     "empty_question_in_json": 0,
-    "question_text_mismatch": 315,
+    "question_text_mismatch": 312,
     "suspicious_label_count": 219,
     "missing_in_json": 0,
     "missing_in_txt_parse": 0
@@ -155,12 +155,6 @@
       "json_question": "Heeft de Levallois-kern een of meer klingvormige afslagnegatieven?"
     },
     {
-      "question_id": "23",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de kern naar het midden gerichte afslagnegatieven op het afbouwvlak?",
-      "json_question": "het afbouwvlak?"
-    },
-    {
       "question_id": "24",
       "issue": "suspicious_ja_label",
       "label": "nee-één-slagvlak",
@@ -170,13 +164,13 @@
       "question_id": "25",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslag negatieven?",
-      "json_question": "korte afslag negatieven?"
+      "json_question": "Heeft de kern een piramidale vorm en (nagenoeg) rondom korte afslagnegatieven?"
     },
     {
       "question_id": "26",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de kern lange afslagnegatieven overwegend max 10 mm breed?",
-      "json_question": "breed?"
+      "json_question": "Heeft de kern lange afslagnegatieven overwegend maximaal 10 mm breed?"
     },
     {
       "question_id": "27",
@@ -194,7 +188,7 @@
       "question_id": "28",
       "issue": "question_text_mismatch",
       "text_question": "Zijn de (overwegend meer dan 10 mm brede) afslagnegatieven regelmatig?",
-      "json_question": "afslagnegatieven regelmatig?"
+      "json_question": "Zijn de overwegend meer dan 10 mm brede afslagnegatieven regelmatig?"
     },
     {
       "question_id": "28a",
@@ -206,7 +200,7 @@
       "question_id": "31",
       "issue": "question_text_mismatch",
       "text_question": "De twee slagvlakken liggen tegenover elkaar, z ijn de afslagnegatieven klingvormig?",
-      "json_question": "afslagnegatieven klingvormig?"
+      "json_question": "De twee slagvlakken liggen tegenover elkaar; zijn de afslagnegatieven klingvormig?"
     },
     {
       "question_id": "32",
@@ -218,19 +212,13 @@
       "question_id": "33",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
-      "json_question": "mogelijk met negatief stekerafslag?"
-    },
-    {
-      "question_id": "34",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de knol, brok of kern een door relatief steile retouche verkregen werkkant, veelal gebogen?",
-      "json_question": "verkregen werkkant, veelal gebogen?"
+      "json_question": "Heeft de knol, brok of kern een zeer kleine beitelkant, mogelijk met negatief van een stekerafslag?"
     },
     {
       "question_id": "37",
       "issue": "question_text_mismatch",
       "text_question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
-      "json_question": "d.m.v. steile retouche en/of grove kerf bewerkte zijden?"
+      "json_question": "Is de knol, brok of vorstsplijting voorzien van een of twee door steile retouche en/of grove kerf bewerkte zijden?"
     },
     {
       "question_id": "40",
@@ -242,7 +230,7 @@
       "question_id": "45a",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de afslag aan één zijde cortex tegenover een scherpe zijde?",
-      "json_question": "zijde?"
+      "json_question": "Heeft de afslag aan een zijde cortex tegenover een scherpe zijde?"
     },
     {
       "question_id": "45a",
@@ -260,55 +248,49 @@
       "question_id": "46",
       "issue": "question_text_mismatch",
       "text_question": "Is de afslag, veelal relatief groot , dun en vlak , met naar het midden gerichte (centripetale) afslagnegatieven op de dorsale zijde?",
-      "json_question": "zijde?"
+      "json_question": "Is de afslag, veelal relatief groot, dun en vlak, met naar het midden gerichte afslagnegatieven op de dorsale zijde?"
     },
     {
       "question_id": "48",
       "issue": "question_text_mismatch",
       "text_question": "Is de afslag (nagenoeg) driehoekige met één of meer afslagnegatieven op de dorsale zijde, de slagrichting is gelijk aan de as van het werktuig?",
-      "json_question": "aan de as van het werktuig?"
+      "json_question": "Is de afslag nagenoeg driehoekig met een of meer afslagnegatieven op de dorsale zijde, waarbij de slagrichting gelijk is aan de as van het werktuig?"
     },
     {
       "question_id": "50",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de al dan niet geretoucheerde Levallois -spits een bifaciaal vlak geretoucheerde afknotting aan de basis?",
-      "json_question": "bifaciaal vlak geretoucheerde afknotting aan de basis?"
+      "json_question": "Heeft de al dan niet geretoucheerde Levallois-spits een bifaciaal vlak geretoucheerde afknotting aan de basis?"
     },
     {
       "question_id": "52",
       "issue": "question_text_mismatch",
       "text_question": "Lijkt het artefact op een Levallois -spits maar is de as van het werktuig ongelijk aan de richting waarin het artefact is losgemaakt van de kern?",
-      "json_question": "losgemaakt van de kern?"
-    },
-    {
-      "question_id": "54",
-      "issue": "question_text_mismatch",
-      "text_question": "Heeft de afslag distale delen van afslagnegatieven op de dorsale zijde haaks op de slagrichting van de afslag?",
-      "json_question": "dorsale zijde haaks op de slagrichting van de afslag?"
+      "json_question": "Lijkt het artefact op een Levallois-spits, maar is de as van het werktuig ongelijk aan de richting waarin het artefact is losgemaakt van de kern?"
     },
     {
       "question_id": "56",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de afslag (een deel van) van het slagvlak van een kern als dorsale zijde en op de rand proximale delen van afslagnegatieven?",
-      "json_question": "afslagnegatieven?"
+      "json_question": "Heeft de afslag een deel van het slagvlak van een kern als dorsale zijde en op de rand proximale delen van afslagnegatieven?"
     },
     {
       "question_id": "58",
       "issue": "question_text_mismatch",
       "text_question": "Is de afslag een bifaciaal bewerkt artefact , herkenbaar aan een dorsaal vlak met afslagnegatieven en een slagvlakrest met bifaciale bewerking?",
-      "json_question": "bifaciale bewerking?"
+      "json_question": "Is de afslag een bifaciaal bewerkt artefact, herkenbaar aan een dorsaal vlak met afslagnegatieven en een slagvlakrest met bifaciale bewerking?"
     },
     {
       "question_id": "71a",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de kling een driehoekige doorsnede en aan één zijde cortex tegenover een scherpe zijde?",
-      "json_question": "cortex tegenover een scherpe zijde?"
+      "json_question": "Heeft de kling een driehoekige doorsnede en aan een zijde cortex tegenover een scherpe zijde?"
     },
     {
       "question_id": "73",
       "issue": "question_text_mismatch",
       "text_question": "Heeft de kling met naar midden gerichte afslagnegatieven op dorsale zijde?",
-      "json_question": "dorsale zijde?"
+      "json_question": "Heeft de kling naar het midden gerichte afslagnegatieven op de dorsale zijde?"
     },
     {
       "question_id": "75",
