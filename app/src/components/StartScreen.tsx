@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.45',
+    title: 'Resterende spits- en kernuitkomsten benoemd',
+    items: [
+      'Nog een batch echte experttypen toont nu nette namen, waaronder gemodificeerde Levallois-spitsen, pseudo-Levallois-spitsen, Dufour-lamellen en kernschrabbers',
+      'Ook transversaal- en trapeziumvarianten, feuille-de-gui, vuistwig op afslag en enkele afgeknotte resttypen zijn nu leesbaar',
+      'Daardoor wordt de expertboom opnieuw minder afhankelijk van ruwe AWN-slugs als einduitkomst',
+    ],
+  },
+  {
     version: '2.2.44',
     title: 'Generieke expertcategorieën benoemd',
     items: [
