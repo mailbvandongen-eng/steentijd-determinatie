@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.62',
+    title: 'Bronomschrijvingen uitgebreid en doorgetrokken naar delen en export',
+    items: [
+      'De bronomschrijvingen zijn uitgebreid naar veel concrete expert-subtypen zoals kernvarianten, vuistbijlen, spitsen, schrabbers, stekers, doorboorde typen en geslepen bijlen en beitels',
+      'Die broninformatie gaat nu ook mee in de deeltekst en PDF-export',
+      'Daardoor blijft de bronverankering niet beperkt tot het scherm zelf maar reist die ook mee in gedeelde en geëxporteerde resultaten',
+    ],
+  },
+  {
     version: '2.2.61',
     title: 'Bronomschrijvingen toegevoegd aan het resultaatscherm',
     items: [

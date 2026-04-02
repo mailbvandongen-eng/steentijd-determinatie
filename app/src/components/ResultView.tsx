@@ -288,7 +288,10 @@ export function ResultView({
     try {
       const typeName = session.result ? formatTypeName(session.result.type) : 'Onbekend artefact';
       const description = session.result?.description || '';
+      const sourceInfo = getSourceResultInfo(session.result?.sourceResultType ?? session.result?.type);
       const period = session.result?.period ? `Periode: ${session.result.period}` : '';
+      const sourceSummary = sourceInfo ? `\nBronomschrijving: ${sourceInfo.summary}` : '';
+      const sourceRef = sourceInfo ? `\nBron: ${sourceInfo.source}` : '';
       const characteristics = session.result?.characteristics?.length
         ? `\nKenmerken:\n${session.result.characteristics.map(c => `• ${c}`).join('\n')}`
         : '';
@@ -299,6 +302,8 @@ export function ResultView({
         ``,
         `Type: ${typeName}`,
         period,
+        sourceSummary,
+        sourceRef,
         ``,
         description,
         characteristics,

@@ -2,6 +2,7 @@
 import { jsPDF } from 'jspdf';
 import type { DeterminationSession } from '../types';
 import { formatTypeName } from './decisionTree';
+import { getSourceResultInfo } from './sourceResultInfo';
 
 export async function exportToPdf(session: DeterminationSession): Promise<void> {
   const doc = new jsPDF();
@@ -17,6 +18,7 @@ export async function exportToPdf(session: DeterminationSession): Promise<void> 
 
   // Type artefact
   const typeName = session.result ? formatTypeName(session.result.type) : 'Onbekend';
+  const sourceResultInfo = getSourceResultInfo(session.result?.sourceResultType ?? session.result?.type);
   doc.setFontSize(18);
   doc.setTextColor(0, 0, 0);
   doc.text(typeName, margin, y);
@@ -34,6 +36,18 @@ export async function exportToPdf(session: DeterminationSession): Promise<void> 
   if (session.result?.confidence) {
     doc.text(`Betrouwbaarheid: ${session.result.confidence}`, margin, y);
     y += 6;
+  }
+
+  if (sourceResultInfo) {
+    const infoLines = doc.splitTextToSize(`Bronomschrijving: ${sourceResultInfo.summary}`, pageWidth - margin * 2);
+    doc.text(infoLines, margin, y);
+    y += infoLines.length * 5;
+
+    const sourceLines = doc.splitTextToSize(`Bron: ${sourceResultInfo.source}`, pageWidth - margin * 2);
+    doc.setTextColor(120, 120, 120);
+    doc.text(sourceLines, margin, y);
+    y += sourceLines.length * 5;
+    doc.setTextColor(100, 100, 100);
   }
 
   y += 5;
