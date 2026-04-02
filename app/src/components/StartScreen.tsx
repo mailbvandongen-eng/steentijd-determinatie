@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.80',
+    title: 'Snelle instap nu ook inhoudelijk afgedekt met een matrix',
+    items: [
+      'Een nieuwe quick-start matrix rekent nu per familie en niveau door hoeveel specifieke uitkomsten vanaf het gekozen instappunt bereikbaar zijn',
+      'De matrix staat nu op 33 routes en 0 families die inhoudelijk doodlopen zonder subtype-uitkomsten',
+      'Daardoor wordt snelle instap nu niet alleen op startvragen maar ook op inhoudelijke uitwaaiering regressietestbaar',
+    ],
+  },
+  {
     version: '2.2.79',
     title: 'Snelle instap duwt nu beter terug bij onwaarschijnlijke keuze',
     items: [
