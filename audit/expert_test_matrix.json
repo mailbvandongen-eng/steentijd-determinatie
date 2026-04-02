@@ -6689,7 +6689,12 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "spits--bromme",
+        "spits--swidry",
+        "spits--font-robert",
+        "spits--havelter",
+        "spits--zonhoven"
       ],
       "found": true,
       "endResult": "spits--tjonger",
@@ -6926,7 +6931,12 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "spits--tjonger",
+        "spits--swidry",
+        "spits--font-robert",
+        "spits--havelter",
+        "spits--zonhoven"
       ],
       "found": true,
       "endResult": "spits--bromme",
@@ -7147,7 +7157,12 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "spits--tjonger",
+        "spits--bromme",
+        "spits--font-robert",
+        "spits--havelter",
+        "spits--zonhoven"
       ],
       "found": true,
       "endResult": "spits--swidry",
@@ -7368,7 +7383,12 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "spits--tjonger",
+        "spits--bromme",
+        "spits--swidry",
+        "spits--havelter",
+        "spits--zonhoven"
       ],
       "found": true,
       "endResult": "spits--font-robert",
@@ -9469,7 +9489,12 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "spits--tjonger",
+        "spits--bromme",
+        "spits--swidry",
+        "spits--font-robert",
+        "spits--zonhoven"
       ],
       "found": true,
       "endResult": "spits--havelter-steelspits",
@@ -9682,7 +9707,12 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "spits--tjonger",
+        "spits--bromme",
+        "spits--swidry",
+        "spits--font-robert",
+        "spits--havelter"
       ],
       "found": true,
       "endResult": "spits--zonhoven",
@@ -9903,6 +9933,12 @@
       "id": "vuistbijl_amandel",
       "label": "Bifaciaal: amandelvormige vuistbijl",
       "target": "vuistbijl--amandelvormig",
+      "forbiddenPrefixes": [
+        "vuistbijl--hartvormig",
+        "vuistbijl--driehoekig",
+        "vuistbijl--micoque",
+        "vuistbijl--lancetvormig"
+      ],
       "found": true,
       "endResult": "vuistbijl--amandelvormig",
       "displayName": "Amandelvormige vuistbijl",
@@ -10229,6 +10265,12 @@
       "id": "vuistbijl_micoque",
       "label": "Bifaciaal: Micoque-vuistbijl",
       "target": "vuistbijl--micoque",
+      "forbiddenPrefixes": [
+        "vuistbijl--amandelvormig",
+        "vuistbijl--hartvormig",
+        "vuistbijl--driehoekig",
+        "vuistbijl--lancetvormig"
+      ],
       "found": true,
       "endResult": "vuistbijl--micoque",
       "displayName": "Micoque-vuistbijl",
@@ -10376,6 +10418,12 @@
       "id": "vuistbijl_lancetvormig",
       "label": "Bifaciaal: lancetvormige vuistbijl",
       "target": "vuistbijl--lancetvormig",
+      "forbiddenPrefixes": [
+        "vuistbijl--amandelvormig",
+        "vuistbijl--hartvormig",
+        "vuistbijl--driehoekig",
+        "vuistbijl--micoque"
+      ],
       "found": true,
       "endResult": "vuistbijl--lancetvormig",
       "displayName": "Lancetvormige vuistbijl",
@@ -10817,6 +10865,12 @@
       "id": "vuistbijl_hartvormig",
       "label": "Bifaciaal: hartvormige vuistbijl",
       "target": "vuistbijl--hartvormig",
+      "forbiddenPrefixes": [
+        "vuistbijl--amandelvormig",
+        "vuistbijl--driehoekig",
+        "vuistbijl--micoque",
+        "vuistbijl--lancetvormig"
+      ],
       "found": true,
       "endResult": "vuistbijl--hartvormig",
       "displayName": "Hartvormige vuistbijl",
@@ -11314,6 +11368,12 @@
       "id": "vuistbijl_driehoekig",
       "label": "Bifaciaal: driehoekige vuistbijl",
       "target": "vuistbijl--driehoekig",
+      "forbiddenPrefixes": [
+        "vuistbijl--amandelvormig",
+        "vuistbijl--hartvormig",
+        "vuistbijl--micoque",
+        "vuistbijl--lancetvormig"
+      ],
       "found": true,
       "endResult": "vuistbijl--driehoekig",
       "displayName": "Driehoekige vuistbijl",

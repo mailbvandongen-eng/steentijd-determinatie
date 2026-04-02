@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.69',
+    title: 'Expert-regressieset nu ook op spits- en vuistbijlsubtypen aangescherpt',
+    items: [
+      'De expert-regressieset controleert nu ook subtypeverwarring tussen naburige spits- en vuistbijlvarianten',
+      'Tjonger, Bromme, Swidry, Font-Robert, Havelter en Zonhoven worden nu expliciet tegen elkaar afgezet, net als amandel-, hart-, driehoek- en Micoque-vuistbijlen',
+      'De regressieset blijft daarbij schoon op 102 van 102 scenario’s zonder verboden overgangen',
+    ],
+  },
+  {
     version: '2.2.68',
     title: 'Expert-regressieset nu ook op combinatiewerktuigen aangescherpt',
     items: [
