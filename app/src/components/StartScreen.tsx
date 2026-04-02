@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.68',
+    title: 'Expert-regressieset nu ook op combinatiewerktuigen aangescherpt',
+    items: [
+      'De expert-regressieset bewaakt nu ook combinatiewerktuigen en gemengde subtypepaden zoals schaaf-steker, schrabber-boor en steker-boor',
+      'Nieuwe scenario’s voor gekerfd-en-getand, gekerfd-en-afgeknot en getand-en-afgeknot artefacten zijn toegevoegd aan de matrix',
+      'De aangescherpte regressieset blijft daarbij schoon op 102 van 102 scenario’s zonder verboden overgangen',
+    ],
+  },
+  {
     version: '2.2.67',
     title: 'Expert-regressieset nu ook op subtypeverwarring aangescherpt',
     items: [

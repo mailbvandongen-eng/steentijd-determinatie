@@ -4918,6 +4918,1625 @@
       "matchedOn": "label"
     },
     {
+      "id": "werktuig_combinatie",
+      "label": "Kling/afslag: combinatiewerktuig",
+      "target": "combinatiewerktuig",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes"
+      ],
+      "found": true,
+      "endResult": "combinatiewerktuig",
+      "displayName": "Combinatiewerktuig",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_schaaf_steker",
+      "label": "Kling/afslag: schaaf-steker",
+      "target": "schaaf--steker",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schrabber--",
+        "boor--",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "afgeknot"
+      ],
+      "found": true,
+      "endResult": "schaaf--steker",
+      "displayName": "Schaaf-steker",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "ja",
+          "nextQuestion": "273",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_schrabber_steker",
+      "label": "Kling/afslag: schrabber-steker",
+      "target": "schrabber--steker",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schaaf--",
+        "boor--",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "afgeknot"
+      ],
+      "found": true,
+      "endResult": "schrabber--steker",
+      "displayName": "Schrabber-steker",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "nee",
+          "nextQuestion": "274",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "274",
+          "question": "Betreft het een schaaf en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "276",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "276",
+          "question": "Betreft het een schrabber en een steker?",
+          "answer": "ja",
+          "nextQuestion": "277",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_schrabber_boor",
+      "label": "Kling/afslag: schrabber-boor",
+      "target": "schrabber--boor",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schaaf--",
+        "steker--",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "afgeknot"
+      ],
+      "found": true,
+      "endResult": "schrabber--boor",
+      "displayName": "Schrabber-boor",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "nee",
+          "nextQuestion": "274",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "274",
+          "question": "Betreft het een schaaf en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "276",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "276",
+          "question": "Betreft het een schrabber en een steker?",
+          "answer": "nee",
+          "nextQuestion": "278",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "278",
+          "question": "Betreft het een schrabber en een boor?",
+          "answer": "ja",
+          "nextQuestion": "279",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_steker_boor",
+      "label": "Kling/afslag: steker-boor",
+      "target": "steker--boor",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schaaf--",
+        "schrabber--",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "afgeknot"
+      ],
+      "found": true,
+      "endResult": "steker--boor",
+      "displayName": "Steker-boor",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "nee",
+          "nextQuestion": "274",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "274",
+          "question": "Betreft het een schaaf en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "276",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "276",
+          "question": "Betreft het een schrabber en een steker?",
+          "answer": "ja",
+          "nextQuestion": "277",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "277",
+          "question": "Betreft het een schrabber en een krombeksteker?",
+          "answer": "nee",
+          "nextQuestion": "279",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "279",
+          "question": "Betreft het een schrabber en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "281",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "281",
+          "question": "Betreft het een steker en een  boor?",
+          "answer": "ja",
+          "nextQuestion": "282",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_gekerfd_getand",
+      "label": "Kling/afslag: gekerfd en getand artefact",
+      "target": "gekerfd--en-getand--artefact",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schaaf--",
+        "schrabber--",
+        "steker--",
+        "boor--",
+        "afgeknot"
+      ],
+      "found": true,
+      "endResult": "gekerfd--en-getand--artefact",
+      "displayName": "Gekerfd en getand artefact",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "nee",
+          "nextQuestion": "274",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "274",
+          "question": "Betreft het een schaaf en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "276",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "276",
+          "question": "Betreft het een schrabber en een steker?",
+          "answer": "ja",
+          "nextQuestion": "277",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "277",
+          "question": "Betreft het een schrabber en een krombeksteker?",
+          "answer": "nee",
+          "nextQuestion": "279",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "279",
+          "question": "Betreft het een schrabber en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "281",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "281",
+          "question": "Betreft het een steker en een  boor?",
+          "answer": "nee",
+          "nextQuestion": "283",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "283",
+          "question": "Betreft het een  krombeksteker en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "286",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "286",
+          "question": "Betreft het een  boor en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "288",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "288",
+          "question": "Betreft het een  gekerfd en getand artefact ?",
+          "answer": "ja",
+          "nextQuestion": "289",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_gekerfd_afgeknot",
+      "label": "Kling/afslag: gekerfd en afgeknot artefact",
+      "target": "gekerfd--en-afgeknot--artefact",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schaaf--",
+        "schrabber--",
+        "steker--",
+        "boor--",
+        "werktuig--getand"
+      ],
+      "found": true,
+      "endResult": "gekerfd--en-afgeknot--artefact",
+      "displayName": "Gekerfd en afgeknot artefact",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "nee",
+          "nextQuestion": "274",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "274",
+          "question": "Betreft het een schaaf en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "276",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "276",
+          "question": "Betreft het een schrabber en een steker?",
+          "answer": "ja",
+          "nextQuestion": "277",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "277",
+          "question": "Betreft het een schrabber en een krombeksteker?",
+          "answer": "nee",
+          "nextQuestion": "279",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "279",
+          "question": "Betreft het een schrabber en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "281",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "281",
+          "question": "Betreft het een steker en een  boor?",
+          "answer": "nee",
+          "nextQuestion": "283",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "283",
+          "question": "Betreft het een  krombeksteker en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "286",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "286",
+          "question": "Betreft het een  boor en een kerf?",
+          "answer": "ja",
+          "nextQuestion": "287",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "287",
+          "question": "Betreft het een  boor en een vertanding?",
+          "answer": "nee",
+          "nextQuestion": "289",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "289",
+          "question": "Betreft het een  gekerfd en afgeknot artefact ?",
+          "answer": "ja",
+          "nextQuestion": "290",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_getand_afgeknot",
+      "label": "Kling/afslag: getand en afgeknot artefact",
+      "target": "getand--en-afgeknot--artefact",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "rugmes",
+        "schaaf--",
+        "schrabber--",
+        "steker--",
+        "boor--",
+        "werktuig--gekerfd"
+      ],
+      "found": true,
+      "endResult": "getand--en-afgeknot--artefact",
+      "displayName": "Getand en afgeknot artefact",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "ja",
+          "nextQuestion": "203",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "203",
+          "question": "Is de steker aangebracht op een ander werktuig -type?",
+          "answer": "ja",
+          "nextQuestion": "270",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "270",
+          "question": "Is het artefact  een combinatiewerktuig ?",
+          "answer": "ja",
+          "nextQuestion": "271",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "271",
+          "question": "Betreft het een s chaaf en een schrabber?",
+          "answer": "ja",
+          "nextQuestion": "272",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "272",
+          "question": "Betreft het een schaaf en een steker?",
+          "answer": "nee",
+          "nextQuestion": "274",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "274",
+          "question": "Betreft het een schaaf en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "276",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "276",
+          "question": "Betreft het een schrabber en een steker?",
+          "answer": "ja",
+          "nextQuestion": "277",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "277",
+          "question": "Betreft het een schrabber en een krombeksteker?",
+          "answer": "nee",
+          "nextQuestion": "279",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "279",
+          "question": "Betreft het een schrabber en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "281",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "281",
+          "question": "Betreft het een steker en een  boor?",
+          "answer": "nee",
+          "nextQuestion": "283",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "283",
+          "question": "Betreft het een  krombeksteker en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "286",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "286",
+          "question": "Betreft het een  boor en een kerf?",
+          "answer": "nee",
+          "nextQuestion": "288",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "288",
+          "question": "Betreft het een  gekerfd en getand artefact ?",
+          "answer": "nee",
+          "nextQuestion": "290",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "290",
+          "question": "Betreft het een  getand en afgeknot artefact ?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "getand--en-afgeknot--artefact",
+          "formattedResult": "Getand en afgeknot artefact"
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
       "id": "spits_bladspits",
       "label": "Spits: bladspits",
       "target": "spits--bladspits",

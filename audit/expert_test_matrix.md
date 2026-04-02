@@ -1,8 +1,8 @@
 # Expert Test Matrix
 
 - startQuestion: `1`
-- scenarios: `94`
-- found: `94`
+- scenarios: `102`
+- found: `102`
 
 ## Scenario Overzicht
 - `kern_levallois_afslag` Kern: Levallois-kern: gevonden als `Ongebruikte Levallois-kern`
@@ -39,6 +39,14 @@
 - `werktuig_getand` Kling/afslag: getand werktuig: gevonden als `Getand werktuig`
 - `werktuig_schaaf` Kling/afslag: schaaf: gevonden als `Schaaf`
 - `werktuig_schaaf_quina` Kling/afslag: Quina-schaaf: gevonden als `Quina-schaaf`
+- `werktuig_combinatie` Kling/afslag: combinatiewerktuig: gevonden als `Combinatiewerktuig`
+- `werktuig_schaaf_steker` Kling/afslag: schaaf-steker: gevonden als `Schaaf-steker`
+- `werktuig_schrabber_steker` Kling/afslag: schrabber-steker: gevonden als `Schrabber-steker`
+- `werktuig_schrabber_boor` Kling/afslag: schrabber-boor: gevonden als `Schrabber-boor`
+- `werktuig_steker_boor` Kling/afslag: steker-boor: gevonden als `Steker-boor`
+- `werktuig_gekerfd_getand` Kling/afslag: gekerfd en getand artefact: gevonden als `Gekerfd en getand artefact`
+- `werktuig_gekerfd_afgeknot` Kling/afslag: gekerfd en afgeknot artefact: gevonden als `Gekerfd en afgeknot artefact`
+- `werktuig_getand_afgeknot` Kling/afslag: getand en afgeknot artefact: gevonden als `Getand en afgeknot artefact`
 - `spits_bladspits` Spits: bladspits: gevonden als `Bladspits`
 - `spits_tjonger` Spits: Tjongerspits: gevonden als `Tjongerspits`
 - `spits_bromme` Spits: Bromme-spits: gevonden als `Bromme-spits`
@@ -819,6 +827,231 @@
 - `350` Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden? -> `nee` -> `351`
 - `351` Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant? -> `ja` -> `352`
 - `352` Heeft de afslag één of meerdere zijden met schubvormige of getrapt -schubvormige retouche? -> `ja` => `Quina-schaaf`
+
+### Kling/afslag: combinatiewerktuig
+
+- resultaat: `Combinatiewerktuig`
+- match: `label`
+- stappen: `15`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+
+### Kling/afslag: schaaf-steker
+
+- resultaat: `Schaaf-steker`
+- match: `label`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `ja` -> `273`
+
+### Kling/afslag: schrabber-steker
+
+- resultaat: `Schrabber-steker`
+- match: `label`
+- stappen: `20`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `nee` -> `274`
+- `274` Betreft het een schaaf en een kerf? -> `nee` -> `276`
+- `276` Betreft het een schrabber en een steker? -> `ja` -> `277`
+
+### Kling/afslag: schrabber-boor
+
+- resultaat: `Schrabber-boor`
+- match: `label`
+- stappen: `21`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `nee` -> `274`
+- `274` Betreft het een schaaf en een kerf? -> `nee` -> `276`
+- `276` Betreft het een schrabber en een steker? -> `nee` -> `278`
+- `278` Betreft het een schrabber en een boor? -> `ja` -> `279`
+
+### Kling/afslag: steker-boor
+
+- resultaat: `Steker-boor`
+- match: `label`
+- stappen: `23`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `nee` -> `274`
+- `274` Betreft het een schaaf en een kerf? -> `nee` -> `276`
+- `276` Betreft het een schrabber en een steker? -> `ja` -> `277`
+- `277` Betreft het een schrabber en een krombeksteker? -> `nee` -> `279`
+- `279` Betreft het een schrabber en een kerf? -> `nee` -> `281`
+- `281` Betreft het een steker en een  boor? -> `ja` -> `282`
+
+### Kling/afslag: gekerfd en getand artefact
+
+- resultaat: `Gekerfd en getand artefact`
+- match: `label`
+- stappen: `26`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `nee` -> `274`
+- `274` Betreft het een schaaf en een kerf? -> `nee` -> `276`
+- `276` Betreft het een schrabber en een steker? -> `ja` -> `277`
+- `277` Betreft het een schrabber en een krombeksteker? -> `nee` -> `279`
+- `279` Betreft het een schrabber en een kerf? -> `nee` -> `281`
+- `281` Betreft het een steker en een  boor? -> `nee` -> `283`
+- `283` Betreft het een  krombeksteker en een kerf? -> `nee` -> `286`
+- `286` Betreft het een  boor en een kerf? -> `nee` -> `288`
+- `288` Betreft het een  gekerfd en getand artefact ? -> `ja` -> `289`
+
+### Kling/afslag: gekerfd en afgeknot artefact
+
+- resultaat: `Gekerfd en afgeknot artefact`
+- match: `label`
+- stappen: `27`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `nee` -> `274`
+- `274` Betreft het een schaaf en een kerf? -> `nee` -> `276`
+- `276` Betreft het een schrabber en een steker? -> `ja` -> `277`
+- `277` Betreft het een schrabber en een krombeksteker? -> `nee` -> `279`
+- `279` Betreft het een schrabber en een kerf? -> `nee` -> `281`
+- `281` Betreft het een steker en een  boor? -> `nee` -> `283`
+- `283` Betreft het een  krombeksteker en een kerf? -> `nee` -> `286`
+- `286` Betreft het een  boor en een kerf? -> `ja` -> `287`
+- `287` Betreft het een  boor en een vertanding? -> `nee` -> `289`
+- `289` Betreft het een  gekerfd en afgeknot artefact ? -> `ja` -> `290`
+
+### Kling/afslag: getand en afgeknot artefact
+
+- resultaat: `Getand en afgeknot artefact`
+- match: `label`
+- stappen: `27`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `ja` -> `203`
+- `203` Is de steker aangebracht op een ander werktuig -type? -> `ja` -> `270`
+- `270` Is het artefact  een combinatiewerktuig ? -> `ja` -> `271`
+- `271` Betreft het een s chaaf en een schrabber? -> `ja` -> `272`
+- `272` Betreft het een schaaf en een steker? -> `nee` -> `274`
+- `274` Betreft het een schaaf en een kerf? -> `nee` -> `276`
+- `276` Betreft het een schrabber en een steker? -> `ja` -> `277`
+- `277` Betreft het een schrabber en een krombeksteker? -> `nee` -> `279`
+- `279` Betreft het een schrabber en een kerf? -> `nee` -> `281`
+- `281` Betreft het een steker en een  boor? -> `nee` -> `283`
+- `283` Betreft het een  krombeksteker en een kerf? -> `nee` -> `286`
+- `286` Betreft het een  boor en een kerf? -> `nee` -> `288`
+- `288` Betreft het een  gekerfd en getand artefact ? -> `nee` -> `290`
+- `290` Betreft het een  getand en afgeknot artefact ? -> `ja` => `Getand en afgeknot artefact`
 
 ### Spits: bladspits
 
