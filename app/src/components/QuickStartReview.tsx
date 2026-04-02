@@ -4,6 +4,8 @@ interface QuickStartReviewProps {
   imageUrl: string;
   familyLabel: string;
   targetLevelLabel: string;
+  expectedTraits?: string[];
+  commonConfusions?: string[];
   isChecking: boolean;
   verdict: 'plausibel' | 'twijfelachtig' | 'onwaarschijnlijk' | null;
   feedback: string | null;
@@ -17,6 +19,8 @@ export function QuickStartReview({
   imageUrl,
   familyLabel,
   targetLevelLabel,
+  expectedTraits = [],
+  commonConfusions = [],
   isChecking,
   verdict,
   feedback,
@@ -66,6 +70,27 @@ export function QuickStartReview({
           <p className="mt-1 text-xl font-bold text-amber-700">{familyLabel}</p>
           <p className="mt-1 text-sm text-stone-600">Beoogde route: {targetLevelLabel}</p>
         </div>
+
+        {(expectedTraits.length > 0 || commonConfusions.length > 0) && (
+          <div className="card border border-stone-200 bg-white space-y-3">
+            {expectedTraits.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Waar AI op let</p>
+                <ul className="mt-2 space-y-1 text-sm text-stone-700">
+                  {expectedTraits.map((trait) => (
+                    <li key={trait}>• {trait}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {commonConfusions.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Mogelijke verwarring</p>
+                <p className="mt-1 text-sm text-stone-700">{commonConfusions.join(', ')}</p>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="card">
           <p className="text-xs font-semibold uppercase tracking-wide text-stone-500 mb-2">Artefact</p>

@@ -2,6 +2,7 @@
 // Gebruikt Claude API met determinatie-kennis als context
 import { getSourceHint } from './sourceHints';
 import { getSourceResultInfo } from './sourceResultInfo';
+import { getQuickStartPromptContext } from './quickStart';
 
 export const DETERMINATION_CONTEXT = `
 Je bent een expert in de determinatie van (vuur-)stenen artefacten uit de steentijd.
@@ -392,7 +393,8 @@ export async function getHintForQuestion(
 export async function checkQuickStartPlausibility(
   imageBase64: string | string[],
   familyLabel: string,
-  familyDescription: string
+  familyDescription: string,
+  quickStartDefinition?: Parameters<typeof getQuickStartPromptContext>[0]
 ): Promise<QuickStartCheckResult> {
   try {
     const images = Array.isArray(imageBase64) ? imageBase64 : [imageBase64];
@@ -404,6 +406,13 @@ export async function checkQuickStartPlausibility(
         data: img.replace(/^data:image\/\w+;base64,/, ''),
       },
     }));
+
+    const promptContext = quickStartDefinition
+      ? getQuickStartPromptContext(quickStartDefinition)
+      : null;
+    const sourceResultInfo = quickStartDefinition
+      ? getSourceResultInfo(quickStartDefinition.sourceResultType)
+      : null;
 
     const response = await fetch(WORKER_URL, {
       method: 'POST',
@@ -424,12 +433,16 @@ export async function checkQuickStartPlausibility(
 
 Gekozen familie: ${familyLabel}
 Beschrijving familie: ${familyDescription}
+${sourceResultInfo ? `Bronomschrijving: ${sourceResultInfo.summary}` : ''}
+${sourceResultInfo?.detail ? `Brondetail: ${sourceResultInfo.detail}` : ''}
+${promptContext ? `${promptContext}` : ''}
 
 INSTRUCTIES:
 - Dit is GEEN volledige determinatie.
 - Beoordeel alleen of deze instapfamilie op basis van de foto verdedigbaar lijkt.
 - Wees conservatief.
 - Als kenmerken ontbreken of niet zichtbaar zijn, kies dan liever "twijfelachtig" dan "plausibel".
+- Let actief op of de foto beter past bij een veelvoorkomende verwarring binnen dezelfde hoofdgroep.
 - Geef geen ander subtype als eindantwoord.
 
 Antwoord exact in dit format:

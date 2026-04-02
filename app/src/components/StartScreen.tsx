@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.77',
+    title: 'Snelle instap inhoudelijk aangescherpt',
+    items: [
+      'Elke snelle-instapfamilie heeft nu expliciete herkenningskenmerken en veelvoorkomende verwarringen, zodat de AI-instap strenger en bronvaster kan beoordelen',
+      'De snelle-instapreview laat nu ook zien waar de AI op let en met welke verwante families verwarring kan ontstaan',
+      'Een nieuwe audit bewaakt dat elke snelle-instapfamilie naar een bestaand boominstappunt, boommodus en bronresultaat verwijst',
+    ],
+  },
+  {
     version: '2.2.76',
     title: 'Snelle instap uitgebreid naar alle stabiele families',
     items: [

@@ -29,7 +29,7 @@ import {
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer' | 'quickstart-review';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.76';
+const APP_VERSION = '2.2.77';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -266,7 +266,8 @@ function App() {
       const result = await checkQuickStartPlausibility(
         imageBase64,
         definition.label,
-        definition.description
+        definition.description,
+        definition
       );
 
       setQuickStartState((prev) => prev ? {
@@ -493,6 +494,8 @@ function App() {
           imageUrl={getImageUrl()}
           familyLabel={definition?.label ?? quickStartState.family}
           targetLevelLabel={quickStartState.targetLevel === 'expert' ? 'Expert' : 'Gevorderd'}
+          expectedTraits={definition?.expectedTraits}
+          commonConfusions={definition?.commonConfusions}
           isChecking={quickStartState.isChecking}
           verdict={quickStartState.verdict}
           feedback={quickStartState.feedback}
