@@ -3144,9 +3144,7 @@ function processExpertAnswer(
   }
 
   if (questionId === '540') {
-    return answer === 'ja'
-      ? { isEnd: false, nextQuestion: '541' }
-      : { isEnd: true, result: 'bekapt' };
+    return { isEnd: false, nextQuestion: '541' };
   }
 
   if (questionId === '541') {

@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.74',
+    title: 'Spitsroute met oppervlakteretouche weer bereikbaar',
+    items: [
+      'De expert-spitsroute rond oppervlakteretouche valt nu niet meer te vroeg terug op de brede categorie bekapt',
+      'Vraag 540 loopt nu altijd door naar de eigen spits- en oppervlakteretoucheroute in plaats van bij nee abrupt te eindigen',
+      'Daardoor blijven routes naar typen met schachtdoorn en weerhaken, zoals dennenboompje en klokbekerspitsen, beter bereikbaar',
+    ],
+  },
+  {
     version: '2.2.73',
     title: 'Testinstructie weer verwijderd uit de app',
     items: [

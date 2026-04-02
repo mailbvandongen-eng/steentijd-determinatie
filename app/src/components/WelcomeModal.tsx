@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.74', date: '3 apr 2026', changes: ['De expert-spitsroute rond oppervlakteretouche valt nu niet meer te vroeg terug op de brede categorie bekapt', 'Vraag 540 loopt nu altijd door naar de eigen spits- en oppervlakteretoucheroute in plaats van bij nee abrupt te eindigen', 'Daardoor blijven routes naar typen met schachtdoorn en weerhaken, zoals dennenboompje en klokbekerspitsen, beter bereikbaar'] },
   { version: '2.2.73', date: '2 apr 2026', changes: ['De zichtbare testinstructie is weer verwijderd van het startscherm', 'Ook de aparte testbriefing in de infomodal is weggehaald', 'De app start daardoor weer rustiger en directer op'] },
   { version: '2.2.72', date: '2 apr 2026', changes: ['Bij het openen van de app staat nu meteen een korte testbriefing voor AWN-testers en andere proefgebruikers', 'De briefing legt uit wat je het best kunt testen en hoe je bruikbare feedback terugkoppelt', 'Daardoor hoeven testers niet eerst de infomodal te openen om goed te kunnen starten'] },
   { version: '2.2.71', date: '2 apr 2026', changes: ['Het resultaatscherm onderscheidt nu expliciet tussen specifieke type-uitkomsten, brede restcategorieën en echte twijfelgevallen', 'Generieke uitkomsten zoals doorboord artefact, geslepen stenen artefact, combinatiewerktuig en onbepaalde artefacten krijgen nu een duidelijke waarschuwingstekst', 'Daardoor wordt de uitkomst inhoudelijk eerlijker gepresenteerd en minder snel gelezen als een te hard subtype'] },
