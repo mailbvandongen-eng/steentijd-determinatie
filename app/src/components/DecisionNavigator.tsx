@@ -10,6 +10,7 @@ import {
   type DecisionTreeMode,
 } from '../lib/decisionTree';
 import { getHintForQuestion } from '../lib/aiAnalysis';
+import { getSourceHint } from '../lib/sourceHints';
 import type { DeterminationStep, UserLevel } from '../types';
 
 interface DecisionNavigatorProps {
@@ -38,7 +39,7 @@ export function DecisionNavigator({
   const [forwardHistory, setForwardHistory] = useState<string[]>([]);
   const [stepCount, setStepCount] = useState(1);
   const [hintsUsed, setHintsUsed] = useState(0);
-  const [currentHint, setCurrentHint] = useState<string | null>(null);
+  const [currentHint, setCurrentHint] = useState<{ text: string; sourceLabel: string; sourceRef?: string; pitfall?: string } | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
 
@@ -133,6 +134,19 @@ export function DecisionNavigator({
     setCurrentHint(null);
 
     try {
+      const sourceHint = getSourceHint(currentQuestionId);
+      if (sourceHint) {
+        const hintText = [sourceHint.short, sourceHint.detail].filter(Boolean).join(' ');
+        setCurrentHint({
+          text: hintText,
+          sourceLabel: 'Bronhint',
+          sourceRef: sourceHint.source,
+          pitfall: sourceHint.pitfall,
+        });
+        setHintsUsed((prev) => prev + 1);
+        return;
+      }
+
       const result = await getHintForQuestion(
         imageUrl,
         question.vraag,
@@ -141,7 +155,10 @@ export function DecisionNavigator({
       );
 
       if (result.success && result.hint) {
-        setCurrentHint(result.hint);
+        setCurrentHint({
+          text: result.hint,
+          sourceLabel: 'AI hint',
+        });
         setHintsUsed((prev) => prev + 1);
       } else {
         setHintError(result.error || 'Kon geen hint ophalen.');
@@ -213,6 +230,11 @@ export function DecisionNavigator({
           <h2 className="text-lg font-semibold text-stone-900 mb-2">
             {question.vraag}
           </h2>
+          {treeMode === 'expert' && (
+            <p className="text-xs text-stone-500 mb-2">
+              Bron: algoritme vraag {currentQuestionId}
+            </p>
+          )}
           {/* Toelichting: in beginner direct, in gevorderd pas na antwoord */}
           {question.toelichting && showToelichtingDirectly && (
             <p className="text-sm text-stone-600 bg-amber-50 p-2 rounded border-l-4 border-amber-400">
@@ -231,7 +253,7 @@ export function DecisionNavigator({
                 </svg>
               </div>
               <div className="flex-1">
-                <p className="text-xs font-semibold text-blue-700 mb-1">AI HINT</p>
+                <p className="text-xs font-semibold text-blue-700 mb-1">{currentHint?.sourceLabel ?? 'Hint'}</p>
                 {isLoadingHint && (
                   <div className="flex items-center gap-2 text-blue-600">
                     <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -245,7 +267,19 @@ export function DecisionNavigator({
                   <p className="text-sm text-red-600">{hintError}</p>
                 )}
                 {currentHint && (
-                  <p className="text-sm text-blue-900">{currentHint}</p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-blue-900">{currentHint.text}</p>
+                    {currentHint.pitfall && (
+                      <p className="text-xs text-blue-800">
+                        <span className="font-semibold">Valkuil:</span> {currentHint.pitfall}
+                      </p>
+                    )}
+                    {currentHint.sourceRef && (
+                      <p className="text-xs text-blue-700">
+                        <span className="font-semibold">Bron:</span> {currentHint.sourceRef}
+                      </p>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

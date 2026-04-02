@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.57', date: '2 apr 2026', changes: ['Een eerste bronhintlaag is toegevoegd voor sleutelvragen in beginner en expert, gebaseerd op algoritme en handleiding in plaats van vrije AI-uitleg', 'De vraagkaart in expert en het stappenoverzicht op het resultaatscherm tonen nu expliciet de bronvraag uit het algoritme', 'Hints gebruiken nu eerst een bronhint en alleen waar nog niets is vastgelegd eventueel een AI-hint als fallback'] },
   { version: '2.2.56', date: '2 apr 2026', changes: ['De expertboom heeft nu een inhoudelijke regressieset met 89 scenario’s verspreid over kernen, werktuigen, spitsen, bifacialen, geslepen artefacten en doorboorde typen', 'De expert-runtime-audit staat nu op 0 onbereikbare vragen en 0 runtimeproblemen, terwijl de uitgebreide testmatrix 89 van 89 scenario’s automatisch vindt', 'Een echte bronlacune is hersteld met vraag 137 voor driehoekige vuistbijlen, en de geslepen, doorboorde en kernroutes zijn verder inhoudelijk opengetrokken'] },
   { version: '2.2.55', date: '2 apr 2026', changes: ['Een grote volgende batch dolk- en stekervraagteksten gebruikt nu weer de letterlijke algoritmeformulering in plaats van afgebroken parserrestjes', 'De bronaudit daalt daardoor verder naar 406 issues en 229 vraagtekst-mismatches', 'Ook de parserfoutcategorie daalt mee naar 335, terwijl de routekoppen stabiel blijven op 66'] },
   { version: '2.2.54', date: '2 apr 2026', changes: ['Een eerste batch vroege vraagteksten in de dolkroute gebruikt nu weer de letterlijke formulering uit het algoritmedocument', 'De bronaudit daalt daardoor verder naar 428 issues en 251 vraagtekst-mismatches', 'Ook de parserfoutcategorie daalt mee naar 357, terwijl de routekoppen gelijk blijven op 66'] },
@@ -237,7 +238,7 @@ export function WelcomeModal({ onClose }: WelcomeModalProps) {
                   De app heeft drie niveaus: <strong>Beginner</strong>, <strong>Gevorderd</strong> en <strong>Expert</strong>.
                 </p>
                 <p>
-                  <strong>Als Beginner</strong> krijg je volledige hulp: AI-hints (max 3 per sessie), referentiefoto's bij elke vraag, en uitleg bij de beslisboom.
+                  <strong>Als Beginner</strong> krijg je volledige hulp: bronhints bij belangrijke vragen, referentiefoto&apos;s bij elke vraag, en uitleg bij de beslisboom. Alleen waar nog geen bronhint is vastgelegd kan een AI-hint als fallback worden gebruikt.
                 </p>
                 <p>
                   <strong>Hoe ontgrendel je Gevorderd?</strong>

@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.57',
+    title: 'Eerste bronhintlaag en expliciete bronverwijzingen toegevoegd',
+    items: [
+      'Een eerste bronhintlaag is toegevoegd voor sleutelvragen in beginner en expert, gebaseerd op algoritme en handleiding in plaats van vrije AI-uitleg',
+      'De vraagkaart in expert en het stappenoverzicht op het resultaatscherm tonen nu expliciet de bronvraag uit het algoritme',
+      'Hints gebruiken nu eerst een bronhint en alleen waar nog niets is vastgelegd eventueel een AI-hint als fallback',
+    ],
+  },
+  {
     version: '2.2.56',
     title: 'Expert-regressieset fors uitgebreid en boom inhoudelijk aangescherpt',
     items: [

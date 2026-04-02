@@ -551,6 +551,9 @@ export function ResultView({
                         </span>
                       </div>
                       <p className="mt-2 text-sm font-medium text-stone-900">{step.questionText}</p>
+                      <p className="mt-2 text-xs text-stone-500">
+                        Bron: algoritme vraag {step.questionId}
+                      </p>
                       {step.referenceImages.length > 0 && (
                         <p className="mt-2 text-xs text-stone-500">
                           Referentiebeelden: {step.referenceImages.join(', ')}
