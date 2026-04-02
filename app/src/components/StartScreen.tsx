@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.66',
+    title: 'Expert-regressieset nu ook op familie-overgangen aangescherpt',
+    items: [
+      'De expert-regressieset bewaakt nu ook verboden familie-overgangen voor werktuigen, spitsen, geslepen en doorboorde routes',
+      'De matrix controleert daarmee niet alleen of een pad bestaat, maar ook of een route niet onterecht in een andere artefactfamilie belandt',
+      'De aangescherpte matrix blijft daarbij op 89 van 89 scenario’s zonder verboden overgangen staan',
+    ],
+  },
+  {
     version: '2.2.65',
     title: 'Expert-kernroute rond vraag 30 en 31 hersteld',
     items: [

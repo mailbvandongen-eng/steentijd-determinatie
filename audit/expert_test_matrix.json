@@ -7,6 +7,13 @@
       "targetPrefixes": [
         "kern--levallois"
       ],
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--levallois--ongebruikt",
       "displayName": "Ongebruikte Levallois-kern",
@@ -107,6 +114,13 @@
       "label": "Kern: klingkern",
       "targetPrefixes": [
         "kern--kling"
+      ],
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
       ],
       "found": true,
       "endResult": "kern--kling",
@@ -217,6 +231,13 @@
       "targets": [
         "met-parallelle-afslagnegatieven-kern--kling--montbani",
         "kern--kling--montbani"
+      ],
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
       ],
       "found": true,
       "endResult": "met-parallelle-afslagnegatieven-kern--kling--montbani",
@@ -349,6 +370,13 @@
       "id": "kern_kombewa",
       "label": "Kern: Kombewa-kern",
       "target": "kern--kombewa",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--kombewa",
       "displayName": "Kombewa-kern",
@@ -440,6 +468,13 @@
       "id": "kern_quina",
       "label": "Kern: Quina-kern",
       "target": "kern--quina",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--quina",
       "displayName": "Quina-kern",
@@ -531,6 +566,13 @@
       "id": "kern_veelvlaks",
       "label": "Kern: veelvlakkige kern",
       "target": "kern--veelvlaks",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--veelvlaks",
       "displayName": "Veelvlakkige kern",
@@ -630,6 +672,13 @@
       "id": "kern_bipolair",
       "label": "Kern: bipolaire kern",
       "target": "kern--bipolair",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--bipolair",
       "displayName": "Bipolaire kern",
@@ -732,6 +781,13 @@
         "beide-zijden-licht-bol-een-kern--diskusvormig",
         "aan-beide-zijden-kern--diskusvormig"
       ],
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "aan-beide-zijden-kern--diskusvormig",
       "displayName": "Diskusvormige kern",
@@ -815,6 +871,13 @@
       "id": "kern_afslag_piramidaal",
       "label": "Kern: piramidale afslagkern",
       "target": "kern--afslag--piramida-al",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--afslag--piramida-al",
       "displayName": "Piramidale afslagkern",
@@ -914,6 +977,13 @@
       "id": "kern_lamelle",
       "label": "Kern: lamellenkern",
       "target": "kern--lamelle",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--lamelle",
       "displayName": "Lamellenkern",
@@ -1023,6 +1093,13 @@
       "targetPrefixes": [
         "kern--kielvormig",
         "een-kern--kielvormig"
+      ],
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
       ],
       "found": true,
       "endResult": "kern--kielvormig-ook-wel-aangeduid-als-kielvormige",
@@ -1139,6 +1216,13 @@
       "id": "kern_coincy",
       "label": "Kern: Coincy-klingkern",
       "target": "kern--kling--coincy",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--kling--coincy",
       "displayName": "Coincy-klingkern",
@@ -1270,6 +1354,13 @@
       "id": "kern_bidirectioneel",
       "label": "Kern: bidirectionele kern",
       "target": "kern--bidirectioneel",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--bidirectioneel",
       "displayName": "Bidirectionele kern",
@@ -1377,6 +1468,13 @@
       "id": "kern_bidirectioneel_kling",
       "label": "Kern: bidirectionele klingkern",
       "target": "kern--bidirectioneel--kling",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--bidirectioneel--kling",
       "displayName": "Bidirectionele klingkern",
@@ -1481,9 +1579,9 @@
           "questionId": "31",
           "question": "De twee slagvlakken liggen tegenover elkaar, z ijn de afslagnegatieven klingvormig?",
           "answer": "ja",
-          "nextQuestion": "32",
-          "result": null,
-          "formattedResult": null
+          "nextQuestion": null,
+          "result": "kern--bidirectioneel--kling",
+          "formattedResult": "Bidirectionele klingkern"
         }
       ],
       "matchedOn": "label"
@@ -1492,6 +1590,13 @@
       "id": "kern_bidirectioneel_afslag",
       "label": "Kern: bidirectionele afslagkern",
       "target": "kern--bidirectioneel--afslag",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--bidirectioneel--afslag",
       "displayName": "Bidirectionele afslagkern",
@@ -1596,9 +1701,9 @@
           "questionId": "31",
           "question": "De twee slagvlakken liggen tegenover elkaar, z ijn de afslagnegatieven klingvormig?",
           "answer": "nee",
-          "nextQuestion": "33",
-          "result": null,
-          "formattedResult": null
+          "nextQuestion": null,
+          "result": "kern--bidirectioneel--afslag",
+          "formattedResult": "Bidirectionele afslagkern"
         }
       ],
       "matchedOn": "label"
@@ -1607,6 +1712,13 @@
       "id": "kern_orthogonaal",
       "label": "Kern: orthogonale kern",
       "target": "kern--orthogon-aal",
+      "forbiddenPrefixes": [
+        "afslag",
+        "kling--",
+        "schrabber",
+        "steker",
+        "spits--"
+      ],
       "found": true,
       "endResult": "kern--orthogon-aal",
       "displayName": "Orthogonale kern",
@@ -1703,9 +1815,9 @@
           "questionId": "30",
           "question": "Liggen de slagvlakken tegenover elkaar?",
           "answer": "nee",
-          "nextQuestion": "32",
-          "result": null,
-          "formattedResult": null
+          "nextQuestion": null,
+          "result": "kern--orthogon-aal",
+          "formattedResult": "Orthogonale kern"
         }
       ],
       "matchedOn": "label"
@@ -1714,6 +1826,15 @@
       "id": "werktuig_rugmes",
       "label": "Kling/afslag: rugmes",
       "target": "rugmes",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "rugmes",
       "displayName": "Rugmes",
@@ -1761,23 +1882,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -1821,6 +1966,15 @@
       "id": "werktuig_schrabber",
       "label": "Kling/afslag: schrabber",
       "target": "schrabber",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "schrabber",
       "displayName": "Schrabber",
@@ -1868,23 +2022,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -1929,6 +2107,15 @@
       "label": "Kling/afslag: steker",
       "targetPrefixes": [
         "steker"
+      ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "steker--kern",
@@ -2013,6 +2200,15 @@
       "id": "werktuig_boor",
       "label": "Kling/afslag: boor",
       "target": "boor",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "boor",
       "displayName": "Boor",
@@ -2060,23 +2256,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -2170,6 +2390,15 @@
       "targetPrefixes": [
         "schrabber--kling"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "schrabber--kling",
       "displayName": "Kling-schrabber",
@@ -2217,23 +2446,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -2333,6 +2586,15 @@
       "id": "werktuig_stekerafslag",
       "label": "Kling/afslag: stekerafslag",
       "target": "stekerafslag",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "stekerafslag",
       "displayName": "Stekerafslag",
@@ -2380,23 +2642,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -2464,6 +2750,15 @@
       "id": "werktuig_lamelle",
       "label": "Kling/afslag: lamelle",
       "target": "lamelle",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "lamelle",
       "displayName": "Lamelle",
@@ -2511,23 +2806,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -2606,6 +2925,15 @@
         "grattoir--caréné-rabot-of-schrabber--kern",
         "schrabber--bootvormig"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "grattoir--caréné-rabot-of-schrabber--kern",
       "displayName": "Carene-grattoir / rabot / schrabberkern",
@@ -2653,23 +2981,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -2753,6 +3105,15 @@
       "id": "werktuig_schrabber_zij",
       "label": "Kling/afslag: zijschrabber",
       "target": "schrabber--zij",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "schrabber--zij",
       "displayName": "Zijschrabber",
@@ -2800,23 +3161,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -2916,6 +3301,15 @@
       "id": "werktuig_schrabber_duimnagel",
       "label": "Kling/afslag: duimnagelschrabber",
       "target": "schrabber--duimnagel",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "schrabber--duimnagel",
       "displayName": "Duimnagelschrapper",
@@ -2963,23 +3357,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -3050,6 +3468,15 @@
         "schrabber--bec-vormig",
         "schrabber--snuitvormig"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "schrabber--snuitvormig",
       "displayName": "Snuitvormige schrabber",
@@ -3097,23 +3524,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -3189,6 +3640,15 @@
       "id": "werktuig_steker_transversaal",
       "label": "Kling/afslag: transversale steker",
       "target": "steker--transversaal",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "steker--transversaal",
       "displayName": "Transversale steker",
@@ -3236,23 +3696,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -3352,6 +3836,15 @@
       "id": "werktuig_steker_noailles",
       "label": "Kling/afslag: Noailles-steker",
       "target": "steker--noailles",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "steker--noailles",
       "displayName": "Noailles-steker",
@@ -3399,23 +3892,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -3523,6 +4040,16 @@
       "id": "spits_bladspits",
       "label": "Spits: bladspits",
       "target": "spits--bladspits",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--blad",
       "displayName": "Bladspits",
@@ -3654,6 +4181,16 @@
       "id": "spits_tjonger",
       "label": "Spits: Tjongerspits",
       "target": "spits--tjonger",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--tjonger",
       "displayName": "Tjongerspits",
@@ -3701,23 +4238,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -3857,6 +4418,16 @@
       "id": "spits_bromme",
       "label": "Spits: Bromme-spits",
       "target": "spits--bromme",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--bromme",
       "displayName": "Bromme-spits",
@@ -3904,23 +4475,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -4044,6 +4639,16 @@
       "id": "spits_swidry",
       "label": "Spits: Swidry-spits",
       "target": "spits--swidry",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--swidry",
       "displayName": "Swidry-spits",
@@ -4091,23 +4696,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -4231,6 +4860,16 @@
       "id": "spits_font_robert",
       "label": "Spits: Font-Robert-spits",
       "target": "spits--font-robert",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--font-robert",
       "displayName": "Font-Robert-spits",
@@ -4278,23 +4917,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -4426,6 +5089,16 @@
       "id": "spits_hamburg_kerf",
       "label": "Spits: Hamburg-kerfspits",
       "target": "spits--kerf-hamburg",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--kerf-hamburg",
       "displayName": "Hamburg-kerfspits",
@@ -4473,23 +5146,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -4629,6 +5326,16 @@
       "id": "spits_lbk",
       "label": "Spits: LBK-spits",
       "target": "spits--lbk",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--lbk",
       "displayName": "LBK-spits",
@@ -4676,23 +5383,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -4816,6 +5547,16 @@
       "id": "spits_trapezium_breed",
       "label": "Spits: breed trapezium",
       "target": "spits--trapezium--breed",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--trapezium--breed-sub-typen-zijn-",
       "displayName": "Breed trapezium",
@@ -4863,23 +5604,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -5027,6 +5792,16 @@
       "id": "spits_trapezium_smal",
       "label": "Spits: smal trapezium",
       "target": "spits--trapezium--smal",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--trapezium--smal-sub-typen-zijn",
       "displayName": "Smal trapezium",
@@ -5074,23 +5849,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -5246,6 +6045,16 @@
       "id": "spits_transversaal",
       "label": "Spits: transversaalspits",
       "target": "spits--transversaal",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--transversaal-transversaal-dus",
       "displayName": "Transversaalspits",
@@ -5293,23 +6102,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -5449,6 +6282,16 @@
       "id": "spits_azilien",
       "label": "Spits: Azilien-spits",
       "target": "spits--azilien",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--azilien",
       "displayName": "Azilien-spits",
@@ -5496,23 +6339,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -5644,6 +6511,16 @@
       "id": "spits_sauveterre",
       "label": "Spits: Sauveterre-spits",
       "target": "spits--sauveterre",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--sauveterre",
       "displayName": "Sauveterre-spits",
@@ -5691,23 +6568,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -5831,6 +6732,16 @@
       "id": "spits_naaldvormig",
       "label": "Spits: naaldvormige spits",
       "target": "spits--naaldvormig",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--naaldvormig",
       "displayName": "Naaldvormige spits",
@@ -5878,23 +6789,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -6026,6 +6961,16 @@
       "id": "spits_havelter",
       "label": "Spits: Havelter-steelspits",
       "target": "spits--havelter-steelspits",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--havelter-steelspits",
       "displayName": "Havelter-steelspits",
@@ -6073,23 +7018,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -6205,6 +7174,16 @@
       "id": "spits_zonhoven",
       "label": "Spits: Zonhovenspits",
       "target": "spits--zonhoven",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
       "found": true,
       "endResult": "spits--zonhoven",
       "displayName": "Zonhoven-spits",
@@ -6252,23 +7231,47 @@
         {
           "questionId": "7",
           "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
           "answer": "nee",
-          "nextQuestion": "9a",
+          "nextQuestion": "35",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "9a",
-          "question": "Vertoont de brok of vorstsplijting 1 of 2 afs lagnegatieven ?",
-          "answer": "ja",
-          "nextQuestion": "32",
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
           "result": null,
           "formattedResult": null
         },
         {
-          "questionId": "32",
-          "question": "Is de brok , vorstsplijting  of kern  mogelijk gemodificeerd ?",
-          "answer": "ja",
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
           "nextQuestion": "40",
           "result": null,
           "formattedResult": null
@@ -9624,6 +10627,15 @@
         "bijl-smaltoppig",
         "bijl-buren"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-met-ronde--dwarsdoorsnede",
       "displayName": "Stenen bijl met ronde dwarsdoorsnede",
@@ -9684,6 +10696,15 @@
       "label": "Geslepen: beitel",
       "targetPrefixes": [
         "beitel"
+      ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
       ],
       "found": true,
       "endResult": "beitel-smaller-dan-29-cm",
@@ -9752,6 +10773,15 @@
       "id": "geslepen_vlakbijl_klokvormig",
       "label": "Geslepen: klokvormige vlakbijl",
       "target": "bijl-vlakbijl--klokvormig",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-vlakbijl--klokvormig",
       "displayName": "Klokvormige vuurstenen vlakbijl",
@@ -9843,6 +10873,15 @@
       "id": "geslepen_vlakbijl_trapezium",
       "label": "Geslepen: trapeziumvormige vlakbijl",
       "target": "bijl-vlakbijl--trapeziumvormig",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-vlakbijl--trapeziumvormig",
       "displayName": "Trapeziumvormige vuurstenen vlakbijl",
@@ -9942,6 +10981,15 @@
       "id": "geslepen_vlakbijl_rechthoekig",
       "label": "Geslepen: rechthoekige vlakbijl",
       "target": "bijl-vlakbijl--rechthoekig",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-vlakbijl--rechthoekig",
       "displayName": "Rechthoekige vuurstenen vlakbijl",
@@ -10041,6 +11089,15 @@
       "id": "geslepen_bijl_buren",
       "label": "Geslepen: Buren-bijl",
       "target": "bijl-buren",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-buren",
       "displayName": "Buren-bijl",
@@ -10174,6 +11231,15 @@
       "targetPrefixes": [
         "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig",
       "displayName": "Dikbladige vuurstenen bijl met rechthoekige dwarsdoorsnede",
@@ -10298,6 +11364,15 @@
       "label": "Geslepen: dunbladige vuurstenen bijl",
       "targetPrefixes": [
         "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig"
+      ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
       ],
       "found": true,
       "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig",
@@ -10432,6 +11507,15 @@
       "targetPrefixes": [
         "bijl-dissel"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "bijl-dissel--met-gat-haaks--op-de-snede",
       "displayName": "Schoenleest-bijl met gat haaks op de snede",
@@ -10483,6 +11567,15 @@
       "id": "geslepen_gutsbeitel",
       "label": "Geslepen: gutsbeitel",
       "target": "beitel--guts",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "beitel--guts",
       "displayName": "Gutsbeitel",
@@ -10566,6 +11659,15 @@
       "id": "geslepen_disselbeitel",
       "label": "Geslepen: disselbeitel",
       "target": "beitel--dissel",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "beitel--dissel",
       "displayName": "Disselbeitel",
@@ -10649,6 +11751,15 @@
       "id": "geslepen_puntbeitel",
       "label": "Geslepen: puntbeitel",
       "target": "beitel--punt",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--"
+      ],
       "found": true,
       "endResult": "beitel--punt",
       "displayName": "Puntbeitel",
@@ -10741,6 +11852,16 @@
       "label": "Doorboord: hamerbijl",
       "targetPrefixes": [
         "bijl-hamer"
+      ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
       ],
       "found": true,
       "endResult": "bijl-hamer",
@@ -10835,6 +11956,16 @@
       "targetPrefixes": [
         "bijl-dubbel"
       ],
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-dubbel",
       "displayName": "Dubbelbijl",
@@ -10918,6 +12049,16 @@
       "id": "doorboord_rolsteen",
       "label": "Doorboord: rolsteen",
       "target": "doorboorde--rolsteen",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "doorboorde--rolsteen",
       "displayName": "Doorboorde rolsteen",
@@ -10961,6 +12102,16 @@
       "id": "doorboord_schijfsteen",
       "label": "Doorboord: schijfvormige steen",
       "target": "doorboorde--schijfvormige--steen",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "doorboorde--schijfvormige--steen",
       "displayName": "Doorboorde schijfvormige steen",
@@ -11004,6 +12155,16 @@
       "id": "doorboord_breedwig",
       "label": "Doorboord: breedwig",
       "target": "doorboorde--breedwig",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "doorboorde--breedwig",
       "displayName": "Doorboorde breedwig",
@@ -11071,6 +12232,16 @@
       "id": "doorboord_schoenleestwig",
       "label": "Doorboord: schoenleestwig",
       "target": "bijl-dissel--doorboord",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-dissel--doorboord",
       "displayName": "Doorboorde schoenleestwig",
@@ -11130,6 +12301,16 @@
       "id": "doorboord_dubbelbijl_a",
       "label": "Doorboord: dubbelbijl type A",
       "target": "bijl-dubbel--type-a",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-dubbel--type-a",
       "displayName": "Dubbelbijl type A",
@@ -11221,6 +12402,16 @@
       "id": "doorboord_dubbelbijl_b",
       "label": "Doorboord: dubbelbijl type B",
       "target": "bijl-dubbel--type-b",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-dubbel--type-b",
       "displayName": "Dubbelbijl type B",
@@ -11320,6 +12511,16 @@
       "id": "doorboord_dubbelbijl_c",
       "label": "Doorboord: dubbelbijl type C",
       "target": "bijl-dubbel--type-c",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-dubbel--type-c",
       "displayName": "Dubbelbijl type C",
@@ -11427,6 +12628,16 @@
       "id": "doorboord_hamerbijl_knop",
       "label": "Doorboord: knop-hamerbijl",
       "target": "bijl-hamer--knop",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-hamer--knop",
       "displayName": "Knop-hamerbijl",
@@ -11534,6 +12745,16 @@
       "id": "doorboord_hamerbijl_type_g",
       "label": "Doorboord: hamerbijl type G",
       "target": "bijl-hamer--type-g",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-hamer--type-g",
       "displayName": "Hamerbijl type G",
@@ -11657,6 +12878,16 @@
       "id": "doorboord_hamerbijl_type_k",
       "label": "Doorboord: hamerbijl type K",
       "target": "bijl-hamer--type-k",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-hamer--type-k",
       "displayName": "Hamerbijl type K",
@@ -11796,6 +13027,16 @@
       "id": "doorboord_hamerbijl_type_l",
       "label": "Doorboord: hamerbijl type L",
       "target": "bijl-hamer--type-l",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-hamer--type-l",
       "displayName": "Hamerbijl type L",
@@ -11935,6 +13176,16 @@
       "id": "doorboord_hamerbijl_type_ba",
       "label": "Doorboord: hamerbijl type Ba",
       "target": "bijl-hamer--type-ba",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel"
+      ],
       "found": true,
       "endResult": "bijl-hamer--type-ba",
       "displayName": "Hamerbijl type Ba",
