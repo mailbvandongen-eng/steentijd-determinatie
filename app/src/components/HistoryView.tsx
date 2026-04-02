@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Search, ChevronLeft, ChevronRight, Trash2, Image, List, Map, MapPin, RotateCcw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getAllSessions, deleteSession, updateSession } from '../lib/db';
-import type { DeterminationSession, VondstLocatie } from '../types';
+import type { DeterminationSession, UserLevel, VondstLocatie } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { HistoryMap } from './HistoryMap';
 import { LocationPickerModal } from './LocationPickerModal';
@@ -81,6 +81,9 @@ export function HistoryView({ onBack, onSelectSession, onResume }: HistoryViewPr
       minute: '2-digit',
     });
   };
+
+  const formatLevelLabel = (level: UserLevel) =>
+    level === 'expert' ? 'Expert' : level === 'gevorderd' ? 'Gevorderd' : 'Beginner';
 
   return (
     <div className="h-full flex flex-col overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
@@ -250,6 +253,21 @@ export function HistoryView({ onBack, onSelectSession, onResume }: HistoryViewPr
                       >
                         {sourceInfo.summary}
                       </p>
+                    )}
+                    {isCompleted && session.quickStart && (
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700">
+                          Snelle instap: {session.quickStart.familyLabel}
+                        </span>
+                        <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs text-stone-600">
+                          {formatLevelLabel(session.quickStart.targetLevel)}
+                        </span>
+                        {!session.quickStart.used && (
+                          <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700">
+                            Volledige route
+                          </span>
+                        )}
+                      </div>
                     )}
                     {isCompleted && session.result?.confidence && (
                       <p className={`text-xs ${

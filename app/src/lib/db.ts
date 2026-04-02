@@ -29,12 +29,16 @@ db.version(3).stores({
 export { db };
 
 // Helper functies
-export async function createSession(input: DeterminationSession['input']): Promise<number> {
+export async function createSession(
+  input: DeterminationSession['input'],
+  initialData: Partial<DeterminationSession> = {}
+): Promise<number> {
   const now = new Date().toISOString();
   const id = await db.sessions.add({
     createdAt: now,
     updatedAt: now,
     status: 'in_progress',
+    ...initialData,
     input,
     steps: [],
     synced: false,

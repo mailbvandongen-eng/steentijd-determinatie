@@ -17,7 +17,7 @@ import { createSession, completeSession, getSession } from './lib/db';
 import { joinTrainingSession, submitDetermination } from './lib/trainingSession';
 import { blobToBase64, checkQuickStartPlausibility } from './lib/aiAnalysis';
 import { useAuth } from './contexts/AuthContext';
-import type { DeterminationSession, LabeledImage, DeterminationStep, UserLevel } from './types';
+import type { DeterminationSession, LabeledImage, DeterminationStep, QuickStartSessionInfo, UserLevel } from './types';
 import { getContinuationOption, isContinuationActive, type ContinuationOption } from './lib/awnProgression';
 import type { DecisionTreeMode } from './lib/decisionTree';
 import {
@@ -29,7 +29,7 @@ import {
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer' | 'quickstart-review';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.81';
+const APP_VERSION = '2.2.82';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -208,6 +208,7 @@ function App() {
     options?: {
       continuation?: ContinuationState | null;
       level?: UserLevel;
+      quickStart?: QuickStartSessionInfo;
     }
   ) => {
     const sessionId = await createSession({
@@ -217,6 +218,10 @@ function App() {
       images: data.images,
       videoBlob: data.videoBlob,
       locatie: data.locatie,
+    }, {
+      level: options?.level ?? sessionLevel,
+      isSandbox: sessionIsSandbox,
+      quickStart: options?.quickStart,
     });
     setCurrentSessionId(sessionId);
     setCapturedData(data);
@@ -229,7 +234,7 @@ function App() {
     }
     setShouldAutoValidateResult(false);
     setView('decision');
-  }, []);
+  }, [sessionIsSandbox, sessionLevel]);
 
   // Capture handler
   const handleCapture = useCallback(async (data: CapturedData) => {
@@ -435,8 +440,21 @@ function App() {
     if (!capturedData || !quickStartState) return;
 
     const continuation = getQuickStartContinuation(quickStartState.family, quickStartState.targetLevel);
+    const definition = getQuickStartDefinition(quickStartState.family);
+    const quickStartMeta: QuickStartSessionInfo = {
+      family: quickStartState.family,
+      familyLabel: definition?.label ?? quickStartState.family,
+      targetLevel: quickStartState.targetLevel,
+      verdict: quickStartState.verdict,
+      feedback: quickStartState.feedback,
+      used: Boolean(continuation),
+    };
+
     if (!continuation) {
-      await startDecisionSession(capturedData);
+      await startDecisionSession(capturedData, {
+        level: quickStartState.targetLevel,
+        quickStart: quickStartMeta,
+      });
       setQuickStartState(null);
       return;
     }
@@ -448,15 +466,27 @@ function App() {
         startQuestionId: continuation.startQuestionId,
       },
       level: continuation.targetLevel,
+      quickStart: quickStartMeta,
     });
     setQuickStartState(null);
   }, [capturedData, quickStartState, startDecisionSession]);
 
   const handleUseFullRoute = useCallback(async () => {
-    if (!capturedData) return;
-    await startDecisionSession(capturedData, { level: sessionLevel });
+    if (!capturedData || !quickStartState) return;
+    const definition = getQuickStartDefinition(quickStartState.family);
+    await startDecisionSession(capturedData, {
+      level: quickStartState.targetLevel,
+      quickStart: {
+        family: quickStartState.family,
+        familyLabel: definition?.label ?? quickStartState.family,
+        targetLevel: quickStartState.targetLevel,
+        verdict: quickStartState.verdict,
+        feedback: quickStartState.feedback,
+        used: false,
+      },
+    });
     setQuickStartState(null);
-  }, [capturedData, startDecisionSession, sessionLevel]);
+  }, [capturedData, quickStartState, startDecisionSession]);
 
   const handleBackFromQuickStartReview = useCallback(() => {
     setView('capture');

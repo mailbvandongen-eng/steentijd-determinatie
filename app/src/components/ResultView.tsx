@@ -60,10 +60,12 @@ export function ResultView({
   shouldAutoValidate = false,
 }: ResultViewProps) {
   const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
+  const formatLevelLabel = (value: UserLevel) => value === 'expert' ? 'Expert' : value === 'gevorderd' ? 'Gevorderd' : 'Beginner';
   const continuationTargetLabel = continuationOption?.targetLevel === 'expert' ? 'Expert' : 'Gevorderd';
   const effectiveResultType = session.result?.sourceResultType ?? session.result?.type ?? null;
   const sourceResultInfo = getSourceResultInfo(effectiveResultType);
   const resultSpecificity = getResultSpecificityInfo(effectiveResultType);
+  const quickStartInfo = session.quickStart;
   const continuationNotice = !continuationOption && session.result?.sourceResultType
     ? getContinuationNotice(session.result.sourceResultType, level)
     : !continuationOption && session.result?.type
@@ -465,6 +467,23 @@ export function ResultView({
             <p className="text-2xl font-bold text-amber-700">
               {session.result ? formatTypeName(session.result.type) : 'Onbekend'}
             </p>
+
+            {quickStartInfo && (
+              <div className="mt-3 rounded-xl border border-violet-200 bg-violet-50 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-violet-700">Snelle instap</p>
+                <p className="mt-1 text-sm text-stone-800">
+                  Gestart vanuit <span className="font-semibold">{quickStartInfo.familyLabel}</span> op {formatLevelLabel(quickStartInfo.targetLevel)}.
+                </p>
+                <p className="mt-1 text-sm text-stone-700">
+                  {quickStartInfo.used ? 'Verkorte route gebruikt.' : 'Na de check is alsnog de volledige route gebruikt.'}
+                </p>
+                {quickStartInfo.verdict && (
+                  <p className="mt-2 text-xs text-stone-500">
+                    AI-oordeel: {quickStartInfo.verdict}
+                  </p>
+                )}
+              </div>
+            )}
 
             {resultSpecificity && resultSpecificity.kind !== 'specific' && (
               <div className={`mt-3 rounded-xl border p-3 ${

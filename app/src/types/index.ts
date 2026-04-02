@@ -34,6 +34,15 @@ export interface VondstLocatie {
   naam?: string; // Optionele plaatsnaam
 }
 
+export interface QuickStartSessionInfo {
+  family: string;
+  familyLabel: string;
+  targetLevel: UserLevel;
+  verdict?: 'plausibel' | 'twijfelachtig' | 'onwaarschijnlijk' | null;
+  feedback?: string | null;
+  used: boolean;
+}
+
 export interface DeterminationSession {
   id?: number;
   createdAt: string;
@@ -44,6 +53,7 @@ export interface DeterminationSession {
   level?: UserLevel;          // Op welk niveau gespeeld
   isSandbox?: boolean;        // Vrij spelen (telt niet mee)
   hintsUsed?: number;         // Aantal hints gebruikt
+  quickStart?: QuickStartSessionInfo;
 
   input: {
     type: 'photo' | 'video' | 'multi-photo';

@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.82',
+    title: 'Snelle instap nu ook zichtbaar in resultaat en geschiedenis',
+    items: [
+      'Sessies slaan nu op vanuit welke snelle-instapfamilie je bent gestart en of je daarna de verkorte of volledige route gebruikte',
+      'Die herkomst is nu zichtbaar op het resultaatscherm en in de vondstgeschiedenis, zodat testfeedback beter te reconstrueren is',
+      'Ook sync neemt deze quick-start herkomst nu mee tussen apparaten',
+    ],
+  },
+  {
     version: '2.2.81',
     title: 'Snelle instap toont nu ook subtype-verwachting',
     items: [

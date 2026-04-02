@@ -103,6 +103,7 @@ async function uploadSessions(userId: string): Promise<{ uploaded: number; error
         resultDescription: session.result?.description || null,
         aiValidationVerdict: session.aiValidation?.verdict || null,
         aiValidationFeedback: session.aiValidation?.feedback || null,
+        quickStart: session.quickStart || null,
         syncedAt: new Date().toISOString(),
       };
 
@@ -225,6 +226,7 @@ async function downloadSessions(userId: string): Promise<{ downloaded: number; e
             verdict: data.aiValidationVerdict,
             feedback: data.aiValidationFeedback || '',
           } : undefined,
+          quickStart: data.quickStart || undefined,
           synced: true,
           cloudId: cloudId,
           lastSyncedAt: new Date().toISOString(),
