@@ -19,7 +19,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { LevelSelector } from './LevelSelector';
 import { ProgressBar } from './ProgressBar';
 import type { UserLevel } from '../types';
-import { getQuickStartDefinitionsForLevel, type QuickStartFamily } from '../lib/quickStart';
+import {
+  getQuickStartDefinitionsForLevel,
+  type QuickStartCategory,
+  type QuickStartFamily,
+} from '../lib/quickStart';
 
 interface StartScreenProps {
   onStartPractice: (level: UserLevel, isSandbox: boolean) => void;
@@ -34,6 +38,15 @@ interface StartScreenProps {
 }
 
 const CHANGELOG = [
+  {
+    version: '2.2.76',
+    title: 'Snelle instap uitgebreid naar alle stabiele families',
+    items: [
+      'De snelle instap dekt nu alle artefactfamilies af waarvoor in de app al een stabiel instappunt bestaat, van kernen en kernwerktuigen tot geslepen en doorboorde typen',
+      'Expertgebruikers kunnen nu ook direct starten in families zoals Levallois-kern, diskusvormige kern, geretoucheerde afslag, boor of priem en hamerbijl',
+      'De keuzelijst is nu gegroepeerd per categorie zodat de grotere familieset nog bruikbaar en scanbaar blijft',
+    ],
+  },
   {
     version: '2.2.75',
     title: 'Snelle instap toegevoegd voor gevorderd en expert',
@@ -763,6 +776,23 @@ export function StartScreen({
   const [showQuickStart, setShowQuickStart] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const quickStartDefinitions = getQuickStartDefinitionsForLevel(currentLevel);
+  const quickStartGroups = quickStartDefinitions.reduce<Record<QuickStartCategory, typeof quickStartDefinitions>>(
+    (groups, definition) => {
+      if (!groups[definition.category]) {
+        groups[definition.category] = [];
+      }
+      groups[definition.category].push(definition);
+      return groups;
+    },
+    {
+      Kernen: [],
+      'Afslag en kling': [],
+      Kernwerktuigen: [],
+      Bifaciaal: [],
+      Geslepen: [],
+      Doorboord: [],
+    }
+  );
 
   const handleJoinTraining = () => {
     if (!sessionCode.trim()) { setError('Vul een sessiecode in'); return; }
@@ -945,16 +975,25 @@ export function StartScreen({
                     <p className="text-xs text-stone-600">
                       Kies een vermoedelijke artefactfamilie. De AI controleert daarna alleen of deze instap plausibel is.
                     </p>
-                    {quickStartDefinitions.map((definition) => (
-                      <button
-                        key={definition.id}
-                        onClick={() => onStartQuickStart(currentLevel, definition.id)}
-                        className="w-full rounded-xl border border-stone-200 px-3 py-3 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
-                      >
-                        <p className="text-sm font-semibold text-stone-800">{definition.label}</p>
-                        <p className="mt-1 text-xs text-stone-500">{definition.description}</p>
-                      </button>
-                    ))}
+                    {Object.entries(quickStartGroups).map(([category, definitions]) =>
+                      definitions.length > 0 ? (
+                        <div key={category} className="space-y-2 pt-1">
+                          <p className="text-[11px] font-semibold uppercase tracking-wide text-stone-500">
+                            {category}
+                          </p>
+                          {definitions.map((definition) => (
+                            <button
+                              key={definition.id}
+                              onClick={() => onStartQuickStart(currentLevel, definition.id)}
+                              className="w-full rounded-xl border border-stone-200 px-3 py-3 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                            >
+                              <p className="text-sm font-semibold text-stone-800">{definition.label}</p>
+                              <p className="mt-1 text-xs text-stone-500">{definition.description}</p>
+                            </button>
+                          ))}
+                        </div>
+                      ) : null
+                    )}
                   </div>
                 )}
               </>
