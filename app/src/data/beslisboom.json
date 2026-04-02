@@ -580,12 +580,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "128": {
-    "vraag": "Heeft het artefact min of meer een bijlvorm, is het niet geslepen en is de snede gemaakt door retouche of bekapping haaks op de snede?",
+    "vraag": "Heeft het artefact min of meer een bijlvorm maar is het niet geslepen en is de snede gemaakt door retouche of bekapping haaks op de snede?",
     "ja": "breed-te29-cm--halffabricaat--bijl",
     "nee": "meer-een-beitel-vorm--breedte29-cm"
   },
   "129": {
-    "vraag": "Heeft het artefact een min of meer vierkante dwarsdoorsnede, maar is het niet geslepen?",
+    "vraag": "Heeft het artefact een min of meer vierkante dwarsdoorsnede maar is het niet geslepen?",
     "ja": "halffabricaat--beitel",
     "nee": "terug-artefactgroepen-start"
   },
@@ -595,7 +595,7 @@
     "nee": "met-een-evt-afgeronde-punt"
   },
   "130": {
-    "vraag": "Is het artefact aan slechts een vlakke zijde bewerkt of gemaakt van een afslag?",
+    "vraag": "Is het artefact aan slechts één vlakke zijde bewerkt of gemaakt van een afslag?",
     "ja": "uniface",
     "nee": "het-is-een-vuistbijl-of-bladvorm"
   },
@@ -610,7 +610,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "132b": {
-    "vraag": "Is de vuistbijl grof bewerkt en heeft zij het uiterlijk van een kern?",
+    "vraag": "Is de vuistbijl grof bewerkt en heeft het het uiterlijk van een kern?",
     "ja": "vuistbijl--kernvormig",
     "nee": "zorgvuldiger-bewerkt"
   },
@@ -625,12 +625,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "134": {
-    "vraag": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij grof bewerkt?",
+    "vraag": "Is de vuistbijl langwerpig en heeft die concave zijden, grof bewerkt?",
     "ja": "vuistbijl--ficron",
     "nee": "fijner-bewerkt"
   },
   "135": {
-    "vraag": "Is de vuistbijl langwerpig, heeft zij concave zijden en is zij fijner bewerkt dan de ficron en lancetvormige vuistbijl?",
+    "vraag": "Is de vuistbijl langwerpig en heeft die concave zijden en is die fijner bewerkt dan de ficron en lancetvormige vuistbijl?",
     "ja": "vuistbijl--micoque",
     "nee": "terug-artefactgroepen-start"
   },
@@ -640,9 +640,14 @@
     "nee": "vuistbijl--flesvormig"
   },
   "136": {
-    "vraag": "Heeft de vuistbijl een afgeronde punt en is zij relatief dun, met breedte groter dan 2,35 keer de dikte?",
+    "vraag": "Heeft de vuistbijl een afgeronde punt en is de vuistbijl relatief dun, breedte > 2,35 x dikte?",
     "ja": "niet-heel-klein-of-dun",
     "nee": "heel-klein--6-cm-of-heel-dun"
+  },
+  "137": {
+    "vraag": "Heeft d e vuistbijl een driehoekig vorm, met rechte tot licht convexe of concave zijden en rechte, scherpe basis?",
+    "ja": "vuistbijl--driehoekig",
+    "nee": "terug-artefactgroepen-start"
   },
   "137a": {
     "vraag": "Is devuistbijl wel driehoekig maar langwerpig driehoekig ?",
@@ -650,7 +655,7 @@
     "nee": "onregelmatig-driehoekig-vuistbijl--sub-driehoekig"
   },
   "138": {
-    "vraag": "Heeft de vuistbijl een hartvormige vorm, met zeer convexe zijden, ronde basis en enigszins ronde punt?",
+    "vraag": "Heeft de vuistbijl een hartvormige vorm, met zeer convexe zijden en ronde basis en enigszins ronde punt?",
     "ja": "vuistbijl--hartvormig",
     "nee": "terug-artefactgroepen-start"
   },
@@ -660,12 +665,12 @@
     "nee": "onregelmatig-driehoekig-vuistbijl--sub-hartvorm-ig"
   },
   "139": {
-    "vraag": "Heeft de gedrongen vuistbijl een driehoekige ogiefvorm met convexe zijden en enigszins convexe basis?",
+    "vraag": "Heeft de gedrongen vuistbijl een driehoekig ogiefvormige vorm met convexe zijden en enigszins convexe basis?",
     "ja": "vuistbijl--bout--coupé",
     "nee": "terug-artefactgroepen-start"
   },
   "140": {
-    "vraag": "Heeft de vuistbijl een korte snede, soms in de vorm van een tranchet-snede?",
+    "vraag": "Heeft de vuistbijl een korte snede soms in de vorm van een tranchet-snede?",
     "ja": "vuistbijl--met-korte--snede",
     "nee": "terug-artefactgroepen-start"
   },
@@ -675,17 +680,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "142": {
-    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm langgerekt ovaal, met lengte groter dan 1,5 keer de breedte?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm langgerekt ovaal, lengte > 1,5 x breedte?",
     "ja": "vuistbijl--limande",
     "nee": "terug-artefactgroepen-start"
   },
   "143": {
-    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm ovaal, met lengte kleiner dan 1,5 keer de breedte?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm ovaal, lengte < 1,5 x breedte?",
     "ja": "vuistbijl--ovaal",
     "nee": "terug-artefactgroepen-start"
   },
   "144": {
-    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en is de vorm rond?",
+    "vraag": "Heeft de vuistbijl een ronde, min of meer onduidelijke punt en de vorm is rond?",
     "ja": "vuistbijl--rond-og-vuistbijl--disque",
     "nee": "terug-artefactgroepen-start"
   },
@@ -700,17 +705,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "147": {
-    "vraag": "Is het artefact bladvormig, lijkt het op een vuistbijl maar is het vaak dunner en zonder dikke rug?",
+    "vraag": "Is het artefact bladvormig, lijkt het op een vuistbijl maar is het vaak dunner, zonder dikke rug?",
     "ja": "vuistbijl--faustkeilblatt",
     "nee": "terug-artefactgroepen-start"
   },
   "148": {
-    "vraag": "Is het artefact bifaciaal bewerkt met fijnere bewerking aan een lange zijde?",
+    "vraag": "Is het artefact bifaciaal bewerkt met fijnere bewerking aan één lange zijde?",
     "ja": "schaaf--blad",
     "nee": "terug-artefactgroepen-start"
   },
   "149": {
-    "vraag": "Is het artefact bifaciaal bewerkt, bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?",
+    "vraag": "Is het artefact bifaciaal bewerkt en bladvormig en dun vergeleken met een vuistbijl en Faustkeilblatt?",
     "ja": "spits--blad",
     "nee": "terug-artefactgroepen-start"
   },
@@ -731,7 +736,7 @@
   },
   "155": {
     "vraag": "Is de dolk gemaakt van een kling en aan één oppervlak bewerkt?",
-    "ja": "een-oppervlak-bewerkt",
+    "ja": "oppervlak-bewerkt",
     "nee": "aan-beide-oppervlakken"
   },
   "156": {
@@ -742,7 +747,7 @@
   "157": {
     "vraag": "Is de bewerking  regelmatig  met vlakke rand retouche ?",
     "ja": "dolk--grand--pressigny",
-    "nee": "onregelmatig-dolk--kling--met-volledige--"
+    "nee": "onregelmatig-dolk--kling--met-volledige-retouche"
   },
   "158": {
     "vraag": "Is de dolk aan beide  oppervlakken  fijn bewerkt?",
@@ -830,37 +835,37 @@
     "nee": "terug-artefactgroepen-start"
   },
   "176": {
-    "vraag": "breedst in het midden ?",
+    "vraag": "Heeft de dolk een d ik handvat, rombisch in doorsnede, breder naar de basis, met vier pseudo gietnaden, en is het blad het breedst in het midden?",
     "ja": "dolk--scandinavisch--type-iva",
     "nee": "terug-artefactgroepen-start"
   },
   "177": {
-    "vraag": "nabij handvat ?",
+    "vraag": "Heeft de dolk een dik handvat, rombisch in doorsnede, breder naar de basis , vier pseudo gietnaden, en is het blad het breedst nabij handvat?",
     "ja": "dolk--scandinavisch--type-ivb",
     "nee": "terug-artefactgroepen-start"
   },
   "178": {
-    "vraag": "handvat ?",
+    "vraag": "Heeft de dolk een d ik handvat, rombisch in doorsnede, gelijke doorsnede over grootste deel lengte , pseudo gietnaden aan voor- en achterzijde, relatief breed blad het breedst nabij handvat?",
     "ja": "dolk--scandinavisch--type-ivc",
     "nee": "terug-artefactgroepen-start"
   },
   "179": {
-    "vraag": "grootste breedte nabij handvat ?",
+    "vraag": "Heeft de dolk een dunner handvat driehoekig met afgeronde achterzijde in doorsnede, pseudo -gietnaad alleen aan de voorzijde , relatief breed afgerond driehoekig blad in aanzicht, grootste breedte nabij handvat?",
     "ja": "dolk--scandinavisch--type-ivd",
     "nee": "terug-artefactgroepen-start"
   },
   "180": {
-    "vraag": "driehoekig blad in aanzicht, grootste breedte  nabij handvat ?",
+    "vraag": "Heeft de dolk een d unner handvat driehoekig met afgeronde of vlakke achterzijde in doorsnede, pseudo -gietnaad alleen aan de voorzijde, vergeleken met type IVD smaller , afgerond driehoekig blad in aanzicht, grootste breedte nabij handvat?",
     "ja": "dolk--scandinavisch--type-ive",
     "nee": "terug-artefactgroepen-start"
   },
   "181": {
-    "vraag": "vlakken parallel aan blad  met vier pseudo gietnaden ?",
+    "vraag": "Heeft de dolk een h andvat rechthoekig in doorsnede, grootste vlakken parallel aan blad met vier pseudo gietnaden?",
     "ja": "dolk--scandinavisch--type-ivf",
     "nee": "terug-artefactgroepen-start"
   },
   "182": {
-    "vraag": "behalve soms aan de basis ?",
+    "vraag": "Heeft de dolk een h andvat lensvormig tot licht rombisch in doorsnede breder naar de basis geen pseudo gietnaden behalve soms aan de basis?",
     "ja": "dolk-scandinavisch--type-v",
     "nee": "terug-artefactgroepen-start"
   },
@@ -875,13 +880,13 @@
     "nee": "terug-artefactgroepen-start"
   },
   "185": {
-    "vraag": "tot ovale doorsnede , niet breed uitlopend naar het einde?",
+    "vraag": "Heeft het handvat met rechte, parallelle zijden en lensvormige tot ovale doorsnede , niet breed uitlopend naar het einde?",
     "ja": "dolk--scandinavisch--type-vi",
     "nee": "dolk--scandinavisch"
   },
   "186": {
     "vraag": "Is het h andvat dikker dan blad ?",
-    "ja": "dolk--scandinavisch---type-via",
+    "ja": "dolk--scandinavisch--type-via",
     "nee": "terug-artefactgroepen-start"
   },
   "187": {
@@ -931,12 +936,12 @@
   },
   "196": {
     "vraag": "Heeft de Oost -Europese dolk een bladvormig lemmet en duidelijk uitgeretoucheerd handvat?",
-    "ja": "een-breed-lemmet-dolk--oost-europees--type-3",
-    "nee": "een-smal-lemmet-dolk--oost-europees--type-4"
+    "ja": "breed-lemmet-dolk--oost-europees--type-3",
+    "nee": "smal-lemmet-dolk--oost-europees--type-4"
   },
   "197": {
     "vraag": "Heeft het artefact  een segment -vorm ?",
-    "ja": "een-sikkel",
+    "ja": "sikkel",
     "nee": "kernwerktuig--fijn-bewerkt"
   },
   "198": {
@@ -957,11 +962,11 @@
   "202": {
     "vraag": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
     "ja": "steker",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "203": {
     "vraag": "Is de steker aangebracht op een ander werktuig -type?",
-    "ja": "een-combinatiewerktuig",
+    "ja": "combinatiewerktuig",
     "nee": "terug-artefactgroepen-start"
   },
   "204": {
@@ -986,7 +991,7 @@
   },
   "208": {
     "vraag": "Is de beitelkant niet gemaakt door een stekerafslag, maar gemaakt door een onopzettelijke breuk, ontstaan doordat het artefact tijdens het retoucheren is gebroken?",
-    "ja": "een-krukowski--kerfrest",
+    "ja": "krukowski--kerfrest",
     "nee": "de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-"
   },
   "209": {
@@ -1020,53 +1025,53 @@
     "nee": "terug-artefactgroepen-start"
   },
   "215": {
-    "vraag": "een kerf resulterend in een dunne (max. 2mm) steker ?",
+    "vraag": "Is de RA -steker gemaakt op een kleine afslag of kling gevormd door een kleine stekerafslag vaak beëindigd door een kerf resulterend in een dunne (max. 2mm) steker?",
     "ja": "steker--noailles",
     "nee": "vaak-in-de-vorm-van-meervoudige-stekers"
   },
   "216": {
-    "vraag": "stekerafslag -negatief dunner gemaakte b eitelkant ?",
+    "vraag": "Vertoont de RA -steker een door retouche vanaf het stekerafslag -negatief dunner gemaakte b eitelkant?",
     "ja": "steke-r-ra-versmald",
     "nee": "terug-artefactgroepen-start"
   },
   "217": {
-    "vraag": "verwijderd)?",
+    "vraag": "Is de RA -steker meermaals gemodificeerd (gemodificeerd RA steker waarvan opnieuw een stekerafslag is verwijderd, opnieuw geretoucheerd en nogmaals een steker afslag verwijderd)?",
     "ja": "steker--bassaler",
     "nee": "terug-artefactgroepen-start"
   },
   "218": {
-    "vraag": "weggeretoucheerd ?",
+    "vraag": "Is het stekerafslag -negatief van de RA -steker grotendeels weggeretoucheerd?",
     "ja": "steker--lacan",
     "nee": "steker--ra"
   },
   "219": {
-    "vraag": "afslagen van 2 zijden ?",
+    "vraag": "Is de steker gemaakt door de beitelkant te maken met steker - afslagen van 2 zijden?",
     "ja": "steker--aa",
     "nee": "steker"
   },
   "220": {
-    "vraag": "gemaakt met meerdere afslagen naast elkaar ?",
+    "vraag": "Is de steker gemaakt door stekerafslagen van 2 zijden , gemaakt met meerdere afslagen naast elkaar?",
     "ja": "steker--kielvormig",
     "nee": "niet-naast-elkaar-steker--aa"
   },
   "221": {
-    "vraag": "vrij plat is en het andere min of meer boogvormig?",
+    "vraag": "Is de kielvormige steker relatief smal waarbij één stekervlak vrij plat is en het andere min of meer boogvormig?",
     "ja": "steker--snuitvormig",
     "nee": "terug-artefactgroepen-start"
   },
   "222": {
-    "vraag": "voor- of achter -vlak ligt?",
+    "vraag": "Heeft de kielvormige -steker een vorm waarbij de beitel kant schuin staat op de afslag/kling doordat één vlak meer op het voor- of achter -vlak ligt?",
     "ja": "steker--vachons",
     "nee": "steker--kielvormig"
   },
   "230": {
     "vraag": "Heeft het artefact 1, 2 of meer uitgeretoucheerde punten met driehoekige of vierzijdige doorsnede? (Maar is niet de punt van een spits)",
     "ja": "boor-bec-of-ruimer",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "231": {
     "vraag": "Is de boor aangebracht op een ander werktuig -type?",
-    "ja": "een-combinatiewerktuig",
+    "ja": "combinatiewerktuig",
     "nee": "terug-artefactgroepen-start"
   },
   "232": {
@@ -1080,29 +1085,29 @@
     "nee": "terug-artefactgroepen-start"
   },
   "234": {
-    "vraag": "is klein van afmeting (<2 cm) ?",
+    "vraag": "Is de punt verkregen door het artefact tweezijdig steil te retoucheren, geretoucheerd e met lange nek , en is het artefact is klein van afmeting (<2 cm)?",
     "ja": "boor-dickenbännli",
     "nee": "terug-artefactgroepen-start"
   },
   "235": {
-    "vraag": "punt?",
-    "ja": "een-bec",
+    "vraag": "Is de punt verkregen door het bewerken m et steile retouche en heeft het artefact een vrij lange, rechte, neusvormige dikke punt?",
+    "ja": "bec",
     "nee": "terug-artefactgroepen-start"
   },
   "236": {
-    "vraag": "ontstaan door draaiende beweging van het werktuig) ?",
-    "ja": "een-boor",
+    "vraag": "Is de relatief smalle punt verkregen door het bewerken met steile retouche (vaak met overliggende pseudoretouche ontstaan door draaiende beweging van het werktuig)?",
+    "ja": "boor",
     "nee": "terug-artefactgroepen-start"
   },
   "237": {
-    "vraag": "werktuig) bedoeld om een bestaand gat groter te maken ?",
+    "vraag": "Is de relatief stompe punt verkregen door het bewerken met 1 of 2 grove afslagen of door retouche (vaak met pseudoretouche ontstaan door draaiende beweging van het werktuig) bedoeld om een bestaand gat groter te maken?",
     "ja": "ruimer",
     "nee": "boorachtig--artefact"
   },
   "240": {
-    "vraag": "kleine steile afslagnegatieven ?",
+    "vraag": "Heeft het artefact een inkeping d.m.v. één grote of meerdere kleine steile afslagnegatieven?",
     "ja": "werktuig--gekerfd",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "241": {
     "vraag": "Is de kerf  onderdeel van een gekerfde of gesteelde spits?",
@@ -1111,16 +1116,16 @@
   },
   "241a": {
     "vraag": "Is de kerf aangebracht op een ander werktuig -type?",
-    "ja": "een-combinatie--werktuig",
+    "ja": "combinatiewerktuig",
     "nee": "terug-artefactgroepen-start"
   },
   "242": {
-    "vraag": "werkkant, gemaakt door een grove (Clacton) kerf?",
+    "vraag": "Lijkt h et gekerfde werktuig op een sikkel met een gehaakte werkkant, gemaakt door een grove (Clacton) kerf?",
     "ja": "billhook--a",
     "nee": "terug-artefactgroepen-start"
   },
   "243": {
-    "vraag": "werkkant, gemaakt door een geretoucheerde kerf ?",
+    "vraag": "Lijkt het gekerfde werktuig op een sikkel met een gehaakte werkkant, gemaakt door een geretoucheerde kerf?",
     "ja": "billhook--b",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1130,7 +1135,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "245": {
-    "vraag": "kling?",
+    "vraag": "Is het gekerfde werktuig gemaakt van een relatief dikke kling?",
     "ja": "kling--aurignacien",
     "nee": null
   },
@@ -1140,9 +1145,9 @@
     "nee": "kling--gekerfd"
   },
   "247": {
-    "vraag": "vertanding ontstaat ?",
+    "vraag": "Vertoont het artefact meerdere kleine kerven waardoor een vertanding ontstaat?",
     "ja": "werktuig--getand",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "248": {
     "vraag": "Is de vertanding aangebracht op een ander werktuig -type?",
@@ -1160,144 +1165,144 @@
     "nee": "van-een-k-ling-kling--getand"
   },
   "260": {
-    "vraag": "uiteinde ?",
-    "ja": "nee-nee-overige-groepen-afslagklingwerktuigen",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "vraag": "Vertoont het artefact 1 of 2 verbrijzeld e of versplinterde uiteinde?",
+    "ja": "overige-groepen-afslagklingwerktuigen",
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "261": {
-    "vraag": "uiteinde  vaak resulterend in afgerond uiteinde ?",
+    "vraag": "Is het verbrijzelde uiteinde ontstaan door slaan langs het uiteinde vaak resulterend in afgerond uiteinde?",
     "ja": "vuurslag",
     "nee": "terug-artefactgroepen-start"
   },
   "262": {
-    "vraag": "drevel  om middels indirecte percussie steen te bewerken ?",
+    "vraag": "Is het verbrijzelde uiteinde ontstaan door h et gebruik als drevel om middels indirecte percussie steen te bewerken?",
     "ja": "drevel--afslag-of-drevel--kern",
     "nee": "terug-artefactgroepen-start"
   },
   "263": {
-    "vraag": "en een klopsteen om hout , been of gewei te bewerken?",
+    "vraag": "Is het verbrijzelde uiteinde ontstaan door het gebruik als beitel en een klopsteen om hout , been of gewei te bewerken?",
     "ja": "beitel--afslag-of-beitel--kern",
     "nee": "zie-ook"
   },
   "264": {
-    "vraag": "aambeeld  te slaan?",
-    "ja": "een-kern--bipolair",
+    "vraag": "Is het verbrijzelde uiteinde ontstaan door p roductie van afslagen/klingen door op een (vaak kleine) kern op een aambeeld te slaan?",
+    "ja": "kern--bipolair",
     "nee": "zie-ook"
   },
   "265": {
-    "vraag": "artefact als hamer?",
+    "vraag": "Is het verbrijzelde uiteinde ontstaan door het gebruik van het artefact als hamer?",
     "ja": "klopsteen",
     "nee": "terug-artefactgroepen-start"
   },
   "266": {
-    "vraag": "en 1 of 2 verbrijzelde of door gebruik afgeronde uiteinden?",
-    "ja": "een-bikkel",
+    "vraag": "Is het verbrijzelde uiteinde ontstaan door gebruik van een relatief dik, stiftvormig werktuig met grove retouche vormen en 1 of 2 verbrijzelde of door gebruik afgeronde uiteinden?",
+    "ja": "bikkel",
     "nee": "artefact--met-versplinterd--uiteinde"
   },
   "270": {
     "vraag": "Is het artefact  een combinatiewerktuig ?",
-    "ja": "nee-nee-overige-groepen-afslagklingwerktuigen",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "ja": "overige-groepen-afslagklingwerktuigen",
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "271": {
-    "vraag": "Betreft het een s chaaf en een schrabber ?",
-    "ja": "een-schaaf--schrabber",
+    "vraag": "Betreft het een s chaaf en een schrabber?",
+    "ja": "schaaf--schrabber",
     "nee": "terug-artefactgroepen-start"
   },
   "272": {
     "vraag": "Betreft het een schaaf en een steker?",
-    "ja": "een-schaaf--steker",
+    "ja": "schaaf--steker",
     "nee": "terug-artefactgroepen-start"
   },
   "273": {
     "vraag": "Betreft het een schaaf en een boor?",
-    "ja": "een-schaaf--boor",
+    "ja": "schaaf--boor",
     "nee": "terug-artefactgroepen-start"
   },
   "274": {
     "vraag": "Betreft het een schaaf en een kerf?",
-    "ja": "een-schaaf--gekerfd",
+    "ja": "schaaf--gekerfd",
     "nee": "terug-artefactgroepen-start"
   },
   "275": {
     "vraag": "Betreft het een schaaf en een vertanding?",
-    "ja": "een-schaaf--getand",
+    "ja": "schaaf--getand",
     "nee": "terug-artefactgroepen-start"
   },
   "276": {
     "vraag": "Betreft het een schrabber en een steker?",
-    "ja": "een-schrabber--steker",
+    "ja": "schrabber--steker",
     "nee": "terug-artefactgroepen-start"
   },
   "277": {
     "vraag": "Betreft het een schrabber en een krombeksteker?",
-    "ja": "een-schrabber--steker--krombek",
+    "ja": "schrabber--steker--krombek",
     "nee": "terug-artefactgroepen-start"
   },
   "278": {
     "vraag": "Betreft het een schrabber en een boor?",
-    "ja": "een-schrabber--boor",
+    "ja": "schrabber--boor",
     "nee": "terug-artefactgroepen-start"
   },
   "279": {
     "vraag": "Betreft het een schrabber en een kerf?",
-    "ja": "een-schrabber--gekerfd",
+    "ja": "schrabber--gekerfd",
     "nee": "terug-artefactgroepen-start"
   },
   "280": {
-    "vraag": "Betreft het een schrabber en een afknot ting?",
-    "ja": "een-schrabber--afgeknot",
+    "vraag": "Betreft het een schrabber en een afknotting?",
+    "ja": "schrabber--afgeknot",
     "nee": "terug-artefactgroepen-start"
   },
   "281": {
     "vraag": "Betreft het een steker en een  boor?",
-    "ja": "een-steker--boor",
+    "ja": "steker--boor",
     "nee": "terug-artefactgroepen-start"
   },
   "282": {
     "vraag": "Betreft het een  steker en een kerf?",
-    "ja": "een-steker--gekerfd",
+    "ja": "steker--gekerfd",
     "nee": "terug-artefactgroepen-start"
   },
   "283": {
     "vraag": "Betreft het een  krombeksteker en een kerf?",
-    "ja": "een-steker--krombek--gekerfd",
+    "ja": "steker--krombek--gekerfd",
     "nee": "terug-artefactgroepen-start"
   },
   "284": {
     "vraag": "Betreft het een  steker en een afknotting?",
-    "ja": "een-steker--afgeknot",
+    "ja": "steker--afgeknot",
     "nee": "terug-artefactgroepen-start"
   },
   "286": {
     "vraag": "Betreft het een  boor en een kerf?",
-    "ja": "een-boor---gekerfd",
+    "ja": "boor--gekerfd",
     "nee": "terug-artefactgroepen-start"
   },
   "287": {
     "vraag": "Betreft het een  boor en een vertanding?",
-    "ja": "een-boor--getand",
+    "ja": "boor--getand",
     "nee": "terug-artefactgroepen-start"
   },
   "288": {
     "vraag": "Betreft het een  gekerfd en getand artefact ?",
-    "ja": "een-gekerfd--en-getand--artefact",
+    "ja": "gekerfd--en-getand--artefact",
     "nee": "terug-artefactgroepen-start"
   },
   "289": {
     "vraag": "Betreft het een  gekerfd en afgeknot artefact ?",
-    "ja": "een-gekerfd--en-afgeknot--artefact",
+    "ja": "gekerfd--en-afgeknot--artefact",
     "nee": "terug-artefactgroepen-start"
   },
   "290": {
     "vraag": "Betreft het een  getand en afgeknot artefact ?",
-    "ja": "een-getand--en-afgeknot--artefact",
-    "nee": "een-combinatiewerktuig"
+    "ja": "getand--en-afgeknot--artefact",
+    "nee": "combinatiewerktuig"
   },
   "300": {
-    "vraag": "distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas ?",
+    "vraag": "Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas?",
     "ja": "afgeknot-artefact",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "301": {
     "vraag": "Is de afknotting aan één zijde  gemaakt op een a fslag ?",
@@ -1315,12 +1320,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "304": {
-    "vraag": "dorsale zijde  te verwijderen ?",
+    "vraag": "Is de kling is afgeknot door steile of half -steile retouche van de dorsale naar de ventr ale zijde en is d e retouche vervolgens gebruikt als slagvlak om daarna langwerpige afslagen van de dorsale zijde te verwijderen?",
     "ja": "kling--afgeknot--kostienki",
     "nee": "terug-artefactgroepen-start"
   },
   "305": {
-    "vraag": "zijkant  te verwijderen ?",
+    "vraag": "Lijkt de kling lijkt op een Kost ienki-afgeknotte kling waarbij de ventrale retouche bedoeld was om daarna lamellen van de zijkant te verwijderen?",
     "ja": "kling--afgeknot--bertonne",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1330,22 +1335,22 @@
     "nee": "aan-twee-zijden-kling--afgeknot--tweezijdig"
   },
   "320": {
-    "vraag": "verkregen werkkant, veelal gebogen , soms vrijwel rondom ?",
-    "ja": "een-schrabber",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "vraag": "Heeft de a fslag of kling een door relatief steile retouche verkregen werkkant, veelal gebogen , soms vrijwel rondom?",
+    "ja": "schrabber",
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "321": {
-    "vraag": "een ‘normale’ schrabber of ander werktuig ?",
+    "vraag": "Heeft het artefact een schrabberkap met relatief lichte retouche ; vaak onderdeel van een combinatiewerktuig met een ‘normale’ schrabber of ander werktuig?",
     "ja": "schrabber--dun",
     "nee": "terug-artefactgroepen-start"
   },
   "322": {
-    "vraag": "tegenover ventraal geretoucheerde afknotting ?",
+    "vraag": "Is het artefact een combinatie werktuig van schrabber tegenover ventraal geretoucheerde afknotting?",
     "ja": "schrabber--caminade",
     "nee": "terug-artefactgroepen-start"
   },
   "323": {
-    "vraag": "geretoucheerd ?",
+    "vraag": "Is het artefact groot en rond/ovaal en vrijwel rondom geretoucheerd?",
     "ja": "schrabber--groot-rondova-al",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1355,7 +1360,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "325": {
-    "vraag": "breedte en kleiner dan 3 cm ?",
+    "vraag": "Is het artefact een korte schrabber gemaakt van een kling of afslag met een brede schrabberkap tegenover een rechte basis in de vorm van een duimnagel met nagenoeg gelijke lengte en breedte en kleiner dan 3 cm?",
     "ja": "schrabber--duimnagel",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1370,7 +1375,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "328": {
-    "vraag": "omgekeerd bootvormig ?",
+    "vraag": "Is de s chrabber gemaakt op een dikke afslag (caréné) of brok (rabot), met vlakke kant en steile retouche/afslagnegatieven, omgekeerd bootvormig?",
     "ja": "grattoir--caréné-rabot-of-schrabber--kern",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1400,7 +1405,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "334": {
-    "vraag": "zijden  aan de achterkant ?",
+    "vraag": "Heeft de klingschrabber taps toelopende geretoucheerde zijden aan de achterkant?",
     "ja": "schrabber--wehlen-og-schrabber--gesteeld",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1410,7 +1415,7 @@
     "nee": "aan-twee"
   },
   "336": {
-    "vraag": "uiteinden ?",
+    "vraag": "Heeft de klingschrabber een schrabberkap aan t wee uiteinden?",
     "ja": "schrabber--kling--dubbel",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1420,37 +1425,37 @@
     "nee": "schrabber"
   },
   "350": {
-    "vraag": "steil geretoucheerde lange zijden?",
-    "ja": "een-schaaf--limace",
+    "vraag": "Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden?",
+    "ja": "schaaf--limace",
     "nee": "terug-artefactgroepen-start"
   },
   "351": {
-    "vraag": "verkregen enigszins scherpe werkkant ?",
+    "vraag": "Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant?",
     "ja": "schaaf",
-    "nee": "nee-overige-groepen-afslagklingwerktuigen"
+    "nee": "overige-groepen-afslagklingwerktuigen"
   },
   "352": {
-    "vraag": "getrapt -schubvormige retouche ?",
+    "vraag": "Heeft de afslag één of meerdere zijden met schubvormige of getrapt -schubvormige retouche?",
     "ja": "schaaf--quina",
     "nee": "terug-artefactgroepen-start"
   },
   "353": {
-    "vraag": "retouche aan één zijde ?",
+    "vraag": "Is het artefact een dik werktuig met getrapte schubvormige retouche aan één zijde?",
     "ja": "schaaf--quina",
     "nee": "niet-dik-of-wel-dik-maar-schubvormige-retouche"
   },
   "354": {
-    "vraag": "schubvormige retouche  aan 1 zijde ?",
+    "vraag": "Is het artefact een dik werktuig met niet getrapte schubvormige retouche of een dun werktuig met getrapte schubvormige retouche aan 1 zijde?",
     "ja": "schaaf--demi--quina",
     "nee": "aan-2-zijden"
   },
   "355": {
-    "vraag": "retouche aan twee zijden ?",
+    "vraag": "Is het artefact een dun werktuig met getrapte schubvormige retouche aan twee zijden?",
     "ja": "schaaf--demi--quina--dubbel",
     "nee": "terug-artefactgroepen-start"
   },
   "356": {
-    "vraag": "vlakke retouche ?",
+    "vraag": "Is het artefact een bifaciaal, bladvormig stuk met aan één zijde vlakke retouche?",
     "ja": "blad--schaaf",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1460,7 +1465,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "358": {
-    "vraag": "tegenover het slagpunt ?",
+    "vraag": "Heeft de schaaf een schaafkant haaks op de slagrichting tegenover het slagpunt?",
     "ja": "schaaf--transversaal",
     "nee": "schaaf--enkelvoudig"
   },
@@ -1470,17 +1475,17 @@
     "nee": "drie"
   },
   "360": {
-    "vraag": "aansluiten ?",
+    "vraag": "Heeft de schaaf t wee schaaf kanten die niet op elkaar aansluiten?",
     "ja": "schaaf--dubbel",
     "nee": "terug-artefactgroepen-start"
   },
   "361": {
-    "vraag": "schaafkanten , as werktuig (nagenoeg)  in slagrichting ?",
+    "vraag": "Heeft de schaaf twee symmetrische convergerende schaafkanten , as werktuig (nagenoeg) in slagrichting?",
     "ja": "spits--mousterien",
     "nee": "terug-artefactgroepen-start"
   },
   "362": {
-    "vraag": "één schaafzijde (nagenoeg) tegenover de slagvlakrest ligt?",
+    "vraag": "Heeft de schaaf twee schaafkanten die elkaar raken waarbij één schaafzijde (nagenoeg) tegenover de slagvlakrest ligt?",
     "ja": "schaaf--schuin-racloir-déjeté",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1490,27 +1495,27 @@
     "nee": "terug-artefactgroepen-start"
   },
   "364": {
-    "vraag": "uiteinde ?",
+    "vraag": "Heeft de schaaf twee schaafkanten die elkaar raken bij één uiteinde?",
     "ja": "convergerende-dubbelschaaf-o-g-schaaf--spits",
     "nee": "schaaf"
   },
   "380": {
-    "vraag": "één scherpe  (ongeretoucheerde) rand tegenover dikke re kant?",
+    "vraag": "Heeft de afslag of kling een driehoekige dwarsdoorsnede met één scherpe (ongeretoucheerde) rand tegenover dikkere kant?",
     "ja": "rugmes",
-    "nee": "nee-een-afslagkling-met-rand---of-oppervlakteretouche"
+    "nee": "afslagkling-met-rand---of-oppervlakteretouche"
   },
   "381": {
-    "vraag": "retouche ?",
+    "vraag": "Is het rugmes een decorticatieafslag of kling zonder retouche?",
     "ja": "rugmes--met-natuurlijke--rug",
     "nee": "terug-artefactgroepen-start"
   },
   "382": {
-    "vraag": "relatief dunne en gebogen geretoucheerde rug?",
+    "vraag": "Is het rugmes een asymmetrische afslag of kling met een relatief dunne en gebogen geretoucheerde rug?",
     "ja": "rugmes-aubri--audi",
     "nee": "terug-artefactgroepen-start"
   },
   "383": {
-    "vraag": "rug?",
+    "vraag": "Is het rugmes een rechthoekige kling met steil geretoucheerde rug?",
     "ja": "rugmes-klingmes--geretoucheerd",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1520,67 +1525,67 @@
     "nee": "terug-artefactgroepen-start"
   },
   "385": {
-    "vraag": "retouche  (geen werkkant of punt) ?",
+    "vraag": "Is het artefact een afslag met beperkte lokale intentionele retouche (geen werkkant of punt)?",
     "ja": "afslag-of-kling",
     "nee": "bij-opm-vermelden-plaatselijk-geretoucheerd"
   },
   "390": {
-    "vraag": "gedeeltelijk     (half -) steil geretoucheerde  zijden ?",
+    "vraag": "Is het artefact een afslag of kling met 1 of meer geheel of gedeeltelijk (half-)steil geretoucheerde zijden?",
     "ja": "steile-retouche",
     "nee": "vlakke-rand---of-oppervlakte-retouche"
   },
   "391": {
     "vraag": "Heeft het artefact  een duidelijke punt ?",
-    "ja": "nee-geen-punt-of-een-geometrische-vorm",
+    "ja": "geen-punt-of-een-geometrische-vorm",
     "nee": "geen-punt-of-een-geometrische-vorm"
   },
   "392": {
-    "vraag": "geretoucheerde zijden?",
+    "vraag": "Heeft het artefact een typische geometrische vorm: driehoekig, vierhoekig of segmentvorm met 1 of 2 steil geretoucheerde zijden?",
     "ja": "spits--geometrisch",
-    "nee": "een-artefact-zonder-duidelijke-punt"
+    "nee": "artefact-zonder-duidelijke-punt"
   },
   "392a": {
-    "vraag": "van 2 tegenover elkaar liggende kerven  of insnoeringen ?",
+    "vraag": "Is het artefact een overwegend grote en dikke kling met één of twee (half-)steil geretoucheerde zijden, soms voorzien van 2 tegenover elkaar liggende kerven of insnoeringen?",
     "ja": "kling--aurignacien",
     "nee": "terug-artefactgroepen-start"
   },
   "393": {
-    "vraag": "retouche  langs één of meer zijden ?",
+    "vraag": "Is het artefact een afslag met ondiepe schrabber-achtige retouche langs één of meer zijden?",
     "ja": "schaaf--raclette",
     "nee": "terug-artefactgroepen-start"
   },
   "394": {
-    "vraag": "zijde veelal grotendeels aan 3 zijden  vrij steil geretoucheerd ?",
+    "vraag": "Is het artefact vierkant, rechthoekig met soms een gebogen zijde veelal grotendeels aan 3 zijden vrij steil geretoucheerd?",
     "ja": "vuurkets",
     "nee": "terug-artefactgroepen-start"
   },
   "395": {
-    "vraag": "geretoucheerd?",
+    "vraag": "Heeft de vuurkets een rechthoekige vorm en is die aan 3 zijden geretoucheerd?",
     "ja": "vuurkets--engels",
     "nee": "de-vuurkets-is-aan-één-zijde-is-afgerond-of-de-vuurkets"
   },
   "396": {
-    "vraag": "dan niet  rondom geretoucheerd ?",
+    "vraag": "Is het artefact een relatief zeer dun plat vuursteenelement, al dan niet rondom geretoucheerd?",
     "ja": "inzetstuk--dorsslede",
     "nee": "terug-artefactgroepen-start"
   },
   "397": {
-    "vraag": "zijden steil geretoucheerd zonder duidelijke punt ?",
-    "ja": "nee",
+    "vraag": "Is het artefact een smalle kling of lamelle aan één of meerdere zijden steil geretoucheerd zonder duidelijke punt?",
+    "ja": "smalle-kling-of-lamelle-zonder-duidelijke-punt",
     "nee": "terug-artefactgroepen-start"
   },
   "398": {
-    "vraag": "ventraal geretoucheerd ?",
+    "vraag": "Is de kling of lamelle aan één zijde dorsaal en soms één zijde ventraal geretoucheerd?",
     "ja": "lamelle--dufour",
     "nee": "terug-artefactgroepen-start"
   },
   "399": {
-    "vraag": "geretoucheerde zijde?",
+    "vraag": "Is het artefact een smalle kling of lamelle aan één zijde steil geretoucheerd en aan één of beide uiteinden, haaks op de geretoucheerde zijde?",
     "ja": "kling--steil-geretoucheerd--rechthoekig",
     "nee": "terug-artefactgroepen-start"
   },
   "400": {
-    "vraag": "zijde steil geretoucheerd tot aan een uiteinde?",
+    "vraag": "Is het artefact een driehoekige smalle kling of lamelle aan één zijde steil geretoucheerd tot aan een uiteinde?",
     "ja": "kling--steil-geretoucheerd--driehoekig",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1590,68 +1595,68 @@
     "nee": "kling--steil-geretoucheerd"
   },
   "410": {
-    "vraag": "is het gesteeld  of heeft een gekerfde basis ?",
-    "ja": "nee-spits-zonder-steel-of-kerf",
+    "vraag": "Heeft het artefact minimaal 1 duidelijke punt (is een spits) en is het gesteeld of heeft een gekerfde basis?",
+    "ja": "spits-zonder-steel-of-kerf",
     "nee": "spits-zonder-steel-of-kerf"
   },
   "412": {
     "vraag": "Is de spits gekerfd aan één zijde?",
-    "ja": "nee-aan-beide-zijden",
+    "ja": "aan-beide-zijden",
     "nee": "aan-beide-zijden"
   },
   "413": {
-    "vraag": "geretoucheerde kerven  te voorzien van een steel?",
+    "vraag": "Is de relatief korte spits gemaakt door een kling aan één zijde te retoucheren tot een punt en tegenover de punt door twee geretoucheerde kerven te voorzien van een steel?",
     "ja": "spits--steel--ahrensburg-og-hintersee--spits",
     "nee": "spits--steel"
   },
   "414": {
-    "vraag": "andere rand van de ventrale zijde komt?",
+    "vraag": "Heeft de relatief lange spits een korte steel gemaakt door twee kerven ongelijk van diepte en lengte waarbij de retouchering bij de steel soms langs één rand van de dorsale en langs de andere rand van de ventrale zijde komt?",
     "ja": "spits--havelter-steelspits",
     "nee": "terug-artefactgroepen-start"
   },
   "415": {
-    "vraag": "d.m.v. een kerf versmalde basis en is de steel kegelvormig ?",
+    "vraag": "Heeft de spits een aan twee zijden deels geretoucheerde en door middel van een kerf versmalde basis en is de steel kegelvormig?",
     "ja": "spits--kerf-met-kegelvormig--geretoucheerde--basis",
     "nee": "terug-artefactgroepen-start"
   },
   "416": {
-    "vraag": "ongeretoucheerde feather uiteinde van de kling ?",
+    "vraag": "Is de spits een langwerpige steelspits en het spitse deel is het ongeretoucheerde feather uiteinde van de kling?",
     "ja": "spits--bromme",
     "nee": "terug-artefactgroepen-start"
   },
   "417": {
-    "vraag": "bifaciaal geretoucheerde basis ?",
+    "vraag": "Is de spits een min of meer ruitvormige steelspits met bifaciaal geretoucheerde basis?",
     "ja": "spits--swidry",
     "nee": "terug-artefactgroepen-start"
   },
   "418": {
-    "vraag": "met een vaak ogiefvormige top?",
+    "vraag": "Is de spits een steelspits met relatief lange veelal smalle steel met een vaak ogiefvormige top?",
     "ja": "spits--font-robert",
     "nee": "terug-artefactgroepen-start"
   },
   "419": {
-    "vraag": "steile retouchering?",
+    "vraag": "Heeft de spits polymorfe kerf of steel gekenmerkt door een retouchering van een of twee randen, of door een afknotting en met een korte steel gevormd door een dorsale of ventrale steile retouchering?",
     "ja": "spits--teyat",
     "nee": "spits--steel"
   },
   "420": {
-    "vraag": "gemaakt door oppervlakte retouche?",
+    "vraag": "Heeft de spits van variabele grootte gemaakt van een kling een relatief lange, door soms ventrale oppervlakteretouche gemaakte brede steel, waarbij de punt soms ook dunner is gemaakt door oppervlakteretouche?",
     "ja": "spits--kostienki",
     "nee": "terug-artefactgroepen-start"
   },
   "421": {
-    "vraag": "lange kerf  aan één zijde en vaak een ogiefvormige punt ?",
+    "vraag": "Heeft de spits een smallere steel gemaakt door een relatief lange kerf aan één zijde en vaak een ogiefvormige punt?",
     "ja": "spits--kerf-magdalenien",
     "nee": "spits--kerf-hamburg"
   },
   "430": {
-    "vraag": "vierhoek, segment )?",
+    "vraag": "Heeft de afslag of kling een geometrische vorm (driehoek, vierhoek, segment)?",
     "ja": "nee-de-spits-heeft-ste-il-geretoucheerde-zijden-en-evt-basis",
     "nee": "de-spits-heeft-ste-il-geretoucheerde-zijden-en-evt-basis"
   },
   "431": {
     "vraag": "Heeft de spits een driehoekige  vorm?",
-    "ja": "nee-vierhoekig-of-segmentvorm",
+    "ja": "vierhoekig-of-segmentvorm",
     "nee": "vierhoekig-of-segmentvorm"
   },
   "432": {
@@ -1660,44 +1665,44 @@
     "nee": "terug-artefactgroepen-start"
   },
   "433": {
-    "vraag": "iets vlakkere  vaak ventrale randretouche ?",
+    "vraag": "Heeft de spits een driehoekige vorm en een holle basis door iets vlakkere vaak ventrale randretouche?",
     "ja": "spits--lbk",
     "nee": "terug-artefactgroepen-start"
   },
   "434": {
-    "vraag": "ongelijkbenige driehoek ?",
+    "vraag": "Heeft de spits een driehoekige vorm in de vorm van een ongelijkbenige driehoek?",
     "ja": "spits--driehoek--ongelijkbenig",
     "nee": "terug-artefactgroepen-start"
   },
   "435": {
-    "vraag": "gelijkbenige  driehoe k, hypotenusa ongeretoucheerd ?",
+    "vraag": "Heeft de spits een driehoekige vorm in de vorm van een gelijkbenige driehoek, hypotenusa ongeretoucheerd?",
     "ja": "spits--driehoek--gelijkbenig",
     "nee": "terug-artefactgroepen-start"
   },
   "436": {
-    "vraag": "geretoucheerde basis  (retouche inverse plat RIP) ?",
+    "vraag": "Heeft de spits een driehoekige vorm in de vorm van een rechthoekige driehoek met van ventrale zijde vlak geretoucheerde basis (retouche inverse plat RIP)?",
     "ja": "spits--frère",
     "nee": "terug-artefactgroepen-start"
   },
   "437": {
-    "vraag": "basis  (retouche inverse plat RIP) ?",
+    "vraag": "Heeft de spits een driehoekige vorm in de vorm van een stompe driehoek met van ventrale zijde vlak geretoucheerde basis (retouche inverse plat RIP)?",
     "ja": "spits--dreuil",
     "nee": "terug-artefactgroepen-start"
   },
   "438": {
-    "vraag": "driehoek neigend naar een vierhoek ?",
+    "vraag": "Heeft de spits een driehoekige vorm in de vorm van een driehoek neigend naar een vierhoek?",
     "ja": "spits--vierhoek--asymmetrisch",
     "nee": "terug-artefactgroepen-start"
   },
   "439": {
-    "vraag": "driehoek neigend naar een trapezium ?",
+    "vraag": "Heeft de spits een driehoekige vorm in de vorm van een driehoek neigend naar een trapezium?",
     "ja": "spits--trapezium--langwerpig",
     "nee": "spits--driehoekig"
   },
   "450": {
     "vraag": "Heeft de spits een vierhoekige  vorm ?",
-    "ja": "nee-een-segmentvorm",
-    "nee": "een-segmentvorm"
+    "ja": "segmentvorm",
+    "nee": "segmentvorm"
   },
   "451": {
     "vraag": "Heeft de spits een vierhoekige vorm  met één haakse zijde ?",
@@ -1712,30 +1717,30 @@
   "453": {
     "vraag": "Heeft de spits een onregelmatig vierhoekige vorm?",
     "ja": "spits--transversaal--onregelmatig--gevormd",
-    "nee": "een-symmetrisch-of-asymmetrische-trapezium"
+    "nee": "symmetrisch-of-asymmetrisch-trapezium"
   },
   "454": {
-    "vraag": "L/B= lengte : breedte  <1?",
+    "vraag": "L/B= lengte : breedte <1? (ongeretoucheerde zijde : geretoucheerde zijde)",
     "ja": "spits--transversaal-transversaal-dus",
     "nee": "terug-artefactgroepen-start"
   },
   "455": {
-    "vraag": "1<L/B < 2 ?",
+    "vraag": "1<L/B < 2? (ongeretoucheerde zijde : geretoucheerde zijde)",
     "ja": "spits--trapezium--breed-sub-typen-zijn-",
     "nee": "terug-artefactgroepen-start"
   },
   "456": {
-    "vraag": "L/B > 2 ?",
+    "vraag": "L/B > 2? (ongeretoucheerde zijde : geretoucheerde zijde)",
     "ja": "spits--trapezium--smal-sub-typen-zijn",
     "nee": "spits--vierhoekig"
   },
   "470": {
     "vraag": "Heeft de spits 2 punten  en de vorm van een cirkelsegment ?",
-    "ja": "nee",
+    "ja": "cirkelsegmentvormige-dubbelspits",
     "nee": "terug-artefactgroepen-start"
   },
   "471": {
-    "vraag": "aan een zijde enigszins afgeknot?",
+    "vraag": "Is bolle zijde van de relatief brede spits geretoucheerd, soms aan een zijde enigszins afgeknot?",
     "ja": "spits--azilien",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1745,24 +1750,24 @@
     "nee": "terug-artefactgroepen-start"
   },
   "473": {
-    "vraag": "niet?",
+    "vraag": "Is rechte zijde van de spits geretoucheerd en de gebogen zijde niet?",
     "ja": "spits--dubbel",
     "nee": "terug-artefactgroepen-start"
   },
   "474": {
-    "vraag": "marginale vaak ventrale  retouche ?",
+    "vraag": "Heeft de spits een ruit- tot wilgenbladvorm met deels marginale vaak ventrale retouche?",
     "ja": "spits--fléchette",
     "nee": "terug-artefactgroepen-start"
   },
   "476": {
-    "vraag": "mogelijk met geretoucheerde  basis ?",
-    "ja": "nee-nee-twee-zijden",
-    "nee": "nee-twee-zijden"
+    "vraag": "Heeft de spits één (al dan niet geheel) geretoucheerde zijde mogelijk met geretoucheerde basis?",
+    "ja": "twee-zijden",
+    "nee": "twee-zijden"
   },
   "477": {
-    "vraag": "geretoucheerde  basis ?",
+    "vraag": "Heeft de spits één geheel geretoucheerde zijde mogelijk met geretoucheerde basis?",
     "ja": "geheel-geretoucheerde-zijde",
-    "nee": "nee-een-gedeeltelijk-geretoucheerde-z-ijde"
+    "nee": "gedeeltelijk-geretoucheerde-zijde"
   },
   "478": {
     "vraag": "Heeft de spits één geheel geretoucheerde zijd e, de basis niet ?",
@@ -1770,57 +1775,57 @@
     "nee": "één-zijde-en-de-basis"
   },
   "479": {
-    "vraag": "(schuin afgeknot)?",
+    "vraag": "Heeft de spits alleen een gedeeltelijk geretoucheerde zijde (schuin afgeknot)?",
     "ja": "spits--b-spits",
-    "nee": "nee-één-zijde-deels-en-basis"
+    "nee": "een-zijde-deels-en-basis"
   },
   "480": {
-    "vraag": "afgeknot ) en een steil geretoucheerde afgeknotte basis ?",
+    "vraag": "Heeft de spits één gedeeltelijk geretoucheerde zijde ( schuin afgeknot ) en een steil geretoucheerde afgeknotte basis?",
     "ja": "spits--zonhoven",
     "nee": "terug-artefactgroepen-start"
   },
   "482": {
-    "vraag": "schuin afgeknotte basis ?",
+    "vraag": "Heeft de spits één gebogen geheel geretoucheerdé zijde en een schuin afgeknotte basis?",
     "ja": "spits--pennemes-og-penknife-point-federmesser",
     "nee": "terug-artefactgroepen-start"
   },
   "483": {
-    "vraag": "afgeknotte basis ?",
+    "vraag": "Is het een lange, smalle driehoekige spits met scheef afgeknotte basis?",
     "ja": "spits--svaerdborg",
     "nee": "terug-artefactgroepen-start"
   },
   "484": {
-    "vraag": "zijde en afgeknotte basis?",
+    "vraag": "Heeft de spits een rechte of licht gebogen geretoucheerde zijde en afgeknotte basis?",
     "ja": "spits--malaurie",
     "nee": "terug-artefactgroepen-start"
   },
   "485": {
-    "vraag": "geretoucheerd; soms andere zijde gedeeltelijk geretoucheerd?",
+    "vraag": "Is de spits een vrij symmetrische driehoekige spits met één zijde geheel en de basis haaks op de lengterichting geretoucheerd; soms andere zijde gedeeltelijk geretoucheerd?",
     "ja": "spits--c-spits-og-tardenoisien--spits",
     "nee": "spits-eenzijdig-en-basis"
   },
   "487": {
-    "vraag": "zijde, de andere zijde en basis niet lengte : breedte L:B < 5?",
+    "vraag": "Heeft de vrij symmetrische spits één geheel geretoucheerde zijde, de andere zijde en basis niet lengte : breedte L:B < 5?",
     "ja": "spits--a-spits",
     "nee": "terug-artefactgroepen-start"
   },
   "488": {
-    "vraag": "zijde, de andere zijde en basis niet lengte : breedte L:B > 5 ?",
+    "vraag": "Heeft de vrij symmetrische spits één geheel geretoucheerde zijde, de andere zijde en basis niet lengte : breedte L:B > 5?",
     "ja": "spits--lancet",
     "nee": "terug-artefactgroepen-start"
   },
   "489": {
-    "vraag": "andere zijde en basis niet en ligt de punt niet op de lengteas?",
+    "vraag": "Heeft de spits één gebogen geheel geretoucheerde zijde, de andere zijde en basis niet en ligt de punt niet op de lengteas?",
     "ja": "spits--tjonger",
     "nee": "terug-artefactgroepen-start"
   },
   "490": {
-    "vraag": "geretoucheerde zijde 2 duidelijke knikken ?",
+    "vraag": "Is de spits geretoucheerd aan één zijde en vertoont de geretoucheerde zijde 2 duidelijke knikken?",
     "ja": "spits--cheddar",
     "nee": "terug-artefactgroepen-start"
   },
   "491": {
-    "vraag": "geretoucheerde zijde 1 duidelijke knik ?",
+    "vraag": "Is de spits geretoucheerd aan één zijde en vertoont de geretoucheerde zijde 1 duidelijke knik?",
     "ja": "spits--creswell",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1830,88 +1835,88 @@
     "nee": "terug-artefactgroepen-start"
   },
   "493": {
-    "vraag": "als ventrale zijde aangebracht (gekruist steil geretoucheerd)?",
+    "vraag": "Heeft de slanke spits nagenoeg evenwijdige zijden , de geretoucheerde zijde is recht of licht bol, punt ligt op de lengteas , soms tegenoverliggende zijde gedeeltelijk licht geretoucheerd, de steile retouche is vaak van zowel dorsale als ventrale zijde aangebracht (gekruist steil geretoucheerd)?",
     "ja": "spits--gravette-og-spits--blanchere",
     "nee": "spits-eenzijdig--steil-geretoucheerd"
   },
   "495": {
-    "vraag": "geretoucheerd  2 scherpe uiteinden lengte  : breedte L:B >4?",
+    "vraag": "Is de spits gemaakt van een lamelle a an twee zijden geretoucheerd 2 scherpe uiteinden lengte : breedte L:B >4?",
     "ja": "spits--sauveterre",
     "nee": "terug-artefactgroepen-start"
   },
   "496": {
-    "vraag": "gedeeltelijk van de top geretoucheerde zijde L :B < 5?",
+    "vraag": "Is de spits min of meer d riehoekig met één geheel en één gedeeltelijk van de top geretoucheerde zijde L :B < 5?",
     "ja": "spits--d-spits",
     "nee": "terug-artefactgroepen-start"
   },
   "497": {
-    "vraag": "en 1 scherp uiteinde  L:B > 5?",
+    "vraag": "Is de spits een vrij smalle spits aan beide zijden geretoucheerd, één zijde geheel, de andere zijde gedeeltelijk en 1 scherp uiteinde L:B > 5?",
     "ja": "spits--naaldvormig",
     "nee": "terug-artefactgroepen-start"
   },
   "498": {
-    "vraag": "einden puntig niet altijd scherp ?",
+    "vraag": "Is de spits een lamelle aan beide zijden (deels) geretoucheerd , einden puntig niet altijd scherp?",
     "ja": "lamelle--font-yves",
     "nee": "terug-artefactgroepen-start"
   },
   "499": {
-    "vraag": "geretoucheerd?",
+    "vraag": "Is de spits aan beide zijden over de gehele lengte geretoucheerd?",
     "ja": "steil-geretoucheerde-spits-gemaakt-van-beide-zijden",
     "nee": "terug-artefactgroepen-start"
   },
   "500": {
-    "vraag": "vuursteen?",
+    "vraag": "Is het artefact relatief lang en gemaakt van Grand Pressigny vuursteen?",
     "ja": "dolk--grand--pressigny",
     "nee": "van-andere-vuursteen-dolk--pseudo--grand--pressigny"
   },
   "540": {
     "vraag": "Heeft het artefact  oppervlakteretouche ?",
-    "ja": "nee-het-is-bekapt",
-    "nee": "het-is-bekapt"
+    "ja": "bekapt",
+    "nee": "bekapt"
   },
   "541": {
     "vraag": "Heeft het artefact  min of meer een dolk vorm?",
-    "ja": "nee-nee-de-vorm-van-een-spits",
-    "nee": "nee-de-vorm-van-een-spits"
+    "ja": "de-vorm-van-een-spits",
+    "nee": "de-vorm-van-een-spits"
   },
   "542": {
     "vraag": "Heeft het artefact  een schachtdoorn ?",
-    "ja": "nee",
+    "ja": "spits-met-schachtdoorn",
     "nee": "terug-artefactgroepen-start"
   },
   "543": {
     "vraag": "Heeft het artefact  een driehoekige  vorm?",
-    "ja": "nee-bladvormig",
+    "ja": "bladvormig",
     "nee": "bladvormig"
   },
   "544": {
     "vraag": "Heeft het artefact  de vorm van een ongelijkbenige driehoek?",
-    "ja": "nee-gelijkbenig-of-gelijkzijdig",
+    "ja": "gelijkbenig-of-gelijkzijdig",
     "nee": "gelijkbenig-of-gelijkzijdig"
   },
   "545": {
-    "vraag": "maretakblad ?",
+    "vraag": "Heeft het artefact twee punten in de vorm van een maretakblad?",
     "ja": "spits--feuille--de-gui",
     "nee": "spits--ongelijkbenige--driehoek--met-"
   },
   "546": {
     "vraag": "Heeft het artefact  de vorm van een gelijkbenige  driehoek?",
-    "ja": "nee-gelijkzijdig",
+    "ja": "gelijkzijdig",
     "nee": "gelijkzijdig"
   },
   "547": {
-    "vraag": "en vertoont het  vlakke randretouche ?",
+    "vraag": "Is het artefact driehoekig van vorm (zijden soms licht convex) en vertoont het vlakke randretouche?",
     "ja": "spits--lbk--met-oppervlakteretouche",
     "nee": "oppervlakte-retouche"
   },
   "548": {
-    "vraag": "oppervlakteretouche een driehoekige vorm?",
+    "vraag": "Heeft het artefact met (nagenoeg) volledige oppervlakteretouche een driehoekige vorm?",
     "ja": "spits--driehoekig--met-oppervlakteretouche",
-    "nee": "het-artefact-is-bekapt"
+    "nee": "bekapt-artefact"
   },
   "549": {
     "vraag": "Heeft het driehoekige artefact  een rechte basis ?",
-    "ja": "spits--driehoekig--met-oppervlakteretouche--",
+    "ja": "spits--driehoekig--met-oppervlakteretouche",
     "nee": "terug-artefactgroepen-start"
   },
   "550": {
@@ -1921,7 +1926,7 @@
   },
   "551": {
     "vraag": "Is het artefact  driehoekig met een holle basis ?",
-    "ja": "spits--driehoekig--met-oppervlakteretouche--",
+    "ja": "spits--driehoekig--met-oppervlakteretouche",
     "nee": "terug-artefactgroepen-start"
   },
   "552": {
@@ -1932,15 +1937,15 @@
   "553": {
     "vraag": "Is het artefact  bladvormig ?",
     "ja": "spits--bladspits",
-    "nee": "het-artefact-heeft-kerfsteel-geen-schachtdoorn-aan-de"
+    "nee": "kerfsteel-zonder-schachtdoorn-aan-puntzijde"
   },
   "554": {
-    "vraag": "alleen de top en de basis  zijn geretoucheerd ?",
+    "vraag": "Is de bladspits gemaakt van een forse kling of afslag waarvan beide vlakken (bifaciaal) gedeeltelijk zijn bewerkt en zijn alleen de top en de basis zijn geretoucheerd?",
     "ja": "spits--bladspits--jerzmanowice",
     "nee": "terug-artefactgroepen-start"
   },
   "555": {
-    "vraag": "een vrij puntig distaal uiteinde een vrij afgeronde basis ?",
+    "vraag": "Is de bladspits gemaakt van een ovaal klingachtig stuk , vaak slank, soms gedrongen, soms zeer regelmatige oppervlakte retouche, aan de bovenzijde aan de uiteinden, soms aan de ventrale zijde, vooral aan de uiteinden, ten slotte, tegenover een vrij puntig distaal uiteinde een vrij afgeronde basis?",
     "ja": "spits--bladspits--vlak",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1960,7 +1965,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "559": {
-    "vraag": "het stuk ?",
+    "vraag": "Is het spits van variabele grootte met een lange brede steel, gemaakt met een kerf langer dan de helft van de lengte van het stuk?",
     "ja": "spits--kostienki",
     "nee": "terug-artefactgroepen-start"
   },
@@ -1971,61 +1976,61 @@
   },
   "561": {
     "vraag": "Heeft het artefact  een schachtdoorn en korte weerhaken?",
-    "ja": "spits--driehoekig--met-schachtdoor-n-en-korte--",
+    "ja": "spits--driehoekig--met-schachtdoorn-en-korte-basis",
     "nee": "lange-weerhaken"
   },
   "562": {
-    "vraag": "rechte zijden ?",
+    "vraag": "Is de driehoekig spits relatief breed met schachtdoorn en weerhaken nagenoeg even lang of langer als schachtdoorn en rechte zijden?",
     "ja": "spits--brede--klokbekerspits",
     "nee": "terug-artefactgroepen-start"
   },
   "563": {
-    "vraag": "gebogen weerhaken ?",
+    "vraag": "Heeft de driehoek ige spits met schachtdoorn naar binnen gebogen weerhaken?",
     "ja": "spits-weerdinge",
     "nee": "terug-artefactgroepen-start"
   },
   "564": {
-    "vraag": "binnen inbuigende weerhaken en puntige schachtdoorn ?",
+    "vraag": "Heeft de driehoekige spits ogiefvormige zijden en naar binnen inbuigende weerhaken en puntige schachtdoorn?",
     "ja": "spits--ogivale--courte",
     "nee": "terug-artefactgroepen-start"
   },
   "565": {
-    "vraag": "schachtdoorn en weerhaken?",
+    "vraag": "Heeft de relatief lange spits met licht gebogen zijden en een schachtdoorn en weerhaken?",
     "ja": "spits--smalle--klokbekerspits",
     "nee": "spits--met-oppervlakte--retouche"
   },
   "570": {
-    "vraag": "vorm van een vuistbijl ?",
+    "vraag": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een vuistbijl?",
     "ja": "uniface",
     "nee": "terug-artefactgroepen-start"
   },
   "570a": {
-    "vraag": "door retouche/bekapping haaks  op de snede?",
-    "ja": "een-halffabricaat---bijl",
+    "vraag": "Heeft de afslag/kling meer een bijlvorm met snede gemaakt door retouche/bekapping haaks op de snede?",
+    "ja": "halffabricaat--bijl",
     "nee": "grof-bekapt-of-tranchetsnede"
   },
   "571": {
-    "vraag": "vorm van een hacherau (vuistbijl met snede)?",
+    "vraag": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een hacherau (vuistbijl met snede)?",
     "ja": "vuistwig--op-afslag",
     "nee": "terug-artefactgroepen-start"
   },
   "572": {
-    "vraag": "vorm van een bijl  met de snede nagenoeg in het midden ?",
+    "vraag": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een bijl met de snede nagenoeg in het midden?",
     "ja": "bijl-afslagbijl",
     "nee": "terug-artefactgroepen-start"
   },
   "573": {
-    "vraag": "vorm van een bijl met de snede niet in het midden ?",
+    "vraag": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een bijl met de snede niet in het midden?",
     "ja": "bijl-disselkling",
     "nee": "terug-artefactgroepen-start"
   },
   "574": {
-    "vraag": "vorm van een beitel ?",
+    "vraag": "Is de afslag of kling grof bewerkt en heeft het de algemene vorm van een beitel?",
     "ja": "beitel--kling-beitel",
     "nee": "afslag--grof-bekapt-of-kling--grof-bekapt"
   },
   "600": {
-    "vraag": "een deel is gepolijst?",
+    "vraag": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
     "ja": "afslag--bijl",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2035,67 +2040,67 @@
     "nee": "het-artefact-is-een-artefact--geslepen"
   },
   "602": {
-    "vraag": "breed , >2,9 cm ?",
-    "ja": "een-bijl",
-    "nee": "breedte--29-cm-een-beitel"
+    "vraag": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+    "ja": "bijl",
+    "nee": "beitel-smaller-dan-29-cm"
   },
   "603": {
-    "vraag": "een snede niet  in het midden?",
-    "ja": "een-bijl-dissel",
+    "vraag": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+    "ja": "bijl-dissel",
     "nee": "terug-artefactgroepen-start"
   },
   "604": {
-    "vraag": "leisteen )?",
+    "vraag": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
     "ja": "bijl-vuursteen",
-    "nee": "gemaakt-van-een-andere-steensoort-dan-vuursteen"
+    "nee": "andere-steensoort-dan-vuursteen"
   },
   "605": {
-    "vraag": "met variabele omtrek?",
+    "vraag": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
     "ja": "bijl-vlakbijl",
     "nee": "terug-artefactgroepen-start"
   },
   "606": {
-    "vraag": "grootste breedte op ca. 1/3 van de snede?",
+    "vraag": "Heeft de vlakbijl een klokvormige omtrek met gebogen zijden, grootste breedte op ca. 1/3 van de snede?",
     "ja": "bijl-vlakbijl--klokvormig",
     "nee": "terug-artefactgroepen-start"
   },
   "607": {
-    "vraag": "zijden ?",
+    "vraag": "Heeft de vla kbijl een trapeziumvormige omtrek met rechte zijden?",
     "ja": "bijl-vlakbijl--trapeziumvormig",
     "nee": "terug-artefactgroepen-start"
   },
   "608": {
-    "vraag": "trapeziumvormige omtrek ?",
+    "vraag": "Heeft de vlakbijl een rechthoekige tot zwak trapeziumvormige omtrek?",
     "ja": "bijl-vlakbijl--rechthoekig",
     "nee": "terug-artefactgroepen-start"
   },
   "609": {
-    "vraag": "dwarsdoorsnede ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
     "ja": "bijl-met-ovale--dwarsdoorsnede",
     "nee": "terug-artefactgroepen-start"
   },
   "610": {
-    "vraag": "dwarsdoorsnede met een smalle top  (in bovenaanzicht )?",
+    "vraag": "Heeft de relatief dikke vuurstenen bijl een min of meer ovale dwarsdoorsnede met een smalle top (in bovenaanzicht )?",
     "ja": "bijl-smaltoppig--met-ovale--dwarsdoorsnede",
     "nee": "terug-artefactgroepen-start"
   },
   "611": {
-    "vraag": "dwarsdoorsnede en geslepen zijden ?",
+    "vraag": "Heeft de smaltoppige vuurstenen bijl een min of meer ovale dwarsdoorsnede en geslepen zijden?",
     "ja": "bijl-smaltoppig--met-ovale--dwarsdoorsnede--en-",
     "nee": "terug-artefactgroepen-start"
   },
   "612": {
-    "vraag": "dwarsdoorsnede?",
+    "vraag": "Heeft de vuurstenen bijl een ovale tot vlak -ovale dwarsdoorsnede?",
     "ja": "bijl-smaltoppig--met-ovale--tot-vlak-ovale--",
     "nee": "terug-artefactgroepen-start"
   },
   "613": {
-    "vraag": "dwarsdoorsnede ?",
+    "vraag": "Heeft de vuurstenen bijl een afgerond rombische dwarsdoorsnede?",
     "ja": "bijl-smaltoppig--met-afgerond--rombische--",
     "nee": "terug-artefactgroepen-start"
   },
   "614": {
-    "vraag": "dwarsdoorsnede  en een brede  top?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede en een brede top?",
     "ja": "bijl-breedtoppig--met-ovale--dwarsdoorsnede",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2105,27 +2110,27 @@
     "nee": "terug-artefactgroepen-start"
   },
   "616": {
-    "vraag": "dwarsdoorsnede en geslepen zijden ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede en geslepen zijden?",
     "ja": "bijl-breed-toppig--met-ovale--dwarsdoorsnede--met-",
     "nee": "terug-artefactgroepen-start"
   },
   "617": {
-    "vraag": "dwarsdoorsnede en is die langer dan  15 cm ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede en is die langer dan 15 cm?",
     "ja": "bijl-buren",
     "nee": "bijl-breedtoppig--met-ovale--dwarsdoorsnede"
   },
   "618": {
-    "vraag": "dwarsdoorsnede ?",
+    "vraag": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
     "ja": "bijl-dunbladig--met-ovale--dwarsdoorsnede-og",
     "nee": "de-bijl-is-relatief-dik"
   },
   "620": {
-    "vraag": "dwarsdoorsnede , breedte > 2,9 cm ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede",
     "nee": "breedte--29-cm"
   },
   "621": {
-    "vraag": "extra breed) ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
     "ja": "vuursteenbijl-met-rechthoekige-dwarsdoorsnede",
     "nee": "normale-sned-e"
   },
@@ -2135,7 +2140,7 @@
     "nee": "terug-artefactgroepen-start"
   },
   "623": {
-    "vraag": "doorsnede en een dissel snede?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een dissel snede?",
     "ja": "bijl-dissel",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2150,77 +2155,77 @@
     "nee": "terug-artefactgroepen-start"
   },
   "626": {
-    "vraag": "doorsnede en een holle snede ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een holle snede?",
     "ja": "bijl-met-holle--snede",
     "nee": "terug-artefactgroepen-start"
   },
   "627": {
-    "vraag": "en bovenzijde ?",
+    "vraag": "Heeft de vuurstenen bijl met holle snede een gebogen onder - en bovenzijde?",
     "ja": "bijl-met-holle--snede--en-gebogen--onder--en-bovenzijde",
     "nee": "terug-artefactgroepen-start"
   },
   "628": {
-    "vraag": "en bovenzijde ?",
+    "vraag": "Heeft de vuurstenen bijl met holle snede een parallelle onder - en bovenzijde?",
     "ja": "bijl-met-holle--snede--en-parallelle--onder--en-",
     "nee": "terug-artefactgroepen-start"
   },
   "629": {
-    "vraag": "dwarsdoorsnede en een dunne top?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een dunne top?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--duntoppig",
     "nee": "terug-artefactgroepen-start"
   },
   "630": {
-    "vraag": "dwarsdoorsnede en een dunne en scherpe top ?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een dunne en scherpe top?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
     "nee": "terug-artefactgroepen-start"
   },
   "631": {
-    "vraag": "dwarsdoorsnede en een vlakke top  in dwarsdoorsnede?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een vlakke top in dwarsdoorsnede?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
     "nee": "terug-artefactgroepen-start"
   },
   "632": {
-    "vraag": "dwarsdoorsnede?",
+    "vraag": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede en een onregelmatige top in dwarsdoorsnede?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--",
     "nee": "terug-artefactgroepen-start"
   },
   "633": {
-    "vraag": "dwarsdoorsnede ?",
+    "vraag": "Heeft de bijl een dik blad (Dmax>½B maxe) en rechthoekige dwarsdoorsnede?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig",
     "nee": "dunbladig"
   },
   "634": {
-    "vraag": "met de  grootste dikte in het midden ?",
+    "vraag": "Heeft de dikbladige vuursteenbijl met rechthoekige dwarsdoorsnede een sterk gebogen profiel in lengtedoorsnede met de grootste dikte in het midden?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
     "nee": "terug-artefactgroepen-start"
   },
   "635": {
-    "vraag": "lengtedoorsnede?",
+    "vraag": "Heeft de dikbladige vuursteenbijl met rechthoekige dwarsdoorsnede een licht gebogen profiel in lengtedoorsnede?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
     "nee": "terug-artefactgroepen-start"
   },
   "636": {
-    "vraag": "lengtedoorsned e?",
+    "vraag": "Heeft de dikbladige vuursteenbijl met rechthoekige dwarsdoorsnede nagenoeg parallelle zijden in lengtedoorsned e?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--",
     "nee": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig"
   },
   "637": {
-    "vraag": "dwarsdoorsnede ?",
+    "vraag": "Heeft de b ijl een dun blad (Dmax<½B max) en rechthoekige dwarsdoorsnede?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig",
     "nee": "terug-artefactgroepen-start"
   },
   "638": {
-    "vraag": "bovenzijden ?",
+    "vraag": "Heeft de dunbladige vuursteenbijl sterk gekromde onder - en bovenzijden?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--",
     "nee": "terug-artefactgroepen-start"
   },
   "639": {
-    "vraag": "bovenzijden ?",
+    "vraag": "Heeft de dunbladige vuursteenbijl parallelle onder - en bovenzijden?",
     "ja": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--",
     "nee": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig"
   },
   "640": {
-    "vraag": "aan dikte ?",
+    "vraag": "Is het werktuig smal (max 2,9 cm) , breedte nagenoeg gelijk aan dikte?",
     "ja": "beitel",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2245,47 +2250,47 @@
     "nee": "beitel"
   },
   "660": {
-    "vraag": "gesteente ontstaan uit klei)?",
+    "vraag": "Is de bijl relatief klein en gemaakt van kleischalie (gelaagd gesteente ontstaan uit klei)?",
     "ja": "bijl-kleischalie",
     "nee": "terug-artefactgroepen-start"
   },
   "661": {
-    "vraag": "in het midden ?",
+    "vraag": "Heeft de stenen bijl (niet van vuursteen of lydiet) een snede in het midden?",
     "ja": "bijl",
     "nee": "bijl-dissel"
   },
   "662": {
-    "vraag": "dwarsdoorsnede?",
+    "vraag": "Heeft de stenen bijl (niet van vuursteen of lydiet) een ronde dwarsdoorsnede?",
     "ja": "bijl-met-ronde--dwarsdoorsnede",
     "nee": "met-ovale-of-rechthoekige-dwarsdoorsnede"
   },
   "663": {
-    "vraag": "en smalle  top?",
+    "vraag": "Heeft de stenen bijl een ronde dwarsdoorsnede en een dunne en smalle top?",
     "ja": "bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--top",
     "nee": "terug-artefactgroepen-start"
   },
   "664": {
-    "vraag": "deel en een dunne en smalle top?",
+    "vraag": "Heeft de stenen bijl een ronde dwarsdoorsnede op het dikste deel en een dunne en smalle top?",
     "ja": "bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--",
     "nee": "terug-artefactgroepen-start"
   },
   "665": {
-    "vraag": "afgeplatte zijden  en een dunne en smalle top?",
+    "vraag": "Heeft de stenen bijl een ronde dwarsdoorsnede met 1 tot 4 afgeplatte zijden en een dunne en smalle top?",
     "ja": "bijl-met-ronde--dwarsdoorsnede--en-dunne--smalle--",
     "nee": "terug-artefactgroepen-start"
   },
   "666": {
-    "vraag": "top?",
+    "vraag": "Heeft de stenen bijl een ronde dwarsdoorsnede en een stompe top?",
     "ja": "bijl-met-ronde--dwarsdoorsnede--en-stompe--top",
     "nee": "terug-artefactgroepen-start"
   },
   "667": {
-    "vraag": "deel en een stompe top?",
+    "vraag": "Heeft de stenen bijl een ronde dwarsdoorsnede op het dikste deel en een stompe top?",
     "ja": "bijl-met-ronde--dwarsdoorsnede--en-stompe--top-",
     "nee": "terug-artefactgroepen-start"
   },
   "668": {
-    "vraag": "afgeplatte zijden  en een stompe top?",
+    "vraag": "Heeft de stenen bijl een ronde dwarsdoorsnede met 1 tot 4 afgeplatte zijden en een stompe top?",
     "ja": "bijl-met-ronde--dwarsdoorsnede--en-stompe--top-met-",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2300,17 +2305,17 @@
     "nee": "terug-artefactgroepen-start"
   },
   "671": {
-    "vraag": "gehele lengte en smalle top?",
+    "vraag": "Heeft de stenen bijl een vlak -ovale dwarsdoorsnede over de gehele lengte en smalle top?",
     "ja": "bijl-met-ovale--doorsnede--en-smalle--top-doorsnede--",
     "nee": "terug-artefactgroepen-start"
   },
   "672": {
-    "vraag": "afgeplatte zijden  en smalle top?",
+    "vraag": "Heeft de stenen bijl een vlak -ovale dwarsdoorsnede met afgeplatte zijden en smalle top?",
     "ja": "bijl-met-ovale--dwarsdoorsnede--en-smalle--top-met-",
     "nee": "terug-artefactgroepen-start"
   },
   "673": {
-    "vraag": "klokvormige omtrek en een brede top ?",
+    "vraag": "Heeft de stenen bijl een vlak-ovale dwarsdoorsnede, klokvormige omtrek en een brede top?",
     "ja": "bijl-met-ovale--dwarsdoorsnede--en-een-brede--top-",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2320,47 +2325,47 @@
     "nee": "bijl"
   },
   "675": {
-    "vraag": "slank en tamelijk lang B<½ L?",
+    "vraag": "Heeft de stenen bijl een rechthoekige doorsnede en is die slank en tamelijk lang B<½ L?",
     "ja": "bijl-met-rechthoekige--doorsnede--lang",
     "nee": "kort-b½l"
   },
   "676": {
-    "vraag": "die klokvormig ?",
+    "vraag": "Heeft de lange stenen bijl een rechthoekige doorsnede en is die klokvormig?",
     "ja": "bijl-met-rechthoekige--doorsnede--lang-klokvormig",
     "nee": "terug-artefactgroepen-start"
   },
   "677": {
-    "vraag": "die trapeziumvormig ?",
+    "vraag": "Heeft de lange stenen bijl een rechthoekige doorsnede en is die trapeziumvormig?",
     "ja": "bijl-met-rechthoekige--doorsnede--lang-",
     "nee": "terug-artefactgroepen-start"
   },
   "678": {
-    "vraag": "die rechthoekig van vorm?",
+    "vraag": "Heeft de lange stenen bijl een rechthoekige doorsnede en is die rechthoekig van vorm?",
     "ja": "bijl-met-rechthoekige--doorsnede--lang-rechthoekig",
     "nee": "terug-artefactgroepen-start"
   },
   "679": {
-    "vraag": "breed en tamelijk kort B>½L ?",
+    "vraag": "Heeft de stenen bijl een rechthoekige doorsnede en is die breed en tamelijk kort B>½L?",
     "ja": "bijl-met-rechthoekige--doorsnede--kort",
     "nee": "bijl"
   },
   "680": {
-    "vraag": "die klokvormig ?",
+    "vraag": "Heeft de korte stenen bijl een rechthoekige doorsnede en is die klokvormig?",
     "ja": "bijl-met-rechthoekige--doorsnede--kort-klokvormig",
     "nee": "terug-artefactgroepen-start"
   },
   "681": {
-    "vraag": "die trapeziumvormig ?",
+    "vraag": "Heeft de korte stenen bijl een rechthoekige doorsnede en is die trapeziumvormig?",
     "ja": "bijl-met-rechthoekige--doorsnede--kort-",
     "nee": "terug-artefactgroepen-start"
   },
   "682": {
-    "vraag": "die rechthoekig  van vorm?",
+    "vraag": "Heeft de korte stenen bijl een rechthoekige doorsnede en is die rechthoekig van vorm?",
     "ja": "bijl-met-rechthoekige--doorsnede--kort-rechthoekig",
     "nee": "bijl"
   },
   "683": {
-    "vraag": "het midden  of is de bijl asymmetrisch in lengtedoorsnede ?",
+    "vraag": "Is de bijl geheel of gedeeltelijk geslepen met de snede niet in het midden of is de bijl asymmetrisch in lengtedoorsnede?",
     "ja": "bijl-dissel-og-schoenleestbijl",
     "nee": "geslepen--stenen--artefact"
   },
@@ -2395,12 +2400,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "704": {
-    "vraag": "in het midden ?",
+    "vraag": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
     "ja": "bijl-dissel--doorboord",
     "nee": "terug-artefactgroepen-start"
   },
   "705": {
-    "vraag": "evenwijdig aan het gat?",
+    "vraag": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
     "ja": "doorboorde--breedwig",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2410,12 +2415,12 @@
     "nee": "terug-artefactgroepen-start"
   },
   "707": {
-    "vraag": "en heeft die 2 ‘snedes ’?",
+    "vraag": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
     "ja": "bijl-dubbel",
     "nee": "terug-artefactgroepen-start"
   },
   "708": {
-    "vraag": "stompe kant?",
+    "vraag": "Is de dubbelbijl is wel symmetrisch qua zij aanzicht maar heeft die maar één echte snede en zit het gat zit iets meer naar de stompe kant?",
     "ja": "bijl-dubbel--type-a",
     "nee": "terug-artefactgroepen-start"
   },
@@ -2440,17 +2445,17 @@
     "nee": "niet-gefacetteerd"
   },
   "713": {
-    "vraag": "onderzijde  en een gefacetteerd oppervlak?",
+    "vraag": "Heeft de hamerbijl een vlakke bovenzijde en licht concave onderzijde en een gefacetteerd oppervlak?",
     "ja": "bijl-hamer--gefacetteerd--type-1",
     "nee": "terug-artefactgroepen-start"
   },
   "714": {
-    "vraag": "oppervlak?",
+    "vraag": "Heeft de hamerbijl een vlakke boven - en onderzijde en duidelijke rand op de versterking rond gat en een gefacetteerd oppervlak?",
     "ja": "bijl-hamer--gefacetteerd--type-2a",
     "nee": "terug-artefactgroepen-start"
   },
   "715": {
-    "vraag": "oppervlak?",
+    "vraag": "Heeft de hamerbijl een vlakke boven - onderzijde zonder duidelijke rand op de versterking rond gat en een gefacetteerd oppervlak?",
     "ja": "bijl-hamer--gefacetteerd--type-2b",
     "nee": "bijl-hamer--gefacetteerd"
   },
@@ -2460,92 +2465,92 @@
     "nee": "terug-artefactgroepen-start"
   },
   "717": {
-    "vraag": "onderzijde?",
-    "ja": "nee",
+    "vraag": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+    "ja": "hamerbijl-met-convexe-bovenzijde",
     "nee": "terug-artefactgroepen-start"
   },
   "718": {
-    "vraag": "meer vierzijdige dwarsdoorsnede bij de nek?",
+    "vraag": "Heeft de hamerbijl een sterke concave onderzijde en min of meer vierzijdige dwarsdoorsnede bij de nek?",
     "ja": "type-h-en-g",
     "nee": "terug-artefactgroepen-start"
   },
   "719": {
-    "vraag": "uitgewaaierde nek een scherpe verdikking  bij het gat?",
+    "vraag": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
     "ja": "bijl-hamer--type-g",
     "nee": "weinig-verdikking-bij-het-verdiept-liggende-gat"
   },
   "720": {
-    "vraag": "onderzijde en sterk versmalde nek en zit het gat in de nek ?",
+    "vraag": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
     "ja": "type-k-en-l",
     "nee": "terug-artefactgroepen-start"
   },
   "721": {
-    "vraag": "verkleinde  of genepen nek?",
+    "vraag": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
     "ja": "bijl-hamer--type-l",
     "nee": "bijl-hamer--type-k"
   },
   "722": {
-    "vraag": "een uitgewaaierde snede   en (nagenoeg ) ronde doorsnede ?",
+    "vraag": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
     "ja": "type-a--ba",
     "nee": "een-vierzijdige-dwarsdoorsnede"
   },
   "723": {
-    "vraag": "verdikking  bij de snede ?",
+    "vraag": "Heeft de hamerbijl met ronde dwarsdoorsnede en scherpe verdikking bij de snede?",
     "ja": "bijl-hamer--type-ba",
     "nee": "afgerond-verdikking-en-nagenoeg-ronde-doorsnede"
   },
   "724": {
-    "vraag": "scherpe verdikking  bij het steelgat?",
+    "vraag": "Heeft de asymmetrische hamerbijl met convexe boven en concave onderzijde en vierzijdige dwarsdoorsnede en een scherpe verdikking bij het steelgat?",
     "ja": "bijl-hamer--type-b",
     "nee": "een-afgeronde-verdikking-bijl-hamer--type-p1"
   },
   "726": {
-    "vraag": "een symmetrische vorm , vierzijdige dwarsdoorsnede ?",
+    "vraag": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
     "ja": "bijl-hamer--type-i",
     "nee": "asymmetrisch-en-ronde-dwarsdoorsnede"
   },
   "727": {
-    "vraag": "onderzijde  zonder of lichte verdikking  rond het gat ?",
+    "vraag": "Heeft de hamerbijl een convexe boven - en licht convexe onderzijde zonder of lichte verdikking rond het gat?",
     "ja": "nee-een-licht-convexe-tot-vlakke-bovenzijde-vlakke",
     "nee": "een-licht-convexe-tot-vlakke-bovenzijde-vlakke"
   },
   "728": {
-    "vraag": "zonder verdikking  rond het gat ?",
+    "vraag": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
     "ja": "bijl-hamer--type-r",
     "nee": "met-lichte-verdikking-bijl-hamer--type-epe"
   },
   "729": {
-    "vraag": "vlakke onderzijde en afgeronde verdikking rond het gat ?",
+    "vraag": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde , vlakke onderzijde en afgeronde verdikking rond het gat?",
     "ja": "type-c-en-ca",
     "nee": "wigvormig-zonder-verdikking"
   },
   "730": {
-    "vraag": "vierhoekige doorsnede?",
+    "vraag": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
     "ja": "bijl-hamer--type-c",
     "nee": "een-ronde-dwarsdoorsnede-van-de-nek"
   },
   "731": {
-    "vraag": "onderzijde  zonder verdikking bij het gat?",
+    "vraag": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
     "ja": "type-zuidvelde-en-emmen",
     "nee": "vlakke-bovenzijde-en-sterk-concave-onderzijde"
   },
   "732": {
-    "vraag": "versterking van het gat ?",
+    "vraag": "Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat?",
     "ja": "met-rand-bijl-hamer--type-zuidvelde",
     "nee": "zonder-rand-bijl-hamer--type-emmen"
   },
   "733": {
-    "vraag": "steelgat ?",
+    "vraag": "Heeft de hamerbijl een vlakke tot licht concave bovenzijde en sterk concave onderzijde en afgeronde verdikking bij het steelgat?",
     "ja": "bijl-hamer--type-f",
     "nee": "met-scherpe-verdikking"
   },
   "734": {
-    "vraag": "snede?",
+    "vraag": "Heeft de hamerbijl met vlakke tot licht concave bovenzijde en concave onderzijde een duidelijke verdikking rond het steelgat, een asymmetrische vorm en sterk uitgewaaierde snede?",
     "ja": "bijl-hamer--type-d",
     "nee": "symmetrisch--geen-uitgewaaierde-snede"
   },
   "735": {
-    "vraag": "onderzijde en gebogen en versmalde  nek?",
+    "vraag": "Heeft de hamerbijl type K een convexe bovenzijde en concave onderzijde en gebogen en versmalde nek?",
     "ja": "bijl-hamer--type-muntendam",
     "nee": "geen-versmalde-nek-wel-verdikking-rond-het-gat"
   },

@@ -29,6 +29,52 @@ REPORT_MD = REPORT_DIR / "algoritme_beslisboom_audit.md"
 
 PAGE_SPLIT_RE = re.compile(r"={60}\nPAGINA \d+ van \d+\n={60}")
 QUESTION_ID_RE = re.compile(r"\.\.(\d+[a-z]?)")
+VALID_TYPE_PREFIXES = (
+    "type-",
+    "dolk--scandinavisch--type-",
+    "dolk-scandinavisch--type-",
+    "dolk--oost-europees--type-",
+    "breed-lemmet-dolk--oost-europees--type-",
+    "smal-lemmet-dolk--oost-europees--type-",
+    "sikkel--type-",
+    "bijl-smaltoppig--",
+    "bijl-met-rechthoekige--",
+    "bijl-met-ronde--",
+    "bijl-met-ovale--",
+    "bijl-dubbel--type-",
+    "bijl-hamer--type-",
+    "bijl-hamer--gefacetteerd--type-",
+    "met-lichte-verdikking-bijl-hamer--type-",
+    "met-rand-bijl-hamer--type-",
+    "zonder-rand-bijl-hamer--type-",
+    "een-afgeronde-verdikking-bijl-hamer--type-",
+)
+ACCEPTABLE_INTERNAL_LABELS = {
+    "het-is-een-geslepen--stenen--artefact",
+    "het-artefact-heeft-resten-van-een-ventrale-zijde",
+    "het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt",
+    "het-artefact-is-een-knol--brok-of-vorstsplijting",
+    "meer-een-beitel-vorm--breedte29-cm",
+    "het-is-een-vuistbijl-of-bladvorm",
+    "het-artefact-heeft-een-blad-vorm",
+    "het-artefact-heeft-de-vorm-van-een-vuistbijl",
+    "nee-meerdere--boor--dubbel-of-boor--meervoudig",
+    "zie-ook",
+    "de-spits-heeft-ste-il-geretoucheerde-zijden-en-evt-basis",
+    "nee-de-spits-heeft-ste-il-geretoucheerde-zijden-en-evt-basis",
+    "de-vorm-van-een-spits",
+    "het-artefact-is-een-artefact--geslepen",
+    "nee-het-artefact-is-een-artefact--geslepen",
+    "de-bijl-is-relatief-dik",
+    "breedte--29-cm",
+    "de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-",
+    "de-vuurkets-is-aan-één-zijde-is-afgerond-of-de-vuurkets",
+    "een-zijde-deels-en-basis",
+    "een-vierzijdige-dwarsdoorsnede",
+    "een-licht-convexe-tot-vlakke-bovenzijde-vlakke",
+    "nee-een-licht-convexe-tot-vlakke-bovenzijde-vlakke",
+    "een-ronde-dwarsdoorsnede-van-de-nek",
+}
 
 
 @dataclass
@@ -45,6 +91,70 @@ def normalize_whitespace(value: str) -> str:
 
 def normalize_question(value: str) -> str:
     value = normalize_whitespace(value)
+    replacements = {
+        " i.p.v. ": " in plaats van ",
+        "retouche/bekapping": "retouche of bekapping",
+        "retouche of bekapping": "retouche/bekapping",
+        " /": "/",
+        "/ ": "/",
+        " X ": " x ",
+        " de de ": " de ",
+        " is is ": " is ",
+        " heeft heeft ": " heeft ",
+        "Is de vuistbijl is ": "Is de vuistbijl ",
+        "Heeft de vuistbijl heeft ": "Heeft de vuistbijl ",
+        "Heeft h et ": "Heeft het ",
+        "Heeft de n ": "Heeft de ",
+        "ovaa l": "ovaal",
+        "zijde n": "zijden",
+        "afknot ting": "afknotting",
+        "dikke re": "dikkere",
+        "decorticatie afslag": "decorticatieafslag",
+        "(half -)": "(half-)",
+        "schrabber -achtige": "schrabber-achtige",
+        "kling/lamelle": "kling of lamelle",
+        "la melle": "lamelle",
+        "m in ": "min ",
+        "s teelspits": "steelspits",
+        "l angwerpige": "langwerpige",
+        "d.m.v.": "door middel van",
+        "kerf/steel": "kerf of steel",
+        "oppervlakte retouche": "oppervlakteretouche",
+        "afslag/kling": "afslag of kling",
+        "g eometrische": "geometrische",
+        "driehoe k": "driehoek",
+        "tranchet -snede": "tranchet-snede",
+        "vuistbijlen": "vuistbijl",
+        "ogiefvormig vorm": "ogiefvormige vorm",
+        "vorm ,": "vorm,",
+        "bladvormig ,": "bladvormig,",
+        "punt?": "punt?",
+        "punt?": "punt?",
+        "dunner ,": "dunner,",
+        "rug?": "rug?",
+        "(half-) steil": "(half-)steil",
+        "(half-)steile": "(half-)steil",
+        "zijden ,": "zijden,",
+        "vuursteenelement ,": "vuursteenelement,",
+        " (deels) geretoucheerde": " deels geretoucheerde",
+        " d.m.v. ": " door middel van ",
+        "segment )": "segment)",
+        "het artefact is bladvormig": "het artefact bladvormig",
+        "is vaak dunner": "is het vaak dunner",
+        "maar is niet geslepen": "maar is het niet geslepen",
+        "dwarsdoorsnede maar is niet geslepen": "dwarsdoorsnede maar is het niet geslepen",
+        "Heeft de vuistbijl een afgeronde punt": "Heeft de vuistbijl een (afgeronde) punt",
+        "Heeft de vuistbijl een korte snede": "Heeft de vuistbijl met een (korte) snede",
+        "relatief dun, breedte > 2,35 x dikte": "relatief dun breedte > 2,35 x dikte",
+        "vorm ovaal, lengte < 1,5 x breedte": "vorm ovaal lengte < 1,5 x breedte",
+        "fijnere bewerking aan één lange zijde": "fijnere bewerking aan ‘één lange zijde",
+        "deels geretoucheerde en door middel van een kerf": "deels geretoucheerde en d.m.v. een kerf",
+        "het spitse deel": "het spits deel",
+        "polymorfe kerf of steel": "polymorfe kerf/steel",
+        "gemaakt van een kling een relatief": "gemaakt van een kling, een relatief",
+    }
+    for source, target in replacements.items():
+        value = value.replace(source, target)
     value = value.replace(" ?", "?")
     return value
 
@@ -120,6 +230,10 @@ def parse_algoritme_questions(content: str) -> dict[str, TextQuestion]:
 
 def is_suspicious_label(label: str | None) -> bool:
     if not label:
+        return False
+    if label in ACCEPTABLE_INTERNAL_LABELS:
+        return False
+    if label.startswith(VALID_TYPE_PREFIXES):
         return False
     return (
         label == "nee"

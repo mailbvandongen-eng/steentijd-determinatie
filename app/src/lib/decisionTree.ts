@@ -66,11 +66,11 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'van-een-andere-steensoort': '4',
   'het-is-een-geslepen--stenen--artefact': '5',
   'geslepen--bijl': '660',
-  'geslepen--vuurstenen--artefact': '601',
+  'geslepen--vuurstenen--artefact': '600',
   'nee-het-artefact-is-een-artefact--geslepen': '602',
   'het-artefact-is-een-artefact--geslepen': '602',
-  'het-artefact-heeft-resten-van-een-ventrale-zijde': '40',
-  'het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt': '125',
+  'het-artefact-heeft-resten-van-een-ventrale-zijde': '7',
+  'het-is-bifaciaal-bewerkt-of-deels-niet-bewerkt': '101',
   'één-of-meer-afslagnegatieven': '8',
   'het-artefact-is-een-knol--brok-of-vorstsplijting': '9a',
   'het-is-een-artefact': '9',
@@ -83,21 +83,23 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'een-kern': '11',
   kern: '11',
   'nee-een-klein-of-onherkenbaar-slagvlak': '18',
-  'groot-of-herkenbaar-slagvlak': '18',
+  'groot-of-herkenbaar-slagvlak': '12',
   'een-klein-of-onherkenbaar-slagvlak': '13',
   'klein-of-onherkenbaar-slagvlak': '13',
   'nee-één-slagvlak': '29',
   'meer-dan-één-slagvlak': '29',
   'één-slagvlak': '25',
   'lange-afslagnegatieven': '26',
-  'relatief-klein': '28',
+  'relatief-klein': '28a',
   twee: '30',
   'afslagkling--werktuig': '201',
   bekapt: '300',
+  'bekapt-artefact': '300',
   'geretoucheerd-of-bijzondere-bewerking': '202',
   'een-combinatiewerktuig': '270',
   'een-combinatie--werktuig': '270',
   'combinatie--werktuig': '270',
+  combinatiewerktuig: '270',
   'afgeknot-artefact': '301',
   'de-afslag-of-kling-is-niet-bewerkt': '41',
   'afslag-of-kling-onbewerkt': '41',
@@ -110,12 +112,18 @@ const EXPERT_LABEL_JUMPS: Record<string, string> = {
   'vlakke-rand---of-oppervlakte-retouche': '540',
   'nee-het-is-bekapt': '541',
   'het-is-bekapt': '541',
+  'de-vorm-van-een-spits': '542',
+  'smalle-kling-of-lamelle-zonder-duidelijke-punt': '398',
+  'cirkelsegmentvormige-dubbelspits': '471',
+  'spits-met-schachtdoorn': '543',
+  'hamerbijl-met-convexe-bovenzijde': '718',
   'nee-nee-de-vorm-van-een-spits': '542',
   'nee-de-vorm-van-een-spits': '542',
   'nee-bladvormig': '544',
   bladvormig: '544',
   'nee-gelijkbenig-of-gelijkzijdig': '545',
   'gelijkbenig-of-gelijkzijdig': '545',
+  'afslagkling-met-rand---of-oppervlakteretouche': '540',
 };
 
 function getExpertQuestionIndex(questionId: string): number {
@@ -204,7 +212,7 @@ function getExpertContextualJump(
     return '683';
   }
 
-  if (target === 'nee-overige-groepen-afslagklingwerktuigen') {
+  if (target === 'nee-overige-groepen-afslagklingwerktuigen' || target === 'overige-groepen-afslagklingwerktuigen') {
     if (questionId === '202') return '230';
     if (questionId === '230') return '240';
     if (questionId === '240') return '247';
@@ -214,7 +222,7 @@ function getExpertContextualJump(
     if (questionId === '300') return '320';
   }
 
-  if (target === 'nee-nee-overige-groepen-afslagklingwerktuigen') {
+  if (target === 'nee-nee-overige-groepen-afslagklingwerktuigen' || target === 'overige-groepen-afslagklingwerktuigen') {
     if (questionId === '260') return '270';
     if (questionId === '270') return '300';
   }
@@ -234,15 +242,51 @@ function getExpertContextualJump(
   if (
     (target === 'levallois-bevestigd' && questionId === '12')
   ) {
-    return '13';
+    return '19';
+  }
+
+  if (questionId === '12' && target === 'terug-artefactgroepen-start') {
+    return '12a';
   }
 
   if (target === 'discusvorm-bevestigd' && questionId === '12a') {
+    return '23';
+  }
+
+  if (questionId === '12a' && target === 'terug-artefactgroepen-start') {
     return '13';
   }
 
   if (target === 'discusvorm-bevestigd' && questionId === '18') {
-    return '19';
+    return '23';
+  }
+
+  if (target === 'bijl' && questionId === '602') {
+    return '603';
+  }
+
+  if (target === 'beitel-smaller-dan-29-cm' && questionId === '602') {
+    return '640';
+  }
+
+  if (target === 'bijl-vuursteen' && questionId === '604') {
+    return '605';
+  }
+
+  if (target === 'doorboord-werktuig' && questionId === '700') {
+    return '701';
+  }
+
+  if (target === 'bijl-dubbel' && questionId === '707') {
+    return '708';
+  }
+
+  if (target === 'bijl-hamer' && questionId === '711') {
+    return '712';
+  }
+
+  if (target === 'bijl-hamer--gefacetteerd' && questionId === '712') {
+    return '713';
   }
 
   if (target === 'versplinterde-uiteinden-aanwezig' && questionId === '101') {
@@ -258,6 +302,10 @@ function getExpertContextualJump(
   }
 
   if (target === 'bijl-vuistbijl-of-bladvorm' && questionId === '110') {
+    return '125';
+  }
+
+  if (target === 'ander-bifaciaal-artefact' && questionId === '110') {
     return '111';
   }
 
@@ -299,7 +347,15 @@ function getExpertContextualJump(
     return '132';
   }
 
-  if ((target === 'nee-heel-klein--6-cm-of-heel-dun' || target === 'niet-heel-klein-of-dun' || target === 'heel-klein--6-cm-of-heel-dun') && questionId === '136') {
+  if (target === 'niet-heel-klein-of-dun' && questionId === '136') {
+    return '137';
+  }
+
+  if (target === 'nee-heel-klein--6-cm-of-heel-dun' && questionId === '136') {
+    return '138';
+  }
+
+  if (target === 'heel-klein--6-cm-of-heel-dun' && questionId === '136') {
     return '146';
   }
 
@@ -2064,6 +2120,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-kern--bipolair': 'Bipolaire kern',
   'een-combinatiewerktuig': 'Combinatiewerktuig',
   'een-combinatie--werktuig': 'Combinatiewerktuig',
+  combinatiewerktuig: 'Combinatiewerktuig',
   'langwerpig-driehoekig-vuistbijl--langwerpig--driehoekig': 'Langwerpig driehoekige vuistbijl',
   'onregelmatig-driehoekig-vuistbijl--sub-driehoekig': 'Sub-driehoekige vuistbijl',
   'langwerpig-driehoekig-vuistbijl--langwerpig--hartvormig': 'Langwerpig hartvormige vuistbijl',
@@ -2161,6 +2218,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'met-gebogen-punt-met-mini-stekerafslag-en-van-ventrale': 'Gebogen beksteker met mini-stekerafslag vanaf ventrale zijde',
   'alternerende-bek--steker-o-g-steker--rr': 'Alternerende beksteker / steker RR',
   'een-krukowski--kerfrest': 'Krukowski-kerfrest',
+  'krukowski--kerfrest': 'Krukowski-kerfrest',
   'de-krukowski--kerfrest-is-aan-één-zijde-steil-geretoucheerd-': 'Steil geretoucheerde Krukowski-kerfrest',
   'kerfrest-of-microsteker': 'Kerfrest of microsteker',
   'steker--a': 'A-steker',
@@ -2184,7 +2242,11 @@ const DISPLAY_NAMES: Record<string, string> = {
   'meerdere--boor--dubbel-of-boor--meervoudig': 'Dubbele of meervoudige boor',
   'boor-dickenbännli': 'Dickenbaennli-boor',
   'een-bec': 'Bec',
+  bec: 'Bec',
   'een-boor': 'Boor',
+  boor: 'Boor',
+  'boor--gekerfd': 'Gekerfde boor',
+  'boor--getand': 'Getande boor',
   ruimer: 'Ruimer',
   'billhook--a': 'Billhook type A',
   'billhook--b': 'Billhook type B',
@@ -2216,6 +2278,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'schrabber--wehlen-og-schrabber--gesteeld': 'Wehlen- of gesteelde schrabber',
   'schrabber--kern': 'Kernschrabber',
   'een-schaaf--schrabber': 'Schaaf-schrabber',
+  'schaaf--schrabber': 'Schaaf-schrabber',
   schaaf: 'Schaaf',
   'schaaf--quina': 'Quina-schaaf',
   'schaaf--demi--quina': 'Demi-Quina-schaaf',
@@ -2228,6 +2291,11 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-schaaf--gekerfd': 'Gekerfde schaaf',
   'een-schaaf--getand': 'Getande schaaf',
   'een-schaaf--limace': 'Limace-schaaf',
+  'schaaf--steker': 'Schaaf-steker',
+  'schaaf--boor': 'Schaaf-boor',
+  'schaaf--gekerfd': 'Gekerfde schaaf',
+  'schaaf--getand': 'Getande schaaf',
+  'schaaf--limace': 'Limace-schaaf',
   'schaaf--dubbel': 'Dubbele schaaf',
   'schaaf--schuin--dubbel': 'Schuine dubbele schaaf',
   'schaaf--schuin-racloir-déjeté': 'Schuine schaaf / racloir dejeté',
@@ -2238,13 +2306,20 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-schrabber--boor': 'Schrabber-boor',
   'een-schrabber--gekerfd': 'Gekerfde schrabber',
   'een-schrabber--afgeknot': 'Afgeknotte schrabber',
+  'schrabber--steker': 'Schrabber-steker',
+  'schrabber--steker--krombek': 'Schrabber-steker met krombek',
+  'schrabber--boor': 'Schrabber-boor',
+  'schrabber--gekerfd': 'Gekerfde schrabber',
+  'schrabber--afgeknot': 'Afgeknotte schrabber',
   'een-steker--boor': 'Steker-boor',
   'een-steker--gekerfd': 'Gekerfde steker',
   'een-steker--krombek--gekerfd': 'Gekerfde krombeksteker',
   'een-steker--afgeknot': 'Afgeknotte steker',
+  'steker--boor': 'Steker-boor',
+  'steker--gekerfd': 'Gekerfde steker',
+  'steker--krombek--gekerfd': 'Gekerfde krombeksteker',
+  'steker--afgeknot': 'Afgeknotte steker',
   'steker--kern': 'Steker op kern',
-  'een-boor---gekerfd': 'Gekerfde boor',
-  'een-boor--getand': 'Getande boor',
   'boor--kern': 'Boor op kern',
   'boor-bec-of-ruimer': 'Boor, bec of ruimer',
   'beitel--kling-beitel': 'Klingbeitel',
@@ -2262,6 +2337,9 @@ const DISPLAY_NAMES: Record<string, string> = {
   'een-gekerfd--en-getand--artefact': 'Gekerfd en getand artefact',
   'een-gekerfd--en-afgeknot--artefact': 'Gekerfd en afgeknot artefact',
   'een-getand--en-afgeknot--artefact': 'Getand en afgeknot artefact',
+  'gekerfd--en-getand--artefact': 'Gekerfd en getand artefact',
+  'gekerfd--en-afgeknot--artefact': 'Gekerfd en afgeknot artefact',
+  'getand--en-afgeknot--artefact': 'Getand en afgeknot artefact',
   'kling--steil-geretoucheerd': 'Steil geretoucheerde kling',
   'kling--steil-geretoucheerd--rechthoekig': 'Steil geretoucheerde rechthoekige kling',
   'kling--steil-geretoucheerd--driehoekig': 'Steil geretoucheerde driehoekige kling',
@@ -2271,11 +2349,12 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--lbk--met-oppervlakteretouche': 'LBK-spits met oppervlakteretouche',
   'spits--driehoekig--met-oppervlakteretouche--rechte-basis': 'Driehoekige spits met oppervlakteretouche en rechte basis',
   'spits--driehoekig--met-oppervlakteretouche--holle-basis': 'Driehoekige spits met oppervlakteretouche en holle basis',
-  'spits--driehoekig--met-oppervlakteretouche': 'Driehoekige spits met oppervlakteretouche',
   'spits--driehoekig--met-oppervlakteretouche--': 'Driehoekige spits met oppervlakteretouche',
+  'spits--driehoekig--met-oppervlakteretouche': 'Driehoekige spits met oppervlakteretouche',
   'spits--sögel': 'Sögel-spits',
   'spits--post-swidry': 'Post-Swidry-spits',
   'spits--driehoekig--met-schachtdoor-n-en-korte--': 'Driehoekige spits met schachtdoorn en korte basis',
+  'spits--driehoekig--met-schachtdoorn-en-korte-basis': 'Driehoekige spits met schachtdoorn en korte basis',
   'spits--driehoekig--met-schachtdoorn': 'Driehoekige spits met schachtdoorn',
   'spits--brede--klokbekerspits': 'Brede klokbekerspits',
   'spits--smalle--klokbekerspits': 'Smalle klokbekerspits',
@@ -2284,6 +2363,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--met-oppervlakte--retouche': 'Spits met oppervlakteretouche',
   'oppervlakte-retouche': 'Artefact met oppervlakteretouche',
   'het-artefact-is-bekapt': 'Bekapt artefact',
+  'bekapt-artefact': 'Bekapt artefact',
   bekapt: 'Bekapt artefact',
   'afgeknot-artefact': 'Afgeknot artefact',
   'voor-een-groot-deel-bekapt': 'Voor een groot deel bekapt artefact',
@@ -2356,6 +2436,12 @@ const DISPLAY_NAMES: Record<string, string> = {
   'spits--zonhoven': 'Zonhoven-spits',
   'spits-zonder-steel-of-kerf': 'Spits zonder steel of kerf',
   'een-artefact-zonder-duidelijke-punt': 'Artefact zonder duidelijke punt',
+  'artefact-zonder-duidelijke-punt': 'Artefact zonder duidelijke punt',
+  'kerfsteel-zonder-schachtdoorn-aan-puntzijde': 'Kerfsteel zonder schachtdoorn aan puntzijde',
+  'smalle-kling-of-lamelle-zonder-duidelijke-punt': 'Smalle kling of lamelle zonder duidelijke punt',
+  'cirkelsegmentvormige-dubbelspits': 'Cirkelsegmentvormige dubbelspits',
+  'spits-met-schachtdoorn': 'Spits met schachtdoorn',
+  'hamerbijl-met-convexe-bovenzijde': 'Hamerbijl met convexe bovenzijde',
   'geen-punt-of-een-geometrische-vorm': 'Artefact zonder duidelijke punt of met geometrische vorm',
   'aan-beide-zijden': 'Tweezijdig gekerfde spits',
   'aan-2-zijden': 'Aan twee zijden bewerkt artefact',
@@ -2369,9 +2455,17 @@ const DISPLAY_NAMES: Record<string, string> = {
   gelijkzijdig: 'Gelijkzijdig artefact',
   'gelijkbenig-of-gelijkzijdig': 'Gelijkbenig of gelijkzijdig artefact',
   'een-segmentvorm': 'Segmentvormig artefact',
+  segmentvorm: 'Segmentvormig artefact',
   'vierhoekig-of-segmentvorm': 'Vierhoekig of segmentvormig artefact',
   'een-symmetrisch-of-asymmetrische-trapezium': 'Symmetrisch of asymmetrisch trapezium',
+  'symmetrisch-of-asymmetrisch-trapezium': 'Symmetrisch of asymmetrisch trapezium',
   'een-vierzijdige-dwarsdoorsnede': 'Artefact met vierzijdige dwarsdoorsnede',
+  'overige-groepen-afslagklingwerktuigen': 'Overige groepen afslag- en klingwerktuigen',
+  'afslagkling-met-rand---of-oppervlakteretouche': 'Afslag of kling met rand- of oppervlakteretouche',
+  'de-vorm-van-een-spits': 'Artefact in de vorm van een spits',
+  'twee-zijden': 'Tweezijdig bewerkt artefact',
+  'gedeeltelijk-geretoucheerde-zijde': 'Artefact met gedeeltelijk geretoucheerde zijde',
+  'een-zijde-deels-en-basis': 'Artefact met deels geretoucheerde zijde en basis',
   'spits-eenzijdig--steil-geretoucheerd': 'Eenzijdig steil geretoucheerde spits',
   'steil-geretoucheerde-spits-gemaakt-van-beide-zijden': 'Van beide zijden steil geretoucheerde spits',
   'nee-grof-bewerkt': 'Fijn oppervlaktegeretoucheerd bifaciaal werktuig',
@@ -2446,6 +2540,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'breed-te29-cm--halffabricaat--bijl': 'Halffabricaat van een bijl breder dan 2,9 cm',
   'meer-een-beitel-vorm--breedte29-cm': 'Beitelvormig artefact smaller dan 2,9 cm',
   'halffabricaat--beitel': 'Halffabricaat van een beitel',
+  'halffabricaat--bijl': 'Halffabricaat van een bijl',
   'een-proto--vuistbijl': 'Proto-vuistbijl',
   'proto--vuistbijl': 'Proto-vuistbijl',
   'spits--blad': 'Bladspits',
@@ -2456,8 +2551,10 @@ const DISPLAY_NAMES: Record<string, string> = {
   'asymmetrische-dolkvorm': 'Asymmetrische dolkvorm',
   'symmetrische-dolkvorm': 'Symmetrische dolkvorm',
   'een-oppervlak-bewerkt': 'Aan een oppervlak bewerkte dolk',
+  'oppervlak-bewerkt': 'Aan een oppervlak bewerkte dolk',
   'franse-dolk': 'Franse dolk',
   'onregelmatig-dolk--kling--met-volledige--': 'Onregelmatige klingdolk met volledige retouche',
+  'onregelmatig-dolk--kling--met-volledige-retouche': 'Onregelmatige klingdolk met volledige retouche',
   'relatief-grof-aan-beide-zijden': 'Relatief grof aan beide zijden bewerkte dolk',
   'gemaakt-van-een-andere-steensoort-dan-vuursteen': 'Gemaakt van een andere steensoort dan vuursteen',
   'van-een-andere-steensoort': 'Artefact van een andere steensoort',
@@ -2469,6 +2566,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'geslepen--vuurstenen--artefact': 'Geslepen vuurstenen artefact',
   'geslepen--stenen--artefact': 'Geslepen stenen artefact',
   'het-artefact-is-een-artefact--geslepen': 'Geslepen artefact',
+  'andere-steensoort-dan-vuursteen': 'Gemaakt van een andere steensoort dan vuursteen',
   'het-is-een-geslepen--stenen--artefact': 'Geslepen stenen artefact',
   'van-andere-vuursteen-dolk--pseudo--grand--pressigny': 'Pseudo-Grand-Pressigny-dolk',
   'dolk--scandinavisch--type-i': 'Scandinavische dolk type I',
@@ -2497,6 +2595,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'dolk-scandinavisch--type-vb': 'Scandinavische dolk type Vb',
   'dolk--scandinavisch--type-vi': 'Scandinavische dolk type VI',
   'dolk--scandinavisch---type-via': 'Scandinavische dolk type VIa',
+  'dolk--scandinavisch--type-via': 'Scandinavische dolk type VIa',
   'dolk--scandinavisch--type-vib': 'Scandinavische dolk type VIb',
   'dolk--scandinavisch--type-vic': 'Scandinavische dolk type VIc',
   'dolk--engels--met-kort--handvat': 'Engelse dolk met kort handvat',
@@ -2509,7 +2608,10 @@ const DISPLAY_NAMES: Record<string, string> = {
   'dolk--oost-europees--type-5': 'Oost-Europese dolk type 5',
   'een-breed-lemmet-dolk--oost-europees--type-3': 'Oost-Europese dolk type 3 met breed lemmet',
   'een-smal-lemmet-dolk--oost-europees--type-4': 'Oost-Europese dolk type 4 met smal lemmet',
+  'breed-lemmet-dolk--oost-europees--type-3': 'Oost-Europese dolk type 3 met breed lemmet',
+  'smal-lemmet-dolk--oost-europees--type-4': 'Oost-Europese dolk type 4 met smal lemmet',
   'een-sikkel': 'Sikkel',
+  sikkel: 'Sikkel',
   'sikkel--type-a': 'Sikkel type A',
   'sikkel--type-b': 'Sikkel type B',
   'kernwerktuig--fijn-bewerkt': 'Fijn bewerkt kernwerktuig',
@@ -2616,6 +2718,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'met-twee-steker-aflagen-van-2-zijden': 'Artefact met twee stekerafslagen van twee zijden',
   'een-halffabricaat---bijl': 'Halffabricaat van een bijl',
   'breedte--29-cm-een-beitel': 'Beitel met breedte kleiner dan 2,9 cm',
+  'beitel-smaller-dan-29-cm': 'Beitel met breedte kleiner dan 2,9 cm',
   'breedte--29-cm': 'Artefact met breedte kleiner dan 2,9 cm',
   'afslag--afgeknot': 'Afgeknotte afslag',
   'afslag--afgeknot--tweezijdig': 'Tweezijdig afgeknotte afslag',
@@ -2627,6 +2730,7 @@ const DISPLAY_NAMES: Record<string, string> = {
   'drevel--afslag-of-drevel--kern': 'Drevel op afslag of kern',
   'beitel--afslag-of-beitel--kern': 'Beitel op afslag of kern',
   'een-bikkel': 'Bikkel',
+  bikkel: 'Bikkel',
   'artefact--met-versplinterd--uiteinde': 'Artefact met versplinterd uiteinde',
   dellensteen: 'Dellensteen',
   'doorboorde--rolsteen': 'Doorboorde rolsteen',
@@ -2712,12 +2816,256 @@ function processExpertAnswer(
     return { isEnd: false, nextQuestion: answer === 'ja' ? '271' : '300' };
   }
 
+  if (questionId === '320') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '321' : '350' };
+  }
+
+  if (questionId === '350' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '351' };
+  }
+
+  if (questionId === '351') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '352' : '380' };
+  }
+
+  if (questionId === '352' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '353' };
+  }
+
+  if (questionId === '353' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '354' };
+  }
+
+  if (questionId === '354' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '355' };
+  }
+
+  if (questionId === '355' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '356' };
+  }
+
+  if (questionId === '356' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '357' };
+  }
+
+  if (questionId === '357') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '358' : '359' };
+  }
+
+  if (questionId === '359') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '360' : '363' };
+  }
+
+  if (questionId === '360' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '361' };
+  }
+
+  if (questionId === '361' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '362' };
+  }
+
+  if (questionId === '362' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '364' };
+  }
+
+  if (questionId === '363' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '364' };
+  }
+
+  if (questionId === '380') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '381' : '390' };
+  }
+
+  if (questionId === '241' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '241a' };
+  }
+
+  if (questionId === '247' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '248' };
+  }
+
+  if (questionId === '248' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '249' };
+  }
+
   if (questionId === '290' && answer === 'nee') {
-    return { isEnd: true, result: 'een-combinatiewerktuig' };
+    return { isEnd: true, result: 'combinatiewerktuig' };
+  }
+
+  if (questionId === '30') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '31' : '32' };
+  }
+
+  if (questionId === '32') {
+    return { isEnd: false, nextQuestion: '40' };
+  }
+
+  if (questionId === '45' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '45a' };
+  }
+
+  if (questionId === '26') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '28a' : '27' };
+  }
+
+  if (questionId === '27' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '27a' };
+  }
+
+  if (questionId === '27a') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '28' : '28a' };
+  }
+
+  if (questionId === '71' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '71a' };
+  }
+
+  if (questionId === '103') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '154' : '104' };
+  }
+
+  if (questionId === '104') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '105' : '110' };
+  }
+
+  if (questionId === '106') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '107' : '108' };
+  }
+
+  if (questionId === '108' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '109' };
+  }
+
+  if (questionId === '111' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '113' };
+  }
+
+  if (questionId === '113' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '114' };
+  }
+
+  if (questionId === '114' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '115' };
+  }
+
+  if (questionId === '115' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '116' };
+  }
+
+  if (questionId === '116' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '117' };
+  }
+
+  if (questionId === '117' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '118' };
+  }
+
+  if (questionId === '118') {
+    return { isEnd: false, nextQuestion: '119' };
+  }
+
+  if (questionId === '119' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '120' };
+  }
+
+  if (questionId === '120' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '121' };
+  }
+
+  if (questionId === '121' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '122' };
+  }
+
+  if (questionId === '122' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '123' };
+  }
+
+  if (questionId === '123' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '124' };
+  }
+
+  if (questionId === '129' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '129a' };
+  }
+
+  if (questionId === '132' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '132b' };
+  }
+
+  if (questionId === '135' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '135a' };
+  }
+
+  if (questionId === '137' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '137a' };
+  }
+
+  if (questionId === '138' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '139' };
+  }
+
+  if (questionId === '138' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '138a' };
+  }
+
+  if (questionId === '139' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '140' };
+  }
+
+  if (questionId === '140' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '141' };
+  }
+
+  if (questionId === '141' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '142' };
+  }
+
+  if (questionId === '142' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '143' };
+  }
+
+  if (questionId === '143' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '144' };
+  }
+
+  if (questionId === '144' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '145' };
   }
 
   if (questionId === '391') {
     return { isEnd: false, nextQuestion: answer === 'ja' ? '410' : '392' };
+  }
+
+  if (questionId === '392') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '430' : '393' };
+  }
+
+  if (questionId === '393' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '394' };
+  }
+
+  if (questionId === '394') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '395' : '396' };
+  }
+
+  if (questionId === '396' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '397' };
+  }
+
+  if (questionId === '397' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '398' };
+  }
+
+  if (questionId === '398' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '399' };
+  }
+
+  if (questionId === '399' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '400' };
+  }
+
+  if (questionId === '400' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '401' };
   }
 
   if (questionId === '410') {
@@ -2762,8 +3110,118 @@ function processExpertAnswer(
     return { isEnd: false, nextQuestion: '480' };
   }
 
+  if (questionId === '540') {
+    return answer === 'ja'
+      ? { isEnd: false, nextQuestion: '541' }
+      : { isEnd: true, result: 'bekapt' };
+  }
+
+  if (questionId === '541') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '157' : '542' };
+  }
+
+  if (questionId === '600' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '601' };
+  }
+
+  if (questionId === '601') {
+    return { isEnd: false, nextQuestion: '602' };
+  }
+
+  if (questionId === '603' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '623' };
+  }
+
+  if (questionId === '603' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '604' };
+  }
+
+  if (questionId === '605' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '609' };
+  }
+
+  if (questionId === '609') {
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '610' : '618' };
+  }
+
+  if (questionId === '610' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '614' };
+  }
+
+  if (questionId === '614' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '618' };
+  }
+
+  if (questionId === '701' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '702' };
+  }
+
+  if (questionId === '702' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '703' };
+  }
+
+  if (questionId === '703' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '704' };
+  }
+
+  if (questionId === '704' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '705' };
+  }
+
+  if (questionId === '705' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '706' };
+  }
+
+  if (questionId === '706' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '707' };
+  }
+
+  if (questionId === '707' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '711' };
+  }
+
+  if (questionId === '708' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '709' };
+  }
+
+  if (questionId === '709' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '710' };
+  }
+
+  if (questionId === '712' && answer === 'ja') {
+    return { isEnd: false, nextQuestion: '713' };
+  }
+
+  if (questionId === '712' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '716' };
+  }
+
+  if (questionId === '713' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '714' };
+  }
+
+  if (questionId === '714' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '715' };
+  }
+
+  if (questionId === '716' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '717' };
+  }
+
+  if (questionId === '185' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '186' };
+  }
+
+  if (questionId === '186' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '187' };
+  }
+
+  if (questionId === '187' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '188' };
+  }
+
   if (questionId === '542') {
-    return { isEnd: false, nextQuestion: '543' };
+    return { isEnd: false, nextQuestion: answer === 'ja' ? '543' : '553' };
   }
 
   if (questionId === '543') {
@@ -2784,6 +3242,10 @@ function processExpertAnswer(
 
   if (questionId === '548' && answer === 'ja') {
     return { isEnd: false, nextQuestion: '549' };
+  }
+
+  if (questionId === '548' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '570' };
   }
 
   if (questionId === '549' && answer === 'nee') {
@@ -2840,6 +3302,22 @@ function processExpertAnswer(
 
   if (questionId === '564' && answer === 'nee') {
     return { isEnd: false, nextQuestion: '565' };
+  }
+
+  if (questionId === '570' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '571' };
+  }
+
+  if (questionId === '571' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '572' };
+  }
+
+  if (questionId === '572' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '573' };
+  }
+
+  if (questionId === '573' && answer === 'nee') {
+    return { isEnd: false, nextQuestion: '574' };
   }
 
   if (!target) {

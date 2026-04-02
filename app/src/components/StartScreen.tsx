@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.56',
+    title: 'Expert-regressieset fors uitgebreid en boom inhoudelijk aangescherpt',
+    items: [
+      'De expertboom heeft nu een inhoudelijke regressieset met 89 scenario’s verspreid over kernen, werktuigen, spitsen, bifacialen, geslepen artefacten en doorboorde typen',
+      'De expert-runtime-audit staat nu op 0 onbereikbare vragen en 0 runtimeproblemen, terwijl de uitgebreide testmatrix 89 van 89 scenario’s automatisch vindt',
+      'Een echte bronlacune is hersteld met vraag 137 voor driehoekige vuistbijlen, en de geslepen, doorboorde en kernroutes zijn verder inhoudelijk opengetrokken',
+    ],
+  },
+  {
     version: '2.2.55',
     title: 'Dolk- en stekervraagteksten verder hersteld',
     items: [
