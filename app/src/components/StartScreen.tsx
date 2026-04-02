@@ -19,9 +19,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { LevelSelector } from './LevelSelector';
 import { ProgressBar } from './ProgressBar';
 import type { UserLevel } from '../types';
+import { getQuickStartDefinitionsForLevel, type QuickStartFamily } from '../lib/quickStart';
 
 interface StartScreenProps {
   onStartPractice: (level: UserLevel, isSandbox: boolean) => void;
+  onStartQuickStart: (level: UserLevel, family: QuickStartFamily) => void;
   onStartTraining: (sessionCode: string, name: string) => void;
   onOpenTrainerDashboard: () => void;
   onViewHistory: () => void;
@@ -32,6 +34,15 @@ interface StartScreenProps {
 }
 
 const CHANGELOG = [
+  {
+    version: '2.2.75',
+    title: 'Snelle instap toegevoegd voor gevorderd en expert',
+    items: [
+      'Gevorderde en expertgebruikers kunnen nu direct een artefactfamilie kiezen, zoals spits, schrabber, kern of geslepen vuurstenen bijl',
+      'Na het maken van een foto doet de AI eerst alleen een plausibiliteitscheck voor die gekozen instap, zonder meteen het type te bepalen',
+      'Daarna kun je ofwel dieper in de boom starten of alsnog de volledige route vanaf het begin lopen',
+    ],
+  },
   {
     version: '2.2.74',
     title: 'Spitsroute met oppervlakteretouche weer bereikbaar',
@@ -732,6 +743,7 @@ const CHANGELOG = [
 
 export function StartScreen({
   onStartPractice,
+  onStartQuickStart,
   onStartTraining,
   onOpenTrainerDashboard,
   onViewHistory,
@@ -748,7 +760,9 @@ export function StartScreen({
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [showSandboxOption, setShowSandboxOption] = useState(false);
+  const [showQuickStart, setShowQuickStart] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const quickStartDefinitions = getQuickStartDefinitionsForLevel(currentLevel);
 
   const handleJoinTraining = () => {
     if (!sessionCode.trim()) { setError('Vul een sessiecode in'); return; }
@@ -914,6 +928,37 @@ export function StartScreen({
                 </div>
               </div>
             </button>
+
+            {currentLevel !== 'beginner' && quickStartDefinitions.length > 0 && (
+              <>
+                <button
+                  onClick={() => setShowQuickStart(!showQuickStart)}
+                  className="w-full flex items-center justify-center gap-1 text-sm text-stone-500 hover:text-amber-600 transition-colors py-1"
+                >
+                  {showQuickStart
+                    ? <><ChevronUp size={14} /> Verberg snelle instap</>
+                    : <><ChevronDown size={14} /> Snelle instap voor gevorderden en experts</>}
+                </button>
+
+                {showQuickStart && (
+                  <div className="bg-white rounded-xl p-3 border border-amber-200 shadow-sm space-y-2">
+                    <p className="text-xs text-stone-600">
+                      Kies een vermoedelijke artefactfamilie. De AI controleert daarna alleen of deze instap plausibel is.
+                    </p>
+                    {quickStartDefinitions.map((definition) => (
+                      <button
+                        key={definition.id}
+                        onClick={() => onStartQuickStart(currentLevel, definition.id)}
+                        className="w-full rounded-xl border border-stone-200 px-3 py-3 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                      >
+                        <p className="text-sm font-semibold text-stone-800">{definition.label}</p>
+                        <p className="mt-1 text-xs text-stone-500">{definition.description}</p>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
 
             <button
               onClick={() => setShowSandboxOption(!showSandboxOption)}

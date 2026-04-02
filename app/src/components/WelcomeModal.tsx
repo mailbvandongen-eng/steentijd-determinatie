@@ -4,6 +4,7 @@ const STORAGE_KEY = 'steentijd-hide-welcome';
 
 // Changelog - nieuwste bovenaan
 const CHANGELOG = [
+  { version: '2.2.75', date: '3 apr 2026', changes: ['Gevorderde en expertgebruikers kunnen nu direct een artefactfamilie kiezen, zoals spits, schrabber, kern of geslepen vuurstenen bijl', 'Na het maken van een foto doet de AI eerst alleen een plausibiliteitscheck voor die gekozen instap, zonder meteen het type te bepalen', 'Daarna kun je ofwel dieper in de boom starten of alsnog de volledige route vanaf het begin lopen'] },
   { version: '2.2.74', date: '3 apr 2026', changes: ['De expert-spitsroute rond oppervlakteretouche valt nu niet meer te vroeg terug op de brede categorie bekapt', 'Vraag 540 loopt nu altijd door naar de eigen spits- en oppervlakteretoucheroute in plaats van bij nee abrupt te eindigen', 'Daardoor blijven routes naar typen met schachtdoorn en weerhaken, zoals dennenboompje en klokbekerspitsen, beter bereikbaar'] },
   { version: '2.2.73', date: '2 apr 2026', changes: ['De zichtbare testinstructie is weer verwijderd van het startscherm', 'Ook de aparte testbriefing in de infomodal is weggehaald', 'De app start daardoor weer rustiger en directer op'] },
   { version: '2.2.72', date: '2 apr 2026', changes: ['Bij het openen van de app staat nu meteen een korte testbriefing voor AWN-testers en andere proefgebruikers', 'De briefing legt uit wat je het best kunt testen en hoe je bruikbare feedback terugkoppelt', 'Daardoor hoeven testers niet eerst de infomodal te openen om goed te kunnen starten'] },

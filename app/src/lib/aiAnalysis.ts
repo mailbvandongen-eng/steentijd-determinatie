@@ -234,6 +234,13 @@ export interface ValidationResult {
   error?: string;
 }
 
+export interface QuickStartCheckResult {
+  success: boolean;
+  verdict?: 'plausibel' | 'twijfelachtig' | 'onwaarschijnlijk';
+  feedback?: string;
+  error?: string;
+}
+
 function buildValidationContext(
   resultType: string,
   resultDescription: string | undefined,
@@ -378,6 +385,93 @@ export async function getHintForQuestion(
     return {
       success: false,
       error: err instanceof Error ? err.message : 'Onbekende fout bij ophalen hint',
+    };
+  }
+}
+
+export async function checkQuickStartPlausibility(
+  imageBase64: string | string[],
+  familyLabel: string,
+  familyDescription: string
+): Promise<QuickStartCheckResult> {
+  try {
+    const images = Array.isArray(imageBase64) ? imageBase64 : [imageBase64];
+    const imageContent = images.map((img) => ({
+      type: 'image' as const,
+      source: {
+        type: 'base64' as const,
+        media_type: 'image/jpeg' as const,
+        data: img.replace(/^data:image\/\w+;base64,/, ''),
+      },
+    }));
+
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [
+          {
+            role: 'user',
+            content: [
+              ...imageContent,
+              {
+                type: 'text',
+                text: `Je beoordeelt alleen of een gekozen instapfamilie voor verdere determinatie plausibel is.
+
+Gekozen familie: ${familyLabel}
+Beschrijving familie: ${familyDescription}
+
+INSTRUCTIES:
+- Dit is GEEN volledige determinatie.
+- Beoordeel alleen of deze instapfamilie op basis van de foto verdedigbaar lijkt.
+- Wees conservatief.
+- Als kenmerken ontbreken of niet zichtbaar zijn, kies dan liever "twijfelachtig" dan "plausibel".
+- Geef geen ander subtype als eindantwoord.
+
+Antwoord exact in dit format:
+**Oordeel:** [plausibel / twijfelachtig / onwaarschijnlijk]
+**Toelichting:** [korte toelichting in het Nederlands, 2-4 zinnen]`,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+      if (response.status === 429) {
+        return { success: false, error: 'Daglimiet bereikt. Probeer later opnieuw.' };
+      }
+      return { success: false, error: `Fout: ${errorMessage}` };
+    }
+
+    const data = await response.json();
+    const content = data.content?.[0]?.text || '';
+    const verdictMatch = content.match(/\*\*Oordeel:\*\*\s*(.+)/i);
+    const feedbackMatch = content.match(/\*\*Toelichting:\*\*\s*([\s\S]+)/i);
+    const rawVerdict = verdictMatch?.[1]?.toLowerCase() ?? '';
+
+    let verdict: QuickStartCheckResult['verdict'] = 'twijfelachtig';
+    if (rawVerdict.includes('plausibel')) verdict = 'plausibel';
+    if (rawVerdict.includes('onwaarschijnlijk')) verdict = 'onwaarschijnlijk';
+    if (rawVerdict.includes('twijfelachtig')) verdict = 'twijfelachtig';
+
+    return {
+      success: true,
+      verdict,
+      feedback: feedbackMatch?.[1]?.trim() || content.trim(),
+    };
+  } catch (err) {
+    console.error('Quick start plausibility error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Onbekende fout bij snelle instap',
     };
   }
 }
