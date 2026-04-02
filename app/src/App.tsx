@@ -29,7 +29,7 @@ import {
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer' | 'quickstart-review';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.78';
+const APP_VERSION = '2.2.79';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;

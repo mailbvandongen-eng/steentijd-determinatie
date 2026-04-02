@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.79',
+    title: 'Snelle instap duwt nu beter terug bij onwaarschijnlijke keuze',
+    items: [
+      'Als de AI een snelle instap onwaarschijnlijk vindt, zet de reviewkaart nu de volledige route duidelijk als aanbevolen keuze bovenaan',
+      'De verkorte route blijft nog wel mogelijk, maar voelt niet meer alsof de app een zwakke instap actief aanmoedigt',
+      'Daardoor is de snelle instap terughoudender en eerlijker bij twijfelachtige familiekeuzes',
+    ],
+  },
+  {
     version: '2.2.78',
     title: 'Snelle instap nu ook volledig gedekt met bronhints',
     items: [

@@ -29,6 +29,10 @@ export function QuickStartReview({
   onUseFullRoute,
   onBack,
 }: QuickStartReviewProps) {
+  const preferFullRoute = verdict === 'onwaarschijnlijk';
+  const quickStartLabel = preferFullRoute ? 'Toch snelle instap gebruiken' : 'Start snelle instap';
+  const fullRouteLabel = preferFullRoute ? 'Gebruik volledige route (aanbevolen)' : 'Gebruik volledige route';
+
   const verdictStyles = verdict === 'plausibel'
     ? {
         box: 'border-green-200 bg-green-50',
@@ -138,17 +142,26 @@ export function QuickStartReview({
 
       <div className="p-4 bg-white border-t border-stone-200 space-y-2 shrink-0">
         <button
-          onClick={onUseQuickStart}
+          onClick={preferFullRoute ? onUseFullRoute : onUseQuickStart}
           disabled={isChecking}
-          className="w-full rounded-xl bg-amber-600 px-4 py-3 text-sm font-semibold text-white hover:bg-amber-700 disabled:opacity-60"
+          className={`w-full rounded-xl px-4 py-3 text-sm font-semibold disabled:opacity-60 ${
+            preferFullRoute
+              ? 'border border-stone-300 text-stone-800 hover:bg-stone-50'
+              : 'bg-amber-600 text-white hover:bg-amber-700'
+          }`}
         >
-          Start snelle instap
+          {preferFullRoute ? fullRouteLabel : quickStartLabel}
         </button>
         <button
-          onClick={onUseFullRoute}
-          className="w-full rounded-xl border border-stone-300 px-4 py-3 text-sm font-semibold text-stone-700 hover:bg-stone-50"
+          onClick={preferFullRoute ? onUseQuickStart : onUseFullRoute}
+          disabled={isChecking}
+          className={`w-full rounded-xl px-4 py-3 text-sm font-semibold disabled:opacity-60 ${
+            preferFullRoute
+              ? 'bg-amber-100 text-amber-800 hover:bg-amber-200'
+              : 'border border-stone-300 text-stone-700 hover:bg-stone-50'
+          }`}
         >
-          Gebruik volledige route
+          {preferFullRoute ? quickStartLabel : fullRouteLabel}
         </button>
       </div>
     </div>
