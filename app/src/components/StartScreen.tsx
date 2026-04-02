@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.71',
+    title: 'Resultaatscherm nu duidelijker over brede en onzekere uitkomsten',
+    items: [
+      'Het resultaatscherm onderscheidt nu expliciet tussen specifieke type-uitkomsten, brede restcategorieën en echte twijfelgevallen',
+      'Generieke uitkomsten zoals doorboord artefact, geslepen stenen artefact, combinatiewerktuig en onbepaalde artefacten krijgen nu een duidelijke waarschuwingstekst',
+      'Daardoor wordt de uitkomst inhoudelijk eerlijker gepresenteerd en minder snel gelezen als een te hard subtype',
+    ],
+  },
+  {
     version: '2.2.70',
     title: 'Expert-engine opent nu ook geslepen en doorboorde detailsubtypen',
     items: [

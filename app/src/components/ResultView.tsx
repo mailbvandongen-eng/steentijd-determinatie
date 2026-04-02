@@ -10,7 +10,7 @@ import { LocationPickerModal } from './LocationPickerModal';
 import { updateDeterminationWithAIValidation } from '../lib/trainingSession';
 import { useUser } from '../contexts/UserContext';
 import { getContinuationNotice, type ContinuationOption } from '../lib/awnProgression';
-import { getSourceResultInfo } from '../lib/sourceResultInfo';
+import { getResultSpecificityInfo, getSourceResultInfo } from '../lib/sourceResultInfo';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -63,6 +63,7 @@ export function ResultView({
   const continuationTargetLabel = continuationOption?.targetLevel === 'expert' ? 'Expert' : 'Gevorderd';
   const effectiveResultType = session.result?.sourceResultType ?? session.result?.type ?? null;
   const sourceResultInfo = getSourceResultInfo(effectiveResultType);
+  const resultSpecificity = getResultSpecificityInfo(effectiveResultType);
   const continuationNotice = !continuationOption && session.result?.sourceResultType
     ? getContinuationNotice(session.result.sourceResultType, level)
     : !continuationOption && session.result?.type
@@ -464,6 +465,21 @@ export function ResultView({
             <p className="text-2xl font-bold text-amber-700">
               {session.result ? formatTypeName(session.result.type) : 'Onbekend'}
             </p>
+
+            {resultSpecificity && resultSpecificity.kind !== 'specific' && (
+              <div className={`mt-3 rounded-xl border p-3 ${
+                resultSpecificity.kind === 'uncertain'
+                  ? 'border-red-200 bg-red-50'
+                  : 'border-sky-200 bg-sky-50'
+              }`}>
+                <p className={`text-xs font-semibold uppercase tracking-wide ${
+                  resultSpecificity.kind === 'uncertain' ? 'text-red-700' : 'text-sky-700'
+                }`}>
+                  {resultSpecificity.title}
+                </p>
+                <p className="mt-1 text-sm text-stone-800">{resultSpecificity.summary}</p>
+              </div>
+            )}
 
             {sourceResultInfo && (
               <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3">

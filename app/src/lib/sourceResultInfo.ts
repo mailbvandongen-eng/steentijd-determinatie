@@ -4,6 +4,12 @@ export interface SourceResultInfo {
   source: string;
 }
 
+export interface ResultSpecificityInfo {
+  kind: 'specific' | 'generic' | 'uncertain';
+  title: string;
+  summary: string;
+}
+
 const SOURCE_RESULT_INFO: Record<string, SourceResultInfo> = {
   'splinter': {
     summary: 'Een splinter is een zeer klein, onbewerkt fragment zonder duidelijke doelgerichte vormgeving.',
@@ -79,6 +85,41 @@ const SOURCE_RESULT_INFO: Record<string, SourceResultInfo> = {
     summary: 'Een doorboord artefact heeft een duidelijk kunstmatig gat of boring door het stuk heen.',
     detail: 'De bron splitst daarna onder meer naar rolstenen, schijfstenen, breedwiggen, dubbelbijlen en hamerbijlen.',
     source: 'Algoritme doorboorde artefacten, handleiding doorboorde werktuigen',
+  },
+  'onbepaald-artefact': {
+    summary: 'Dit is een restuitkomst voor stukken die in de huidige route niet overtuigend in een duidelijk artefacttype vallen.',
+    detail: 'De bron behandelt dit niet als scherp eindtype, maar als signaal dat extra context, expertise of herbeoordeling nodig kan zijn.',
+    source: 'Algoritme restuitkomsten, handleiding basisdeterminatie',
+  },
+  'onbepaalde-kern': {
+    summary: 'Dit is een kernachtig stuk dat wel als kern wordt herkend, maar binnen de huidige route niet scherper is getypeerd.',
+    detail: 'Het is dus eerder een brede kerncategorie dan een uitgewerkt subtype.',
+    source: 'Algoritme kernroutes, handleiding kernen',
+  },
+  'kern-gelegenheids': {
+    summary: 'Een gelegenheidskern is een weinig systematisch geëxploiteerde kern zonder duidelijke uitgewerkte reductiestrategie.',
+    detail: 'Dit is een brede kerncategorie en geen fijn uitgewerkt subtype zoals Levallois-, diskus- of klingkern.',
+    source: 'Algoritme kernroutes, handleiding kernen',
+  },
+  combinatiewerktuig: {
+    summary: 'Een combinatiewerktuig combineert kenmerken van meer dan één werktuigtype in één stuk.',
+    detail: 'Dat is een zinvolle bronuitkomst, maar wel breder en interpretatiegevoeliger dan een enkel scherp subtype.',
+    source: 'Algoritme combinatiewerktuigen, handleiding combinatiewerktuigen',
+  },
+  'geslepen-bijl-andere-steensoort': {
+    summary: 'Dit is een geslepen bijl van een andere steensoort dan vuursteen.',
+    detail: 'Binnen deze app is dit voorlopig een brede materiaalgebonden restgroep en geen verder uitgewerkte subtypeboom.',
+    source: 'Algoritme geslepen stenen bijlen, handleiding geslepen werktuigen',
+  },
+  'geslepen-stenen-artefact': {
+    summary: 'Dit is een geslepen stenen artefact van een andere steensoort dan vuursteen.',
+    detail: 'Het resultaat is bronconform als brede categorie, maar wordt in deze app nog niet verder uitgesplitst.',
+    source: 'Algoritme geslepen stenen artefacten, handleiding geslepen werktuigen',
+  },
+  'ik-twijfel-het-is-een-incertofact-determineren-als': {
+    summary: 'Dit is expliciet een twijfeluitkomst: het stuk kan artefactisch zijn, maar de determinatie blijft onzeker.',
+    detail: 'De bron markeert zulke gevallen juist om te voorkomen dat een onzekere uitkomst als hard type wordt gelezen.',
+    source: 'Algoritme twijfel- en incertofactroute, handleiding beoordeling van twijfelgevallen',
   },
   'hamerbijl': {
     summary: 'Een hamerbijl is een doorboord werktuig met duidelijke hamer- of bijlvorm en een eigen subtypeboom.',
@@ -468,4 +509,47 @@ export function getSourceResultInfo(resultType: string | undefined | null): Sour
   }
 
   return null;
+}
+
+const GENERIC_RESULT_TYPES = new Set([
+  'onbepaald-artefact',
+  'onbepaalde-kern',
+  'kern-gelegenheids',
+  'combinatiewerktuig',
+  'geslepen-bijl-andere-steensoort',
+  'geslepen-stenen-artefact',
+  'geslepen-vuurstenen-artefact',
+  'doorboord-artefact',
+]);
+
+const UNCERTAIN_RESULT_TYPES = new Set([
+  'ik-twijfel-het-is-een-incertofact-determineren-als',
+  'onbepaald',
+  'onbekend',
+]);
+
+export function getResultSpecificityInfo(resultType: string | undefined | null): ResultSpecificityInfo | null {
+  if (!resultType) return null;
+
+  if (UNCERTAIN_RESULT_TYPES.has(resultType)) {
+    return {
+      kind: 'uncertain',
+      title: 'Twijfelgeval',
+      summary: 'Deze uitkomst moet je niet lezen als hard type. De boom geeft hier juist aan dat de determinatie onzeker blijft of extra beoordeling vraagt.',
+    };
+  }
+
+  if (GENERIC_RESULT_TYPES.has(resultType)) {
+    return {
+      kind: 'generic',
+      title: 'Brede categorie',
+      summary: 'Dit is een bruikbare bronuitkomst, maar wel een brede rest- of verzamelgroep en geen fijn uitgewerkt subtype.',
+    };
+  }
+
+  return {
+    kind: 'specific',
+    title: 'Specifieke type-uitkomst',
+    summary: 'Dit resultaat wordt in de app als concreet type of subtype gepresenteerd binnen de huidige AWN-route.',
+  };
 }
