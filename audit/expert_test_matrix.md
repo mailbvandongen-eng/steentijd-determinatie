@@ -1,8 +1,8 @@
 # Expert Test Matrix
 
 - startQuestion: `1`
-- scenarios: `89`
-- found: `89`
+- scenarios: `94`
+- found: `94`
 
 ## Scenario Overzicht
 - `kern_levallois_afslag` Kern: Levallois-kern: gevonden als `Ongebruikte Levallois-kern`
@@ -34,6 +34,11 @@
 - `werktuig_schrabber_bec` Kling/afslag: bec-vormige schrabber: gevonden als `Snuitvormige schrabber`
 - `werktuig_steker_transversaal` Kling/afslag: transversale steker: gevonden als `Transversale steker`
 - `werktuig_steker_noailles` Kling/afslag: Noailles-steker: gevonden als `Noailles-steker`
+- `werktuig_afgeknot` Kling/afslag: afgeknot artefact: gevonden als `Afgeknot artefact`
+- `werktuig_gekerfd` Kling/afslag: gekerfd werktuig: gevonden als `Gekerfd werktuig`
+- `werktuig_getand` Kling/afslag: getand werktuig: gevonden als `Getand werktuig`
+- `werktuig_schaaf` Kling/afslag: schaaf: gevonden als `Schaaf`
+- `werktuig_schaaf_quina` Kling/afslag: Quina-schaaf: gevonden als `Quina-schaaf`
 - `spits_bladspits` Spits: bladspits: gevonden als `Bladspits`
 - `spits_tjonger` Spits: Tjongerspits: gevonden als `Tjongerspits`
 - `spits_bromme` Spits: Bromme-spits: gevonden als `Bromme-spits`
@@ -702,6 +707,118 @@
 - `211` Is de steker gemaakt door de stekerafslag zijwaarts ( haaks op de slagrichting afslag/kling) aan te brengen? -> `nee` -> `213`
 - `213` Heeft de RA -steker een zijwaarts aangebrachte stekerafslag? -> `nee` -> `215`
 - `215` Is de RA -steker gemaakt op een kleine afslag of kling gevormd door een kleine stekerafslag vaak beëindigd door een kerf resulterend in een dunne (max. 2mm) steker? -> `ja` -> `216`
+
+### Kling/afslag: afgeknot artefact
+
+- resultaat: `Afgeknot artefact`
+- match: `label`
+- stappen: `14`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `ja` -> `300`
+- `300` Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas? -> `ja` -> `301`
+
+### Kling/afslag: gekerfd werktuig
+
+- resultaat: `Gekerfd werktuig`
+- match: `label`
+- stappen: `16`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `230`
+- `230` Heeft het artefact een smalle, puntige werkkant zoals een boor, bec of ruimer? -> `nee` -> `240`
+- `240` Heeft het artefact een inkeping d.m.v. één grote of meerdere kleine steile afslagnegatieven? -> `ja` -> `241`
+
+### Kling/afslag: getand werktuig
+
+- resultaat: `Getand werktuig`
+- match: `label`
+- stappen: `17`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `nee` -> `202`
+- `202` Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `230`
+- `230` Heeft het artefact een smalle, puntige werkkant zoals een boor, bec of ruimer? -> `nee` -> `240`
+- `240` Heeft het artefact een inkeping d.m.v. één grote of meerdere kleine steile afslagnegatieven? -> `nee` -> `247`
+- `247` Vertoont het artefact meerdere kleine kerven waardoor een vertanding ontstaat? -> `ja` -> `248`
+
+### Kling/afslag: schaaf
+
+- resultaat: `Schaaf`
+- match: `label`
+- stappen: `17`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `ja` -> `300`
+- `300` Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas? -> `nee` -> `320`
+- `320` Heeft de a fslag of kling een door relatief steile retouche verkregen werkkant, veelal gebogen , soms vrijwel rondom? -> `nee` -> `350`
+- `350` Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden? -> `nee` -> `351`
+- `351` Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant? -> `ja` -> `352`
+
+### Kling/afslag: Quina-schaaf
+
+- resultaat: `Quina-schaaf`
+- match: `label`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `nee` -> `6`
+- `6` Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde? -> `ja` -> `7`
+- `7` Heeft het afslagnegatieven? -> `ja` -> `8`
+- `8` Heeft het meer dan 2 afslagnegatieven? -> `ja` -> `9`
+- `9` Heeft het een werkkant of punt ? -> `ja` -> `33`
+- `33` Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag? -> `nee` -> `35`
+- `35` Heeft het kernwerktuig een duidelijke boorpunt? -> `nee` -> `37`
+- `37` Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden? -> `nee` -> `40`
+- `40` Is de afslag of kling bewerkt na het losslaan  van de kern? -> `ja` -> `201`
+- `201` Is de afslag of kling niet geretoucheerd maar bekapt ? -> `ja` -> `300`
+- `300` Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas? -> `nee` -> `320`
+- `320` Heeft de a fslag of kling een door relatief steile retouche verkregen werkkant, veelal gebogen , soms vrijwel rondom? -> `nee` -> `350`
+- `350` Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden? -> `nee` -> `351`
+- `351` Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant? -> `ja` -> `352`
+- `352` Heeft de afslag één of meerdere zijden met schubvormige of getrapt -schubvormige retouche? -> `ja` => `Quina-schaaf`
 
 ### Spits: bladspits
 

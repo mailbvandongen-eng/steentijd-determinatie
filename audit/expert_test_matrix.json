@@ -1833,7 +1833,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand"
       ],
       "found": true,
       "endResult": "rugmes",
@@ -1973,7 +1980,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "schrabber",
@@ -2115,7 +2129,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "steker--kern",
@@ -2207,7 +2228,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "boor",
@@ -2397,7 +2425,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "schrabber--kling",
@@ -2593,7 +2628,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "stekerafslag",
@@ -2757,7 +2799,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand"
       ],
       "found": true,
       "endResult": "lamelle",
@@ -2932,7 +2981,13 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand"
       ],
       "found": true,
       "endResult": "grattoir--caréné-rabot-of-schrabber--kern",
@@ -3112,7 +3167,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "schrabber--zij",
@@ -3308,7 +3370,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "schrabber--duimnagel",
@@ -3475,7 +3544,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "schrabber--snuitvormig",
@@ -3647,7 +3723,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "steker--transversaal",
@@ -3843,7 +3926,14 @@
         "beitel",
         "doorboorde--",
         "bijl-hamer",
-        "bijl-dubbel"
+        "bijl-dubbel",
+        "schrabber",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
       ],
       "found": true,
       "endResult": "steker--noailles",
@@ -4032,6 +4122,797 @@
           "nextQuestion": "216",
           "result": null,
           "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_afgeknot",
+      "label": "Kling/afslag: afgeknot artefact",
+      "target": "afgeknot-artefact",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "schaaf",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
+      ],
+      "found": true,
+      "endResult": "afgeknot-artefact",
+      "displayName": "Afgeknot artefact",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "ja",
+          "nextQuestion": "300",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "300",
+          "question": "Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas?",
+          "answer": "ja",
+          "nextQuestion": "301",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_gekerfd",
+      "label": "Kling/afslag: gekerfd werktuig",
+      "target": "werktuig--gekerfd",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--getand",
+        "rugmes"
+      ],
+      "found": true,
+      "endResult": "werktuig--gekerfd",
+      "displayName": "Gekerfd werktuig",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "230",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "230",
+          "question": "Heeft het artefact een smalle, puntige werkkant zoals een boor, bec of ruimer?",
+          "answer": "nee",
+          "nextQuestion": "240",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "240",
+          "question": "Heeft het artefact een inkeping d.m.v. één grote of meerdere kleine steile afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "241",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_getand",
+      "label": "Kling/afslag: getand werktuig",
+      "target": "werktuig--getand",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "schaaf",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "rugmes"
+      ],
+      "found": true,
+      "endResult": "werktuig--getand",
+      "displayName": "Getand werktuig",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "nee",
+          "nextQuestion": "202",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "202",
+          "question": "Heeft de afslag of kling een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "230",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "230",
+          "question": "Heeft het artefact een smalle, puntige werkkant zoals een boor, bec of ruimer?",
+          "answer": "nee",
+          "nextQuestion": "240",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "240",
+          "question": "Heeft het artefact een inkeping d.m.v. één grote of meerdere kleine steile afslagnegatieven?",
+          "answer": "nee",
+          "nextQuestion": "247",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "247",
+          "question": "Vertoont het artefact meerdere kleine kerven waardoor een vertanding ontstaat?",
+          "answer": "ja",
+          "nextQuestion": "248",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_schaaf",
+      "label": "Kling/afslag: schaaf",
+      "target": "schaaf",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
+      ],
+      "found": true,
+      "endResult": "schaaf",
+      "displayName": "Schaaf",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "ja",
+          "nextQuestion": "300",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "300",
+          "question": "Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas?",
+          "answer": "nee",
+          "nextQuestion": "320",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "320",
+          "question": "Heeft de a fslag of kling een door relatief steile retouche verkregen werkkant, veelal gebogen , soms vrijwel rondom?",
+          "answer": "nee",
+          "nextQuestion": "350",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "350",
+          "question": "Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden?",
+          "answer": "nee",
+          "nextQuestion": "351",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "351",
+          "question": "Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant?",
+          "answer": "ja",
+          "nextQuestion": "352",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "werktuig_schaaf_quina",
+      "label": "Kling/afslag: Quina-schaaf",
+      "target": "schaaf--quina",
+      "forbiddenPrefixes": [
+        "kern--",
+        "vuistbijl--",
+        "bijl-",
+        "beitel",
+        "doorboorde--",
+        "bijl-hamer",
+        "bijl-dubbel",
+        "schrabber",
+        "steker",
+        "boor",
+        "afgeknot",
+        "werktuig--gekerfd",
+        "werktuig--getand",
+        "rugmes"
+      ],
+      "found": true,
+      "endResult": "schaaf--quina",
+      "displayName": "Quina-schaaf",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "nee",
+          "nextQuestion": "6",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "6",
+          "question": "Heeft het object van vuursteen (of vergelijkbare steensoort) een ventrale zijde?",
+          "answer": "ja",
+          "nextQuestion": "7",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "7",
+          "question": "Heeft het afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "8",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "8",
+          "question": "Heeft het meer dan 2 afslagnegatieven?",
+          "answer": "ja",
+          "nextQuestion": "9",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "9",
+          "question": "Heeft het een werkkant of punt ?",
+          "answer": "ja",
+          "nextQuestion": "33",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "33",
+          "question": "Heeft de knol, brok of kern een (zeer) kleine beitelkant mogelijk met negatief stekerafslag?",
+          "answer": "nee",
+          "nextQuestion": "35",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "35",
+          "question": "Heeft het kernwerktuig een duidelijke boorpunt?",
+          "answer": "nee",
+          "nextQuestion": "37",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "37",
+          "question": "Is het knol brok of vorstsplijting voorzien van één of twee d.m.v. steile retouche en/of grove kerf bewerkte zijden?",
+          "answer": "nee",
+          "nextQuestion": "40",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "40",
+          "question": "Is de afslag of kling bewerkt na het losslaan  van de kern?",
+          "answer": "ja",
+          "nextQuestion": "201",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "201",
+          "question": "Is de afslag of kling niet geretoucheerd maar bekapt ?",
+          "answer": "ja",
+          "nextQuestion": "300",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "300",
+          "question": "Heeft de a fslag of kling steile randretouche op het (meestal distale) uiteinde , vaak enigszins schuin t.o.v. de lengteas?",
+          "answer": "nee",
+          "nextQuestion": "320",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "320",
+          "question": "Heeft de a fslag of kling een door relatief steile retouche verkregen werkkant, veelal gebogen , soms vrijwel rondom?",
+          "answer": "nee",
+          "nextQuestion": "350",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "350",
+          "question": "Is de afslag of kling zeer dik en heeft die twee min of meer steil geretoucheerde lange zijden?",
+          "answer": "nee",
+          "nextQuestion": "351",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "351",
+          "question": "Heeft de (vrij grove) afslag een door aaneengesloten vlakke rand -retouche of (getrapte) schubvormige -retouche verkregen enigszins scherpe werkkant?",
+          "answer": "ja",
+          "nextQuestion": "352",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "352",
+          "question": "Heeft de afslag één of meerdere zijden met schubvormige of getrapt -schubvormige retouche?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "schaaf--quina",
+          "formattedResult": "Quina-schaaf"
         }
       ],
       "matchedOn": "label"
@@ -10634,7 +11515,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-met-ronde--dwarsdoorsnede",
@@ -10704,7 +11588,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "bijl-vlakbijl",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "beitel-smaller-dan-29-cm",
@@ -10780,7 +11667,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-vlakbijl--klokvormig",
@@ -10880,7 +11770,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-vlakbijl--trapeziumvormig",
@@ -10988,7 +11881,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-vlakbijl--rechthoekig",
@@ -11096,7 +11992,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-buren",
@@ -11238,7 +12137,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig",
@@ -11372,7 +12274,10 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig",
@@ -11514,7 +12419,11 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "beitel--",
+        "bijl-vlakbijl",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-dissel--met-gat-haaks--op-de-snede",
@@ -11574,7 +12483,11 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "bijl-vlakbijl",
+        "bijl-dissel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "beitel--guts",
@@ -11666,7 +12579,11 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "bijl-vlakbijl",
+        "bijl-dissel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "beitel--dissel",
@@ -11758,7 +12675,11 @@
         "spits--",
         "rugmes",
         "lamelle",
-        "doorboorde--"
+        "doorboorde--",
+        "bijl-vlakbijl",
+        "bijl-dissel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "beitel--punt",
@@ -11861,7 +12782,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-hamer",
@@ -11964,7 +12889,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-dubbel",
@@ -12057,7 +12986,9 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "doorboorde--rolsteen",
@@ -12110,7 +13041,9 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "doorboorde--schijfvormige--steen",
@@ -12163,7 +13096,9 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "doorboorde--breedwig",
@@ -12240,7 +13175,9 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "bijl-dubbel"
       ],
       "found": true,
       "endResult": "bijl-dissel--doorboord",
@@ -12309,7 +13246,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-dubbel--type-a",
@@ -12410,7 +13351,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-dubbel--type-b",
@@ -12519,7 +13464,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-hamer",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-dubbel--type-c",
@@ -12636,7 +13585,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-hamer--knop",
@@ -12753,7 +13706,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-hamer--type-g",
@@ -12886,7 +13843,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-hamer--type-k",
@@ -13035,7 +13996,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-hamer--type-l",
@@ -13184,7 +14149,11 @@
         "rugmes",
         "lamelle",
         "bijl-vlakbijl",
-        "beitel"
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
       ],
       "found": true,
       "endResult": "bijl-hamer--type-ba",

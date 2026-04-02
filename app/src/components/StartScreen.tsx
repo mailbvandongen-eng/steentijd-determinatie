@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.67',
+    title: 'Expert-regressieset nu ook op subtypeverwarring aangescherpt',
+    items: [
+      'De expert-regressieset controleert nu ook subfamilieverwarring binnen werktuig-, geslepen- en doorboordroutes',
+      'Nieuwe scenario’s voor afgeknotte, gekerfde, getande en schaafroutes zijn toegevoegd aan de matrix',
+      'De aangescherpte regressieset blijft daarbij schoon op 94 van 94 scenario’s zonder verboden overgangen',
+    ],
+  },
+  {
     version: '2.2.66',
     title: 'Expert-regressieset nu ook op familie-overgangen aangescherpt',
     items: [
