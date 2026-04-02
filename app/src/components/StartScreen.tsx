@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.60',
+    title: 'Bronhintdekking in de expert-regressieset afgerond',
+    items: [
+      'De laatste resterende bronhints uit de expert-regressiematrix zijn toegevoegd, inclusief zeldzame kern-, boor-, schrabber-, spits- en geslepen subtypevragen',
+      'De bronhintdekking voor alle vragen die in de huidige expert-testmatrix voorkomen staat daarmee nu op 100 procent',
+      'De expertflow heeft in de regressieset daardoor geen resterende hintgaten meer',
+    ],
+  },
+  {
     version: '2.2.59',
     title: 'Bronhints verder doorgetrokken naar resterende expert-subtypen',
     items: [
