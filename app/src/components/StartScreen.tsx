@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.61',
+    title: 'Bronomschrijvingen toegevoegd aan het resultaatscherm',
+    items: [
+      'Het resultaatscherm toont nu voor veel hoofdgroepen en veelgebruikte expertsubtypen een bronomschrijving uit algoritme en handleiding',
+      'Die toelichting gebruikt het bronresultaat of een passende familieherkenning in plaats van alleen de vrije AI-beschrijving',
+      'Daardoor zijn eindresultaten nu ook inhoudelijk beter verankerd in de AWN-bronlogica',
+    ],
+  },
+  {
     version: '2.2.60',
     title: 'Bronhintdekking in de expert-regressieset afgerond',
     items: [

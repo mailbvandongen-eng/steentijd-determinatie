@@ -10,6 +10,7 @@ import { LocationPickerModal } from './LocationPickerModal';
 import { updateDeterminationWithAIValidation } from '../lib/trainingSession';
 import { useUser } from '../contexts/UserContext';
 import { getContinuationNotice, type ContinuationOption } from '../lib/awnProgression';
+import { getSourceResultInfo } from '../lib/sourceResultInfo';
 
 // Helper: converteer data URL naar File object
 async function dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
@@ -60,6 +61,8 @@ export function ResultView({
 }: ResultViewProps) {
   const { profile, progress, progressToExpert, recordResult, isLevelUnlocked } = useUser();
   const continuationTargetLabel = continuationOption?.targetLevel === 'expert' ? 'Expert' : 'Gevorderd';
+  const effectiveResultType = session.result?.sourceResultType ?? session.result?.type ?? null;
+  const sourceResultInfo = getSourceResultInfo(effectiveResultType);
   const continuationNotice = !continuationOption && session.result?.sourceResultType
     ? getContinuationNotice(session.result.sourceResultType, level)
     : !continuationOption && session.result?.type
@@ -456,6 +459,17 @@ export function ResultView({
             <p className="text-2xl font-bold text-amber-700">
               {session.result ? formatTypeName(session.result.type) : 'Onbekend'}
             </p>
+
+            {sourceResultInfo && (
+              <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-amber-700">Bronomschrijving</p>
+                <p className="mt-1 text-sm text-stone-800">{sourceResultInfo.summary}</p>
+                {sourceResultInfo.detail && (
+                  <p className="mt-2 text-sm text-stone-700">{sourceResultInfo.detail}</p>
+                )}
+                <p className="mt-2 text-xs text-stone-500">Bron: {sourceResultInfo.source}</p>
+              </div>
+            )}
 
             {/* Kerninfo: Periode + Betrouwbaarheid */}
             <div className="flex flex-wrap items-center gap-2 mt-2">
