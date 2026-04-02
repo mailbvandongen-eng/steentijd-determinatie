@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.73',
+    title: 'Testinstructie weer verwijderd uit de app',
+    items: [
+      'De zichtbare testinstructie is weer verwijderd van het startscherm',
+      'Ook de aparte testbriefing in de infomodal is weggehaald',
+      'De app start daardoor weer rustiger en directer op',
+    ],
+  },
+  {
     version: '2.2.72',
     title: 'Testinstructie nu direct zichtbaar op het startscherm',
     items: [
@@ -711,23 +720,6 @@ const CHANGELOG = [
   },
 ];
 
-const TESTER_GUIDE = {
-  title: 'Testinstructie',
-  intro: 'Gebruik deze versie vooral om de determinatielogica inhoudelijk te toetsen, niet alleen om vastlopers te zoeken.',
-  focus: [
-    'Controleer of de vraagvolgorde logisch voelt voor het artefact dat je voor je hebt.',
-    'Controleer of het eindresultaat inhoudelijk klopt en niet te breed of te stellig is.',
-    'Let extra op rare sprongen tussen families, bijvoorbeeld van kern naar klingwerktuig of van bijl naar hamerbijl.',
-  ],
-  feedback: [
-    'artefact of vermoedelijk type',
-    'gekozen niveau',
-    'welke vragen en antwoorden je hebt doorlopen',
-    'verwacht resultaat',
-    'gekregen resultaat',
-    'waarom dat volgens jou niet klopt',
-  ],
-};
 
 export function StartScreen({
   onStartPractice,
@@ -858,31 +850,6 @@ export function StartScreen({
       {/* Content */}
       <div className="flex-1 p-4 flex flex-col">
         <div className="max-w-md mx-auto w-full space-y-4">
-
-          <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4 shadow-sm">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-sky-100 flex items-center justify-center shrink-0">
-                <BookOpen size={20} className="text-sky-700" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">{TESTER_GUIDE.title}</p>
-                <p className="mt-1 text-sm text-stone-800">{TESTER_GUIDE.intro}</p>
-                <div className="mt-3 space-y-1 text-xs text-stone-700">
-                  {TESTER_GUIDE.focus.map((item) => (
-                    <p key={item}>• {item}</p>
-                  ))}
-                </div>
-                <div className="mt-3 rounded-xl bg-white/70 p-3 border border-sky-100">
-                  <p className="text-xs font-semibold text-stone-800">Geef feedback bij voorkeur zo door:</p>
-                  <div className="mt-2 space-y-1 text-xs text-stone-600">
-                    {TESTER_GUIDE.feedback.map((item) => (
-                      <p key={item}>• {item}</p>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Niveau Selector */}
           <LevelSelector
@@ -1068,26 +1035,6 @@ export function StartScreen({
                     <p><strong>Beginner</strong> — verkorte, begrijpelijke instapboom met hulp, context en referentiebeelden.</p>
                     <p><strong>Gevorderd</strong> — verdieping op artefactgroepen waar de AWN-bron echt verder uitsplitst, zoals spitsen, schrabbers, vuistbijlen, geslepen en doorboorde werktuigen.</p>
                     <p><strong>Expert</strong> — werkt zonder verkorte beginnerboom en gebruikt de volledige AWN-bronstructuur als basis voor determinatie.</p>
-                  </div>
-                </section>
-
-                <section>
-                  <h3 className="font-semibold mb-2 text-stone-800 dark:text-stone-100">Zo test je deze versie</h3>
-                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-400">
-                    <p>{TESTER_GUIDE.intro}</p>
-                    <div className="space-y-1">
-                      {TESTER_GUIDE.focus.map((item) => (
-                        <p key={item}>• {item}</p>
-                      ))}
-                    </div>
-                    <div className="pt-1">
-                      <p className="font-semibold text-stone-700 dark:text-stone-300">Geef feedback bij voorkeur zo door:</p>
-                      <div className="mt-1 space-y-1">
-                        {TESTER_GUIDE.feedback.map((item) => (
-                          <p key={item}>• {item}</p>
-                        ))}
-                      </div>
-                    </div>
                   </div>
                 </section>
 
