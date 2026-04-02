@@ -42,6 +42,18 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Recente beschadigingen geven vaak losse, scherpe breuken zonder logisch patroon.',
     source: 'Algoritme vraag 7, handleiding basisdeterminatie',
   },
+  '8': {
+    short: 'Meer dan twee afslagnegatieven wijst op een echt artefact met reductiegeschiedenis, niet op een simpele brok of vorstsplijting.',
+    detail: 'De bron gebruikt dit als vroege knip tussen echte reductiestukken en stukken met slechts één of twee slagen.',
+    pitfall: 'Tel alleen duidelijke negatieven; kleine recente afsplinteringen tellen niet mee.',
+    source: 'Algoritme vraag 8, handleiding basisdeterminatie',
+  },
+  '9': {
+    short: 'Een werkkant of punt op een kernachtig stuk wijst op gebruik als kernwerktuig, niet alleen op een gewone kern.',
+    detail: 'Hier vraagt de bron of het stuk behalve kernsporen ook een duidelijke functionele rand of punt heeft.',
+    pitfall: 'Een toevallig scherpe hoek is nog geen echte werkkant of doelbewuste punt.',
+    source: 'Algoritme vraag 9, handleiding kernwerktuigen',
+  },
   '11': {
     short: 'Zoek naar een echt herkenbaar slagvlak waarop doelgericht is geslagen.',
     detail: 'Een groot of herkenbaar slagvlak opent in de bron de kernroutes met Levallois-, discus- of andere kernsubtypen.',
@@ -126,6 +138,18 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Laat afbreuk of uitputting van de kern de oorspronkelijke grootte niet verhullen.',
     source: 'Algoritme vraag 27a, handleiding grote en kleine klingkernen',
   },
+  '28': {
+    short: 'Regelmatige brede afslagnegatieven wijzen in de bron naar een meer geordende Montbani-achtige klingkernroute.',
+    detail: 'Ontbreekt die regelmaat, dan ga je eerder naar andere klingkernsubtypen zoals Coincy.',
+    pitfall: 'Kijk naar het overheersende patroon en niet naar één uitzonderlijk netjes negatief.',
+    source: 'Algoritme vraag 28, handleiding klingkernsubtypen',
+  },
+  '31': {
+    short: 'Bij bidirectionele kernen bepaalt de vorm van de negatieven of je met kling- of afslagproductie te maken hebt.',
+    detail: 'Klingvormige negatieven zijn lang en relatief smal; bredere kortere negatieven wijzen op afslagen.',
+    pitfall: 'Een enkele lange afslag maakt een kern nog niet meteen tot bidirectionele klingkern.',
+    source: 'Algoritme vraag 31, handleiding bidirectionele kernen',
+  },
   '29': {
     short: 'Meer dan twee slagvlakken wijst op een complexere meerslagvlakkern.',
     detail: 'Bij precies twee slagvlakken vraagt de bron daarna door naar hun onderlinge positie.',
@@ -185,6 +209,12 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     detail: 'De kling oogt gestandaardiseerd en strak in plaats van grillig of toevallig.',
     pitfall: 'Niet elke rechte kling is meteen Montbani-stijl.',
     source: 'Algoritme vraag 77, handleiding klingsubtypen',
+  },
+  '79': {
+    short: 'Een stekerafslag is smal en in dwarsdoorsnede vierkant of licht vlak, zoals van een steker afgenomen splinter.',
+    detail: 'Deze route herkent niet het werktuig zelf maar de karakteristieke afslag die bij stekerproductie ontstaat.',
+    pitfall: 'Een gewone smalle lamelle of kling is nog geen stekerafslag.',
+    source: 'Algoritme vraag 79, handleiding stekerafslagen',
   },
   '85': {
     short: 'Vraag je af of er na het losslaan nog bewuste nabewerking is aangebracht.',
@@ -390,11 +420,23 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Meet het complete artefact en niet alleen de schrabberkap.',
     source: 'Algoritme vraag 324, handleiding micro- en knoopschrabbers',
   },
+  '325': {
+    short: 'Een duimnagelschraper is kort, klein en breed, met een brede schrabberkap tegenover een rechte basis.',
+    detail: 'Lengte en breedte zijn ongeveer gelijk en het hele stuk blijft kleiner dan circa 3 cm.',
+    pitfall: 'Een kleine ronde schrabber zonder duidelijke rechte basis is niet automatisch duimnagelvormig.',
+    source: 'Algoritme vraag 325, handleiding duimnagelschrabbers',
+  },
   '326': {
     short: 'Een snuitschrabber heeft een smalle, relatief dikke schrabberkap die als “snuit” uitsteekt.',
     detail: 'De actieve kap is meestal duidelijk smaller dan de rest van het stuk.',
     pitfall: 'Een beschadigde punt of gewone smalle retouche maakt nog geen snuitschrabber.',
     source: 'Algoritme vraag 326, handleiding snuitschrabbers',
+  },
+  '328': {
+    short: 'Een caréné of rabot-schrabber is dik, steil geretoucheerd en bootvormig, vaak bijna als een kern.',
+    detail: 'De vlakke zijde en de steile negatieven of retouche geven het omgekeerd bootvormige profiel.',
+    pitfall: 'Een gewone dikke schrabber is nog geen caréné/rabot zonder dat uitgesproken profiel.',
+    source: 'Algoritme vraag 328, handleiding caréné, rabot en schrabber-kern',
   },
   '350': {
     short: 'Een limace is zeer dik en heeft twee ongeveer steil geretoucheerde lange zijden.',
@@ -450,6 +492,24 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Kijk echt naar ongelijke kerven en steelvorming; een gewone gesteelde spits is nog geen Havelter-type.',
     source: 'Algoritme vraag 414, handleiding Havelter-steelspitsen',
   },
+  '415': {
+    short: 'Deze spits heeft een versmalde basis met kegelvormige steel en aan twee zijden gedeeltelijke retouche.',
+    detail: 'De combinatie van kerf, basisversmalling en conische steel is hier onderscheidend.',
+    pitfall: 'Een gewone gesteelde spits zonder duidelijke conische steel past minder goed bij dit subtype.',
+    source: 'Algoritme vraag 415, handleiding gekerfde spitsen met kegelvormige basis',
+  },
+  '416': {
+    short: 'Een Bromme-spits is langwerpig en gebruikt het ongeretoucheerde feather-einde van de kling als spits deel.',
+    detail: 'De steel is aanwezig, maar de punt zelf blijft opvallend ongeretoucheerd.',
+    pitfall: 'Een slanke gesteelde spits met overal retouche is niet automatisch een Bromme-type.',
+    source: 'Algoritme vraag 416, handleiding Bromme-spitsen',
+  },
+  '417': {
+    short: 'Een Swidry-spits is min of meer ruitvormig en heeft een bifaciaal geretoucheerde basis.',
+    detail: 'De basisbewerking is hier belangrijker dan alleen de lengte of slankheid.',
+    pitfall: 'Een ruitvormige spits zonder duidelijke bifaciale basisretouche past minder goed bij Swidry.',
+    source: 'Algoritme vraag 417, handleiding Swidry-spitsen',
+  },
   '451': {
     short: 'Een rechthoekig trapezium of vierhoek heeft één duidelijk haakse zijde.',
     detail: 'Deze vraag opent de rechthoekige vierhoek- en trapeziumtypen binnen de geometrische spitsen.',
@@ -467,6 +527,12 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     detail: 'De spits werkt dan als een dwarsgerichte snede of punt over de breedte van het stuk.',
     pitfall: 'Meet consequent volgens de bronoriëntatie; anders lijkt een trapezium snel transversaal.',
     source: 'Algoritme vraag 454, handleiding transversale spitsen',
+  },
+  '455': {
+    short: 'Een breed trapezium zit qua verhouding tussen ongeveer 1 en 2 en blijft dus duidelijk breder dan lange, smalle varianten.',
+    detail: 'Deze maatverhouding helpt de bron om brede trapezia van smallere en transversale vormen te scheiden.',
+    pitfall: 'Meet langs de juiste assen; een scheve oriëntatie kan de verhouding vertekenen.',
+    source: 'Algoritme vraag 455, handleiding trapeziumvormige spitsen',
   },
   '470': {
     short: 'Een cirkelsegmentvormige dubbelspits heeft twee punten en een duidelijke segmentvorm.',
@@ -576,11 +642,53 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Een gewone waaiervorm of afgeronde bijl is nog niet automatisch klokvormig.',
     source: 'Algoritme vraag 606, handleiding klokvormige vlakbijlen',
   },
+  '623': {
+    short: 'Een disselsnede ligt dwars en niet centraal zoals bij een gewone bijl met rechthoekige doorsnede.',
+    detail: 'Deze vraag splitst rechthoekige vuurstenen bijlen verder naar disselvormen.',
+    pitfall: 'Een beschadigde snede kan asymmetrisch lijken zonder dat het echt een dissel is.',
+    source: 'Algoritme vraag 623, handleiding dissels op vuurstenen bijlen',
+  },
+  '625': {
+    short: 'Parallelle onder- en bovenzijde geven een meer rechtlijnig disselprofiel.',
+    detail: 'Ontbreekt dat, dan ga je in de bron verder naar andere disselsubtypen.',
+    pitfall: 'Lokale beschadiging of verwering aan één vlak kan de indruk van paralleliteit verstoren.',
+    source: 'Algoritme vraag 625, handleiding dissels met parallelle vlakken',
+  },
+  '627': {
+    short: 'Bij een bijl met holle snede let je hier op gebogen onder- en bovenzijde als subtypekenmerk.',
+    detail: 'De combinatie van holle snede en gebogen profiel vormt in de bron een eigen subtype.',
+    pitfall: 'Een licht gebogen rand door slijtage is niet automatisch dezelfde vorm als een echt gebogen profiel.',
+    source: 'Algoritme vraag 627, handleiding bijlen met holle snede',
+  },
+  '629': {
+    short: 'Een duntoppige rechthoekige bijl heeft een relatief dunne top in vergelijking met het lichaam.',
+    detail: 'De bron gebruikt topdikte hier als subtypekenmerk binnen rechthoekige vuurstenen bijlen.',
+    pitfall: 'Een afgeslagen of afgebroken top kan ten onrechte dun lijken.',
+    source: 'Algoritme vraag 629, handleiding duntoppige rechthoekige bijlen',
+  },
+  '631': {
+    short: 'Een vlakke top in dwarsdoorsnede onderscheidt dit subtype van rondere of dikkere topvormen.',
+    detail: 'De vraag blijft binnen de rechthoekige vuursteenbijlen en splitst verder op topvorm.',
+    pitfall: 'Kijk naar de dwarsdoorsnede van de top, niet alleen naar het zijprofiel.',
+    source: 'Algoritme vraag 631, handleiding rechthoekige vuursteenbijlen',
+  },
+  '633': {
+    short: 'Een dikbladige bijl heeft een maximale dikte van meer dan ongeveer de helft van de maximale breedte.',
+    detail: 'De bron gebruikt dit als verhouding om dik- en dunbladige rechthoekige bijlen uit elkaar te houden.',
+    pitfall: 'Meet de maximale dikte en breedte op vergelijkbare punten en niet alleen bij de snede.',
+    source: 'Algoritme vraag 633, handleiding dik- en dunbladige bijlen',
+  },
   '640': {
     short: 'Bij beitels is de breedte ongeveer gelijk aan de dikte; bredere stukken lopen eerder als bijlroute.',
     detail: 'De bron gebruikt hier opnieuw een vorm- en maatverhouding om beitels te scheiden van bijlen.',
     pitfall: 'Meet niet alleen bij de snede; het hele lichaam van het werktuig telt mee.',
     source: 'Algoritme vraag 640, handleiding beitels',
+  },
+  '642': {
+    short: 'Een beiteldissel heeft zijn snede uit het midden geplaatst in plaats van centraal.',
+    detail: 'Dat asymmetrische snedeverloop vormt ook bij beitels een aparte disselroute.',
+    pitfall: 'Een scheef afgesleten snede is niet automatisch een echte disselvorm.',
+    source: 'Algoritme vraag 642, handleiding beitels en dissels',
   },
   '700': {
     short: 'Kijk of het gat echt volledig door het artefact gaat.',

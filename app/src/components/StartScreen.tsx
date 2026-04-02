@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.59',
+    title: 'Bronhints verder doorgetrokken naar resterende expert-subtypen',
+    items: [
+      'De bronhintlaag dekt nu ook vroege kernspecialisaties, kleine schrabbertypen, gesteelde spitsen en de fijnere rechthoekige vuursteenbijl- en beitelroutes',
+      'Ook veel lagere frequentievragen uit de expert-regressiematrix hebben nu een bronhint uit algoritme en handleiding',
+      'De resterende ongedekte expertvragen zijn daarmee teruggebracht tot een kleine restgroep van zeldzamere subtypeknooppunten',
+    ],
+  },
+  {
     version: '2.2.58',
     title: 'Bronhintdekking fors uitgebreid op basis van de expert-testmatrix',
     items: [
