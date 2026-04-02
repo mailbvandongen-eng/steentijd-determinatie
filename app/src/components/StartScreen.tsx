@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.81',
+    title: 'Snelle instap toont nu ook subtype-verwachting',
+    items: [
+      'Per snelle-instapfamilie laat de reviewkaart nu ook voorbeelden zien van subtype-uitkomsten die je ongeveer in die familie kunt verwachten',
+      'Die subtype-preview gaat ook mee in de AI-plausibiliteitscheck, zodat de familiekeuze niet alleen op hoofdvorm maar ook op verwachte verdieping wordt beoordeeld',
+      'Daardoor krijgt snelle instap meer inhoudelijke context vóórdat je de boom in gaat',
+    ],
+  },
+  {
     version: '2.2.80',
     title: 'Snelle instap nu ook inhoudelijk afgedekt met een matrix',
     items: [

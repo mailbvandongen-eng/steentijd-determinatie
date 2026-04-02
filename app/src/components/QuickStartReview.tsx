@@ -6,6 +6,7 @@ interface QuickStartReviewProps {
   targetLevelLabel: string;
   expectedTraits?: string[];
   commonConfusions?: string[];
+  exampleOutcomes?: string[];
   isChecking: boolean;
   verdict: 'plausibel' | 'twijfelachtig' | 'onwaarschijnlijk' | null;
   feedback: string | null;
@@ -21,6 +22,7 @@ export function QuickStartReview({
   targetLevelLabel,
   expectedTraits = [],
   commonConfusions = [],
+  exampleOutcomes = [],
   isChecking,
   verdict,
   feedback,
@@ -91,6 +93,12 @@ export function QuickStartReview({
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Mogelijke verwarring</p>
                 <p className="mt-1 text-sm text-stone-700">{commonConfusions.join(', ')}</p>
+              </div>
+            )}
+            {exampleOutcomes.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Verwachte subtype-richting</p>
+                <p className="mt-1 text-sm text-stone-700">{exampleOutcomes.join(', ')}</p>
               </div>
             )}
           </div>

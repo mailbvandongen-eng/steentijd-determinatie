@@ -46,6 +46,7 @@ export interface QuickStartDefinition {
   sourceResultType: string;
   expectedTraits: string[];
   commonConfusions?: string[];
+  exampleOutcomes?: string[];
   start: {
     gevorderd?: QuickStartTarget;
     expert: QuickStartTarget;
@@ -65,6 +66,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'duidelijk kernstuk, geen afslag of klingwerktuig',
     ],
     commonConfusions: ['diskusvormige kern', 'gewone afslagkern', 'groot afgebroken brokstuk'],
+    exampleOutcomes: ['Ongebruikte Levallois-kern', 'Levallois-afslagkern', 'Levallois-klingkern'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '21' },
     },
@@ -81,6 +83,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'duidelijk kernstuk zonder uitgewerkte werktuigkap',
     ],
     commonConfusions: ['Levallois-kern', 'veelvlakkern', 'platte brok of schijfsteen'],
+    exampleOutcomes: ['Diskusvormige kern', 'Afslagkern', 'Bidirectionele kern'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '18' },
     },
@@ -97,6 +100,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen los klingwerktuig met retouche',
     ],
     commonConfusions: ['lange afslagkern', 'geretoucheerde kling', 'rugmes'],
+    exampleOutcomes: ['Klingkern', 'Montbani-klingkern', 'Coincy-klingkern', 'Kielvormige kern'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '27' },
     },
@@ -113,6 +117,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen doelgerichte retouche langs een werktuigrand',
     ],
     commonConfusions: ['klingkern', 'grof kernwerktuig', 'natuurlijk gebroken brok'],
+    exampleOutcomes: ['Afslagkern', 'Piramidale afslagkern', 'Orthogonale kern', 'Bidirectionele afslagkern'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '23' },
     },
@@ -129,6 +134,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen duidelijke retouche of werktuigkap',
     ],
     commonConfusions: ['geretoucheerde afslag', 'kling', 'bijlafslag'],
+    exampleOutcomes: ['Kombewa-afslag', 'Primaire afslag', 'Secundaire afslag'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase1-afslag', startQuestionId: '42' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '42' },
@@ -146,6 +152,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen duidelijke retouche of werktuigkap',
     ],
     commonConfusions: ['geretoucheerde kling', 'rugmes', 'kernpreparatiekling'],
+    exampleOutcomes: ['Levallois-kling', 'Kernpreparatiekling', 'Montbani-kling'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase1-kling', startQuestionId: '71' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '71' },
@@ -163,6 +170,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen kern maar een los product',
     ],
     commonConfusions: ['rugmes', 'klingschrabber', 'spits'],
+    exampleOutcomes: ['Geretoucheerde kling', 'Klingschrabber', 'Rugmes', 'Spits'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase1-geretoucheerde-kling', startQuestionId: '390' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '390' },
@@ -180,6 +188,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'werktuigfunctie overheerst boven ruwe afslagvorm',
     ],
     commonConfusions: ['schrabber', 'spits', 'onbewerkte afslag'],
+    exampleOutcomes: ['Schrabber', 'Steker', 'Boor', 'Afgeknot artefact'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '202' },
     },
@@ -196,6 +205,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'langwerpig stuk zonder uitgesproken spitsfunctie',
     ],
     commonConfusions: ['geretoucheerde kling', 'spits', 'klingschrabber'],
+    exampleOutcomes: ['Rugmes met natuurlijke rug', 'Rugmes met retouche', 'Micro-rugmes'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase1-rugmes', startQuestionId: '381' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '381' },
@@ -213,6 +223,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen zuivere spitsvorm als hoofdfunctie',
     ],
     commonConfusions: ['geretoucheerde kling', 'schrabber', 'rugmes'],
+    exampleOutcomes: ['Enkelvoudige klingschrabber', 'Dubbele klingschrabber'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase1-klingschrabber', startQuestionId: '335' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '335' },
@@ -230,6 +241,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen uitgesproken doorborende punt',
     ],
     commonConfusions: ['klingschrabber', 'afgeknot werktuig', 'spits'],
+    exampleOutcomes: ['Zijschrabber', 'Duimnagelschraper', 'Snuitschrabber', 'Limace'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase2-schrabber', startQuestionId: '321' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '321' },
@@ -247,6 +259,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'puntfunctie overheerst boven schrapende of rugmesfunctie',
     ],
     commonConfusions: ['rugmes', 'boor of priem', 'geretoucheerde kling'],
+    exampleOutcomes: ['Dennenboompje', 'Brede klokbekerspits', 'Smalle klokbekerspits', 'Tjonger-spits'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase2-spits', startQuestionId: '540' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '540' },
@@ -264,6 +277,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen fijne bifaciale afwerking',
     ],
     commonConfusions: ['grof kernwerktuig', 'vuistbijl', 'natuurlijk beschadigde steen'],
+    exampleOutcomes: ['Chopper', 'Chopping tool', 'Unifaciaal chopping tool'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '103' },
     },
@@ -280,6 +294,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen nette vuistbijl- of schrabbervorm',
     ],
     commonConfusions: ['chopper of chopping tool', 'klein kernwerktuig', 'vuistbijl'],
+    exampleOutcomes: ['Pic of hak', 'Vuistwig', 'Grof kernwerktuig'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '104' },
     },
@@ -296,6 +311,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen brede pijlpunt of schrabberkap',
     ],
     commonConfusions: ['spits', 'klein kernwerktuig', 'steker'],
+    exampleOutcomes: ['Boor', 'Dubbele boor', 'Bec', 'Priem'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '230' },
     },
@@ -312,6 +328,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen duidelijke geslepen, doorboorde of afslag/klingbasis',
     ],
     commonConfusions: ['boor of priem', 'kleine vuistbijl', 'grof kernwerktuig'],
+    exampleOutcomes: ['Faustkeilblatt', 'Uniface', 'Klein kernwerktuig'],
     start: {
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '125' },
     },
@@ -328,6 +345,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'niet slechts één geretoucheerde rand op een afslag of kling',
     ],
     commonConfusions: ['klein kernwerktuig', 'chopper', 'geslepen bijl'],
+    exampleOutcomes: ['Amandelvormige vuistbijl', 'Hartvormige vuistbijl', 'Micoque-vuistbijl', 'Bout-coupé'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase3-vuistbijl', startQuestionId: '610' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '610' },
@@ -345,6 +363,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen boring of gat als hoofdkenmerk',
     ],
     commonConfusions: ['geslepen vuurstenen artefact', 'geslepen stenen artefact', 'doorboorde bijl'],
+    exampleOutcomes: ['Vlakbijl', 'Buren-bijl', 'Dissel', 'Dunbladige vuurstenen bijl'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase4-geslepen-bijl', startQuestionId: '801' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '801' },
@@ -362,6 +381,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'kan eerder beitel-, dolk- of ander gespecialiseerd werktuig zijn',
     ],
     commonConfusions: ['geslepen vuurstenen bijl', 'geslepen stenen artefact', 'geretoucheerde kling'],
+    exampleOutcomes: ['Gutsbeitel', 'Disselbeitel', 'Puntbeitel', 'Dolk'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase4-geslepen-artefact', startQuestionId: '840' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '840' },
@@ -379,6 +399,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'geen natuurlijke holte of recente beschadiging',
     ],
     commonConfusions: ['hamerbijl', 'natuurlijke steen met gat', 'geslepen bijlfragment'],
+    exampleOutcomes: ['Dellensteen', 'Doorboorde rolsteen', 'Doorboorde breedwig', 'Dubbelbijl'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase5-doorboord-artefact', startQuestionId: '900' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '900' },
@@ -396,6 +417,7 @@ export const QUICK_START_DEFINITIONS: QuickStartDefinition[] = [
       'duidelijk zwaarder werktuig dan kleine doorboorde objecten of sieraden',
     ],
     commonConfusions: ['doorboord artefact', 'dubbelbijl', 'geslepen bijl met beschadiging'],
+    exampleOutcomes: ['Gefacetteerde hamerbijl', 'Knop-hamerbijl', 'Type Muntendam', 'Type Zuidvelde'],
     start: {
       gevorderd: { targetLevel: 'gevorderd', treeMode: 'phase5-hamerbijl', startQuestionId: '930' },
       expert: { targetLevel: 'expert', treeMode: 'expert', startQuestionId: '930' },
@@ -441,6 +463,9 @@ export function getQuickStartPromptContext(definition: QuickStartDefinition): st
     `Verwachte kenmerken: ${definition.expectedTraits.join('; ')}`,
     definition.commonConfusions && definition.commonConfusions.length > 0
       ? `Veelvoorkomende verwarring: ${definition.commonConfusions.join('; ')}`
+      : null,
+    definition.exampleOutcomes && definition.exampleOutcomes.length > 0
+      ? `Voorbeelden van subtype-uitkomsten in deze familie: ${definition.exampleOutcomes.join('; ')}`
       : null,
   ].filter(Boolean);
 

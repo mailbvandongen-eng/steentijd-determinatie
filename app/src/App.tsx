@@ -29,7 +29,7 @@ import {
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer' | 'quickstart-review';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.80';
+const APP_VERSION = '2.2.81';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -496,6 +496,7 @@ function App() {
           targetLevelLabel={quickStartState.targetLevel === 'expert' ? 'Expert' : 'Gevorderd'}
           expectedTraits={definition?.expectedTraits}
           commonConfusions={definition?.commonConfusions}
+          exampleOutcomes={definition?.exampleOutcomes}
           isChecking={quickStartState.isChecking}
           verdict={quickStartState.verdict}
           feedback={quickStartState.feedback}
