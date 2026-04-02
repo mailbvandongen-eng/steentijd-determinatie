@@ -6,6 +6,7 @@ import type { DeterminationSession, VondstLocatie } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
 import { HistoryMap } from './HistoryMap';
 import { LocationPickerModal } from './LocationPickerModal';
+import { getSourceResultInfo } from '../lib/sourceResultInfo';
 
 type ViewMode = 'list' | 'map';
 
@@ -199,6 +200,9 @@ export function HistoryView({ onBack, onSelectSession, onResume }: HistoryViewPr
             {filteredSessions.map((session, index) => {
               const isCompleted = session.status === 'completed' && session.result;
               const resultType = session.result?.type;
+              const sourceInfo = isCompleted
+                ? getSourceResultInfo(session.result?.sourceResultType ?? resultType)
+                : null;
 
               return (
                 <motion.div
@@ -239,6 +243,14 @@ export function HistoryView({ onBack, onSelectSession, onResume }: HistoryViewPr
                       )}
                     </div>
                     <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{formatDate(session.createdAt)}</p>
+                    {isCompleted && sourceInfo && (
+                      <p
+                        className="text-xs line-clamp-2 mt-1"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        {sourceInfo.summary}
+                      </p>
+                    )}
                     {isCompleted && session.result?.confidence && (
                       <p className={`text-xs ${
                         session.result.confidence === 'hoog' ? 'text-green-600 dark:text-green-400' :

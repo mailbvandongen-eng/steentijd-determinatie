@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation } from '../types';
 import { getAllSessions, getAllLocations, updateSession, updateLocation, deleteSession, deleteLocation } from '../lib/db';
 import { formatTypeName } from '../lib/decisionTree';
+import { getSourceResultInfo } from '../lib/sourceResultInfo';
 
 // Simple SVG icons (no background, just the shape)
 // Lucide Stone icon voor determinaties - filled with white lines
@@ -378,6 +379,7 @@ export function HomeMap({ onSelectSession, onAddLocation }: HomeMapProps) {
             if (editState.type === 'session' && editState.session.id === session.id) return null;
 
             const confidence = session.result?.confidence || 'gemiddeld';
+            const sourceInfo = getSourceResultInfo(session.result?.sourceResultType ?? session.result?.type);
             const colors: Record<string, string> = { hoog: '#16a34a', gemiddeld: '#d97706', laag: '#ea580c' };
             const color = colors[confidence] || colors.gemiddeld;
 
@@ -412,6 +414,7 @@ export function HomeMap({ onSelectSession, onAddLocation }: HomeMapProps) {
                         </button>
                       </div>
                     </div>
+                    {sourceInfo && <p className="text-xs text-stone-600 mt-1">{sourceInfo.summary}</p>}
                     {session.result?.period && <p className="text-xs text-stone-500">{session.result.period}</p>}
                     {onSelectSession && (
                       <button

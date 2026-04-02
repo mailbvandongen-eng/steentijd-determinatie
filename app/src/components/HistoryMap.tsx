@@ -5,6 +5,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { DeterminationSession, SavedLocation } from '../types';
 import { formatTypeName } from '../lib/decisionTree';
+import { getSourceResultInfo } from '../lib/sourceResultInfo';
 
 // Simple SVG icons (no background, just the shape)
 // Lucide Stone icon voor determinaties - filled with white lines
@@ -184,6 +185,7 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
           {/* Session markers */}
           {sessionsWithLocation.map((session) => {
             const confidence = session.result?.confidence || 'gemiddeld';
+            const sourceInfo = getSourceResultInfo(session.result?.sourceResultType ?? session.result?.type);
             const colors: Record<string, string> = {
               hoog: '#16a34a',
               gemiddeld: '#d97706',
@@ -212,6 +214,9 @@ export function HistoryMap({ sessions, locations, onSelectSession, onSelectLocat
                     <p className="font-medium text-sm text-stone-900">
                       {formatTypeName(session.result?.type || '')}
                     </p>
+                    {sourceInfo && (
+                      <p className="text-xs text-stone-600 mt-1">{sourceInfo.summary}</p>
+                    )}
                     {session.result?.period && (
                       <p className="text-xs text-stone-500">{session.result.period}</p>
                     )}

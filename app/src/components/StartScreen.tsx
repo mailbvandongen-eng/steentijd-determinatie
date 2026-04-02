@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.63',
+    title: 'Bronomschrijvingen nu ook in geschiedenis en kaart',
+    items: [
+      'Bronomschrijvingen worden nu ook getoond in geschiedenis en kaart-popups voor opgeslagen vondsten',
+      'Daardoor blijft de broncontext zichtbaar buiten het directe resultaatscherm',
+      'Lijst- en kaartweergave sluiten nu beter aan op de bronvaste uitleg van de determinatie',
+    ],
+  },
+  {
     version: '2.2.62',
     title: 'Bronomschrijvingen uitgebreid en doorgetrokken naar delen en export',
     items: [
