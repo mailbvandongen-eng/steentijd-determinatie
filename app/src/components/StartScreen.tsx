@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.78',
+    title: 'Snelle instap nu ook volledig gedekt met bronhints',
+    items: [
+      'Alle beginvragen van de snelle-instapfamilies hebben nu een bronhint, ook in de geslepen en doorboorde fasebomen',
+      'Daardoor starten snelle instaproutes niet alleen op een geldige vraag, maar ook meteen met inhoudelijke AWN-ondersteuning',
+      'De quick-start dekking staat nu op 21 families, 33 geldige instapchecks en 0 resterende hintgaten op startvragen',
+    ],
+  },
+  {
     version: '2.2.77',
     title: 'Snelle instap inhoudelijk aangescherpt',
     items: [

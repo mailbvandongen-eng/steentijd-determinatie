@@ -108,6 +108,12 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Een gewone klingkern is niet hetzelfde als een Levallois-klingkern.',
     source: 'Algoritme vraag 21, handleiding Levallois-kernsubtypen',
   },
+  '18': {
+    short: 'Een diskusvormige kern heeft aan boven- en onderzijde naar het midden gerichte negatieven en een schijfachtige opbouw.',
+    detail: 'De kern oogt tweezijdig uitgebalanceerd en niet alleen aan één zijde voorbereid zoals een Levallois-kern.',
+    pitfall: 'Een platte of ronde steen met enkele slagen is nog geen echte diskusvormige kern.',
+    source: 'Algoritme vraag 18, handleiding diskusvormige kernen',
+  },
   '23': {
     short: 'Kijk of de naar het midden gerichte negatieven vooral aan één zijde of aan beide zijden liggen.',
     detail: 'Aan één zijde past bij herhaald gebruikte Levallois, aan beide zijden bij een diskusvormige kern.',
@@ -191,6 +197,12 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     detail: 'Bij maximaal ongeveer twee keer de breedte blijf je in de afslaggroep; daarboven ga je naar de klinggroep.',
     pitfall: 'Een afgebroken kling kan kort lijken; beoordeel de oorspronkelijke vorm als die nog herkenbaar is.',
     source: 'Algoritme vraag 41, handleiding afslagen en klingen',
+  },
+  '42': {
+    short: 'Twee ventrale zijden wijzen op een Kombewa-afslag: een afslag die opnieuw van een eerdere afslag is losgeslagen.',
+    detail: 'Zoek dus aan beide zijden kenmerken van een buikzijde in plaats van een gewone dorsale zijde met negatieven.',
+    pitfall: 'Een sterk gebroken of afgerold stuk kan glad lijken zonder echt twee ventrale zijden te hebben.',
+    source: 'Algoritme vraag 42, handleiding Kombewa-afslagen',
   },
   '71': {
     short: 'Cortex op de dorsale zijde wijst op een vroege kling of een natuurlijke rug.',
@@ -462,11 +474,23 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     pitfall: 'Een gewone kling met één retoucheerde zijde is nog niet automatisch een rugmes.',
     source: 'Algoritme vraag 380, handleiding rugmessen',
   },
+  '381': {
+    short: 'Een rugmes zonder retouche gebruikt cortex of decorticatie als natuurlijke rug tegenover de scherpe snijrand.',
+    detail: 'De bron splitst hier natuurlijke rugmessen af van rugmessen waarbij de rug door retouche is gevormd.',
+    pitfall: 'Een klein restje cortex op de rugzijde is niet genoeg als de vorm verder niet echt als rugmes werkt.',
+    source: 'Fase 1 rugmesverdieping, handleiding rugmessen',
+  },
   '390': {
     short: 'Hier scheidt de bron steil geretoucheerde werktuigen van vlakke rand- of oppervlakteretouche.',
     detail: 'Dat is een hoofdknip tussen schrabber/spitsachtige groepen en de fijnere oppervlakteretouche-routes.',
     pitfall: 'Kijk naar retouchehoek en algemeen profiel, niet alleen naar het aantal geretoucheerde randen.',
     source: 'Algoritme vraag 390, handleiding steile versus vlakke retouche',
+  },
+  '540': {
+    short: 'Oppervlakteretouche loopt over een groter deel van het vlak en vormt meer dan alleen een steile randretouche.',
+    detail: 'Bij spitsen en pijlpunten stuurt deze vraag je naar de fijnere subtypeboom met schachtdoorn-, weerhaak- en bladvormen.',
+    pitfall: 'Plaatselijke randretouche of gebruikssporen zijn nog geen echte oppervlakteretouche van het hele artefact.',
+    source: 'Fase 2 spitsverdieping, handleiding spitsen met oppervlakteretouche',
   },
   '391': {
     short: 'Beoordeel eerst of het artefact echt een duidelijke punt of juist een geometrische vorm heeft.',
@@ -1115,6 +1139,30 @@ const SOURCE_HINTS: Record<string, SourceHint> = {
     detail: 'De topvorm in bovenaanzicht is hier belangrijker dan alleen de doorsnede.',
     pitfall: 'Een afgebroken top kan ten onrechte smal lijken.',
     source: 'Algoritme vraag 610, handleiding smaltoppige ovale bijlen',
+  },
+  '801': {
+    short: 'Begin hier alleen als het stuk duidelijk geslepen vuursteen is en als bijl herkenbaar blijft.',
+    detail: 'De eerste fasevraag splitst de grote hoofdgroepen vlakbijlen, ovale doorsneden en rechthoekige of disselachtige vormen uit elkaar.',
+    pitfall: 'Een geslepen fragment zonder duidelijke bijlvorm past eerder bij andere geslepen artefacten dan bij deze route.',
+    source: 'Fase 4 geslepen vuurstenen bijlen, handleiding geslepen bijlen',
+  },
+  '840': {
+    short: 'Deze route is voor geslepen vuurstenen werktuigen die niet meteen als gewone bijl vallen, zoals beitels, dolken of hergebruikte bijlafslagen.',
+    detail: 'Breedte, dikte en de vorm van snede of punt bepalen hier of je in de beitelgroep, dolkgroep of restgroep zit.',
+    pitfall: 'Gebruik deze route niet voor gewone rechthoekige of ovale vuursteenbijlen met duidelijke bijlvorm.',
+    source: 'Fase 4 geslepen vuurstenen artefacten, handleiding geslepen werktuigen',
+  },
+  '900': {
+    short: 'Controleer eerst of het gat echt onvolledig of volledig doorboord is en of het stuk verder snede, wig of schijfvorm heeft.',
+    detail: 'Deze route splitst dellenstenen, rolstenen, schijfstenen, breedwiggen, dubbelbijlen en de hamerbijlgroep.',
+    pitfall: 'Natuurlijke holtes of recente beschadigingen zijn geen betrouwbare ingang voor de doorboorde werktuigroute.',
+    source: 'Fase 5 doorboorde artefacten, handleiding doorboorde werktuigen',
+  },
+  '930': {
+    short: 'Beoordeel eerst of de hamerbijl gefacetteerd is; dat opent direct de hoofdknip tussen de belangrijkste hamerbijlgroepen.',
+    detail: 'Daarna volgt de bron op vorm van doorsnede, nek, verdikking en relatie tussen gat en snede.',
+    pitfall: 'Een doorboord werktuig met één grove snede is niet automatisch een hamerbijl; dubbelbijlen en andere doorboorde werktuigen kunnen erop lijken.',
+    source: 'Fase 5 hamerbijlen, handleiding hamerbijlen',
   },
   '614': {
     short: 'Een breedtoppige ovale bijl heeft juist een brede top binnen de ovale doorsnede-route.',
