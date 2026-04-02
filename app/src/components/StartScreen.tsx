@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.64',
+    title: 'AI-beeldtoets bronvaster aangestuurd',
+    items: [
+      'De AI-beeldtoets krijgt nu een bronpakket mee uit het gekozen type en het doorlopen vraagpad in plaats van alleen een vrije resultaatbeschrijving',
+      'Per validatie worden nu bronomschrijving van het type, verwachte kenmerken uit de beslisstappen en expliciete validatie-instructies meegestuurd',
+      'Daardoor wordt de AI-beeldtoets strakker gestuurd op compatibiliteit met de AWN-bronlogica en minder op vrije interpretatie',
+    ],
+  },
+  {
     version: '2.2.63',
     title: 'Bronomschrijvingen nu ook in geschiedenis en kaart',
     items: [

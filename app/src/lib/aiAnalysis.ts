@@ -1,5 +1,7 @@
 // AI Analyse service voor stenen artefacten determinatie
 // Gebruikt Claude API met determinatie-kennis als context
+import { getSourceHint } from './sourceHints';
+import { getSourceResultInfo } from './sourceResultInfo';
 
 export const DETERMINATION_CONTEXT = `
 Je bent een expert in de determinatie van (vuur-)stenen artefacten uit de steentijd.
@@ -232,6 +234,48 @@ export interface ValidationResult {
   error?: string;
 }
 
+function buildValidationContext(
+  resultType: string,
+  resultDescription: string | undefined,
+  steps: Array<{ questionId: string; questionText: string; answer: 'ja' | 'nee' }>
+): { enrichedDescription: string; validationContext: string } {
+  const sourceResultInfo = getSourceResultInfo(resultType);
+  const relevantHints = steps
+    .map((step) => ({
+      step,
+      hint: getSourceHint(step.questionId),
+    }))
+    .filter((item) => item.hint)
+    .slice(-8);
+
+  const expectedTraits = relevantHints.map(({ step, hint }) => {
+    const parts = [
+      `Vraag ${step.questionId} (${step.answer})`,
+      hint?.short,
+      hint?.detail,
+      hint?.pitfall ? `Valkuil: ${hint.pitfall}` : null,
+    ].filter(Boolean);
+    return `- ${parts.join(' | ')}`;
+  });
+
+  const validationLines = [
+    'BRONGESTUURDE VALIDATIE-INSTRUCTIE',
+    'Beoordeel alleen of de foto verenigbaar is met het gekozen type en het doorlopen beslispad.',
+    'Noem expliciet welke verwachte kenmerken zichtbaar zijn, welke ontbreken en welke niet toetsbaar zijn op de foto.',
+    'Geef geen alternatief type tenzij de foto duidelijk strijdig is met het gekozen type.',
+    sourceResultInfo ? `Bronomschrijving type: ${sourceResultInfo.summary}` : null,
+    sourceResultInfo?.detail ? `Brondetail type: ${sourceResultInfo.detail}` : null,
+    sourceResultInfo ? `Bron type: ${sourceResultInfo.source}` : null,
+    expectedTraits.length > 0 ? 'Verwachte kenmerken uit beslispad:' : null,
+    expectedTraits.length > 0 ? expectedTraits.join('\n') : null,
+  ].filter(Boolean);
+
+  const validationContext = validationLines.join('\n');
+  const enrichedDescription = [resultDescription, '', validationContext].filter(Boolean).join('\n');
+
+  return { enrichedDescription, validationContext };
+}
+
 // Validate a completed determination
 export async function validateDetermination(
   imageBase64: string,
@@ -240,6 +284,8 @@ export async function validateDetermination(
   steps: Array<{ questionId: string; questionText: string; answer: 'ja' | 'nee' }>
 ): Promise<ValidationResult> {
   try {
+    const { enrichedDescription, validationContext } = buildValidationContext(resultType, resultDescription, steps);
+
     const response = await fetch(`${WORKER_URL}/validate`, {
       method: 'POST',
       headers: {
@@ -248,7 +294,8 @@ export async function validateDetermination(
       body: JSON.stringify({
         imageBase64,
         resultType,
-        resultDescription,
+        resultDescription: enrichedDescription,
+        validationContext,
         steps,
       }),
     });
