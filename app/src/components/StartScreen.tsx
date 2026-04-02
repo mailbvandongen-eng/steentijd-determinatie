@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.65',
+    title: 'Expert-kernroute rond vraag 30 en 31 hersteld',
+    items: [
+      'De expert-kernroute rond vraag 30 en 31 loopt nu niet meer door naar gemodificeerde brok- of klingvragen',
+      'Een nee op vraag 30 eindigt nu correct op orthogonale kern en vraag 31 eindigt nu correct op bidirectionele afslag- of klingkern',
+      'Daardoor springt de expertdeterminatie vanuit kernen niet meer onterecht naar afslag- en klingwerktuigen',
+    ],
+  },
+  {
     version: '2.2.64',
     title: 'AI-beeldtoets bronvaster aangestuurd',
     items: [

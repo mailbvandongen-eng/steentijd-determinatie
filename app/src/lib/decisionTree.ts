@@ -2893,11 +2893,16 @@ function processExpertAnswer(
   }
 
   if (questionId === '30') {
-    return { isEnd: false, nextQuestion: answer === 'ja' ? '31' : '32' };
+    return answer === 'ja'
+      ? { isEnd: false, nextQuestion: '31' }
+      : { isEnd: true, result: 'kern--orthogon-aal' };
   }
 
-  if (questionId === '32') {
-    return { isEnd: false, nextQuestion: '40' };
+  if (questionId === '31') {
+    return {
+      isEnd: true,
+      result: answer === 'ja' ? 'kern--bidirectioneel--kling' : 'kern--bidirectioneel--afslag',
+    };
   }
 
   if (questionId === '45' && answer === 'ja') {
