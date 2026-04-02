@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.58',
+    title: 'Bronhintdekking fors uitgebreid op basis van de expert-testmatrix',
+    items: [
+      'De bronhintlaag dekt nu veel meer hoofdknopen af, waaronder vroege instapvragen, kernsubtypen, vuistbijlen, schrabbers, stekers, geometrische spitsen en geslepen bijlen',
+      'Veelgebruikte expertvragen uit de regressieset hebben nu een bronhint uit algoritme en handleiding in plaats van alleen AI-fallback',
+      'Daardoor sluit de hulp in de app beter aan op de routes die testers en gevorderde gebruikers het vaakst doorlopen',
+    ],
+  },
+  {
     version: '2.2.57',
     title: 'Eerste bronhintlaag en expliciete bronverwijzingen toegevoegd',
     items: [
