@@ -14086,6 +14086,1461 @@
       "matchedOn": "label"
     },
     {
+      "id": "geslepen_bijl_brede_snede",
+      "label": "Geslepen: vuurstenen bijl met brede snede",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--en-brede--snede",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--en-brede--snede",
+      "displayName": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en brede snede",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "ja",
+          "nextQuestion": "816",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "816",
+          "question": "Heeft de bijl een duidelijke disselsnede en is die niet symmetrisch in lengtedoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "818",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "818",
+          "question": "Heeft de bijl een holle snede?",
+          "answer": "nee",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--en-brede--snede",
+          "formattedResult": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en brede snede"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dunne_scherpe_top",
+      "label": "Geslepen: vuurstenen bijl met dunne scherpe top",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--scherpe--top",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--scherpe--top",
+      "displayName": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "821",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "821",
+          "question": "Is de dunne top scherp?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--scherpe--top",
+          "formattedResult": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dunne_vlakke_top",
+      "label": "Geslepen: vuurstenen bijl met dunne vlakke top",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--vlakke--top",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--vlakke--top",
+      "displayName": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "821",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "821",
+          "question": "Is de dunne top scherp?",
+          "answer": "nee",
+          "nextQuestion": "822",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "822",
+          "question": "Is de dunne top vlak?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--vlakke--top",
+          "formattedResult": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dunne_onregelmatige_top",
+      "label": "Geslepen: vuurstenen bijl met dunne onregelmatige top",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--onregelmatige--top",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--onregelmatige--top",
+      "displayName": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne onregelmatige top",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "821",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "821",
+          "question": "Is de dunne top scherp?",
+          "answer": "nee",
+          "nextQuestion": "822",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "822",
+          "question": "Is de dunne top vlak?",
+          "answer": "nee",
+          "nextQuestion": "823",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "823",
+          "question": "Is de top dun maar onregelmatig?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--en-dunne--onregelmatige--top",
+          "formattedResult": "Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne onregelmatige top"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dikbladig_sterk_gebogen",
+      "label": "Geslepen: dikbladige vuurstenen bijl sterk gebogen",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--sterk-gebogen",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--sterk-gebogen",
+      "displayName": "Dikbladige vuurstenen bijl met sterk gebogen boven- en onderzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "824",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "824",
+          "question": "Is de grootste dikte meer dan de helft van de grootste breedte?",
+          "answer": "ja",
+          "nextQuestion": "825",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "825",
+          "question": "Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--sterk-gebogen",
+          "formattedResult": "Dikbladige vuurstenen bijl met sterk gebogen boven- en onderzijde"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dikbladig_weinig_gekromd",
+      "label": "Geslepen: dikbladige vuurstenen bijl weinig gekromd",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--weinig-gekromd",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--weinig-gekromd",
+      "displayName": "Dikbladige vuurstenen bijl met weinig gekromde boven- en onderzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "824",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "824",
+          "question": "Is de grootste dikte meer dan de helft van de grootste breedte?",
+          "answer": "ja",
+          "nextQuestion": "825",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "825",
+          "question": "Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "826",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "826",
+          "question": "Zijn boven- en onderzijde weinig gekromd?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--weinig-gekromd",
+          "formattedResult": "Dikbladige vuurstenen bijl met weinig gekromde boven- en onderzijde"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dikbladig_parallel",
+      "label": "Geslepen: dikbladige vuurstenen bijl parallel",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--parallel",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--parallel",
+      "displayName": "Dikbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "824",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "824",
+          "question": "Is de grootste dikte meer dan de helft van de grootste breedte?",
+          "answer": "ja",
+          "nextQuestion": "825",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "825",
+          "question": "Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "826",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "826",
+          "question": "Zijn boven- en onderzijde weinig gekromd?",
+          "answer": "nee",
+          "nextQuestion": "827",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "827",
+          "question": "Zijn boven- en onderzijde nagenoeg parallel?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--dikbladig--parallel",
+          "formattedResult": "Dikbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dunbladig_sterk_gekromd",
+      "label": "Geslepen: dunbladige vuurstenen bijl sterk gekromd",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--sterk-gekromd",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--sterk-gekromd",
+      "displayName": "Dunbladige vuurstenen bijl met sterk gekromde boven- en onderzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "824",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "824",
+          "question": "Is de grootste dikte meer dan de helft van de grootste breedte?",
+          "answer": "nee",
+          "nextQuestion": "828",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "828",
+          "question": "Zijn boven- en onderzijde sterk gekromd?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--sterk-gekromd",
+          "formattedResult": "Dunbladige vuurstenen bijl met sterk gekromde boven- en onderzijde"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
+      "id": "geslepen_bijl_dunbladig_parallel",
+      "label": "Geslepen: dunbladige vuurstenen bijl parallel",
+      "target": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--parallel",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--parallel",
+      "displayName": "Dunbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "604",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "604",
+          "question": "Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )?",
+          "answer": "ja",
+          "nextQuestion": "605",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "605",
+          "question": "Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek?",
+          "answer": "nee",
+          "nextQuestion": "609",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "609",
+          "question": "Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "618",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "618",
+          "question": "Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "620",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "620",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "621",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "621",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)?",
+          "answer": "nee",
+          "nextQuestion": "820",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "820",
+          "question": "Heeft de bijl een dunne top in dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "824",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "824",
+          "question": "Is de grootste dikte meer dan de helft van de grootste breedte?",
+          "answer": "nee",
+          "nextQuestion": "828",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "828",
+          "question": "Zijn boven- en onderzijde sterk gekromd?",
+          "answer": "nee",
+          "nextQuestion": "829",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "829",
+          "question": "Zijn boven- en onderzijde nagenoeg parallel?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-met-rechthoekige--dwarsdoorsnede--dunbladig--parallel",
+          "formattedResult": "Dunbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde"
+        }
+      ],
+      "matchedOn": "end"
+    },
+    {
       "id": "geslepen_dissel",
       "label": "Geslepen: dissel",
       "targetPrefixes": [
@@ -14145,6 +15600,214 @@
           "question": "Heeft het artefact  een snede haaks op het gat ?",
           "answer": "ja",
           "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "geslepen_dissel_gebogen",
+      "label": "Geslepen: dissel met gebogen onder- en bovenzijde",
+      "target": "bijl-dissel--met-gebogen--onder--en-bovenzijde",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-vlakbijl",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-dissel--met-gebogen--onder--en-bovenzijde",
+      "displayName": "Vuurstenen dissel met gebogen onder- en bovenzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "ja",
+          "nextQuestion": "623",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "623",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een dissel snede?",
+          "answer": "ja",
+          "nextQuestion": "624",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "624",
+          "question": "Heeft de dissel een gebogen onder - en bovenzijde?",
+          "answer": "ja",
+          "nextQuestion": "625",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "geslepen_dissel_parallel",
+      "label": "Geslepen: dissel met parallelle onder- en bovenzijde",
+      "target": "bijl-dissel--met-parallelle--onder--en-bovenzijde",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "doorboorde--",
+        "beitel--",
+        "bijl-vlakbijl",
+        "bijl-hamer",
+        "bijl-dubbel"
+      ],
+      "found": true,
+      "endResult": "bijl-dissel--met-parallelle--onder--en-bovenzijde",
+      "displayName": "Vuurstenen dissel met parallelle onder- en bovenzijde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "nee",
+          "nextQuestion": "3",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "3",
+          "question": "Is het vuursteen, kwartsiet of lydiet?",
+          "answer": "ja",
+          "nextQuestion": "5",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "5",
+          "question": "Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken?",
+          "answer": "ja",
+          "nextQuestion": "600",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "600",
+          "question": "Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst?",
+          "answer": "ja",
+          "nextQuestion": "601",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "601",
+          "question": "Heeft het artefact  min of meer de vorm van een bijl of beitel?",
+          "answer": "ja",
+          "nextQuestion": "602",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "602",
+          "question": "Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm?",
+          "answer": "ja",
+          "nextQuestion": "603",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "603",
+          "question": "Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden?",
+          "answer": "ja",
+          "nextQuestion": "623",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "623",
+          "question": "Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een dissel snede?",
+          "answer": "nee",
+          "nextQuestion": "625",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "625",
+          "question": "Heeft de dissel een parallelle onder - en bovenzijde?",
+          "answer": "ja",
+          "nextQuestion": "626",
           "result": null,
           "formattedResult": null
         }
@@ -15971,6 +17634,1735 @@
           "question": "Heeft de hamerbijl met ronde dwarsdoorsnede en scherpe verdikking bij de snede?",
           "answer": "ja",
           "nextQuestion": "724",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_type_b",
+      "label": "Doorboord: hamerbijl type B",
+      "target": "bijl-hamer--type-b",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-b",
+      "displayName": "Hamerbijl type B",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "nee",
+          "nextQuestion": "723",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "723",
+          "question": "Heeft de hamerbijl met ronde dwarsdoorsnede en scherpe verdikking bij de snede?",
+          "answer": "ja",
+          "nextQuestion": "724",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "724",
+          "question": "Heeft de asymmetrische hamerbijl met convexe boven en concave onderzijde en vierzijdige dwarsdoorsnede en een scherpe verdikking bij het steelgat?",
+          "answer": "ja",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_type_i",
+      "label": "Doorboord: hamerbijl type I",
+      "target": "bijl-hamer--type-i",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-i",
+      "displayName": "Hamerbijl type I",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "ja",
+          "nextQuestion": "727",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_type_r",
+      "label": "Doorboord: hamerbijl type R",
+      "target": "bijl-hamer--type-r",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-r",
+      "displayName": "Hamerbijl type R",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "ja",
+          "nextQuestion": "729",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_type_c",
+      "label": "Doorboord: hamerbijl type C",
+      "target": "bijl-hamer--type-c",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-c",
+      "displayName": "Hamerbijl type C",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "nee",
+          "nextQuestion": "730",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "730",
+          "question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+          "answer": "ja",
+          "nextQuestion": "731",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_type_d",
+      "label": "Doorboord: hamerbijl type D",
+      "target": "bijl-hamer--type-d",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-d",
+      "displayName": "Hamerbijl type D",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "nee",
+          "nextQuestion": "730",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "730",
+          "question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+          "answer": "ja",
+          "nextQuestion": "731",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "731",
+          "question": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "732",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "732",
+          "question": "Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat?",
+          "answer": "nee",
+          "nextQuestion": "734",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "734",
+          "question": "Heeft de hamerbijl met vlakke tot licht concave bovenzijde en concave onderzijde een duidelijke verdikking rond het steelgat, een asymmetrische vorm en sterk uitgewaaierde snede?",
+          "answer": "ja",
+          "nextQuestion": "735",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_type_f",
+      "label": "Doorboord: hamerbijl type F",
+      "target": "bijl-hamer--type-f",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-f",
+      "displayName": "Hamerbijl type F",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "nee",
+          "nextQuestion": "730",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "730",
+          "question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+          "answer": "ja",
+          "nextQuestion": "731",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "731",
+          "question": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
+          "answer": "nee",
+          "nextQuestion": "733",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "733",
+          "question": "Heeft de hamerbijl een vlakke tot licht concave bovenzijde en sterk concave onderzijde en afgeronde verdikking bij het steelgat?",
+          "answer": "ja",
+          "nextQuestion": "734",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_muntendam",
+      "label": "Doorboord: hamerbijl type Muntendam",
+      "target": "bijl-hamer--type-muntendam",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "bijl-hamer--type-muntendam",
+      "displayName": "Hamerbijl type Muntendam",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "nee",
+          "nextQuestion": "730",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "730",
+          "question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+          "answer": "ja",
+          "nextQuestion": "731",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "731",
+          "question": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "732",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "732",
+          "question": "Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat?",
+          "answer": "nee",
+          "nextQuestion": "734",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "734",
+          "question": "Heeft de hamerbijl met vlakke tot licht concave bovenzijde en concave onderzijde een duidelijke verdikking rond het steelgat, een asymmetrische vorm en sterk uitgewaaierde snede?",
+          "answer": "ja",
+          "nextQuestion": "735",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "735",
+          "question": "Heeft de hamerbijl type K een convexe bovenzijde en concave onderzijde en gebogen en versmalde nek?",
+          "answer": "ja",
+          "nextQuestion": null,
+          "result": "bijl-hamer--type-muntendam",
+          "formattedResult": "Hamerbijl type Muntendam"
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_zuidvelde",
+      "label": "Doorboord: hamerbijl type Zuidvelde",
+      "target": "met-rand-bijl-hamer--type-zuidvelde",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "met-rand-bijl-hamer--type-zuidvelde",
+      "displayName": "Hamerbijl type Zuidvelde",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "nee",
+          "nextQuestion": "730",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "730",
+          "question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+          "answer": "ja",
+          "nextQuestion": "731",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "731",
+          "question": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "732",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "732",
+          "question": "Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat?",
+          "answer": "ja",
+          "nextQuestion": "733",
+          "result": null,
+          "formattedResult": null
+        }
+      ],
+      "matchedOn": "label"
+    },
+    {
+      "id": "doorboord_hamerbijl_emmen",
+      "label": "Doorboord: hamerbijl type Emmen",
+      "target": "zonder-rand-bijl-hamer--type-emmen",
+      "forbiddenPrefixes": [
+        "kern--",
+        "schrabber",
+        "steker",
+        "spits--",
+        "rugmes",
+        "lamelle",
+        "bijl-vlakbijl",
+        "beitel",
+        "bijl-dubbel",
+        "doorboorde--rolsteen",
+        "doorboorde--schijfvormige--steen",
+        "doorboorde--breedwig"
+      ],
+      "found": true,
+      "endResult": "zonder-rand-bijl-hamer--type-emmen",
+      "displayName": "Hamerbijl type Emmen",
+      "steps": [
+        {
+          "questionId": "1",
+          "question": "Is het artefact  niet bewerkt  en kleiner  dan 1 cm?",
+          "answer": "nee",
+          "nextQuestion": "2",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "2",
+          "question": "Vertoont het artefact  een niet natuurlijk  gat?",
+          "answer": "ja",
+          "nextQuestion": "700",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "700",
+          "question": "Is het artefact  volledig doorboord?",
+          "answer": "nee",
+          "nextQuestion": "702",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "702",
+          "question": "Is het doorboorde artefact  zonder snede en schijfvormig ?",
+          "answer": "nee",
+          "nextQuestion": "703",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "703",
+          "question": "Heeft het artefact  een snede haaks op het gat ?",
+          "answer": "ja",
+          "nextQuestion": "704",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "704",
+          "question": "Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden?",
+          "answer": "nee",
+          "nextQuestion": "705",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "705",
+          "question": "Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat?",
+          "answer": "nee",
+          "nextQuestion": "706",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "706",
+          "question": "Is het artefact  doorboord en heeft het een stompe punt ?",
+          "answer": "nee",
+          "nextQuestion": "707",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "707",
+          "question": "Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’?",
+          "answer": "nee",
+          "nextQuestion": "711",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "711",
+          "question": "Heeft het doorboorde artefact  een hamervorm?",
+          "answer": "ja",
+          "nextQuestion": "712",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "712",
+          "question": "Heeft de hamerbijl een gefacetteerd oppervlak?",
+          "answer": "nee",
+          "nextQuestion": "716",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "716",
+          "question": "Heeft de hamerbijl een knopvormig uiteinde  aan de nek?",
+          "answer": "ja",
+          "nextQuestion": "717",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "717",
+          "question": "Heeft de hamerbijl een convexe boven - en concave onderzijde?",
+          "answer": "nee",
+          "nextQuestion": "719",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "719",
+          "question": "Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "720",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "720",
+          "question": "Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek?",
+          "answer": "ja",
+          "nextQuestion": "721",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "721",
+          "question": "Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek?",
+          "answer": "ja",
+          "nextQuestion": "722",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "722",
+          "question": "Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede?",
+          "answer": "nee",
+          "nextQuestion": "726",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "726",
+          "question": "Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede?",
+          "answer": "nee",
+          "nextQuestion": "728",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "728",
+          "question": "Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat?",
+          "answer": "nee",
+          "nextQuestion": "730",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "730",
+          "question": "Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede?",
+          "answer": "ja",
+          "nextQuestion": "731",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "731",
+          "question": "Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat?",
+          "answer": "ja",
+          "nextQuestion": "732",
+          "result": null,
+          "formattedResult": null
+        },
+        {
+          "questionId": "732",
+          "question": "Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat?",
+          "answer": "nee",
+          "nextQuestion": "734",
           "result": null,
           "formattedResult": null
         }

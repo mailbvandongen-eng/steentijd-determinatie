@@ -1,8 +1,8 @@
 # Expert Test Matrix
 
 - startQuestion: `1`
-- scenarios: `102`
-- found: `102`
+- scenarios: `122`
+- found: `122`
 
 ## Scenario Overzicht
 - `kern_levallois_afslag` Kern: Levallois-kern: gevonden als `Ongebruikte Levallois-kern`
@@ -89,7 +89,18 @@
 - `geslepen_bijl_buren` Geslepen: Buren-bijl: gevonden als `Buren-bijl`
 - `geslepen_bijl_dikbladig` Geslepen: dikbladige vuurstenen bijl: gevonden als `Dikbladige vuurstenen bijl met rechthoekige dwarsdoorsnede`
 - `geslepen_bijl_dunbladig` Geslepen: dunbladige vuurstenen bijl: gevonden als `Dunbladige vuurstenen bijl met rechthoekige dwarsdoorsnede`
+- `geslepen_bijl_brede_snede` Geslepen: vuurstenen bijl met brede snede: gevonden als `Vuurstenen bijl met rechthoekige dwarsdoorsnede en brede snede`
+- `geslepen_bijl_dunne_scherpe_top` Geslepen: vuurstenen bijl met dunne scherpe top: gevonden als `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top`
+- `geslepen_bijl_dunne_vlakke_top` Geslepen: vuurstenen bijl met dunne vlakke top: gevonden als `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top`
+- `geslepen_bijl_dunne_onregelmatige_top` Geslepen: vuurstenen bijl met dunne onregelmatige top: gevonden als `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne onregelmatige top`
+- `geslepen_bijl_dikbladig_sterk_gebogen` Geslepen: dikbladige vuurstenen bijl sterk gebogen: gevonden als `Dikbladige vuurstenen bijl met sterk gebogen boven- en onderzijde`
+- `geslepen_bijl_dikbladig_weinig_gekromd` Geslepen: dikbladige vuurstenen bijl weinig gekromd: gevonden als `Dikbladige vuurstenen bijl met weinig gekromde boven- en onderzijde`
+- `geslepen_bijl_dikbladig_parallel` Geslepen: dikbladige vuurstenen bijl parallel: gevonden als `Dikbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde`
+- `geslepen_bijl_dunbladig_sterk_gekromd` Geslepen: dunbladige vuurstenen bijl sterk gekromd: gevonden als `Dunbladige vuurstenen bijl met sterk gekromde boven- en onderzijde`
+- `geslepen_bijl_dunbladig_parallel` Geslepen: dunbladige vuurstenen bijl parallel: gevonden als `Dunbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde`
 - `geslepen_dissel` Geslepen: dissel: gevonden als `Schoenleest-bijl met gat haaks op de snede`
+- `geslepen_dissel_gebogen` Geslepen: dissel met gebogen onder- en bovenzijde: gevonden als `Vuurstenen dissel met gebogen onder- en bovenzijde`
+- `geslepen_dissel_parallel` Geslepen: dissel met parallelle onder- en bovenzijde: gevonden als `Vuurstenen dissel met parallelle onder- en bovenzijde`
 - `geslepen_gutsbeitel` Geslepen: gutsbeitel: gevonden als `Gutsbeitel`
 - `geslepen_disselbeitel` Geslepen: disselbeitel: gevonden als `Disselbeitel`
 - `geslepen_puntbeitel` Geslepen: puntbeitel: gevonden als `Puntbeitel`
@@ -107,6 +118,15 @@
 - `doorboord_hamerbijl_type_k` Doorboord: hamerbijl type K: gevonden als `Hamerbijl type K`
 - `doorboord_hamerbijl_type_l` Doorboord: hamerbijl type L: gevonden als `Hamerbijl type L`
 - `doorboord_hamerbijl_type_ba` Doorboord: hamerbijl type Ba: gevonden als `Hamerbijl type Ba`
+- `doorboord_hamerbijl_type_b` Doorboord: hamerbijl type B: gevonden als `Hamerbijl type B`
+- `doorboord_hamerbijl_type_i` Doorboord: hamerbijl type I: gevonden als `Hamerbijl type I`
+- `doorboord_hamerbijl_type_r` Doorboord: hamerbijl type R: gevonden als `Hamerbijl type R`
+- `doorboord_hamerbijl_type_c` Doorboord: hamerbijl type C: gevonden als `Hamerbijl type C`
+- `doorboord_hamerbijl_type_d` Doorboord: hamerbijl type D: gevonden als `Hamerbijl type D`
+- `doorboord_hamerbijl_type_f` Doorboord: hamerbijl type F: gevonden als `Hamerbijl type F`
+- `doorboord_hamerbijl_muntendam` Doorboord: hamerbijl type Muntendam: gevonden als `Hamerbijl type Muntendam`
+- `doorboord_hamerbijl_zuidvelde` Doorboord: hamerbijl type Zuidvelde: gevonden als `Hamerbijl type Zuidvelde`
+- `doorboord_hamerbijl_emmen` Doorboord: hamerbijl type Emmen: gevonden als `Hamerbijl type Emmen`
 
 ## Paden
 ### Kern: Levallois-kern
@@ -2151,6 +2171,216 @@
 - `633` Heeft de bijl een dik blad (Dmax>½B maxe) en rechthoekige dwarsdoorsnede? -> `nee` -> `637`
 - `637` Heeft de b ijl een dun blad (Dmax<½B max) en rechthoekige dwarsdoorsnede? -> `ja` -> `638`
 
+### Geslepen: vuurstenen bijl met brede snede
+
+- resultaat: `Vuurstenen bijl met rechthoekige dwarsdoorsnede en brede snede`
+- match: `end`
+- stappen: `16`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `ja` -> `816`
+- `816` Heeft de bijl een duidelijke disselsnede en is die niet symmetrisch in lengtedoorsnede? -> `nee` -> `818`
+- `818` Heeft de bijl een holle snede? -> `nee` => `Vuurstenen bijl met rechthoekige dwarsdoorsnede en brede snede`
+
+### Geslepen: vuurstenen bijl met dunne scherpe top
+
+- resultaat: `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top`
+- match: `end`
+- stappen: `16`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `ja` -> `821`
+- `821` Is de dunne top scherp? -> `ja` => `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne scherpe top`
+
+### Geslepen: vuurstenen bijl met dunne vlakke top
+
+- resultaat: `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top`
+- match: `end`
+- stappen: `17`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `ja` -> `821`
+- `821` Is de dunne top scherp? -> `nee` -> `822`
+- `822` Is de dunne top vlak? -> `ja` => `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne vlakke top`
+
+### Geslepen: vuurstenen bijl met dunne onregelmatige top
+
+- resultaat: `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne onregelmatige top`
+- match: `end`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `ja` -> `821`
+- `821` Is de dunne top scherp? -> `nee` -> `822`
+- `822` Is de dunne top vlak? -> `nee` -> `823`
+- `823` Is de top dun maar onregelmatig? -> `ja` => `Vuurstenen bijl met rechthoekige dwarsdoorsnede en dunne onregelmatige top`
+
+### Geslepen: dikbladige vuurstenen bijl sterk gebogen
+
+- resultaat: `Dikbladige vuurstenen bijl met sterk gebogen boven- en onderzijde`
+- match: `end`
+- stappen: `17`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `nee` -> `824`
+- `824` Is de grootste dikte meer dan de helft van de grootste breedte? -> `ja` -> `825`
+- `825` Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde? -> `ja` => `Dikbladige vuurstenen bijl met sterk gebogen boven- en onderzijde`
+
+### Geslepen: dikbladige vuurstenen bijl weinig gekromd
+
+- resultaat: `Dikbladige vuurstenen bijl met weinig gekromde boven- en onderzijde`
+- match: `end`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `nee` -> `824`
+- `824` Is de grootste dikte meer dan de helft van de grootste breedte? -> `ja` -> `825`
+- `825` Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde? -> `nee` -> `826`
+- `826` Zijn boven- en onderzijde weinig gekromd? -> `ja` => `Dikbladige vuurstenen bijl met weinig gekromde boven- en onderzijde`
+
+### Geslepen: dikbladige vuurstenen bijl parallel
+
+- resultaat: `Dikbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde`
+- match: `end`
+- stappen: `19`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `nee` -> `824`
+- `824` Is de grootste dikte meer dan de helft van de grootste breedte? -> `ja` -> `825`
+- `825` Ligt de grootste dikte in het midden met sterk gebogen boven- en onderzijde? -> `nee` -> `826`
+- `826` Zijn boven- en onderzijde weinig gekromd? -> `nee` -> `827`
+- `827` Zijn boven- en onderzijde nagenoeg parallel? -> `ja` => `Dikbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde`
+
+### Geslepen: dunbladige vuurstenen bijl sterk gekromd
+
+- resultaat: `Dunbladige vuurstenen bijl met sterk gekromde boven- en onderzijde`
+- match: `end`
+- stappen: `17`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `nee` -> `824`
+- `824` Is de grootste dikte meer dan de helft van de grootste breedte? -> `nee` -> `828`
+- `828` Zijn boven- en onderzijde sterk gekromd? -> `ja` => `Dunbladige vuurstenen bijl met sterk gekromde boven- en onderzijde`
+
+### Geslepen: dunbladige vuurstenen bijl parallel
+
+- resultaat: `Dunbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde`
+- match: `end`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `nee` -> `604`
+- `604` Is de bijl gemaakt van vuursteen of lydiet (= een zwarte leisteen )? -> `ja` -> `605`
+- `605` Is de bijl relatief breed en dun (B > ½L), snede in het midden, met variabele omtrek? -> `nee` -> `609`
+- `609` Heeft de vuurstenen bijl een min of meer ovale dwarsdoorsnede? -> `nee` -> `618`
+- `618` Is de vuurstenen bijl dun in lengtedoorsnede , ovaal in dwarsdoorsnede? -> `ja` -> `620`
+- `620` Heeft de vuurstenen bijl een min of meer rechthoekige dwarsdoorsnede , breedte > 2,9 cm? -> `ja` -> `621`
+- `621` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een afwijkende snede (hol, niet in het midden of extra breed)? -> `nee` -> `820`
+- `820` Heeft de bijl een dunne top in dwarsdoorsnede? -> `nee` -> `824`
+- `824` Is de grootste dikte meer dan de helft van de grootste breedte? -> `nee` -> `828`
+- `828` Zijn boven- en onderzijde sterk gekromd? -> `nee` -> `829`
+- `829` Zijn boven- en onderzijde nagenoeg parallel? -> `ja` => `Dunbladige vuurstenen bijl met nagenoeg parallelle boven- en onderzijde`
+
 ### Geslepen: dissel
 
 - resultaat: `Schoenleest-bijl met gat haaks op de snede`
@@ -2161,6 +2391,38 @@
 - `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
 - `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
 - `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+
+### Geslepen: dissel met gebogen onder- en bovenzijde
+
+- resultaat: `Vuurstenen dissel met gebogen onder- en bovenzijde`
+- match: `label`
+- stappen: `10`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `ja` -> `623`
+- `623` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een dissel snede? -> `ja` -> `624`
+- `624` Heeft de dissel een gebogen onder - en bovenzijde? -> `ja` -> `625`
+
+### Geslepen: dissel met parallelle onder- en bovenzijde
+
+- resultaat: `Vuurstenen dissel met parallelle onder- en bovenzijde`
+- match: `label`
+- stappen: `10`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `nee` -> `3`
+- `3` Is het vuursteen, kwartsiet of lydiet? -> `ja` -> `5`
+- `5` Heeft het object van vuursteen, kwartsiet of lydiet geslepen of gepolijst e vlakken? -> `ja` -> `600`
+- `600` Is het geslepen artefact gemaakt van bijlfragment , kenmerk een deel is gepolijst? -> `ja` -> `601`
+- `601` Heeft het artefact  min of meer de vorm van een bijl of beitel? -> `ja` -> `602`
+- `602` Is het artefact (soms gemaakt van een dikke afslag ) relatief breed , >2,9 cm? -> `ja` -> `603`
+- `603` Heeft de bijl van lydiet of andere steensoort (niet vuursteen) een snede niet in het midden? -> `ja` -> `623`
+- `623` Heeft de vuurstenen bijl een min of meer rechthoekige doorsnede en een dissel snede? -> `nee` -> `625`
+- `625` Heeft de dissel een parallelle onder - en bovenzijde? -> `ja` -> `626`
 
 ### Geslepen: gutsbeitel
 
@@ -2439,3 +2701,245 @@
 - `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
 - `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `nee` -> `723`
 - `723` Heeft de hamerbijl met ronde dwarsdoorsnede en scherpe verdikking bij de snede? -> `ja` -> `724`
+
+### Doorboord: hamerbijl type B
+
+- resultaat: `Hamerbijl type B`
+- match: `label`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `nee` -> `723`
+- `723` Heeft de hamerbijl met ronde dwarsdoorsnede en scherpe verdikking bij de snede? -> `ja` -> `724`
+- `724` Heeft de asymmetrische hamerbijl met convexe boven en concave onderzijde en vierzijdige dwarsdoorsnede en een scherpe verdikking bij het steelgat? -> `ja` -> `726`
+
+### Doorboord: hamerbijl type I
+
+- resultaat: `Hamerbijl type I`
+- match: `label`
+- stappen: `18`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `ja` -> `727`
+
+### Doorboord: hamerbijl type R
+
+- resultaat: `Hamerbijl type R`
+- match: `label`
+- stappen: `19`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `ja` -> `729`
+
+### Doorboord: hamerbijl type C
+
+- resultaat: `Hamerbijl type C`
+- match: `label`
+- stappen: `20`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `nee` -> `730`
+- `730` Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede? -> `ja` -> `731`
+
+### Doorboord: hamerbijl type D
+
+- resultaat: `Hamerbijl type D`
+- match: `label`
+- stappen: `23`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `nee` -> `730`
+- `730` Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede? -> `ja` -> `731`
+- `731` Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat? -> `ja` -> `732`
+- `732` Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat? -> `nee` -> `734`
+- `734` Heeft de hamerbijl met vlakke tot licht concave bovenzijde en concave onderzijde een duidelijke verdikking rond het steelgat, een asymmetrische vorm en sterk uitgewaaierde snede? -> `ja` -> `735`
+
+### Doorboord: hamerbijl type F
+
+- resultaat: `Hamerbijl type F`
+- match: `label`
+- stappen: `22`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `nee` -> `730`
+- `730` Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede? -> `ja` -> `731`
+- `731` Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat? -> `nee` -> `733`
+- `733` Heeft de hamerbijl een vlakke tot licht concave bovenzijde en sterk concave onderzijde en afgeronde verdikking bij het steelgat? -> `ja` -> `734`
+
+### Doorboord: hamerbijl type Muntendam
+
+- resultaat: `Hamerbijl type Muntendam`
+- match: `label`
+- stappen: `24`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `nee` -> `730`
+- `730` Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede? -> `ja` -> `731`
+- `731` Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat? -> `ja` -> `732`
+- `732` Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat? -> `nee` -> `734`
+- `734` Heeft de hamerbijl met vlakke tot licht concave bovenzijde en concave onderzijde een duidelijke verdikking rond het steelgat, een asymmetrische vorm en sterk uitgewaaierde snede? -> `ja` -> `735`
+- `735` Heeft de hamerbijl type K een convexe bovenzijde en concave onderzijde en gebogen en versmalde nek? -> `ja` => `Hamerbijl type Muntendam`
+
+### Doorboord: hamerbijl type Zuidvelde
+
+- resultaat: `Hamerbijl type Zuidvelde`
+- match: `label`
+- stappen: `22`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `nee` -> `730`
+- `730` Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede? -> `ja` -> `731`
+- `731` Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat? -> `ja` -> `732`
+- `732` Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat? -> `ja` -> `733`
+
+### Doorboord: hamerbijl type Emmen
+
+- resultaat: `Hamerbijl type Emmen`
+- match: `label`
+- stappen: `22`
+- `1` Is het artefact  niet bewerkt  en kleiner  dan 1 cm? -> `nee` -> `2`
+- `2` Vertoont het artefact  een niet natuurlijk  gat? -> `ja` -> `700`
+- `700` Is het artefact  volledig doorboord? -> `nee` -> `702`
+- `702` Is het doorboorde artefact  zonder snede en schijfvormig ? -> `nee` -> `703`
+- `703` Heeft het artefact  een snede haaks op het gat ? -> `ja` -> `704`
+- `704` Heeft het artefact een snede e venwijdig aan het gat, snede niet in het midden? -> `nee` -> `705`
+- `705` Is het artefact grof en breed wigvormig met een snede evenwijdig aan het gat? -> `nee` -> `706`
+- `706` Is het artefact  doorboord en heeft het een stompe punt ? -> `nee` -> `707`
+- `707` Is het doorboorde artefact enigszins symmetrisch in de lengte en heeft die 2 ‘snedes ’? -> `nee` -> `711`
+- `711` Heeft het doorboorde artefact  een hamervorm? -> `ja` -> `712`
+- `712` Heeft de hamerbijl een gefacetteerd oppervlak? -> `nee` -> `716`
+- `716` Heeft de hamerbijl een knopvormig uiteinde  aan de nek? -> `ja` -> `717`
+- `717` Heeft de hamerbijl een convexe boven - en concave onderzijde? -> `nee` -> `719`
+- `719` Heeft de hamerbijl een sterk uitgewaaierde snede en een licht uitgewaaierde nek een scherpe verdikking bij het gat? -> `ja` -> `720`
+- `720` Heeft de hamerbijl een convexe bovenzijde en concave onderzijde en sterk versmalde nek en zit het gat in de nek? -> `ja` -> `721`
+- `721` Heeft de hamerbijl met versmalde nek ook een in hoogte verkleinde of genepen nek? -> `ja` -> `722`
+- `722` Heeft de hamerbijl een convexe boven en concave onderzijde een uitgewaaierde snede en (nagenoeg ) ronde doorsnede? -> `nee` -> `726`
+- `726` Heeft de hamerbijl met convexe boven en vlakke onderzijde een symmetrische vorm , vierzijdige dwarsdoorsnede? -> `nee` -> `728`
+- `728` Heeft de hamerbijl een lichte convexe boven - en onderzijde zonder verdikking rond het gat? -> `nee` -> `730`
+- `730` Heeft de hamerbijl een licht convexe tot vlakke bovenzijde, vlakke onderzijde en afgeronde verdikking rond het gat en een vierhoekige doorsnede? -> `ja` -> `731`
+- `731` Is de hamerbijl een wigvormig met vlakke boven - en onderzijde zonder verdikking bij het gat? -> `ja` -> `732`
+- `732` Heeft de hamerbijl met licht convexe tot vlakke bovenzijde en vlakke onderzijde een rand rondom op bovenzijde zonder versterking van het gat? -> `nee` -> `734`

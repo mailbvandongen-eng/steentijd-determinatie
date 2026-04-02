@@ -33,6 +33,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.70',
+    title: 'Expert-engine opent nu ook geslepen en doorboorde detailsubtypen',
+    items: [
+      'De expert-engine kan nu ook de extra subtypevragen uit de geslepen en doorboorde detailbomen echt doorlopen in plaats van ze als onbekend te behandelen',
+      'De geslepen vuurstenen bijlroute rond brede snede, dunne top en dik- of dunbladige subtypen is nu inhoudelijk opengetrokken',
+      'De uitgebreide expert-regressieset stijgt daarmee naar 122 van 122 scenario’s zonder ontbrekende routes',
+    ],
+  },
+  {
     version: '2.2.69',
     title: 'Expert-regressieset nu ook op spits- en vuistbijlsubtypen aangescherpt',
     items: [

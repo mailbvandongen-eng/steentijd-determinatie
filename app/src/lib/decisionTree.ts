@@ -197,11 +197,11 @@ function getExpertContextualJump(
   }
 
   if (target === 'vuursteenbijl-met-rechthoekige-dwarsdoorsnede' && questionId === '621') {
-    return '622';
+    return '816';
   }
 
   if (target === 'normale-sned-e' && questionId === '621') {
-    return '623';
+    return '820';
   }
 
   if (target === 'dunbladig' && questionId === '633') {
@@ -1990,6 +1990,13 @@ const phase5HamerbijlTree: Record<string, QuestionNode> = {
   },
 };
 
+const EXPERT_EXTENSION_QUESTIONS: Record<string, QuestionNode> = {
+  ...phase4GeslepenBijlTree,
+  ...phase4GeslepenArtefactTree,
+  ...phase5DoorboordArtefactTree,
+  ...phase5HamerbijlTree,
+};
+
 const TREE_DEFINITIONS: Record<DecisionTreeMode, TreeDefinition> = {
   beginner: {
     label: 'Beginner',
@@ -2794,7 +2801,28 @@ function processExpertAnswer(
 } {
   const question = fullDecisionTree[questionId];
   if (!question) {
-    return { isEnd: true, result: 'onbekend' };
+    const extensionQuestion = EXPERT_EXTENSION_QUESTIONS[questionId];
+    if (!extensionQuestion) {
+      return { isEnd: true, result: 'onbekend' };
+    }
+
+    if (answer === 'ja') {
+      if (extensionQuestion.jaResultaat) {
+        return { isEnd: true, result: extensionQuestion.jaResultaat };
+      }
+      if (extensionQuestion.jaVolgende) {
+        return { isEnd: false, nextQuestion: extensionQuestion.jaVolgende };
+      }
+    } else {
+      if (extensionQuestion.neeResultaat) {
+        return { isEnd: true, result: extensionQuestion.neeResultaat };
+      }
+      if (extensionQuestion.neeVolgende) {
+        return { isEnd: false, nextQuestion: extensionQuestion.neeVolgende };
+      }
+    }
+
+    return { isEnd: true, result: 'onbepaald' };
   }
 
   const target = answer === 'ja' ? question.ja : question.nee;
@@ -3402,7 +3430,14 @@ export function getImagesForQuestion(questionId: string): ImageMetadata[] {
 }
 
 export function getQuestion(id: string, mode: DecisionTreeMode = 'beginner'): QuestionNode | undefined {
-  return getTreeDefinition(mode).questions[id];
+  const question = getTreeDefinition(mode).questions[id];
+  if (question) return question;
+
+  if (mode === 'expert') {
+    return EXPERT_EXTENSION_QUESTIONS[id];
+  }
+
+  return undefined;
 }
 
 export function processAnswer(
