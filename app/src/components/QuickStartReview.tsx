@@ -32,7 +32,7 @@ export function QuickStartReview({
   onBack,
 }: QuickStartReviewProps) {
   const preferFullRoute = verdict === 'onwaarschijnlijk';
-  const quickStartLabel = preferFullRoute ? 'Toch snelle instap gebruiken' : 'Start snelle instap';
+  const quickStartLabel = preferFullRoute ? 'Toch stap in gebruiken' : 'Stap in gebruiken';
   const fullRouteLabel = preferFullRoute ? 'Gebruik volledige route (aanbevolen)' : 'Gebruik volledige route';
 
   const verdictStyles = verdict === 'plausibel'
@@ -65,7 +65,7 @@ export function QuickStartReview({
           </svg>
         </button>
         <div className="flex-1">
-          <p className="text-white text-sm font-medium">Snelle instap controleren</p>
+          <p className="text-white text-sm font-medium">Stap in controleren</p>
           <p className="text-stone-400 text-xs">AI controleert alleen of deze instap verdedigbaar is</p>
         </div>
       </div>
@@ -143,7 +143,7 @@ export function QuickStartReview({
         <div className="card border border-stone-200 bg-white">
           <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Keuze</p>
           <p className="mt-1 text-sm text-stone-700">
-            Je kunt de snelle instap gebruiken als routeversneller, of alsnog de volledige route lopen vanaf het begin.
+            Je kunt instappen in deze familie of alsnog de volledige route lopen vanaf het begin. Het AI-advies is adviserend; jij beslist.
           </p>
         </div>
       </div>

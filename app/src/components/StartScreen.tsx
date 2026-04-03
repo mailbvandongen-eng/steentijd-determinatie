@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.84',
+    title: 'Determinatie-ingang opnieuw opgebouwd',
+    items: [
+      'Het startscherm opent nu via een duidelijke determinatie-ingang met de routes Start, Stap in en Vrij determineren',
+      'Stap in vervangt de eerdere snelle-instaptaal en maakt duidelijker dat AI alleen advies geeft en de gebruiker altijd kan overrulen',
+      'Vrij determineren staat nu als volwaardige leer- en oefenroute naast de gewone startflow',
+    ],
+  },
+  {
     version: '2.2.83',
     title: 'Snelle instap en hints nu ook voor beginners',
     items: [
@@ -835,6 +844,7 @@ export function StartScreen({
   const [sessionCode, setSessionCode] = useState(initialJoinCode || '');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+  const [showDeterminationOptions, setShowDeterminationOptions] = useState(false);
   const [showSandboxOption, setShowSandboxOption] = useState(false);
   const [showQuickStart, setShowQuickStart] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -1006,7 +1016,7 @@ export function StartScreen({
           {/* Hoofdactie */}
           <div className="space-y-2">
             <button
-              onClick={() => onStartPractice(currentLevel, false)}
+              onClick={() => setShowDeterminationOptions(!showDeterminationOptions)}
               className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-2xl shadow-xl p-5 hover:shadow-2xl transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
               <div className="flex items-center justify-center gap-4">
@@ -1014,89 +1024,114 @@ export function StartScreen({
                   <Camera size={28} />
                 </div>
                 <div className="text-left">
-                  <h2 className="text-lg font-bold">Start Determinatie</h2>
+                  <h2 className="text-lg font-bold">Determinatie</h2>
                   <p className="text-white/80 text-sm">
-                    {currentLevel === 'beginner' ? 'Met hints en hulp' : 'Zelfstandig determineren'}
+                    Kies hoe je wilt starten
                   </p>
                 </div>
               </div>
             </button>
 
-            {quickStartDefinitions.length > 0 && (
-              <>
+            {showDeterminationOptions && (
+              <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-3 space-y-3">
                 <button
-                  onClick={() => setShowQuickStart(!showQuickStart)}
-                  className="w-full flex items-center justify-center gap-1 text-sm text-stone-500 hover:text-amber-600 transition-colors py-1"
+                  onClick={() => onStartPractice(currentLevel, false)}
+                  className="w-full rounded-xl border border-stone-200 px-4 py-4 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
                 >
-                  {showQuickStart
-                    ? <><ChevronUp size={14} /> Verberg snelle instap</>
-                    : <><ChevronDown size={14} /> Snelle instap</>}
+                  <p className="text-sm font-semibold text-stone-800">Start</p>
+                  <p className="mt-1 text-xs text-stone-500">
+                    Volg de gewone route vanaf het begin op niveau {currentLevel}.
+                  </p>
                 </button>
 
-                {showQuickStart && (
-                  <div className="bg-white rounded-xl p-3 border border-amber-200 shadow-sm space-y-2">
-                    <p className="text-xs text-stone-600">
-                      Kies een vermoedelijke artefactfamilie. De AI controleert daarna alleen of deze instap plausibel is en je kunt altijd terug naar de volledige route.
-                    </p>
-                    {Object.entries(quickStartGroups).map(([category, definitions]) =>
-                      definitions.length > 0 ? (
-                        <div key={category} className="space-y-2 pt-1">
-                          <p className="text-[11px] font-semibold uppercase tracking-wide text-stone-500">
-                            {category}
+                {quickStartDefinitions.length > 0 && (
+                  <>
+                    <button
+                      onClick={() => setShowQuickStart(!showQuickStart)}
+                      className="w-full rounded-xl border border-stone-200 px-4 py-4 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-semibold text-stone-800">Stap in</p>
+                          <p className="mt-1 text-xs text-stone-500">
+                            Kies eerst een hoofdgroep. AI kijkt alleen mee of die instap verdedigbaar is.
                           </p>
-                          {definitions.map((definition) => (
-                            <button
-                              key={definition.id}
-                              onClick={() => onStartQuickStart(currentLevel, definition.id)}
-                              className="w-full rounded-xl border border-stone-200 px-3 py-3 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
-                            >
-                              <p className="text-sm font-semibold text-stone-800">{definition.label}</p>
-                              <p className="mt-1 text-xs text-stone-500">{definition.description}</p>
-                            </button>
-                          ))}
                         </div>
-                      ) : null
+                        {showQuickStart ? <ChevronUp size={16} className="text-stone-400 shrink-0" /> : <ChevronDown size={16} className="text-stone-400 shrink-0" />}
+                      </div>
+                    </button>
+
+                    {showQuickStart && (
+                      <div className="bg-amber-50 rounded-xl p-3 border border-amber-200 shadow-sm space-y-2">
+                        <p className="text-xs text-stone-600">
+                          Kies een vermoedelijke artefactfamilie. De app adviseert daarna of volledig starten verstandiger is, maar jij blijft de baas.
+                        </p>
+                        {Object.entries(quickStartGroups).map(([category, definitions]) =>
+                          definitions.length > 0 ? (
+                            <div key={category} className="space-y-2 pt-1">
+                              <p className="text-[11px] font-semibold uppercase tracking-wide text-stone-500">
+                                {category}
+                              </p>
+                              {definitions.map((definition) => (
+                                <button
+                                  key={definition.id}
+                                  onClick={() => onStartQuickStart(currentLevel, definition.id)}
+                                  className="w-full rounded-xl border border-stone-200 bg-white px-3 py-3 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                                >
+                                  <p className="text-sm font-semibold text-stone-800">{definition.label}</p>
+                                  <p className="mt-1 text-xs text-stone-500">{definition.description}</p>
+                                </button>
+                              ))}
+                            </div>
+                          ) : null
+                        )}
+                      </div>
                     )}
+                  </>
+                )}
+
+                <button
+                  onClick={() => setShowSandboxOption(!showSandboxOption)}
+                  className="w-full rounded-xl border border-stone-200 px-4 py-4 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-stone-800">Vrij determineren</p>
+                      <p className="mt-1 text-xs text-stone-500">
+                        Oefen zonder voortgang. Kies zelf je niveau en gebruik alle hulp die je nodig hebt.
+                      </p>
+                    </div>
+                    {showSandboxOption ? <ChevronUp size={16} className="text-stone-400 shrink-0" /> : <ChevronDown size={16} className="text-stone-400 shrink-0" />}
+                  </div>
+                </button>
+
+                {showSandboxOption && (
+                  <div className="bg-stone-50 rounded-xl p-3 border border-stone-200">
+                    <p className="text-xs text-stone-500 mb-2">
+                      Oefen op elk niveau zonder dat dit meetelt voor je voortgang.
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => onStartPractice('beginner', true)}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
+                      >
+                        <Sprout size={14} /> Beginner
+                      </button>
+                      <button
+                        onClick={() => onStartPractice('gevorderd', true)}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-colors"
+                      >
+                        <Leaf size={14} /> Gevorderd
+                      </button>
+                      <button
+                        onClick={() => onStartPractice('expert', true)}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-violet-100 text-violet-700 rounded-lg text-sm font-medium hover:bg-violet-200 transition-colors"
+                      >
+                        <Star size={14} /> Expert
+                      </button>
+                    </div>
                   </div>
                 )}
-              </>
-            )}
-
-            <button
-              onClick={() => setShowSandboxOption(!showSandboxOption)}
-              className="w-full flex items-center justify-center gap-1 text-sm text-stone-500 hover:text-amber-600 transition-colors py-1"
-            >
-              {showSandboxOption
-                ? <><ChevronUp size={14} /> Verberg opties</>
-                : <><ChevronDown size={14} /> Vrij spelen (zonder voortgang)</>
-              }
-            </button>
-
-            {showSandboxOption && (
-              <div className="bg-stone-50 rounded-xl p-3 border border-stone-200">
-                <p className="text-xs text-stone-500 mb-2">
-                  Oefen op elk niveau zonder dat het meetelt voor je voortgang.
-                </p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => onStartPractice('beginner', true)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors"
-                  >
-                    <Sprout size={14} /> Beginner
-                  </button>
-                  <button
-                    onClick={() => onStartPractice('gevorderd', true)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-colors"
-                  >
-                    <Leaf size={14} /> Gevorderd
-                  </button>
-                  <button
-                    onClick={() => onStartPractice('expert', true)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-violet-100 text-violet-700 rounded-lg text-sm font-medium hover:bg-violet-200 transition-colors"
-                  >
-                    <Star size={14} /> Expert
-                  </button>
-                </div>
               </div>
             )}
           </div>
