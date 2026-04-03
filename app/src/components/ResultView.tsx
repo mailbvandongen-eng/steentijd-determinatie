@@ -82,6 +82,7 @@ export function ResultView({
   const [showFullAnalysis, setShowFullAnalysis] = useState(false);
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [sessionLocation, setSessionLocation] = useState<VondstLocatie | undefined>(session.input.locatie);
+  const detailImages = session.input.detailImages ?? [];
 
   // AI Validation state — initialize from existing session data to avoid re-running
   const [validation, setValidation] = useState<ValidationResult | null>(() => {
@@ -856,6 +857,24 @@ export function ResultView({
                     : 'Klik op "Toon naast elkaar" om foto en tekening te vergelijken'}
                 </p>
               )}
+            </div>
+          </div>
+        )}
+
+        {detailImages.length > 0 && (
+          <div className="px-4 pb-4">
+            <div className="card">
+              <h3 className="text-sm text-stone-500 mb-2">Detailfoto's tijdens determinatie</h3>
+              <div className="flex gap-2 overflow-x-auto pb-1">
+                {detailImages.map((img, idx) => (
+                  <img
+                    key={img.id}
+                    src={img.thumbnail}
+                    alt={`Detailfoto ${idx + 1}`}
+                    className="h-24 w-auto rounded border border-stone-200 shrink-0"
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}

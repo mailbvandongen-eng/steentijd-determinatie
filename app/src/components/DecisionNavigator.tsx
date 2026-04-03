@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import { Sprout, Leaf, Star } from 'lucide-react';
 import {
   getQuestion,
@@ -11,10 +11,12 @@ import {
 } from '../lib/decisionTree';
 import { checkCurrentRoute, getHintForQuestion } from '../lib/aiAnalysis';
 import { getSourceHint } from '../lib/sourceHints';
-import type { DeterminationStep, UserLevel } from '../types';
+import type { DetailImage, DeterminationStep, UserLevel } from '../types';
 
 interface DecisionNavigatorProps {
   imageUrl: string;
+  detailImages?: DetailImage[];
+  onDetailImagesChange?: (images: DetailImage[]) => void | Promise<void>;
   onStep: (step: DeterminationStep) => void;
   onComplete: (result: { type: string; description?: string; hintsUsed: number; sourceResultType?: string }) => void;
   onBack: () => void;
@@ -26,6 +28,8 @@ interface DecisionNavigatorProps {
 
 export function DecisionNavigator({
   imageUrl,
+  detailImages = [],
+  onDetailImagesChange,
   onStep,
   onComplete,
   onBack,
@@ -47,6 +51,7 @@ export function DecisionNavigator({
   const [midwayCheck, setMidwayCheck] = useState<{ verdict: 'logisch' | 'twijfelachtig' | 'heroverweeg'; feedback: string } | null>(null);
   const [isCheckingRoute, setIsCheckingRoute] = useState(false);
   const [midwayCheckError, setMidwayCheckError] = useState<string | null>(null);
+  const [isAddingDetailImage, setIsAddingDetailImage] = useState(false);
 
   const question = getQuestion(currentQuestionId, treeMode);
   const images = getImagesForQuestion(currentQuestionId);
@@ -198,7 +203,7 @@ export function DecisionNavigator({
 
     try {
       const result = await checkCurrentRoute(
-        imageUrl,
+        [imageUrl, ...detailImages.map((image) => image.thumbnail)],
         currentQuestionId,
         question.vraag,
         answeredSteps
@@ -223,6 +228,73 @@ export function DecisionNavigator({
       setMidwayCheckError('Er ging iets mis bij de tussentijdse check.');
     } finally {
       setIsCheckingRoute(false);
+    }
+  };
+
+  const handleDetailImageSelected = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !onDetailImagesChange) return;
+    event.target.value = '';
+
+    setIsAddingDetailImage(true);
+    try {
+      const detailImage = await new Promise<DetailImage>((resolve, reject) => {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+        img.onload = async () => {
+          const maxDimension = 1600;
+          const scale = Math.min(1, maxDimension / Math.max(img.width, img.height));
+
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('Canvas niet beschikbaar'));
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const blob = await new Promise<Blob | null>((res) => {
+            canvas.toBlob(res, 'image/jpeg', 0.85);
+          });
+
+          const thumbCanvas = document.createElement('canvas');
+          const thumbScale = Math.min(1, 500 / Math.max(img.width, img.height));
+          thumbCanvas.width = Math.round(img.width * thumbScale);
+          thumbCanvas.height = Math.round(img.height * thumbScale);
+          const thumbCtx = thumbCanvas.getContext('2d');
+          if (!thumbCtx || !blob) {
+            URL.revokeObjectURL(objectUrl);
+            reject(new Error('Kon detailfoto niet verwerken'));
+            return;
+          }
+
+          thumbCtx.drawImage(img, 0, 0, thumbCanvas.width, thumbCanvas.height);
+          const thumbnail = thumbCanvas.toDataURL('image/jpeg', 0.8);
+          URL.revokeObjectURL(objectUrl);
+
+          resolve({
+            id: crypto.randomUUID(),
+            blob,
+            thumbnail,
+            createdAt: new Date().toISOString(),
+          });
+        };
+        img.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('Kon detailfoto niet laden'));
+        };
+        img.src = objectUrl;
+      });
+
+      await onDetailImagesChange([...detailImages, detailImage]);
+    } catch {
+      setMidwayCheckError('De detailfoto kon niet worden toegevoegd.');
+    } finally {
+      setIsAddingDetailImage(false);
     }
   };
 
@@ -385,6 +457,22 @@ export function DecisionNavigator({
           />
         </div>
 
+        {detailImages.length > 0 && (
+          <div className="card mb-3">
+            <p className="text-xs text-stone-500 mb-2 font-medium">DETAILFOTO'S</p>
+            <div className="flex gap-2 overflow-x-auto pb-1">
+              {detailImages.map((image, index) => (
+                <img
+                  key={image.id}
+                  src={image.thumbnail}
+                  alt={`Detailfoto ${index + 1}`}
+                  className="h-20 w-auto rounded border border-stone-200 shrink-0"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Referentie afbeeldingen */}
         {images.length > 0 && (
           <div className="card">
@@ -437,6 +525,24 @@ export function DecisionNavigator({
             </svg>
             {isCheckingRoute ? 'AI kijkt mee...' : 'Kijk even mee'}
           </button>
+          <label className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+            isAddingDetailImage
+              ? 'bg-stone-100 text-stone-400'
+              : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+          }`}>
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              disabled={isAddingDetailImage}
+              onChange={handleDetailImageSelected}
+            />
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h4l2-2h6l2 2h4v12H3V7zm9 3a3 3 0 100 6 3 3 0 000-6z" />
+            </svg>
+            {isAddingDetailImage ? 'Detailfoto wordt toegevoegd...' : 'Voeg detailfoto toe'}
+          </label>
         </div>
 
         <p className="text-xs text-stone-500 text-center mb-2">

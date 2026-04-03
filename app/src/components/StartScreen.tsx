@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.86',
+    title: 'Detailfoto’s tijdens determinatie',
+    items: [
+      'Tijdens een lopende determinatie kun je nu extra detailfoto’s toevoegen, bijvoorbeeld voor microretouche, doorsnede, slagvlak of schachtdoorn',
+      'Deze detailfoto’s worden apart opgeslagen van de 4 hoofdopnames, zodat de basisopzet van de captureflow intact blijft',
+      'Detailfoto’s worden lokaal aan de sessie gekoppeld, op het resultaatscherm getoond en via sync als aparte thumbnails meegenomen',
+    ],
+  },
+  {
     version: '2.2.85',
     title: 'Tussentijdse check tijdens determinatie',
     items: [

@@ -36,6 +36,19 @@ async function uploadThumbnail(userId: string, sessionId: number, thumbnail: str
   }
 }
 
+async function uploadDetailThumbnail(userId: string, sessionId: number, detailImageId: string, thumbnail: string): Promise<string | null> {
+  if (!storage || !thumbnail) return null;
+
+  try {
+    const storageRef = ref(storage, `detail-thumbnails/${userId}/${sessionId}_${detailImageId}.jpg`);
+    await uploadString(storageRef, thumbnail, 'data_url');
+    return await getDownloadURL(storageRef);
+  } catch (err) {
+    console.error('Detail thumbnail upload failed:', err);
+    return null;
+  }
+}
+
 // Helper: upload drawing to Firebase Storage
 async function uploadDrawing(userId: string, sessionId: number, imageIndex: number, drawing: string): Promise<string | null> {
   if (!storage || !drawing) return null;
@@ -84,6 +97,14 @@ async function uploadSessions(userId: string): Promise<{ uploaded: number; error
         }
       }
 
+      const detailImageUrls: (string | null)[] = [];
+      if (session.input.detailImages) {
+        for (const detailImage of session.input.detailImages) {
+          const url = await uploadDetailThumbnail(userId, session.id!, detailImage.id, detailImage.thumbnail);
+          detailImageUrls.push(url);
+        }
+      }
+
       // Prepare data for Firestore
       const sessionData = {
         userId,
@@ -94,6 +115,7 @@ async function uploadSessions(userId: string): Promise<{ uploaded: number; error
         inputType: session.input.type,
         thumbnailUrl, // URL to Firebase Storage
         drawingUrls, // URLs to Firebase Storage
+        detailImageUrls,
         locatie: session.input.locatie || null,
         resultType: session.result?.type || null,
         resultPeriod: session.result?.period || null,
@@ -182,7 +204,9 @@ async function downloadSessions(userId: string): Promise<{ downloaded: number; e
 
         // Download drawings from Storage if available
         const drawingUrls = data.drawingUrls as (string | null)[] | undefined;
+        const detailImageUrls = data.detailImageUrls as (string | null)[] | undefined;
         const images: DeterminationSession['input']['images'] = [];
+        const detailImages: DeterminationSession['input']['detailImages'] = [];
 
         if (drawingUrls && drawingUrls.length > 0) {
           for (let i = 0; i < drawingUrls.length; i++) {
@@ -202,6 +226,21 @@ async function downloadSessions(userId: string): Promise<{ downloaded: number; e
           }
         }
 
+        if (detailImageUrls && detailImageUrls.length > 0) {
+          for (let i = 0; i < detailImageUrls.length; i++) {
+            const detailImageUrl = detailImageUrls[i];
+            if (!detailImageUrl) continue;
+            const dataUrl = await downloadImageAsDataUrl(detailImageUrl);
+            if (!dataUrl) continue;
+            detailImages.push({
+              id: `cloud-detail-${i}`,
+              blob: new Blob(),
+              thumbnail: dataUrl,
+              createdAt: data.updatedAt || data.createdAt,
+            });
+          }
+        }
+
         // Create new local session from cloud data
         const newSession: Omit<DeterminationSession, 'id'> = {
           createdAt: data.createdAt,
@@ -211,6 +250,7 @@ async function downloadSessions(userId: string): Promise<{ downloaded: number; e
             type: data.inputType,
             thumbnail,
             images: images.length > 0 ? images : undefined,
+            detailImages: detailImages.length > 0 ? detailImages : undefined,
             locatie: data.locatie || undefined,
           },
           steps: [],

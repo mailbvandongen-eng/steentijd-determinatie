@@ -13,11 +13,11 @@ import { SettingsMenu } from './components/SettingsMenu';
 import TrainerDashboard from './components/TrainerDashboard';
 import { auth, googleProvider } from './lib/firebase';
 import { ADMIN_EMAILS } from './lib/adminConfig';
-import { createSession, completeSession, getSession } from './lib/db';
+import { createSession, completeSession, getSession, updateSession } from './lib/db';
 import { joinTrainingSession, submitDetermination } from './lib/trainingSession';
 import { blobToBase64, checkQuickStartPlausibility } from './lib/aiAnalysis';
 import { useAuth } from './contexts/AuthContext';
-import type { DeterminationSession, LabeledImage, DeterminationStep, QuickStartSessionInfo, UserLevel } from './types';
+import type { DetailImage, DeterminationSession, LabeledImage, DeterminationStep, QuickStartSessionInfo, UserLevel } from './types';
 import { getContinuationOption, isContinuationActive, type ContinuationOption } from './lib/awnProgression';
 import type { DecisionTreeMode } from './lib/decisionTree';
 import {
@@ -29,7 +29,7 @@ import {
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer' | 'quickstart-review';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.85';
+const APP_VERSION = '2.2.86';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -55,6 +55,7 @@ interface CapturedData {
   blob?: Blob;
   thumbnail?: string;
   images?: LabeledImage[];
+  detailImages?: DetailImage[];
   videoBlob?: Blob;
   videoFrames?: LabeledImage[];
   locatie?: { lat: number; lng: number; naam?: string };
@@ -216,6 +217,7 @@ function App() {
       blob: data.blob,
       thumbnail: data.thumbnail,
       images: data.images,
+      detailImages: data.detailImages,
       videoBlob: data.videoBlob,
       locatie: data.locatie,
     }, {
@@ -379,6 +381,7 @@ function App() {
     const data: CapturedData = {
       type: session.input.type,
       images: session.input.images,
+      detailImages: session.input.detailImages,
       blob: session.input.blob,
       thumbnail: session.input.thumbnail,
       videoBlob: session.input.videoBlob,
@@ -394,6 +397,7 @@ function App() {
     const data: CapturedData = {
       type: currentSession.input.type,
       images: currentSession.input.images,
+      detailImages: currentSession.input.detailImages,
       blob: currentSession.input.blob,
       thumbnail: currentSession.input.thumbnail,
       videoBlob: currentSession.input.videoBlob,
@@ -405,6 +409,7 @@ function App() {
       blob: data.blob,
       thumbnail: data.thumbnail,
       images: data.images,
+      detailImages: data.detailImages,
       videoBlob: data.videoBlob,
       locatie: data.locatie,
     });
@@ -435,6 +440,24 @@ function App() {
     }
     return '';
   };
+
+  const handleDetailImagesChange = useCallback(async (detailImages: DetailImage[]) => {
+    setCapturedData((prev) => prev ? { ...prev, detailImages } : prev);
+
+    if (currentSessionId && capturedData) {
+      await updateSession(currentSessionId, {
+        input: {
+          type: capturedData.type,
+          blob: capturedData.blob,
+          thumbnail: capturedData.thumbnail,
+          images: capturedData.images,
+          detailImages,
+          videoBlob: capturedData.videoBlob,
+          locatie: capturedData.locatie,
+        },
+      });
+    }
+  }, [capturedData, currentSessionId]);
 
   const handleUseQuickStart = useCallback(async () => {
     if (!capturedData || !quickStartState) return;
@@ -542,6 +565,8 @@ function App() {
       return (
         <DecisionNavigator
           imageUrl={getImageUrl()}
+          detailImages={capturedData.detailImages ?? []}
+          onDetailImagesChange={handleDetailImagesChange}
           onStep={handleDecisionStep}
           onComplete={handleDecisionComplete}
           onBack={handleBackFromDecision}
