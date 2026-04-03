@@ -242,6 +242,13 @@ export interface QuickStartCheckResult {
   error?: string;
 }
 
+export interface MidwayCheckResult {
+  success: boolean;
+  verdict?: 'logisch' | 'twijfelachtig' | 'heroverweeg';
+  feedback?: string;
+  error?: string;
+}
+
 function buildValidationContext(
   resultType: string,
   resultDescription: string | undefined,
@@ -485,6 +492,103 @@ Antwoord exact in dit format:
     return {
       success: false,
       error: err instanceof Error ? err.message : 'Onbekende fout bij snelle instap',
+    };
+  }
+}
+
+export async function checkCurrentRoute(
+  imageBase64: string | string[],
+  currentQuestionId: string,
+  currentQuestion: string,
+  steps: Array<{ questionId: string; questionText: string; answer: 'ja' | 'nee' }>,
+  toelichting?: string
+): Promise<MidwayCheckResult> {
+  try {
+    const images = Array.isArray(imageBase64) ? imageBase64 : [imageBase64];
+    const imageContent = images.map((img) => ({
+      type: 'image' as const,
+      source: {
+        type: 'base64' as const,
+        media_type: 'image/jpeg' as const,
+        data: img.replace(/^data:image\/\w+;base64,/, ''),
+      },
+    }));
+
+    const recentSteps = steps.slice(-8).map((step) =>
+      `- Vraag ${step.questionId}: ${step.questionText} -> ${step.answer}`
+    ).join('\n');
+
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 600,
+        messages: [
+          {
+            role: 'user',
+            content: [
+              ...imageContent,
+              {
+                type: 'text',
+                text: `Je doet een tussentijdse controle tijdens een stenen artefact-determinatie.
+
+Huidige vraag: ${currentQuestionId} - ${currentQuestion}
+${toelichting ? `Toelichting bij huidige vraag: ${toelichting}` : ''}
+
+Doorlopen beslispad:
+${recentSteps || '- Nog geen eerdere stappen'}
+
+INSTRUCTIES:
+- Dit is GEEN einddeterminatie.
+- Beoordeel alleen of het huidige pad op basis van de foto en de gegeven antwoorden nog logisch lijkt.
+- Als de route nog steeds verdedigbaar is, zeg dat.
+- Als er twijfel is, benoem waar de twijfel zit.
+- Als een andere hoofdrichting waarschijnlijker lijkt, zeg alleen dat heroverweging verstandig is.
+- Geef geen hard subtype als eindantwoord.
+
+Antwoord exact in dit format:
+**Oordeel:** [logisch / twijfelachtig / heroverweeg]
+**Toelichting:** [korte toelichting in het Nederlands, 2-5 zinnen]`,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+      if (response.status === 429) {
+        return { success: false, error: 'Daglimiet bereikt. Probeer later opnieuw.' };
+      }
+      return { success: false, error: `Fout: ${errorMessage}` };
+    }
+
+    const data = await response.json();
+    const content = data.content?.[0]?.text || '';
+    const verdictMatch = content.match(/\*\*Oordeel:\*\*\s*(.+)/i);
+    const feedbackMatch = content.match(/\*\*Toelichting:\*\*\s*([\s\S]+)/i);
+    const rawVerdict = verdictMatch?.[1]?.toLowerCase() ?? '';
+
+    let verdict: MidwayCheckResult['verdict'] = 'twijfelachtig';
+    if (rawVerdict.includes('logisch')) verdict = 'logisch';
+    if (rawVerdict.includes('heroverweeg')) verdict = 'heroverweeg';
+    if (rawVerdict.includes('twijfelachtig')) verdict = 'twijfelachtig';
+
+    return {
+      success: true,
+      verdict,
+      feedback: feedbackMatch?.[1]?.trim() || content.trim(),
+    };
+  } catch (err) {
+    console.error('Midway check error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Onbekende fout bij tussentijdse check',
     };
   }
 }

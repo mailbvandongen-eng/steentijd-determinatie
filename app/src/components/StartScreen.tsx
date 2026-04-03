@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.85',
+    title: 'Tussentijdse check tijdens determinatie',
+    items: [
+      'Tijdens een lopende determinatie kun je nu met "Kijk even mee" een adviserend AI-oordeel opvragen over het huidige pad',
+      'Die check gebruikt de foto, de huidige vraag en het al doorlopen beslispad, maar neemt de determinatie niet over',
+      'Daardoor kun je bij twijfel eerder bijsturen zonder te hoeven wachten op de eindbeoordeling',
+    ],
+  },
+  {
     version: '2.2.84',
     title: 'Determinatie-ingang opnieuw opgebouwd',
     items: [

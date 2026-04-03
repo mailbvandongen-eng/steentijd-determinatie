@@ -9,7 +9,7 @@ import {
   getTreeStartQuestionId,
   type DecisionTreeMode,
 } from '../lib/decisionTree';
-import { getHintForQuestion } from '../lib/aiAnalysis';
+import { checkCurrentRoute, getHintForQuestion } from '../lib/aiAnalysis';
 import { getSourceHint } from '../lib/sourceHints';
 import type { DeterminationStep, UserLevel } from '../types';
 
@@ -37,11 +37,16 @@ export function DecisionNavigator({
   const [currentQuestionId, setCurrentQuestionId] = useState(() => startQuestionId ?? getTreeStartQuestionId(treeMode));
   const [history, setHistory] = useState<string[]>([]);
   const [forwardHistory, setForwardHistory] = useState<string[]>([]);
+  const [answeredSteps, setAnsweredSteps] = useState<DeterminationStep[]>([]);
+  const [forwardSteps, setForwardSteps] = useState<DeterminationStep[]>([]);
   const [stepCount, setStepCount] = useState(1);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [currentHint, setCurrentHint] = useState<{ text: string; sourceLabel: string; sourceRef?: string; pitfall?: string } | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
+  const [midwayCheck, setMidwayCheck] = useState<{ verdict: 'logisch' | 'twijfelachtig' | 'heroverweeg'; feedback: string } | null>(null);
+  const [isCheckingRoute, setIsCheckingRoute] = useState(false);
+  const [midwayCheckError, setMidwayCheckError] = useState<string | null>(null);
 
   const question = getQuestion(currentQuestionId, treeMode);
   const images = getImagesForQuestion(currentQuestionId);
@@ -54,6 +59,8 @@ export function DecisionNavigator({
     setCurrentQuestionId(startQuestionId ?? getTreeStartQuestionId(treeMode));
     setHistory([]);
     setForwardHistory([]);
+    setAnsweredSteps([]);
+    setForwardSteps([]);
     setStepCount(1);
     setHintsUsed(0);
   }, [treeMode, startQuestionId]);
@@ -63,6 +70,8 @@ export function DecisionNavigator({
     // Clear hint when question changes
     setCurrentHint(null);
     setHintError(null);
+    setMidwayCheck(null);
+    setMidwayCheckError(null);
   }, [currentQuestionId]);
 
   const handleAnswer = (answer: 'ja' | 'nee') => {
@@ -77,12 +86,14 @@ export function DecisionNavigator({
       timestamp: new Date().toISOString(),
     };
     onStep(step);
+    setAnsweredSteps((prev) => [...prev, step]);
 
     // Verwerk het antwoord
     const result = processAnswer(currentQuestionId, answer, treeMode);
 
     // Clear forward history when user makes a new answer choice
     setForwardHistory([]);
+    setForwardSteps([]);
 
     const proceedToNext = () => {
       if (result.isEnd && result.result) {
@@ -106,7 +117,12 @@ export function DecisionNavigator({
     if (history.length > 0) {
       const prev = history[history.length - 1];
       setForwardHistory((f) => [currentQuestionId, ...f]);
+      const previousStep = answeredSteps[answeredSteps.length - 1];
+      if (previousStep) {
+        setForwardSteps((f) => [previousStep, ...f]);
+      }
       setHistory((h) => h.slice(0, -1));
+      setAnsweredSteps((steps) => steps.slice(0, -1));
       setCurrentQuestionId(prev);
       setStepCount((c) => c - 1);
     } else {
@@ -119,6 +135,11 @@ export function DecisionNavigator({
       const next = forwardHistory[0];
       setHistory((h) => [...h, currentQuestionId]);
       setForwardHistory((f) => f.slice(1));
+      const nextStep = forwardSteps[0];
+      if (nextStep) {
+        setAnsweredSteps((steps) => [...steps, nextStep]);
+      }
+      setForwardSteps((steps) => steps.slice(1));
       setCurrentQuestionId(next);
       setStepCount((c) => c + 1);
     }
@@ -165,6 +186,43 @@ export function DecisionNavigator({
       setHintError('Er ging iets mis bij het ophalen van de hint.');
     } finally {
       setIsLoadingHint(false);
+    }
+  };
+
+  const handleMidwayCheck = async () => {
+    if (isCheckingRoute || !question) return;
+
+    setIsCheckingRoute(true);
+    setMidwayCheck(null);
+    setMidwayCheckError(null);
+
+    try {
+      const result = await checkCurrentRoute(
+        imageUrl,
+        currentQuestionId,
+        question.vraag,
+        answeredSteps
+          .filter((step) => step.answer === 'ja' || step.answer === 'nee')
+          .map((step) => ({
+            questionId: step.questionId,
+            questionText: step.questionText,
+            answer: step.answer as 'ja' | 'nee',
+          })),
+        question.toelichting
+      );
+
+      if (result.success && result.verdict && result.feedback) {
+        setMidwayCheck({
+          verdict: result.verdict,
+          feedback: result.feedback,
+        });
+      } else {
+        setMidwayCheckError(result.error || 'Geen tussentijdse check ontvangen.');
+      }
+    } catch {
+      setMidwayCheckError('Er ging iets mis bij de tussentijdse check.');
+    } finally {
+      setIsCheckingRoute(false);
     }
   };
 
@@ -282,6 +340,41 @@ export function DecisionNavigator({
           </div>
         )}
 
+        {(midwayCheck || isCheckingRoute || midwayCheckError) && (
+          <div className={`card mb-3 border ${
+            midwayCheck?.verdict === 'logisch'
+              ? 'border-green-200 bg-green-50'
+              : midwayCheck?.verdict === 'heroverweeg'
+                ? 'border-red-200 bg-red-50'
+                : 'border-amber-200 bg-amber-50'
+          }`}>
+            {isCheckingRoute ? (
+              <div className="flex items-center gap-2 text-blue-700">
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span className="text-sm font-medium">AI kijkt even mee naar je huidige route...</span>
+              </div>
+            ) : midwayCheckError ? (
+              <p className="text-sm text-red-600">{midwayCheckError}</p>
+            ) : midwayCheck ? (
+              <div className="space-y-1">
+                <p className={`text-xs font-semibold uppercase tracking-wide ${
+                  midwayCheck.verdict === 'logisch'
+                    ? 'text-green-700'
+                    : midwayCheck.verdict === 'heroverweeg'
+                      ? 'text-red-700'
+                      : 'text-amber-700'
+                }`}>
+                  Tussentijdse check: {midwayCheck.verdict}
+                </p>
+                <p className="text-sm text-stone-800 whitespace-pre-wrap">{midwayCheck.feedback}</p>
+              </div>
+            ) : null}
+          </div>
+        )}
+
         {/* Jouw artefact */}
         <div className="card mb-3">
           <p className="text-xs text-stone-500 mb-2 font-medium">JOUW ARTEFACT</p>
@@ -315,7 +408,7 @@ export function DecisionNavigator({
 
       {/* Antwoord knoppen - fixed */}
       <div className="p-3 bg-white border-t border-stone-200 shrink-0">
-        <div className="flex justify-center mb-2">
+        <div className="flex justify-center gap-2 mb-2 flex-wrap">
           <button
             onClick={handleRequestHint}
             disabled={!canUseHint}
@@ -329,6 +422,20 @@ export function DecisionNavigator({
               <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
             {isLoadingHint ? 'Hint wordt opgehaald...' : 'Vraag hint'}
+          </button>
+          <button
+            onClick={handleMidwayCheck}
+            disabled={isCheckingRoute}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              isCheckingRoute
+                ? 'bg-stone-100 text-stone-400 cursor-not-allowed'
+                : 'bg-violet-100 text-violet-700 hover:bg-violet-200'
+            }`}
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 9.75h.008v.008H9.75V9.75zm4.5 0h.008v.008h-.008V9.75zM8.25 15c.97.61 2.227 1 3.75 1s2.78-.39 3.75-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {isCheckingRoute ? 'AI kijkt mee...' : 'Kijk even mee'}
           </button>
         </div>
 
