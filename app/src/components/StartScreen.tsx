@@ -39,6 +39,15 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
+    version: '2.2.83',
+    title: 'Snelle instap en hints nu ook voor beginners',
+    items: [
+      'Snelle instap is niet langer verborgen voor beginners zolang er een stabiele verkorte instap voor die familie bestaat',
+      'Hints en referentiebeelden blijven nu op alle niveaus beschikbaar, zodat gevorderd en expert ook echt leerniveaus blijven',
+      'De navigatortekst maakt nu duidelijk dat hints ondersteuning zijn en geen beginnersprivilege',
+    ],
+  },
+  {
     version: '2.2.82',
     title: 'Snelle instap nu ook zichtbaar in resultaat en geschiedenis',
     items: [
@@ -1013,7 +1022,7 @@ export function StartScreen({
               </div>
             </button>
 
-            {currentLevel !== 'beginner' && quickStartDefinitions.length > 0 && (
+            {quickStartDefinitions.length > 0 && (
               <>
                 <button
                   onClick={() => setShowQuickStart(!showQuickStart)}
@@ -1021,13 +1030,13 @@ export function StartScreen({
                 >
                   {showQuickStart
                     ? <><ChevronUp size={14} /> Verberg snelle instap</>
-                    : <><ChevronDown size={14} /> Snelle instap voor gevorderden en experts</>}
+                    : <><ChevronDown size={14} /> Snelle instap</>}
                 </button>
 
                 {showQuickStart && (
                   <div className="bg-white rounded-xl p-3 border border-amber-200 shadow-sm space-y-2">
                     <p className="text-xs text-stone-600">
-                      Kies een vermoedelijke artefactfamilie. De AI controleert daarna alleen of deze instap plausibel is.
+                      Kies een vermoedelijke artefactfamilie. De AI controleert daarna alleen of deze instap plausibel is en je kunt altijd terug naar de volledige route.
                     </p>
                     {Object.entries(quickStartGroups).map(([category, definitions]) =>
                       definitions.length > 0 ? (

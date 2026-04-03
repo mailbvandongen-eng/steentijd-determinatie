@@ -432,6 +432,7 @@ export function getQuickStartDefinition(id: QuickStartFamily): QuickStartDefinit
 export function getQuickStartDefinitionsForLevel(level: UserLevel): QuickStartDefinition[] {
   return QUICK_START_DEFINITIONS.filter((definition) => {
     if (level === 'expert') return true;
+    if (level === 'beginner') return Boolean(definition.start.gevorderd);
     return Boolean(definition.start.gevorderd);
   });
 }
