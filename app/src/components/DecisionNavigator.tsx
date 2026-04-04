@@ -3,13 +3,13 @@ import { Sprout, Leaf, Star } from 'lucide-react';
 import {
   getQuestion,
   processAnswer,
-  getImagesForQuestion,
   formatTypeName,
   getTreeLabel,
   getTreeStartQuestionId,
+  normalizeTreeResult,
   type DecisionTreeMode,
 } from '../lib/decisionTree';
-import { checkCurrentRoute, getHintForQuestion } from '../lib/aiAnalysis';
+import { analyzeDetailImage, getHintForQuestion } from '../lib/aiAnalysis';
 import { getSourceHint } from '../lib/sourceHints';
 import type { DetailImage, DeterminationStep, UserLevel } from '../types';
 
@@ -48,16 +48,12 @@ export function DecisionNavigator({
   const [currentHint, setCurrentHint] = useState<{ text: string; sourceLabel: string; sourceRef?: string; pitfall?: string } | null>(null);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [hintError, setHintError] = useState<string | null>(null);
-  const [midwayCheck, setMidwayCheck] = useState<{ verdict: 'logisch' | 'twijfelachtig' | 'heroverweeg'; feedback: string } | null>(null);
-  const [isCheckingRoute, setIsCheckingRoute] = useState(false);
-  const [midwayCheckError, setMidwayCheckError] = useState<string | null>(null);
   const [isAddingDetailImage, setIsAddingDetailImage] = useState(false);
 
   const question = getQuestion(currentQuestionId, treeMode);
-  const images = getImagesForQuestion(currentQuestionId);
   const treeLabel = getTreeLabel(treeMode);
   const isBeginnerTree = treeMode === 'beginner';
-
+  const canAddDetailImages = level !== 'beginner';
   const showToelichtingDirectly = level === 'beginner' || !isBeginnerTree;
 
   useEffect(() => {
@@ -72,82 +68,76 @@ export function DecisionNavigator({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Clear hint when question changes
     setCurrentHint(null);
     setHintError(null);
-    setMidwayCheck(null);
-    setMidwayCheckError(null);
   }, [currentQuestionId]);
 
   const handleAnswer = (answer: 'ja' | 'nee') => {
     if (!question) return;
 
-    // Log de stap
     const step: DeterminationStep = {
       questionId: currentQuestionId,
       questionText: question.vraag,
       answer,
-      referenceImages: images.map((img) => img.file),
+      referenceImages: [],
       timestamp: new Date().toISOString(),
     };
     onStep(step);
     setAnsweredSteps((prev) => [...prev, step]);
 
-    // Verwerk het antwoord
     const result = processAnswer(currentQuestionId, answer, treeMode);
-
-    // Clear forward history when user makes a new answer choice
     setForwardHistory([]);
     setForwardSteps([]);
 
-    const proceedToNext = () => {
-      if (result.isEnd && result.result) {
-        onComplete({
-          type: result.result,
-          description: formatTypeName(result.result),
-          hintsUsed,
-          sourceResultType: result.result,
-        });
-      } else if (result.nextQuestion) {
-        setHistory((prev) => [...prev, currentQuestionId]);
-        setCurrentQuestionId(result.nextQuestion);
-        setStepCount((c) => c + 1);
-      }
-    };
+    if (result.isEnd && result.result) {
+      const normalizedResult = normalizeTreeResult(treeMode, result.result);
+      onComplete({
+        type: normalizedResult,
+        description: formatTypeName(normalizedResult),
+        hintsUsed,
+        sourceResultType: normalizedResult,
+      });
+      return;
+    }
 
-    proceedToNext();
+    if (result.nextQuestion) {
+      setHistory((prev) => [...prev, currentQuestionId]);
+      setCurrentQuestionId(result.nextQuestion);
+      setStepCount((count) => count + 1);
+    }
   };
 
   const handleGoBack = () => {
     if (history.length > 0) {
-      const prev = history[history.length - 1];
-      setForwardHistory((f) => [currentQuestionId, ...f]);
+      const previousQuestionId = history[history.length - 1];
       const previousStep = answeredSteps[answeredSteps.length - 1];
+      setForwardHistory((prev) => [currentQuestionId, ...prev]);
       if (previousStep) {
-        setForwardSteps((f) => [previousStep, ...f]);
+        setForwardSteps((prev) => [previousStep, ...prev]);
       }
-      setHistory((h) => h.slice(0, -1));
-      setAnsweredSteps((steps) => steps.slice(0, -1));
-      setCurrentQuestionId(prev);
-      setStepCount((c) => c - 1);
-    } else {
-      onBack();
+      setHistory((prev) => prev.slice(0, -1));
+      setAnsweredSteps((prev) => prev.slice(0, -1));
+      setCurrentQuestionId(previousQuestionId);
+      setStepCount((count) => count - 1);
+      return;
     }
+
+    onBack();
   };
 
   const handleGoForward = () => {
-    if (forwardHistory.length > 0) {
-      const next = forwardHistory[0];
-      setHistory((h) => [...h, currentQuestionId]);
-      setForwardHistory((f) => f.slice(1));
-      const nextStep = forwardSteps[0];
-      if (nextStep) {
-        setAnsweredSteps((steps) => [...steps, nextStep]);
-      }
-      setForwardSteps((steps) => steps.slice(1));
-      setCurrentQuestionId(next);
-      setStepCount((c) => c + 1);
+    if (forwardHistory.length === 0) return;
+
+    const nextQuestionId = forwardHistory[0];
+    const nextStep = forwardSteps[0];
+    setHistory((prev) => [...prev, currentQuestionId]);
+    setForwardHistory((prev) => prev.slice(1));
+    if (nextStep) {
+      setAnsweredSteps((prev) => [...prev, nextStep]);
     }
+    setForwardSteps((prev) => prev.slice(1));
+    setCurrentQuestionId(nextQuestionId);
+    setStepCount((count) => count + 1);
   };
 
   const handleRequestHint = async () => {
@@ -160,9 +150,8 @@ export function DecisionNavigator({
     try {
       const sourceHint = getSourceHint(currentQuestionId);
       if (sourceHint) {
-        const hintText = [sourceHint.short, sourceHint.detail].filter(Boolean).join(' ');
         setCurrentHint({
-          text: hintText,
+          text: [sourceHint.short, sourceHint.detail].filter(Boolean).join(' '),
           sourceLabel: 'Bronhint',
           sourceRef: sourceHint.source,
           pitfall: sourceHint.pitfall,
@@ -171,17 +160,11 @@ export function DecisionNavigator({
         return;
       }
 
-      const result = await getHintForQuestion(
-        imageUrl,
-        question.vraag,
-        currentQuestionId,
-        question.toelichting
-      );
-
+      const result = await getHintForQuestion(imageUrl, question.vraag, currentQuestionId, question.toelichting);
       if (result.success && result.hint) {
         setCurrentHint({
           text: result.hint,
-          sourceLabel: 'AI hint',
+          sourceLabel: 'AI-hint',
         });
         setHintsUsed((prev) => prev + 1);
       } else {
@@ -194,46 +177,9 @@ export function DecisionNavigator({
     }
   };
 
-  const handleMidwayCheck = async () => {
-    if (isCheckingRoute || !question) return;
-
-    setIsCheckingRoute(true);
-    setMidwayCheck(null);
-    setMidwayCheckError(null);
-
-    try {
-      const result = await checkCurrentRoute(
-        [imageUrl, ...detailImages.map((image) => image.thumbnail)],
-        currentQuestionId,
-        question.vraag,
-        answeredSteps
-          .filter((step) => step.answer === 'ja' || step.answer === 'nee')
-          .map((step) => ({
-            questionId: step.questionId,
-            questionText: step.questionText,
-            answer: step.answer as 'ja' | 'nee',
-          })),
-        question.toelichting
-      );
-
-      if (result.success && result.verdict && result.feedback) {
-        setMidwayCheck({
-          verdict: result.verdict,
-          feedback: result.feedback,
-        });
-      } else {
-        setMidwayCheckError(result.error || 'Geen tussentijdse check ontvangen.');
-      }
-    } catch {
-      setMidwayCheckError('Er ging iets mis bij de tussentijdse check.');
-    } finally {
-      setIsCheckingRoute(false);
-    }
-  };
-
   const handleDetailImageSelected = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file || !onDetailImagesChange) return;
+    if (!file || !onDetailImagesChange || !question || !canAddDetailImages) return;
     event.target.value = '';
 
     setIsAddingDetailImage(true);
@@ -256,9 +202,8 @@ export function DecisionNavigator({
           }
 
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          const blob = await new Promise<Blob | null>((res) => {
-            canvas.toBlob(res, 'image/jpeg', 0.85);
+          const blob = await new Promise<Blob | null>((resolveBlob) => {
+            canvas.toBlob(resolveBlob, 'image/jpeg', 0.85);
           });
 
           const thumbCanvas = document.createElement('canvas');
@@ -290,9 +235,27 @@ export function DecisionNavigator({
         img.src = objectUrl;
       });
 
-      await onDetailImagesChange([...detailImages, detailImage]);
+      const analysis = await analyzeDetailImage(
+        detailImage.thumbnail,
+        currentQuestionId,
+        question.vraag,
+        question.toelichting
+      );
+
+      await onDetailImagesChange([
+        ...detailImages,
+        {
+          ...detailImage,
+          analysis: analysis.success && analysis.feedback
+            ? {
+                feedback: analysis.feedback,
+                analyzedAt: new Date().toISOString(),
+              }
+            : undefined,
+        },
+      ]);
     } catch {
-      setMidwayCheckError('De detailfoto kon niet worden toegevoegd.');
+      setHintError('De detailfoto kon niet worden toegevoegd.');
     } finally {
       setIsAddingDetailImage(false);
     }
@@ -309,18 +272,14 @@ export function DecisionNavigator({
     );
   }
 
-  const canUseHint = !isLoadingHint;
-
   const levelConfig = {
-    beginner: { icon: <Sprout className="w-4 h-4" />, label: 'Beginner', color: 'bg-green-500/20 text-green-400' },
-    gevorderd: { icon: <Leaf className="w-4 h-4" />, label: 'Gevorderd', color: 'bg-amber-500/20 text-amber-400' },
-    expert: { icon: <Star className="w-4 h-4" />, label: 'Expert', color: 'bg-purple-500/20 text-purple-400' },
+    beginner: { icon: <Sprout className="w-4 h-4" />, color: 'bg-green-500/20 text-green-400' },
+    gevorderd: { icon: <Leaf className="w-4 h-4" />, color: 'bg-amber-500/20 text-amber-400' },
+    expert: { icon: <Star className="w-4 h-4" />, color: 'bg-purple-500/20 text-purple-400' },
   };
-  const currentLevelConfig = levelConfig[level];
 
   return (
     <div className="h-full flex flex-col overflow-hidden bg-stone-50">
-      {/* Header */}
       <div className="bg-stone-800 p-3 flex items-center gap-3 shrink-0">
         <button onClick={handleGoBack} className="text-white p-1">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -331,37 +290,49 @@ export function DecisionNavigator({
         <div className="flex-1">
           <p className="text-white text-sm font-medium">Stap {stepCount}</p>
           <p className="text-stone-400 text-xs">{history.length > 0 ? 'Terug = vorige vraag' : 'Terug = annuleren'}</p>
-          {!isBeginnerTree && (
-            <p className="text-stone-400 text-xs">{treeLabel}</p>
-          )}
+          {!isBeginnerTree && <p className="text-stone-400 text-xs">{treeLabel}</p>}
         </div>
-        {/* Level badge */}
-        <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${currentLevelConfig.color}`}>
-          {currentLevelConfig.icon}
+        <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${levelConfig[level].color}`}>
+          {levelConfig[level].icon}
           {isSandbox && <span className="opacity-70">Vrij</span>}
-        </div>
-        {/* Hint counter */}
-        <div className="flex items-center gap-1 text-amber-400">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-          <span className="text-xs font-medium">{hintsUsed} gebruikt</span>
         </div>
       </div>
 
-      {/* Content - scrollable */}
       <div className="flex-1 overflow-y-auto p-3">
-        {/* Vraag */}
         <div className="card mb-3">
-          <h2 className="text-lg font-semibold text-stone-900 mb-2">
-            {question.vraag}
-          </h2>
+          <p className="text-xs text-stone-500 mb-2 font-medium">JOUW ARTEFACT</p>
+          <img
+            src={imageUrl}
+            alt="Jouw artefact"
+            className="w-full max-h-56 object-contain rounded border border-stone-200"
+          />
+        </div>
+
+        {detailImages.length > 0 && canAddDetailImages && (
+          <div className="card mb-3">
+            <p className="text-xs text-stone-500 mb-2 font-medium">DETAILFOTO&apos;S</p>
+            <div className="space-y-3">
+              {detailImages.map((image, index) => (
+                <div key={image.id} className="rounded-xl border border-stone-200 p-2">
+                  <img
+                    src={image.thumbnail}
+                    alt={`Detailfoto ${index + 1}`}
+                    className="h-28 w-auto rounded border border-stone-200"
+                  />
+                  {image.analysis && (
+                    <p className="mt-2 text-sm text-stone-700">{image.analysis.feedback}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="card mb-3">
+          <h2 className="text-lg font-semibold text-stone-900 mb-2">{question.vraag}</h2>
           {treeMode === 'expert' && (
-            <p className="text-xs text-stone-500 mb-2">
-              Bron: algoritme vraag {currentQuestionId}
-            </p>
+            <p className="text-xs text-stone-500 mb-2">Bron: algoritme vraag {currentQuestionId}</p>
           )}
-          {/* Toelichting: in beginner direct, in gevorderd pas na antwoord */}
           {question.toelichting && showToelichtingDirectly && (
             <p className="text-sm text-stone-600 bg-amber-50 p-2 rounded border-l-4 border-amber-400">
               {question.toelichting}
@@ -369,141 +340,35 @@ export function DecisionNavigator({
           )}
         </div>
 
-        {/* AI Hint */}
         {(currentHint || isLoadingHint || hintError) && (
           <div className="card mb-3 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-            <div className="flex items-start gap-2">
-              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center shrink-0">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-blue-700 mb-1">{currentHint?.sourceLabel ?? 'Hint'}</p>
-                {isLoadingHint && (
-                  <div className="flex items-center gap-2 text-blue-600">
-                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span className="text-sm">Hint wordt opgehaald...</span>
-                  </div>
+            <p className="text-xs font-semibold text-blue-700 mb-1">{currentHint?.sourceLabel ?? 'Hint'}</p>
+            {isLoadingHint && <p className="text-sm text-blue-700">Hint wordt opgehaald...</p>}
+            {hintError && <p className="text-sm text-red-600">{hintError}</p>}
+            {currentHint && (
+              <div className="space-y-2">
+                <p className="text-sm text-blue-900">{currentHint.text}</p>
+                {currentHint.pitfall && (
+                  <p className="text-xs text-blue-700">Let op: {currentHint.pitfall}</p>
                 )}
-                {hintError && (
-                  <p className="text-sm text-red-600">{hintError}</p>
-                )}
-                {currentHint && (
-                  <div className="space-y-2">
-                    <p className="text-sm text-blue-900">{currentHint.text}</p>
-                    {currentHint.pitfall && (
-                      <p className="text-xs text-blue-800">
-                        <span className="font-semibold">Valkuil:</span> {currentHint.pitfall}
-                      </p>
-                    )}
-                    {currentHint.sourceRef && (
-                      <p className="text-xs text-blue-700">
-                        <span className="font-semibold">Bron:</span> {currentHint.sourceRef}
-                      </p>
-                    )}
-                  </div>
+                {currentHint.sourceRef && (
+                  <p className="text-xs text-blue-600">{currentHint.sourceRef}</p>
                 )}
               </div>
-            </div>
-          </div>
-        )}
-
-        {(midwayCheck || isCheckingRoute || midwayCheckError) && (
-          <div className={`card mb-3 border ${
-            midwayCheck?.verdict === 'logisch'
-              ? 'border-green-200 bg-green-50'
-              : midwayCheck?.verdict === 'heroverweeg'
-                ? 'border-red-200 bg-red-50'
-                : 'border-amber-200 bg-amber-50'
-          }`}>
-            {isCheckingRoute ? (
-              <div className="flex items-center gap-2 text-blue-700">
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span className="text-sm font-medium">AI kijkt even mee naar je huidige route...</span>
-              </div>
-            ) : midwayCheckError ? (
-              <p className="text-sm text-red-600">{midwayCheckError}</p>
-            ) : midwayCheck ? (
-              <div className="space-y-1">
-                <p className={`text-xs font-semibold uppercase tracking-wide ${
-                  midwayCheck.verdict === 'logisch'
-                    ? 'text-green-700'
-                    : midwayCheck.verdict === 'heroverweeg'
-                      ? 'text-red-700'
-                      : 'text-amber-700'
-                }`}>
-                  Tussentijdse check: {midwayCheck.verdict}
-                </p>
-                <p className="text-sm text-stone-800 whitespace-pre-wrap">{midwayCheck.feedback}</p>
-              </div>
-            ) : null}
-          </div>
-        )}
-
-        {/* Jouw artefact */}
-        <div className="card mb-3">
-          <p className="text-xs text-stone-500 mb-2 font-medium">JOUW ARTEFACT</p>
-          <img
-            src={imageUrl}
-            alt="Jouw artefact"
-            className="w-full max-h-48 object-contain rounded border border-stone-200"
-          />
-        </div>
-
-        {detailImages.length > 0 && (
-          <div className="card mb-3">
-            <p className="text-xs text-stone-500 mb-2 font-medium">DETAILFOTO'S</p>
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {detailImages.map((image, index) => (
-                <img
-                  key={image.id}
-                  src={image.thumbnail}
-                  alt={`Detailfoto ${index + 1}`}
-                  className="h-20 w-auto rounded border border-stone-200 shrink-0"
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Referentie afbeeldingen */}
-        {images.length > 0 && (
-          <div className="card">
-            <p className="text-xs text-stone-500 mb-2 font-medium">REFERENTIE VOORBEELDEN</p>
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {images.slice(0, 4).map((img) => (
-                <img
-                  key={img.file}
-                  src={`./images_algoritme/${img.file}`}
-                  alt="Referentie"
-                  className="h-20 w-auto rounded border border-stone-200 shrink-0"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              ))}
-            </div>
+            )}
           </div>
         )}
       </div>
 
-      {/* Antwoord knoppen - fixed */}
       <div className="p-3 bg-white border-t border-stone-200 shrink-0">
-        <div className="flex justify-center gap-2 mb-2 flex-wrap">
+        <div className="flex justify-center gap-2 mb-3 flex-wrap">
           <button
             onClick={handleRequestHint}
-            disabled={!canUseHint}
+            disabled={isLoadingHint}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              canUseHint
-                ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                : 'bg-stone-100 text-stone-400 cursor-not-allowed'
+              isLoadingHint
+                ? 'bg-stone-100 text-stone-400 cursor-not-allowed'
+                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
             }`}
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -511,47 +376,29 @@ export function DecisionNavigator({
             </svg>
             {isLoadingHint ? 'Hint wordt opgehaald...' : 'Vraag hint'}
           </button>
-          <button
-            onClick={handleMidwayCheck}
-            disabled={isCheckingRoute}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              isCheckingRoute
-                ? 'bg-stone-100 text-stone-400 cursor-not-allowed'
-                : 'bg-violet-100 text-violet-700 hover:bg-violet-200'
-            }`}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 9.75h.008v.008H9.75V9.75zm4.5 0h.008v.008h-.008V9.75zM8.25 15c.97.61 2.227 1 3.75 1s2.78-.39 3.75-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {isCheckingRoute ? 'AI kijkt mee...' : 'Kijk even mee'}
-          </button>
-          <label className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
-            isAddingDetailImage
-              ? 'bg-stone-100 text-stone-400'
-              : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-          }`}>
-            <input
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="hidden"
-              disabled={isAddingDetailImage}
-              onChange={handleDetailImageSelected}
-            />
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h4l2-2h6l2 2h4v12H3V7zm9 3a3 3 0 100 6 3 3 0 000-6z" />
-            </svg>
-            {isAddingDetailImage ? 'Detailfoto wordt toegevoegd...' : 'Voeg detailfoto toe'}
-          </label>
+
+          {canAddDetailImages && (
+            <label className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+              isAddingDetailImage
+                ? 'bg-stone-100 text-stone-400'
+                : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+            }`}>
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                disabled={isAddingDetailImage}
+                onChange={handleDetailImageSelected}
+              />
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h4l2-2h6l2 2h4v12H3V7zm9 3a3 3 0 100 6 3 3 0 000-6z" />
+              </svg>
+              {isAddingDetailImage ? 'Detailfoto wordt toegevoegd...' : 'Voeg detailfoto toe'}
+            </label>
+          )}
         </div>
 
-        <p className="text-xs text-stone-500 text-center mb-2">
-          {level === 'beginner'
-            ? 'Bekijk je artefact, gebruik hints als je wilt, en beantwoord de vraag'
-            : level === 'gevorderd'
-            ? 'Determineren met bronhints en AI-hulp als ondersteuning'
-            : 'Expert modus met volledige boom en optionele hints als leerhulp'}
-        </p>
         <div className="flex gap-3">
           <button
             onClick={() => handleAnswer('ja')}
@@ -566,7 +413,7 @@ export function DecisionNavigator({
             Nee
           </button>
         </div>
-        {/* Back / Forward navigation */}
+
         <div className="flex gap-2 mt-2">
           <button
             onClick={handleGoBack}

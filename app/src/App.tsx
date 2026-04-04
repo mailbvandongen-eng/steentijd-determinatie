@@ -21,6 +21,7 @@ import type { DetailImage, DeterminationSession, LabeledImage, DeterminationStep
 import { getContinuationOption, isContinuationActive, type ContinuationOption } from './lib/awnProgression';
 import type { DecisionTreeMode } from './lib/decisionTree';
 import {
+  getQuickStartDefinitionsForLevel,
   getQuickStartContinuation,
   getQuickStartDefinition,
   type QuickStartFamily,
@@ -29,7 +30,7 @@ import {
 type View = 'start' | 'capture' | 'decision' | 'result' | 'history' | 'trainer' | 'quickstart-review';
 type AppMode = 'practice' | 'training';
 
-const APP_VERSION = '2.2.86';
+const APP_VERSION = '2.2.87';
 
 interface ContinuationState {
   treeMode: DecisionTreeMode;
@@ -143,6 +144,57 @@ function App() {
     setView('capture');
   }, []);
 
+  const runQuickStartCheck = useCallback(async (data: CapturedData, family: QuickStartFamily, targetLevel: UserLevel) => {
+    setCapturedData(data);
+    setDeterminationSteps([]);
+    setSessionStartTime(null);
+    setSessionHintsUsed(0);
+    setCurrentSessionId(null);
+    setCurrentSession(null);
+    setShouldAutoValidateResult(false);
+    setContinuationState(null);
+    setQuickStartState({
+      family,
+      targetLevel,
+      isChecking: true,
+      verdict: null,
+      feedback: null,
+      error: null,
+    });
+    setView('quickstart-review');
+
+    const definition = getQuickStartDefinition(family);
+    const imageBase64 = await getCapturedImageBase64(data);
+
+    if (!definition || !imageBase64) {
+      setQuickStartState({
+        family,
+        targetLevel,
+        isChecking: false,
+        verdict: null,
+        feedback: null,
+        error: 'Kon geen bruikbare foto voorbereiden voor de instapcontrole.',
+      });
+      return;
+    }
+
+    const result = await checkQuickStartPlausibility(
+      imageBase64,
+      definition.label,
+      definition.description,
+      definition
+    );
+
+    setQuickStartState({
+      family,
+      targetLevel,
+      isChecking: false,
+      verdict: result.verdict ?? 'twijfelachtig',
+      feedback: result.feedback ?? null,
+      error: result.success ? null : (result.error ?? 'Kon de instap niet controleren.'),
+    });
+  }, []);
+
   const handleStartTraining = useCallback(async (sessionCode: string, name: string) => {
     // Join the training session in Firestore
     const result = await joinTrainingSession(sessionCode, name);
@@ -241,54 +293,12 @@ function App() {
   // Capture handler
   const handleCapture = useCallback(async (data: CapturedData) => {
     if (quickStartState && appMode === 'practice' && quickStartState.targetLevel !== 'beginner') {
-      setCapturedData(data);
-      setDeterminationSteps([]);
-      setSessionStartTime(null);
-      setSessionHintsUsed(0);
-      setCurrentSessionId(null);
-      setCurrentSession(null);
-      setShouldAutoValidateResult(false);
-      setContinuationState(null);
-      setQuickStartState((prev) => prev ? {
-        ...prev,
-        isChecking: true,
-        verdict: null,
-        feedback: null,
-        error: null,
-      } : prev);
-      setView('quickstart-review');
-
-      const definition = getQuickStartDefinition(quickStartState.family);
-      const imageBase64 = await getCapturedImageBase64(data);
-
-      if (!definition || !imageBase64) {
-        setQuickStartState((prev) => prev ? {
-          ...prev,
-          isChecking: false,
-          error: 'Kon geen bruikbare foto voorbereiden voor de snelle instap.',
-        } : prev);
-        return;
-      }
-
-      const result = await checkQuickStartPlausibility(
-        imageBase64,
-        definition.label,
-        definition.description,
-        definition
-      );
-
-      setQuickStartState((prev) => prev ? {
-        ...prev,
-        isChecking: false,
-        verdict: result.verdict ?? 'twijfelachtig',
-        feedback: result.feedback ?? null,
-        error: result.success ? null : (result.error ?? 'Kon de instap niet controleren.'),
-      } : prev);
+      await runQuickStartCheck(data, quickStartState.family, quickStartState.targetLevel);
       return;
     }
 
     await startDecisionSession(data);
-  }, [quickStartState, appMode, getCapturedImageBase64, startDecisionSession]);
+  }, [quickStartState, appMode, runQuickStartCheck, startDecisionSession]);
 
   // Decision tree handlers
   const handleDecisionStep = useCallback((step: DeterminationStep) => {
@@ -494,22 +504,10 @@ function App() {
     setQuickStartState(null);
   }, [capturedData, quickStartState, startDecisionSession]);
 
-  const handleUseFullRoute = useCallback(async () => {
+  const handleChooseDifferentQuickStartFamily = useCallback(async (familyId: string) => {
     if (!capturedData || !quickStartState) return;
-    const definition = getQuickStartDefinition(quickStartState.family);
-    await startDecisionSession(capturedData, {
-      level: quickStartState.targetLevel,
-      quickStart: {
-        family: quickStartState.family,
-        familyLabel: definition?.label ?? quickStartState.family,
-        targetLevel: quickStartState.targetLevel,
-        verdict: quickStartState.verdict,
-        feedback: quickStartState.feedback,
-        used: false,
-      },
-    });
-    setQuickStartState(null);
-  }, [capturedData, quickStartState, startDecisionSession]);
+    await runQuickStartCheck(capturedData, familyId as QuickStartFamily, quickStartState.targetLevel);
+  }, [capturedData, quickStartState, runQuickStartCheck]);
 
   const handleBackFromQuickStartReview = useCallback(() => {
     setView('capture');
@@ -547,6 +545,9 @@ function App() {
           imageUrl={getImageUrl()}
           familyLabel={definition?.label ?? quickStartState.family}
           targetLevelLabel={quickStartState.targetLevel === 'expert' ? 'Expert' : 'Gevorderd'}
+          alternativeFamilies={getQuickStartDefinitionsForLevel(quickStartState.targetLevel)
+            .filter((item) => item.id !== quickStartState.family)
+            .map((item) => ({ id: item.id, label: item.label }))}
           expectedTraits={definition?.expectedTraits}
           commonConfusions={definition?.commonConfusions}
           exampleOutcomes={definition?.exampleOutcomes}
@@ -555,7 +556,7 @@ function App() {
           feedback={quickStartState.feedback}
           error={quickStartState.error}
           onUseQuickStart={handleUseQuickStart}
-          onUseFullRoute={handleUseFullRoute}
+          onChooseDifferentFamily={handleChooseDifferentQuickStartFamily}
           onBack={handleBackFromQuickStartReview}
         />
       );

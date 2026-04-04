@@ -39,12 +39,12 @@ interface StartScreenProps {
 
 const CHANGELOG = [
   {
-    version: '2.2.86',
-    title: 'Detailfoto’s tijdens determinatie',
+    version: '2.2.87',
+    title: 'Stap in en determinatie-UI opgeschoond',
     items: [
-      'Tijdens een lopende determinatie kun je nu extra detailfoto’s toevoegen, bijvoorbeeld voor microretouche, doorsnede, slagvlak of schachtdoorn',
-      'Deze detailfoto’s worden apart opgeslagen van de 4 hoofdopnames, zodat de basisopzet van de captureflow intact blijft',
-      'Detailfoto’s worden lokaal aan de sessie gekoppeld, op het resultaatscherm getoond en via sync als aparte thumbnails meegenomen',
+      'Stap in werkt nu als echte gevorderde instap: na keuze van hoofdtype volgt eerst een AI-plausibiliteitscheck en daarna start de verdieping direct binnen die familie',
+      'De beginnerflow is opgeschoond naar een eenvoudige vraagroute zonder voorbeeldplaatjes, tussentijdse meekijkcheck of detailfoto-opties',
+      'Gevorderde routes zijn afgeschermd tegen onlogische familie-overgangen en detailfoto’s geven nu objectieve AI-observaties per opname',
     ],
   },
   {
@@ -1052,17 +1052,19 @@ export function StartScreen({
 
             {showDeterminationOptions && (
               <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-3 space-y-3">
-                <button
-                  onClick={() => onStartPractice(currentLevel, false)}
-                  className="w-full rounded-xl border border-stone-200 px-4 py-4 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
-                >
-                  <p className="text-sm font-semibold text-stone-800">Start</p>
-                  <p className="mt-1 text-xs text-stone-500">
-                    Volg de gewone route vanaf het begin op niveau {currentLevel}.
-                  </p>
-                </button>
+                {currentLevel === 'beginner' && (
+                  <button
+                    onClick={() => onStartPractice(currentLevel, false)}
+                    className="w-full rounded-xl border border-stone-200 px-4 py-4 text-left hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                  >
+                    <p className="text-sm font-semibold text-stone-800">Start</p>
+                    <p className="mt-1 text-xs text-stone-500">
+                      Volg de gewone route vanaf het begin en werk toe naar een basisdeterminatie.
+                    </p>
+                  </button>
+                )}
 
-                {quickStartDefinitions.length > 0 && (
+                {currentLevel !== 'beginner' && quickStartDefinitions.length > 0 && (
                   <>
                     <button
                       onClick={() => setShowQuickStart(!showQuickStart)}
@@ -1072,7 +1074,7 @@ export function StartScreen({
                         <div>
                           <p className="text-sm font-semibold text-stone-800">Stap in</p>
                           <p className="mt-1 text-xs text-stone-500">
-                            Kies eerst een hoofdgroep. AI kijkt alleen mee of die instap verdedigbaar is.
+                            Kies eerst een basisvorm of hoofdtype. AI controleert alleen of die instap op je foto verdedigbaar is.
                           </p>
                         </div>
                         {showQuickStart ? <ChevronUp size={16} className="text-stone-400 shrink-0" /> : <ChevronDown size={16} className="text-stone-400 shrink-0" />}
@@ -1082,7 +1084,7 @@ export function StartScreen({
                     {showQuickStart && (
                       <div className="bg-amber-50 rounded-xl p-3 border border-amber-200 shadow-sm space-y-2">
                         <p className="text-xs text-stone-600">
-                          Kies een vermoedelijke artefactfamilie. De app adviseert daarna of volledig starten verstandiger is, maar jij blijft de baas.
+                          Dit is de instap voor gevorderden. Kies de basisvorm die je al herkent; daarna start de verdieping direct binnen die familie.
                         </p>
                         {Object.entries(quickStartGroups).map(([category, definitions]) =>
                           definitions.length > 0 ? (

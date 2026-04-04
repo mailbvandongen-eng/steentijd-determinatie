@@ -32,6 +32,10 @@ export interface DetailImage {
   blob: Blob;
   thumbnail: string;
   createdAt: string;
+  analysis?: {
+    feedback: string;
+    analyzedAt: string;
+  };
 }
 
 // Locatie voor vondsten

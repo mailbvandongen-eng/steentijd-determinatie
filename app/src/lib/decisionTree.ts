@@ -2075,6 +2075,74 @@ const TREE_DEFINITIONS: Record<DecisionTreeMode, TreeDefinition> = {
   },
 };
 
+const TREE_RESULT_LOCKS: Partial<Record<DecisionTreeMode, { fallback: string; allowedPrefixes: string[]; allowedResults?: string[] }>> = {
+  'phase1-afslag': {
+    fallback: 'afslag',
+    allowedPrefixes: ['afslag--'],
+    allowedResults: ['afslag'],
+  },
+  'phase1-kling': {
+    fallback: 'kling',
+    allowedPrefixes: ['kling--'],
+    allowedResults: ['kling', 'lamelle'],
+  },
+  'phase1-geretoucheerde-kling': {
+    fallback: 'geretoucheerde-kling',
+    allowedPrefixes: ['kling--'],
+    allowedResults: ['geretoucheerde-kling'],
+  },
+  'phase1-rugmes': {
+    fallback: 'rugmes',
+    allowedPrefixes: ['rugmes--'],
+    allowedResults: ['rugmes', 'rugmes-aubri--audi', 'rugmes-klingmes--geretoucheerd'],
+  },
+  'phase1-klingschrabber': {
+    fallback: 'klingschrabber',
+    allowedPrefixes: ['schrabber--kling--'],
+    allowedResults: ['klingschrabber'],
+  },
+  'phase1-schrabber': {
+    fallback: 'schrabber',
+    allowedPrefixes: ['schrabber--'],
+    allowedResults: ['schrabber'],
+  },
+  'phase2-schrabber': {
+    fallback: 'schrabber',
+    allowedPrefixes: ['schrabber--'],
+    allowedResults: ['schrabber'],
+  },
+  'phase2-spits': {
+    fallback: 'spits',
+    allowedPrefixes: ['spits--'],
+    allowedResults: ['spits'],
+  },
+  'phase3-vuistbijl': {
+    fallback: 'vuistbijl',
+    allowedPrefixes: ['vuistbijl--'],
+    allowedResults: ['vuistbijl', 'uniface'],
+  },
+  'phase4-geslepen-bijl': {
+    fallback: 'geslepen-vuurstenen-bijl',
+    allowedPrefixes: ['bijl-'],
+    allowedResults: ['geslepen-vuurstenen-bijl'],
+  },
+  'phase4-geslepen-artefact': {
+    fallback: 'geslepen-vuurstenen-artefact',
+    allowedPrefixes: ['geslepen-'],
+    allowedResults: ['geslepen-vuurstenen-artefact'],
+  },
+  'phase5-doorboord-artefact': {
+    fallback: 'doorboord-artefact',
+    allowedPrefixes: ['doorboord-', 'sieraad-', 'bijl-'],
+    allowedResults: ['doorboord-artefact'],
+  },
+  'phase5-hamerbijl': {
+    fallback: 'hamerbijl',
+    allowedPrefixes: ['hamerbijl', 'bijl-hamer'],
+    allowedResults: ['hamerbijl'],
+  },
+};
+
 const DISPLAY_NAMES: Record<string, string> = {
   'een-splinter': 'Splinter',
   splinter: 'Splinter',
@@ -3473,6 +3541,21 @@ export function processAnswer(
   }
 
   return { isEnd: true, result: 'onbepaald' };
+}
+
+export function normalizeTreeResult(mode: DecisionTreeMode, result: string): string {
+  const lock = TREE_RESULT_LOCKS[mode];
+  if (!lock) return result;
+
+  if (lock.allowedResults?.includes(result)) {
+    return result;
+  }
+
+  if (lock.allowedPrefixes.some((prefix) => result.startsWith(prefix))) {
+    return result;
+  }
+
+  return lock.fallback;
 }
 
 export function formatTypeName(typeName: string): string {

@@ -4,6 +4,7 @@ interface QuickStartReviewProps {
   imageUrl: string;
   familyLabel: string;
   targetLevelLabel: string;
+  alternativeFamilies: Array<{ id: string; label: string }>;
   expectedTraits?: string[];
   commonConfusions?: string[];
   exampleOutcomes?: string[];
@@ -12,7 +13,7 @@ interface QuickStartReviewProps {
   feedback: string | null;
   error: string | null;
   onUseQuickStart: () => void;
-  onUseFullRoute: () => void;
+  onChooseDifferentFamily: (familyId: string) => void;
   onBack: () => void;
 }
 
@@ -20,6 +21,7 @@ export function QuickStartReview({
   imageUrl,
   familyLabel,
   targetLevelLabel,
+  alternativeFamilies,
   expectedTraits = [],
   commonConfusions = [],
   exampleOutcomes = [],
@@ -28,12 +30,10 @@ export function QuickStartReview({
   feedback,
   error,
   onUseQuickStart,
-  onUseFullRoute,
+  onChooseDifferentFamily,
   onBack,
 }: QuickStartReviewProps) {
-  const preferFullRoute = verdict === 'onwaarschijnlijk';
-  const quickStartLabel = preferFullRoute ? 'Toch stap in gebruiken' : 'Stap in gebruiken';
-  const fullRouteLabel = preferFullRoute ? 'Gebruik volledige route (aanbevolen)' : 'Gebruik volledige route';
+  const continueLabel = verdict === 'onwaarschijnlijk' ? 'Toch doorgaan met deze instap' : 'Doorgaan met deze instap';
 
   const verdictStyles = verdict === 'plausibel'
     ? {
@@ -143,33 +143,36 @@ export function QuickStartReview({
         <div className="card border border-stone-200 bg-white">
           <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Keuze</p>
           <p className="mt-1 text-sm text-stone-700">
-            Je kunt instappen in deze familie of alsnog de volledige route lopen vanaf het begin. Het AI-advies is adviserend; jij beslist.
+            Je kunt met deze familie doorgaan of direct een ander hoofdtype kiezen op basis van dezelfde foto&apos;s. Het AI-advies is adviserend; jij beslist.
           </p>
         </div>
+
+        {alternativeFamilies.length > 0 && (
+          <div className="card border border-stone-200 bg-white">
+            <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">Ander hoofdtype kiezen</p>
+            <div className="mt-3 grid gap-2">
+              {alternativeFamilies.map((family) => (
+                <button
+                  key={family.id}
+                  onClick={() => onChooseDifferentFamily(family.id)}
+                  disabled={isChecking}
+                  className="rounded-xl border border-stone-200 px-3 py-3 text-left text-sm font-medium text-stone-700 hover:border-amber-400 hover:bg-amber-50 disabled:opacity-60"
+                >
+                  {family.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="p-4 bg-white border-t border-stone-200 space-y-2 shrink-0">
         <button
-          onClick={preferFullRoute ? onUseFullRoute : onUseQuickStart}
+          onClick={onUseQuickStart}
           disabled={isChecking}
-          className={`w-full rounded-xl px-4 py-3 text-sm font-semibold disabled:opacity-60 ${
-            preferFullRoute
-              ? 'border border-stone-300 text-stone-800 hover:bg-stone-50'
-              : 'bg-amber-600 text-white hover:bg-amber-700'
-          }`}
+          className="w-full rounded-xl bg-amber-600 px-4 py-3 text-sm font-semibold text-white hover:bg-amber-700 disabled:opacity-60"
         >
-          {preferFullRoute ? fullRouteLabel : quickStartLabel}
-        </button>
-        <button
-          onClick={preferFullRoute ? onUseQuickStart : onUseFullRoute}
-          disabled={isChecking}
-          className={`w-full rounded-xl px-4 py-3 text-sm font-semibold disabled:opacity-60 ${
-            preferFullRoute
-              ? 'bg-amber-100 text-amber-800 hover:bg-amber-200'
-              : 'border border-stone-300 text-stone-700 hover:bg-stone-50'
-          }`}
-        >
-          {preferFullRoute ? quickStartLabel : fullRouteLabel}
+          {continueLabel}
         </button>
       </div>
     </div>

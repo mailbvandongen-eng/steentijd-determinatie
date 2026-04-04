@@ -249,6 +249,12 @@ export interface MidwayCheckResult {
   error?: string;
 }
 
+export interface DetailImageCheckResult {
+  success: boolean;
+  feedback?: string;
+  error?: string;
+}
+
 function buildValidationContext(
   resultType: string,
   resultDescription: string | undefined,
@@ -589,6 +595,81 @@ Antwoord exact in dit format:
     return {
       success: false,
       error: err instanceof Error ? err.message : 'Onbekende fout bij tussentijdse check',
+    };
+  }
+}
+
+export async function analyzeDetailImage(
+  imageBase64: string,
+  currentQuestionId: string,
+  currentQuestion: string,
+  toelichting?: string
+): Promise<DetailImageCheckResult> {
+  try {
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 350,
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'image',
+                source: {
+                  type: 'base64',
+                  media_type: 'image/jpeg',
+                  data: imageBase64.replace(/^data:image\/\w+;base64,/, ''),
+                },
+              },
+              {
+                type: 'text',
+                text: `Je bekijkt een detailfoto van een stenen artefact tijdens een determinatie.
+
+Huidige vraag: ${currentQuestionId} - ${currentQuestion}
+${toelichting ? `Toelichting: ${toelichting}` : ''}
+
+INSTRUCTIES:
+- Geef alleen objectieve visuele feedback over wat op deze detailfoto wel, niet of twijfelachtig zichtbaar is.
+- Beschrijf bijvoorbeeld retouche, randbeschadiging, slaglittekens, glans, doorsnede of onduidelijkheid.
+- Geef GEEN einddeterminatie en GEEN bevel aan de gebruiker.
+- Formuleer voorzichtig en concreet.
+
+Antwoord exact in dit format:
+**Observatie:** [2-4 zinnen in het Nederlands]`,
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+      if (response.status === 429) {
+        return { success: false, error: 'Daglimiet bereikt. Probeer later opnieuw.' };
+      }
+      return { success: false, error: `Fout: ${errorMessage}` };
+    }
+
+    const data = await response.json();
+    const content = data.content?.[0]?.text || '';
+    const feedbackMatch = content.match(/\*\*Observatie:\*\*\s*([\s\S]+)/i);
+
+    return {
+      success: true,
+      feedback: feedbackMatch?.[1]?.trim() || content.trim(),
+    };
+  } catch (err) {
+    console.error('Detail image analysis error:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Onbekende fout bij detailfoto-analyse',
     };
   }
 }
